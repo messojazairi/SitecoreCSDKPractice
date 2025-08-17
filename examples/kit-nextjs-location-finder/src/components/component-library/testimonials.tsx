@@ -257,7 +257,7 @@ const TestimonialCard = (props: TestimonialCardProps) => {
 export const Default = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -291,7 +291,7 @@ export const Default = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials1 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -327,7 +327,7 @@ export const Testimonials1 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials2 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -364,7 +364,7 @@ export const Testimonials2 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials3 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -408,7 +408,7 @@ export const Testimonials3 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials4 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -447,7 +447,7 @@ export const Testimonials4 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials5 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -484,7 +484,7 @@ export const Testimonials5 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials6 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -518,7 +518,7 @@ export const Testimonials6 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials7 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -552,7 +552,7 @@ export const Testimonials7 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials8 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
@@ -595,7 +595,7 @@ export const Testimonials8 = (props: TestimonialsProps): JSX.Element => {
 export const Testimonials9 = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  if (!datasource || !datasource.title?.jsonValue || !datasource.tagLine?.jsonValue) {
+  if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
