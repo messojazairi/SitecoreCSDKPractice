@@ -1,4 +1,4 @@
-# Alaris - Demo Site (NextJS) - kit-nextjs-location-finder
+# Alaris - Demo Site (NextJS) - kit-nextjs-location-starter
 
 ## Overview
 Alaris is a a bold, minimalist template perfect for showcasing premium products, with a homepage, subpage, navigation, and footer. It showcases a car brand site offering an overview about the different models. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
@@ -36,7 +36,7 @@ If you have not enabled the split deployment feature your edting hosts are autom
 3. Select Project that has been deployed
 4. Switch to tab "Editing Hosts"
 5. Click "Add editing host"
-6. Provide Editing host name  ```kit-nextjs-location-finder``` as per xmcloud.build.json
+6. Provide Editing host name  ```kit-nextjs-location-starter``` as per xmcloud.build.json
 7. Check if the link to authoring environment is set correctly (should be by default)
 8.  Check if the source code provider is set correctly (should be by default)
 9. Check if the GitHub Account is set correctly (should be by default)

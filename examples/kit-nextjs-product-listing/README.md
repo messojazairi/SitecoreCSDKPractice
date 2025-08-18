@@ -1,4 +1,4 @@
-# SYNC - Demo Site (NextJS) - kit-nextjs-product-listing
+# SYNC - Demo Site (NextJS) - kit-nextjs-product-starter
 
 ## Overview
 SYNC is a clean, bold, product-focused site template with a homepage, subpage, navigation, and footer. It showcases a company offering speakers, headphones and other audio geear. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
@@ -36,7 +36,7 @@ If you have not enabled the split deployment feature your edting hosts are autom
 3. Select Project that has been deployed
 4. Switch to tab "Editing Hosts"
 5. Click "Add editing host"
-6. Provide Editing host name  ```kit-nextjs-product-listing``` as per xmcloud.build.json
+6. Provide Editing host name  ```kit-nextjs-product-starter``` as per xmcloud.build.json
 7. Check if the link to authoring environment is set correctly (should be by default)
 8.  Check if the source code provider is set correctly (should be by default)
 9. Check if the GitHub Account is set correctly (should be by default)
