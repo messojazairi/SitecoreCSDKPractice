@@ -18,8 +18,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
   // Instantiate AFTER the guard so constructors don’t run in local-only mode
   const multisite = new MultisiteMiddleware({
     /**
-    * List of sites for site resolver to work with
-    */
+     * List of sites for site resolver to work with
+     */
     sites,
     ...scConfig.api.edge,
     ...scConfig.multisite,
@@ -31,8 +31,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const redirects = new RedirectsMiddleware({
     /**
-    * List of sites for site resolver to work with
-    */
+     * List of sites for site resolver to work with
+     */
     sites,
     ...scConfig.api.edge,
     ...scConfig.redirects,
@@ -45,8 +45,8 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const personalize = new PersonalizeMiddleware({
     /**
-    * List of sites for site resolver to work with
-    */
+     * List of sites for site resolver to work with
+     */
     sites,
     ...scConfig.api.edge,
     ...scConfig.personalize,
