@@ -4,7 +4,7 @@
 SYNC is a clean, bold, product-focused site template with a homepage, subpage, navigation, and footer. It showcases a company offering speakers, headphones and other audio geear. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
 
 ## Developer Expectations:
-* Tailwind-based styling (Shutcn)
+* Tailwind-based styling (Shadcn)
 * Personalized homepage via URL parameters
 * Modular components for reuse
 * Localization support for English (en) and Canadian English (en-CA)

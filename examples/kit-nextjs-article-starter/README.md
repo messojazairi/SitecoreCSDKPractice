@@ -4,7 +4,7 @@
 Solterra & Co. is a polished, editorial-style template great for lifestyle brands, with a homepage, subpage, navigation, and footer. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
 
 ## Developer Expectations:
-* Tailwind-based styling (Shutcn)
+* Tailwind-based styling (Shadcn)
 * Personalized homepage via URL parameters
 * Modular components for reuse
 * Localization support for English (en) and Canadian English (en-CA)

@@ -4,7 +4,7 @@
 Alaris is a a bold, minimalist template perfect for showcasing premium products, with a homepage, subpage, navigation, and footer. It showcases a car brand site offering an overview about the different models. This demo site is built to showcase XM Cloud capabilities using the Content SDK.
 
 ## Developer Expectations:
-* Tailwind-based styling (Shutcn)
+* Tailwind-based styling (Shadcn)
 * Personalized homepage via URL parameters
 * Modular components for reuse
 * Localization support for English (en) and Canadian English (en-CA)
