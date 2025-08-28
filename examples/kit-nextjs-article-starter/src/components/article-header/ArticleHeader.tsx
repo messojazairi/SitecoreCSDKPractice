@@ -134,7 +134,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields }) => {
     };
   }, []);
 
-  if (fields?.data?.datasource) {
+  if (fields) {
     const parallaxStyle = imageRequired?.jsonValue?.value?.src
       ? {
           transform: prefersReducedMotion
