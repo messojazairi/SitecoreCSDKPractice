@@ -58,9 +58,9 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
         <div className="@xl:px-8 mx-auto flex h-16 w-full max-w-screen-xl items-center px-4">
           <div className="mr-8">
             {pageEditing ? (
-              <Image field={logo.jsonValue} className="h-10 w-auto" />
+              <Image field={logo?.jsonValue} className="h-10 w-auto" />
             ) : (
-              logo.jsonValue?.value && (
+              logo?.jsonValue?.value && (
                 <Link
                   href="/"
                   className="flex w-[164px] items-stretch space-x-2 [&_.image-container]:w-full"
@@ -79,10 +79,10 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                     <Fragment key={`desktop-nav-menu-list-item-${i}`}>
                       {pageEditing ? (
                         <Button variant="ghost" asChild className="font-body text-base font-medium">
-                          <SitecoreLink field={item.link.jsonValue} />
+                          <SitecoreLink field={item.link?.jsonValue} />
                         </Button>
                       ) : (
-                        item.link.jsonValue?.value?.href && (
+                        item.link?.jsonValue?.value?.href && (
                           <NavigationMenuItem>
                             <Button
                               variant="ghost"

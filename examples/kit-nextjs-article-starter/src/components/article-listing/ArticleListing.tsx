@@ -58,7 +58,7 @@ export const Default: React.FC<ArticleListingProps> = ({
   params,
   isPageEditing: propIsEditing,
 }) => {
-  const { titleOptional, descriptionOptional, linkOptional, featuredContent } = fields;
+  const { titleOptional, descriptionOptional, linkOptional, featuredContent } = fields || {};
   const { page } = useSitecore();
   const contextIsEditing = page.mode.isEditing;
 
