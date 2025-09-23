@@ -116,7 +116,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
             aria-label="Previous slide"
           >
             <ImageWrapper
-              image={slides[prevIndex].image?.jsonValue}
+              image={slides[prevIndex]?.image?.jsonValue}
               className={previewImageClasses}
             />
           </button>
@@ -156,7 +156,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
                 >
                   <div className="relative">
                     <ImageWrapper
-                      image={slide.image?.jsonValue}
+                      image={slide?.image?.jsonValue}
                       className="relative z-0 h-auto w-full"
                     />
                   </div>
@@ -172,7 +172,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
             aria-label="Next slide"
           >
             <ImageWrapper
-              image={slides[nextIndex].image?.jsonValue}
+              image={slides[nextIndex]?.image?.jsonValue}
               className={previewImageClasses}
             />
           </button>

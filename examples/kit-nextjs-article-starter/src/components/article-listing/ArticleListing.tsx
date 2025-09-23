@@ -82,6 +82,7 @@ export const Default: React.FC<ArticleListingProps> = ({
     }));
   }, [featuredContent]);
 
+  console.log("fields of article listinfg", fields);
   if (fields) {
     // Split articles into featured (first 2) and regular (remaining)
     const featuredArticles = articles.slice(0, 2);
