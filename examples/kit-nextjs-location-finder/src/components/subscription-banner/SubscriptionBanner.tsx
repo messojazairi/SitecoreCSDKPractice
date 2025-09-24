@@ -53,6 +53,7 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
     // Reset the form to clear the input, then set the thank you message
     form.reset({ email: thankYouMessage?.value || 'Thank you' });
   };
+  console.log('alaris subscription banner', fields);
 
   if (fields) {
     return (

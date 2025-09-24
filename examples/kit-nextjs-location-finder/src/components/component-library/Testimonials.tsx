@@ -257,6 +257,8 @@ const TestimonialCard = (props: TestimonialCardProps) => {
 export const Default = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
+  console.log('alaris testimonials', props.fields);
+
   if (!datasource) {
     return <NoDataFallback componentName="Testimonials" />;
   }

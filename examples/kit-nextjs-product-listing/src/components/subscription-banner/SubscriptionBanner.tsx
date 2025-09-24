@@ -36,6 +36,8 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
     form.reset({ email: thankYouMessage?.value || 'Thank you' });
   };
 
+  console.log('product listing subscription banner', fields);
+
   if (fields) {
     return (
       <section className="w-full mx-auto px-4 py-16 text-center">

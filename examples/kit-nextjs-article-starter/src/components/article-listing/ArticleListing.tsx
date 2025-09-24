@@ -82,6 +82,8 @@ export const Default: React.FC<ArticleListingProps> = ({
     }));
   }, [featuredContent]);
 
+  console.log('modern article listing', fields);
+
   if (fields) {
     // Split articles into featured (first 2) and regular (remaining)
     const featuredArticles = articles.slice(0, 2);
