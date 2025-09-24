@@ -259,7 +259,7 @@ export const Default = (props: TestimonialsProps): JSX.Element => {
 
   console.log('alaris testimonials', props.fields);
 
-  if (!datasource) {
+  if (!props.fields) {
     return <NoDataFallback componentName="Testimonials" />;
   }
 
