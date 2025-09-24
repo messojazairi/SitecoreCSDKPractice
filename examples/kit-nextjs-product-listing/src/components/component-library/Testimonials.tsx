@@ -257,8 +257,6 @@ const TestimonialCard = (props: TestimonialCardProps) => {
 export const Default = (props: TestimonialsProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
-  console.log('sync testimonials', props.fields);
-
   if (!props.fields) {
     return <NoDataFallback componentName="Testimonials" />;
   }

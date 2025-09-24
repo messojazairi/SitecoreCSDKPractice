@@ -1,5 +1,4 @@
 import { Text, Field, LinkField } from '@sitecore-content-sdk/nextjs';
-// import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
@@ -53,9 +52,7 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
     // Reset the form to clear the input, then set the thank you message
     form.reset({ email: thankYouMessage?.value || 'Thank you' });
   };
-  console.log('alaris subscription banner', fields);
 
-  // if (fields) {
   return (
     <section className="w-full mx-auto px-4 py-16 text-center">
       <div className="max-w-5xl mx-auto @container">
@@ -115,7 +112,4 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
       </div>
     </section>
   );
-  // }
-
-  // return <NoDataFallback componentName="SubscriptionBanner" />;
 };
