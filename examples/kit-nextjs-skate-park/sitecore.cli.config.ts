@@ -12,10 +12,10 @@ export default defineCliConfig({
     commands: [
       generateMetadata(),
       generateSites({
-        scConfig: scConfig,
+        scConfig,
       }),
       extractFiles({
-        scConfig: scConfig,
+        scConfig,
       }),
       writeImportMap({
         paths: ['src/components'],
