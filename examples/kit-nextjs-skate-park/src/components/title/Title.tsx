@@ -44,14 +44,16 @@ export const Default = ({ params, fields }: TitleProps): JSX.Element => {
   const { page } = useSitecore();
   const { styles, RenderingIdentifier: id } = params;
   const datasource = fields?.data?.datasource || fields?.data?.contextItem;
-  
+
   // Use the route's Title field for proper editing support with chrometype="field"
   const titleField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
-  
+
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
-      title: (titleField?.value ? String(titleField.value) : undefined) || datasource?.field?.jsonValue?.value
+      title:
+        (titleField?.value ? String(titleField.value) : undefined) ||
+        datasource?.field?.jsonValue?.value,
     },
   };
 
