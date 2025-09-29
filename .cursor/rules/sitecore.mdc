@@ -32,18 +32,43 @@ SITECORE_EDITING_SECRET=your-editing-secret
 ## Component Architecture Patterns
 
 Component Structure:
-- Use main component file as variant dispatcher: `Hero.tsx`, `ProductListing.tsx`
-- Implement actual variants in `.dev.tsx` files: `HeroDefault.dev.tsx`, `HeroImageBottom.dev.tsx`
-- Export named variants: `Default`, `ThreeUp`, `Slider`, `ImageBottom`, etc.
-- Each variant handles its own data source validation
+
+- Follow Locality of Behavior pattern
+- Create a tsx `ComponentName.tsx` with all varaiants of the component as well as the props
+- Export named variants: `Default`, `ThreeUp`, `Slider`, `ImageBottom`, etc. from the componenet file
+
+Prop and Interface Structure
+- Extend from `ComponentProps` from `@/lib/component-props`
+- Use specific interface for component parameters
+- Structure fields with `data.datasource` pattern
+- Include `isPageEditing` prop for variants
+
 
 ```typescript
-// Main component file (Hero.tsx)
 import type React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
-import type { HeroProps } from './hero.props';
-import { HeroDefault } from './HeroDefault.dev';
-import { HeroImageBottom } from './HeroImageBottom.dev';
+import { ComponentProps } from '@/lib/component-props';
+import { Field, ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
+
+interface HeroParams {
+  [key: string]: any;
+}
+
+interface HeroFields {
+  title?: { jsonValue: Field<string> };
+  subtitle?: { jsonValue: Field<string> };
+  backgroundImage?: { jsonValue: ImageField };
+}
+
+interface HeroProps extends ComponentProps {
+  params: HeroParams;
+  fields: {
+    data: {
+      datasource: HeroFields;
+    };
+  };
+  isPageEditing?: boolean;
+}
 
 export const Default: React.FC<HeroProps> = (props) => {
   const { page } = useSitecore();
@@ -58,38 +83,6 @@ export const ImageBottom: React.FC<HeroProps> = (props) => {
 };
 ```
 
-## Props and Interface Patterns
-
-Component Props Structure:
-- Extend from `ComponentProps` from `@/lib/component-props`
-- Use specific interface for component parameters
-- Structure fields with `data.datasource` pattern
-- Include `isPageEditing` prop for variants
-
-```typescript
-import { ComponentProps } from '@/lib/component-props';
-
-interface ArticleHeaderParams {
-  [key: string]: any; // eslint-disable-line
-}
-
-interface ArticleHeaderFields {
-  title?: { jsonValue: Field<string> };
-  description?: { jsonValue: Field<string> };
-  image?: { jsonValue: ImageField };
-}
-
-interface ArticleHeaderProps extends ComponentProps {
-  params: ArticleHeaderParams;
-  fields: {
-    data: {
-      datasource: ArticleHeaderFields;
-      externalFields?: ArticleHeaderExternalFields;
-    };
-  };
-  isPageEditing?: boolean;
-}
-```
 
 ## Data Source Validation
 
@@ -326,11 +319,9 @@ import { SitecoreClient } from '@sitecore-content-sdk/nextjs/client';
 ## Development Patterns
 
 Component Development Workflow:
-- Create props interface file: `component-name.props.ts`
-- Create main component: `ComponentName.tsx` (variant dispatcher)
-- Create variant implementations: `ComponentNameDefault.dev.tsx`, `ComponentNameVariant.dev.tsx`
+- Follow Locality of Behavior pattern
+- Create a tsx `ComponentName.tsx` with all varaiants of the component as well as the props
 - Use kebab-case for component directories: `product-listing/`, `article-header/`
-- Export Default and named variants from main component file
 
 Testing and Validation:
 - Test components with and without datasources

@@ -71,8 +71,7 @@ src/
 
 File Organization:
 - Component directories contain main file, variants, and props
-- Use `.dev.tsx` suffix for variant implementations
-- Props interfaces in separate `.props.ts` files
+- Use `.dev.tsx` suffix for variant implementations when they are required
 - Shared utilities in dedicated directories
 - Group UI components in `ui/` subdirectory
 

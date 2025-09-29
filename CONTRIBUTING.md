@@ -19,13 +19,15 @@ Ensure the following tools are installed on your system:
 
 ## 🔀 **Branching Strategy**
    
-   This repository uses a three-branch workflow for proper testing and deployment:
-   
-   - **`dev`** - Development branch for integration and internal testing
-   - **`staging`** - Staging branch for pre-production testing  
-   - **`main`** - Production branch for stable releases
-   
-   **⚠️ Important**: All pull requests must be raised against the **`dev`** branch to enable proper merging and testing workflow.
+  Planned Branching Stratergy:
+
+   DMZ flow will be implemented in the future to support better development practices with following branches:
+   - **`dmz`** - Integration branch which will be the target of all pull requests by contributors
+   - **`main`** - Stable branch used for cutting branches and production  deployments after implementation of DMZ flow. Will not accept pull requests from contributors (PRs merged to dmz branch will be automatically merged to main if the merge builds and passes all automated tests).
+
+     **⚠️ Important**: All pull requests must be raised against the **`dmz`** branch to enable proper merging and testing workflow.
+
+ 
 
 
 ## 🧪 Development Setup
@@ -36,7 +38,7 @@ Ensure the following tools are installed on your system:
    cd xmcloud-starter-js
    ```
 
-2. Create a new branch from `dev` and use meaningful branch names, e.g. 
+2. Create a new branch from `main` and use meaningful branch names, e.g. 
     ```
     git switch -c feature/starter-kit-feature
     ```
@@ -98,7 +100,7 @@ To improve the AI guidance:
 
 5. 🚀 Submitting a Pull Request
 Once your changes are ready:
-Make sure your branch is up-to-date with upstream/dev and create your PR against the **dev** branch.
+Make sure your branch is up-to-date with upstream/main and create your PR against the **dmz** branch.
 
     ✅ Before submitting:
       - Run code formatters or linters if configured.

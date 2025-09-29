@@ -181,8 +181,8 @@ Package Scripts:
 - `npm run test:ci` - Run all tests in CI mode
 
 Coverage Requirements:
-- Aim for 80%+ code coverage on components
-- Ensure all XM Cloud integration points are tested
+- Tests should be comprehensive enough to cover business logic and to validate that sites and componenets are working as intended
+- Ensure different rendering options and  scenarios are considered such as Design Library, Page Editor, Preview mode, Hosted Vercel Sites and Local Deployments
 - Test error scenarios and edge cases
 - Maintain test quality over quantity
 

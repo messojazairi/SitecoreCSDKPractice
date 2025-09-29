@@ -76,9 +76,20 @@ File Organization:
 - Independent package.json for each example
 
 Development Workflow:
-- Uses the DMZ Git workflow with two primary branches: `main` and `xmctrails`
-- Developers branch off `main` (in their own fork) and merge to `xmctrails` branch (integration/staging branch)
-- After successful validation and deployment readiness, `xmctrails` is merged back into `main`
+
+DMZ git flow will be implemented in the future to support better development practices, scaling, efficiency and developer productivity.
+Below is an outline of the planned workflow and processes that will be followed:
+
+- Has a shared main repo (`upstream repository`) with two key branches: `main` and `dmz`
+- Each contributor uses their own fork as their workspace
+- Feature branches are sourced from `main` but Pull Requests (PRs) with changes are merged to `dmz` branch 
+- `main` branch in the `upstream repository` is always clean (deployable, branchable and reliable). It does not accept PRs created by developers.
+- Developers should push changes to feature branches in their own fork and then create PRs to `dmz` branch in the `upstream repository`.  
+- PRs are merged by reviewers to the `dmz` branch after review and validation. Conflicts should be resolved by rebasing onto main. 
+- Once a PR has been merged into `dmz` branch the code changes are validated through an automated full build of the `dmz` branch `HEAD` in the Continous Integration server.  
+- Only if the build is clean, the CI server then automatically fast-forwards `main` to the clean HEAD of `dmz` and pushes the results, ensuring that the `main` branch is updated with latest changes merged to `dmz` 
+- If the build fails, the changes are not pushed to main and the main branch remains clean. The merge causing errors can be reverted by reviewers by rebasing out the commits from `dmz` and force-pushing it. 
+
 - Each starter can be developed independently in its own directory
 - Copy `.env.remote.example` to `.env.local` for local development
 - Required environment variables: `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `SITECORE_EDITING_SECRET`
