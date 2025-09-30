@@ -49,7 +49,7 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 💡 Make sure to populate the required environment variables in your .env.local file to connect to your XM Cloud instance.
 
-      cd examples/kit-nextjs-article-starter.
+      cd examples/kit-nextjs-article-starter
       npm install
       npm run dev
 
