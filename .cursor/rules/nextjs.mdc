@@ -157,7 +157,7 @@ export function middleware(request: NextRequest) {
 ## Performance Optimization
 
 Image Optimization:
-- Always use NextImage component from ContentSDK for XM Cloud media as it supports inline editing in editor mode and uses NextImage internally
+- Always use NextImage component from ContentSDK for XM Cloud media as it supports inline editing in editor mode and uses Image component from next internally
 - Configure proper image domains and sizes
 - Implement lazy loading for below-fold images
 - Use proper alt text from XM Cloud fields
