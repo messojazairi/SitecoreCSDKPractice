@@ -20,8 +20,7 @@ Variables and Functions:
 
 Components (React):
 - Use PascalCase: `ArticleHeader`, `ProductListing`, `VerticalImageAccordion`
-- Main component files: `Hero.tsx`, `ProductListing.tsx` (variant dispatchers)
-- Variant files: `HeroDefault.dev.tsx`, `ProductListingSlider.dev.tsx`
+- Main component files: `Hero.tsx`, `ProductListing.tsx`
 - Component directories: kebab-case like `article-header/`, `product-listing/`
 
 Constants and Variables:
@@ -30,8 +29,6 @@ Constants and Variables:
 - Dictionary keys: `dictionaryKeys.HERO_SubmitCTALabel`
 
 File Naming Patterns:
-- Component props: `component-name.props.ts`
-- Variant implementations: `ComponentNameVariant.dev.tsx`
 - Utilities: `NoDataFallback.tsx`, `date-utils.ts`
 - Main components: `ComponentName.tsx`
 
@@ -48,10 +45,7 @@ Directory Structure:
 src/
   components/          # React components organized by feature
     hero/             # Component directories with variants
-      Hero.tsx        # Main component (variant dispatcher)
-      HeroDefault.dev.tsx      # Default variant implementation
-      HeroImageBottom.dev.tsx  # Named variant implementation
-      hero.props.ts   # Props interface
+      Hero.tsx        # Main component file with props and variants
     article-header/   # Component with complex structure
     product-listing/  # Multi-variant component
     ui/              # Shadcn/ui components
@@ -71,7 +65,7 @@ src/
 
 File Organization:
 - Component directories contain main file, variants, and props
-- Main component file should contain vaaraiants and props following the Locality of Behavior
+- Main component file should contain varaiants and props following the Locality of Behavior pattern
 - Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes dificult for the componenent and seperation can not be avoided
 - Shared utilities in dedicated directories
 - Group UI components in `ui/` subdirectory
@@ -194,6 +188,5 @@ export const HeroDefault: React.FC<HeroProps> = (props) => {
 
 Referenced:
 @examples/kit-nextjs-article-starter/src/components/article-header/ArticleHeader.tsx
-@examples/kit-nextjs-location-finder/src/components/hero/HeroDefault.dev.tsx
 @examples/kit-nextjs-product-listing/src/components/product-listing/ProductListing.tsx
 @examples/kit-nextjs-article-starter/src/utils/NoDataFallback.tsx
