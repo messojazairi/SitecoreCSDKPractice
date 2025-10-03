@@ -56,17 +56,17 @@ export const Default = (props: TitleProps): JSX.Element => {
   const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
   const { page } = useSitecore();
   const { mode } = page;
-  const text: TextField = datasource?.field?.jsonValue || {};
+  const titleField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
-      title: datasource?.field?.jsonValue?.value,
+      title: titleField?.value ? String(titleField.value) : datasource?.field?.jsonValue?.value,
     },
   };
   if (!mode.isNormal) {
     link.value.querystring = `sc_site=${datasource?.url?.siteName}`;
-    if (!text?.value) {
-      text.value = 'Title field';
+    if (!titleField?.value) {
+      titleField.value = 'Title field';
       link.value.href = '#';
     }
   }
@@ -75,10 +75,10 @@ export const Default = (props: TitleProps): JSX.Element => {
     <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
       <>
         {mode.isEditing ? (
-          <Text field={text} />
+          <Text field={titleField} />
         ) : (
           <Link field={link}>
-            <Text field={text} />
+            <Text field={titleField} />
           </Link>
         )}
       </>

@@ -76,3 +76,7 @@ For developers new to XM Cloud you can follow the Getting Started Guide on the [
 ### SPA Starters Monorepo and Angular SPA
 
 A new starter SPA based on Angular has been introduced with JSS v22.3.0. The Angular starter has been designed to be compatible with XM Cloud and should be used with the provided node XM Cloud proxy application to handle server-side rendering (SSR), data queries, personalization and more. For more details and information on how to run and deploy the Angular starter and proxy to XM Cloud have a look at [SPA starters monorepo](examples/basic-spa/)
+
+## AI-Assisted Development
+
+This repository includes Cursor AI guidance files (`.cursor/rules/`) to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications. These rules automatically provide context and enforce patterns when using AI coding assistants like Cursor. See the [Contributing Guide](CONTRIBUTING.md#ai-assisted-development) for details on using AI assistance with this project.
