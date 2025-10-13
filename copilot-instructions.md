@@ -48,6 +48,13 @@ This repository contains **XM Cloud Front End Application Starter Kits** - multi
 - **Node.js LTS** - JavaScript runtime environment
 - **npm** - Package management across all starter applications
 
+### File Organization:
+- Component directories contain main file, variants, and props
+- Main component file should contain variants and props following the Locality of Behavior pattern
+- Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes difficult for the component and separation cannot be avoided
+- Shared utilities in dedicated directories
+- Group UI components in `ui/` subdirectory
+
 ## Coding Standards
 
 ### TypeScript Best Practices
