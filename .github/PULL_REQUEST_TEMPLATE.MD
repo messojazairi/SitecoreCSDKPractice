@@ -1,9 +1,3 @@
-<!--- Provide a general summary of your changes in the Title above -->
-
-- [ ] This PR follows the [Contribution Guide](https://github.com/Sitecore/content-sdk/blob/dev/CONTRIBUTING.md)
-- [ ] Changelog updated
-- [ ] Upgrade guide entry added
-
 ## Description / Motivation
 <!--- Describe your changes in detail -->
 <!--- Why is this change required? What problem does it solve? -->
