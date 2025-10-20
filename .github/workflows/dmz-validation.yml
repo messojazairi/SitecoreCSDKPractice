@@ -1,32 +1,3 @@
-# DMZ Workflow: Post-Merge Validation and Fast-Forward
-#
-# This workflow is the SECOND GATE in the DMZ git flow:
-#
-# GATE 1 - PR Validation (pr-validation.yml):
-#   - Checks if PR branch is based on latest main
-#   - Runs lint, format, type-check, build, tests
-#   - Catches issues BEFORE merge to dmz
-#
-# GATE 2 - DMZ Validation (this workflow):
-#   - Runs AFTER squash merge to dmz
-#   - Double-checks everything again (safety net)
-#   - If validation passes → fast-forward main to dmz
-#   - If validation fails → rebase dmz to remove bad commits
-#
-# Why two gates?
-# - First gate: Fast feedback at PR time
-# - Second gate: Final safety check before touching main
-# - Defense in depth ensures main is ALWAYS clean
-#
-# Why squash + fast-forward?
-# - Squash creates clean, atomic commits per feature
-# - Fast-forward keeps main and dmz with identical commit SHAs
-# - This ensures main is always deployable and never breaks
-#
-# Why no duplicate commits?
-# - pr-validation.yml enforces PRs are based on latest main
-# - This prevents "previous commits showing in my PR" issue
-
 name: DMZ Branch Validation and Main Fast-Forward
 
 on:
