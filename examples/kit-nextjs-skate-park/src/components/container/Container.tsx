@@ -1,7 +1,7 @@
 import Placeholder from 'components/content-sdk/Placeholder';
 import React, { JSX } from 'react';
 import { ComponentProps } from 'lib/component-props';
-import { getCleanComponentMap, type CleanComponentMap } from 'src/lib/component-map-utils';
+import componentMap from '.sitecore/component-map';
 
 interface ContainerProps extends ComponentProps {
   params: ComponentProps['params'] & {
@@ -10,12 +10,7 @@ interface ContainerProps extends ComponentProps {
   };
 }
 
-const Container = ({
-  params,
-  rendering,
-  page,
-  componentMap,
-}: ContainerProps & { componentMap: CleanComponentMap }): JSX.Element => {
+const Container = ({ params, rendering, page }: ContainerProps): JSX.Element => {
   const {
     styles,
     RenderingIdentifier: id,
@@ -50,13 +45,12 @@ const Container = ({
 
 export const Default = ({ params, rendering, page }: ContainerProps): JSX.Element => {
   const styles = params?.styles?.split(' ');
-  const componentMap = getCleanComponentMap();
 
   return styles?.includes('container') ? (
     <div className="container-wrapper">
-      <Container params={params} rendering={rendering} page={page} componentMap={componentMap} />
+      <Container params={params} rendering={rendering} page={page} />
     </div>
   ) : (
-    <Container params={params} rendering={rendering} page={page} componentMap={componentMap} />
+    <Container params={params} rendering={rendering} page={page} />
   );
 };

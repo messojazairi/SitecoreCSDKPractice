@@ -7,7 +7,7 @@ import { Link, Text, useSitecore, RichText, NextImage, Placeholder as Placeholde
 import { useState, useEffect } from 'react';
 import React from 'react';
 import Placeholder from 'components/content-sdk/Placeholder';
-import { getCleanComponentMap } from 'src/lib/component-map-utils';
+import componentMap from '.sitecore/component-map';
 import client from 'lib/sitecore-client';
 import { rsc } from 'rsc-env';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
@@ -43,9 +43,9 @@ const importMap = [
     ]
   },
   {
-    module: 'src/lib/component-map-utils',
+    module: '.sitecore/component-map',
     exports: [
-      { name: 'getCleanComponentMap', value: getCleanComponentMap },
+      { name: 'default', value: componentMap },
     ]
   },
   {

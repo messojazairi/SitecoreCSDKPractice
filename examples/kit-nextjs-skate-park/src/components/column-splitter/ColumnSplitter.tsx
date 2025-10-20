@@ -1,7 +1,7 @@
 import React, { JSX } from 'react';
 import Placeholder from 'components/content-sdk/Placeholder';
 import { ComponentProps } from 'lib/component-props';
-import { getCleanComponentMap } from 'src/lib/component-map-utils';
+import componentMap from '.sitecore/component-map';
 
 /**
  * The number of columns that can be inserted into the column splitter component.
@@ -31,7 +31,6 @@ interface ColumnSplitterProps extends ComponentProps {
 
 export const Default = ({ params, rendering, page }: ColumnSplitterProps): JSX.Element => {
   const { EnabledPlaceholders, RenderingIdentifier: id, styles } = params;
-  const componentMap = getCleanComponentMap();
 
   const enabledColumns = EnabledPlaceholders?.split(',') ?? [];
 

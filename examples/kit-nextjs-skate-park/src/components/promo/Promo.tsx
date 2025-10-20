@@ -35,7 +35,7 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
     </div>
   );
 
-  const importMap = fs.readFileSync('.sitecore/import-map.json', 'utf8');
+  const importMap = fs.readFileSync('./.sitecore/import-map.ts', 'utf8');
   console.log(importMap);
 
   if (!fields) {
