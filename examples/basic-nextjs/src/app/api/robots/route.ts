@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-
-export const dynamic = 'force-dynamic';
+import { createRobotsRouteHandler } from '@sitecore-content-sdk/nextjs/route-handler';
+import sites from '.sitecore/sites.json';
+import client from 'lib/sitecore-client';
 
 /**
  * API route for serving robots.txt
@@ -10,15 +10,7 @@ export const dynamic = 'force-dynamic';
  * used by search engine crawlers to determine crawl and indexing rules.
  */
 
-export async function GET(request: NextRequest) {
-  const robotsTxt = `User-agent: *
-Allow: /
-
-Sitemap: ${new URL(request.url).origin}/sitemap.xml`;
-
-  return new NextResponse(robotsTxt, {
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-  });
-}
+export const { GET } = createRobotsRouteHandler({
+  client,
+  sites,
+});

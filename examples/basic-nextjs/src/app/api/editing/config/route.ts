@@ -1,20 +1,13 @@
-import { NextResponse } from 'next/server';
+import { createEditingConfigRouteHandler } from '@sitecore-content-sdk/nextjs/route-handler';
+import components from '.sitecore/component-map';
+import metadata from '.sitecore/metadata.json';
 
 /**
  * This API route is used by Sitecore Editor in XM Cloud
  * to determine feature compatibility and configuration.
  */
 
-export async function GET() {
-  // Return basic configuration for editing mode
-  const config = {
-    components: [],
-    metadata: {},
-  };
-
-  return NextResponse.json(config);
-}
-
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 200 });
-}
+export const { GET, OPTIONS } = createEditingConfigRouteHandler({
+  components,
+  metadata,
+});

@@ -14,5 +14,4 @@ const PartialDesignDynamicPlaceholder = (props: ComponentProps): JSX.Element => 
   );
 };
 
-export const Default = PartialDesignDynamicPlaceholder;
 export default PartialDesignDynamicPlaceholder;

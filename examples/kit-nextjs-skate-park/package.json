@@ -1,6 +1,5 @@
 {
   "name": "content-sdk-nextjs-skate-park-app-router",
-  "description": "Skate Park Application utilizing Content SDK and Next.js with App Router",
   "version": "1.0.0",
   "private": true,
   "config": {
@@ -35,11 +34,11 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rsc-env": "0.0.2",
-    "sharp": "0.34.1",
-    "tailwind-bootstrap-grid": "^6.0.0",
-    "tailwindcss": "^4.1.14"
+    "sharp": "0.34.1"
   },
   "devDependencies": {
+    "tailwind-bootstrap-grid": "^6.0.0",
+    "tailwindcss": "^4.1.14",
     "@sitecore-content-sdk/cli": "1.2.0-canary.40",
     "@types/node": "^22.15.14",
     "@types/react": "^19.1.10",

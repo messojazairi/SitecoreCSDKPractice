@@ -11,22 +11,6 @@ const nextConfig: NextConfig = {
   // Disable the X-Powered-By header. Follows security best practices.
   poweredByHeader: false,
 
-  // Webpack configuration to handle Node.js modules in browser environment
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Fallbacks for Node.js modules when running in browser
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        module: false,
-        path: false,
-        os: false,
-        crypto: false,
-      };
-    }
-    return config;
-  },
-
   // use this configuration to ensure that only images from the whitelisted domains
   // can be served from the Next.js Image Optimization API
   // see https://nextjs.org/docs/app/api-reference/components/image#remotepatterns
