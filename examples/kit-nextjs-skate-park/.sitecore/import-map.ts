@@ -3,17 +3,25 @@
 import { combineImportEntries, defaultImportEntries } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { Link, Text, useSitecore, RichText, NextImage, Placeholder as Placeholder_8a80e63291fea86e0744df19113dc44bec187216, ServerPlaceholder, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
 import { useState, useEffect } from 'react';
 import React from 'react';
-import Placeholder from 'components/content-sdk/Placeholder';
+import { Link, Text, useSitecore, RichText, NextImage, Placeholder as Placeholder_8a80e63291fea86e0744df19113dc44bec187216, ServerPlaceholder, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
+import Placeholder from 'components/content-sdk/Placeholder';
 import client from 'lib/sitecore-client';
 import { rsc } from 'rsc-env';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
 import config from 'sitecore.config';
 
 const importMap = [
+  {
+    module: 'react',
+    exports: [
+      { name: 'useState', value: useState },
+      { name: 'useEffect', value: useEffect },
+      { name: 'default', value: React },
+    ]
+  },
   {
     module: '@sitecore-content-sdk/nextjs',
     exports: [
@@ -29,23 +37,15 @@ const importMap = [
     ]
   },
   {
-    module: 'react',
+    module: '.sitecore/component-map',
     exports: [
-      { name: 'useState', value: useState },
-      { name: 'useEffect', value: useEffect },
-      { name: 'default', value: React },
+      { name: 'default', value: componentMap },
     ]
   },
   {
     module: 'components/content-sdk/Placeholder',
     exports: [
       { name: 'default', value: Placeholder },
-    ]
-  },
-  {
-    module: '.sitecore/component-map',
-    exports: [
-      { name: 'default', value: componentMap },
     ]
   },
   {

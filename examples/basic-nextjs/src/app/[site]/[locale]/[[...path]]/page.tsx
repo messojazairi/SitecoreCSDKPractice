@@ -11,7 +11,7 @@ import Bootstrap from 'src/Bootstrap';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 
-import 'assets/main.css';
+import 'assets/main.scss';
 
 type PageProps = {
   params: Promise<{
