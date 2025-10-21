@@ -8,7 +8,6 @@ import {
   LinkField,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
-import fs from 'fs';
 
 interface Fields {
   PromoIcon: ImageField;
@@ -34,9 +33,6 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
       <div className="component-content">{children}</div>
     </div>
   );
-
-  const importMap = fs.readFileSync('./.sitecore/import-map.ts', 'utf8');
-  console.log(importMap);
 
   if (!fields) {
     return (

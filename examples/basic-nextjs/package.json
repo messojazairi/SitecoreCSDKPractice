@@ -56,8 +56,7 @@
   },
   "scripts": {
     "fix": "npm-run-all --serial lint:fix prettier",
-    "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build fix-import-map next:build",
-    "fix-import-map": "node scripts/fix-import-map.js"
+    "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build next:build",
     "lint": "eslint ./src/**/*.tsx ./src/**/*.ts",
     "lint:fix": "eslint ./src/**/*.tsx ./src/**/*.ts --fix",
     "prettier": "prettier --write \"./src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
@@ -70,7 +69,7 @@
     "sitecore-tools:generate-map": "sitecore-tools project component generate-map",
     "sitecore-tools:generate-map:watch": "sitecore-tools project component generate-map --watch",
     "sitecore-tools:build": "sitecore-tools project build",
-    "dev": "cross-env NODE_ENV=development npm-run-all --serial sitecore-tools:build --parallel next:dev sitecore-tools:generate-map:watch",
+    "dev": "cross-env NODE_ENV=development npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build --parallel next:dev sitecore-tools:generate-map:watch",
     "start": "cross-env-shell NODE_ENV=production npm-run-all --serial build next:start"
   }
 }
