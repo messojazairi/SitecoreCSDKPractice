@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import { ErrorPage } from '@sitecore-content-sdk/nextjs';
 import client from 'lib/sitecore-client';
 import scConfig from 'sitecore.config';
-import { ErrorPage } from '@sitecore-content-sdk/nextjs';
 import Layout from 'src/Layout';
 import Providers from 'src/Providers';
 
