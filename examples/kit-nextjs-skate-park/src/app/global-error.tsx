@@ -7,13 +7,7 @@ import scConfig from 'sitecore.config';
 import Providers from 'src/Providers';
 import Layout from 'src/Layout';
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function GlobalError() {
   const [page, setPage] = useState<Page | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,41 +30,22 @@ export default function GlobalError({
   }, []);
 
   if (loading) {
-    return (
-      <html>
-        <body>
-          <div>Loading...</div>
-        </body>
-      </html>
-    );
+    return <div>Loading...</div>;
   }
 
   if (page) {
     return (
-      <html>
-        <body>
-          <Providers page={page}>
-            <Layout page={page} />
-          </Providers>
-        </body>
-      </html>
+      <Providers page={page}>
+        <Layout page={page} />
+      </Providers>
     );
   }
 
   return (
-    <html>
-      <body>
-        <div style={{ padding: 10 }}>
-          <h1>500 Internal Server Error</h1>
-          <p>
-            There is a problem with the resource you are looking for, and it cannot be displayed.
-          </p>
-          <p>Error: {error.message}</p>
-          <button onClick={() => reset()}>Try again</button>
-          <br />
-          <Link href="/">Go to the Home page</Link>
-        </div>
-      </body>
-    </html>
+    <div style={{ padding: 10 }}>
+      <h1>500 Internal Server Error</h1>
+      <p>There is a problem with the resource you are looking for, and it cannot be displayed.</p>
+      <Link href="/">Go to the Home page</Link>
+    </div>
   );
 }
