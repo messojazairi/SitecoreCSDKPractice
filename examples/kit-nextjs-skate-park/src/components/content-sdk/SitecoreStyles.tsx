@@ -1,6 +1,6 @@
 'use client';
 import { LayoutServiceData, HTMLLink } from '@sitecore-content-sdk/nextjs';
-import client from 'lib/sitecore-client';
+import client from 'src/lib/sitecore-client';
 
 /**
  * Component to render `<link>` elements for Sitecore styles

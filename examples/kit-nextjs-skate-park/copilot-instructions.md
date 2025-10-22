@@ -5,14 +5,12 @@
 This is a **Sitecore Content SDK** application built with **Next.js App Router** and **TypeScript**. The project follows Sitecore best practices for XM Cloud development and leverages the latest Next.js App Router features for improved performance and developer experience.
 
 ### Key Technologies
-- **Next.js 15+ App Router** - React framework with Server Components and modern routing
+- **Next.js App Router** - React framework with Server Components and modern routing
 - **Sitecore Content SDK** - Official SDK for Sitecore XM Cloud integration
 - **TypeScript** - Type-safe JavaScript development
 - **Sitecore XM Cloud** - Headless CMS platform
 - **React Server Components** - Server-side rendering for better performance
 - **next-intl** - Internationalization support
-- **Tailwind CSS** - Utility-first CSS with PostCSS
-- **ESLint 9.x** - Code quality with flat config (no Prettier)
 
 ## Coding Standards
 
@@ -45,9 +43,8 @@ src/
 ### @sitecore-content-sdk
 - Use `SitecoreClient` for content fetching
 - Implement proper error handling with try/catch blocks
-- Use Next.js built-in caching for API responses
+- Cache API responses using React Query or SWR
 - Handle content preview vs. published content scenarios
-- Use `client.getPage()`, `client.getPreview()`, `client.getDesignLibraryData()`
 
 ```typescript
 import { SitecoreClient } from '@sitecore-content-sdk/nextjs/client';
@@ -67,18 +64,15 @@ const client = new SitecoreClient({
 
 ### Sitecore Field Components
 - Always use Sitecore field components: `<Text>`, `<RichText>`, `<Image>`
-- Validate field existence before rendering with safe destructuring
+- Validate field existence before rendering
 - Handle empty/null fields gracefully
 - Prefer Sitecore field components over manual rendering
 
 ```typescript
-// Good: Safe destructuring and field validation
-const { data: { datasource } = {} } = fields || {};
-const { title, content, backgroundImage } = datasource || {};
-
-{title?.jsonValue && <Text field={title.jsonValue} tag="h1" />}
-{content?.jsonValue && <RichText field={content.jsonValue} />}
-{backgroundImage?.jsonValue && <Image field={backgroundImage.jsonValue} />}
+// Good: Using Sitecore field components
+<Text field={fields?.title} tag="h1" />
+<RichText field={fields?.content} />
+<Image field={fields?.backgroundImage} />
 
 // Avoid: Manual field value extraction unless necessary
 ```

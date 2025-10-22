@@ -4,14 +4,13 @@
 This is a Sitecore Content SDK application built with Next.js App Router, TypeScript, and React Server Components. The project integrates with Sitecore XM Cloud for headless content management and follows modern web development best practices with the latest Next.js App Router features.
 
 ## Architecture Overview
-- **Framework**: Next.js 15+ with App Router (Server Components by default)
+- **Framework**: Next.js with App Router (Server Components by default)
 - **Language**: TypeScript with strict mode enabled
 - **CMS**: Sitecore XM Cloud (headless)
-- **SDK**: @sitecore-content-sdk/nextjs
-- **Styling**: Tailwind CSS with PostCSS
-- **State Management**: React Server Components for data fetching
+- **SDK**: @sitecore-content-sdk for API integration
+- **Styling**: CSS Modules or Tailwind CSS
+- **State Management**: React Query/SWR for server state
 - **Internationalization**: next-intl for multi-language support
-- **Code Quality**: ESLint 9.x with flat config (no Prettier)
 
 ## Development Principles
 
@@ -41,10 +40,9 @@ This is a Sitecore Content SDK application built with Next.js App Router, TypeSc
 ### Content Fetching
 - Use SitecoreClient for all API calls
 - Implement proper error handling with custom error classes
-- Use Next.js built-in caching for API responses
+- Cache responses using React Query or SWR
 - Handle preview vs. published content scenarios
 - Fetch data in Server Components when possible
-- Use `client.getPage()`, `client.getPreview()`, `client.getDesignLibraryData()`
 
 ### Component Development
 - Always use Sitecore field components (Text, RichText, Image)
@@ -57,54 +55,24 @@ This is a Sitecore Content SDK application built with Next.js App Router, TypeSc
 ```typescript
 interface ComponentProps {
   fields: {
-    data?: {
-      datasource?: {
-        title?: { jsonValue?: Field };
-        content?: { jsonValue?: Field };
-        image?: { jsonValue?: Field };
-      };
-    };
+    title: Field;
+    content: Field;
+    image: Field;
   };
 }
 
-// Always validate fields with safe destructuring
-const { data: { datasource } = {} } = fields || {};
-const { title, content, image } = datasource || {};
-
-// Safe field rendering
-{title?.jsonValue && <Text field={title.jsonValue} tag="h1" />}
-{content?.jsonValue && <RichText field={content.jsonValue} />}
-{image?.jsonValue && <Image field={image.jsonValue} />}
+// Always validate fields
+<Text field={fields?.title} tag="h1" />
+<RichText field={fields?.content} />
+<Image field={fields?.image} />
 ```
 
 ### App Router Specific Patterns
 ```typescript
-// Server Component (default) - page.tsx
-export default async function Page({ params, searchParams }: PageProps) {
-  const { site, locale, path } = await params;
-  const draft = await draftMode();
-  
-  let page;
-  if (draft.isEnabled) {
-    const editingParams = await searchParams;
-    if (isDesignLibraryPreviewData(editingParams)) {
-      page = await client.getDesignLibraryData(editingParams);
-    } else {
-      page = await client.getPreview(editingParams);
-    }
-  } else {
-    page = await client.getPage(path ?? [], { site, locale });
-  }
-  
-  if (!page) notFound();
-  
-  return (
-    <NextIntlClientProvider>
-      <Providers page={page} componentProps={componentProps}>
-        <Layout page={page} />
-      </Providers>
-    </NextIntlClientProvider>
-  );
+// Server Component (default)
+export default async function SitecorePage({ params }: { params: { path: string[] } }) {
+  const pageData = await client.getPage(params.path.join('/'));
+  return <SitecoreLayout layoutData={pageData.layout} />;
 }
 
 // Client Component when needed
@@ -193,8 +161,7 @@ export default function InteractiveComponent({ fields }: ComponentProps) {
 ### Build Process
 - Use `npm run build` for production builds
 - Enable TypeScript strict mode
-- Run `npm run lint` for code quality checks
-- No Prettier - ESLint handles all formatting
+- Run linting and type checking before commits
 - Test both Server and Client Component functionality
 
 ## Common Patterns and Examples
@@ -229,12 +196,12 @@ const client = new SitecoreClient({
   ...scConfig,
 });
 
-async function fetchPageData(path: string[], { site, locale }: { site: string; locale: string }) {
+async function fetchPageData(path: string) {
   try {
-    const response = await client.getPage(path, { site, locale });
+    const response = await client.getPage(path);
     return response?.layout;
   } catch (error) {
-    throw new SitecoreFetchError(`Failed to fetch page: ${path.join('/')}`, error);
+    throw new SitecoreFetchError(`Failed to fetch page: ${path}`, error);
   }
 }
 ```
