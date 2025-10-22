@@ -6,6 +6,7 @@
       "lib/*": ["src/lib/*"],
       "temp/*": ["src/temp/*"],
       "assets/*": ["src/assets/*"],
+      ".sitecore/*": [".sitecore/*"],
     },
     "target": "es5",
     "types": ["node"],
