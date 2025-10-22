@@ -3,11 +3,10 @@ import sites from '.sitecore/sites.json';
 import client from 'lib/sitecore-client';
 
 /**
- * API route for serving sitemap.xml
+ * API route for generating sitemap.xml
  *
- * This Next.js API route handler generates and returns the sitemap.xml content dynamically
- * based on the resolved site name. It is commonly used by search engines to discover
- * and index pages on the website.
+ * This Next.js API route handler dynamically generates and serves the sitemap XML for your site.
+ * The sitemap configuration can be managed within XM Cloud.
  */
 
 export const { GET } = createSitemapRouteHandler({
