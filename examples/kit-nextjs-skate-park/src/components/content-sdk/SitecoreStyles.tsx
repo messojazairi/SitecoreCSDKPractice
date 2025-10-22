@@ -1,3 +1,4 @@
+'use client';
 import { LayoutServiceData, HTMLLink } from '@sitecore-content-sdk/nextjs';
 import client from 'lib/sitecore-client';
 
