@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';

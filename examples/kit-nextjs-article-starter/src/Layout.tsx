@@ -3,12 +3,15 @@
  */
 import React, { type JSX } from 'react';
 import Head from 'next/head';
-import { Placeholder, Page, Field, DesignLibrary, ImageField } from '@sitecore-content-sdk/nextjs';
+import { Page, Field, ImageField } from '@sitecore-content-sdk/nextjs';
 import Scripts from 'src/Scripts';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { Figtree } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider/theme-provider.dev';
 import { VideoProvider } from './contexts/VideoContext';
+import { DesignLibraryLayout } from './DesignLibraryLayout';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
+import componentMap from '.sitecore/component-map';
+import { ThemeProvider } from 'components/theme-provider/theme-provider.dev';
 
 const heading = Figtree({
   weight: ['400', '500'],
@@ -27,7 +30,7 @@ interface LayoutProps {
   page: Page;
 }
 
-interface RouteFields {
+export interface RouteFields {
   [key: string]: unknown;
   Title?: Field;
   metadataTitle?: Field;
@@ -46,7 +49,6 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
   const { route } = layout.sitecore;
   const fields = route?.fields as RouteFields;
   const mainClassPageEditing = mode.isEditing ? 'editing-mode' : 'prod-mode';
-  const importMapDynamic = () => import('.sitecore/import-map');
   const classNamesMain = `${mainClassPageEditing} ${body.variable} ${heading.variable} main-layout`;
 
   const metaTitle =
@@ -84,22 +86,43 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
             {mode.isDesignLibrary ? (
-              <DesignLibrary loadImportMap={importMapDynamic} />
+              <DesignLibraryLayout />
             ) : (
               <>
                 <header>
                   <div id="header">
-                    {route && <Placeholder name="headless-header" rendering={route} />}
+                    {route && (
+                      <AppPlaceholder
+                        page={page}
+                        componentMap={componentMap}
+                        name="headless-header"
+                        rendering={route}
+                      />
+                    )}
                   </div>
                 </header>
                 <main>
                   <div id="content" className="antialiased">
-                    {route && <Placeholder name="headless-main" rendering={route} />}
+                    {route && (
+                      <AppPlaceholder
+                        page={page}
+                        componentMap={componentMap}
+                        name="headless-main"
+                        rendering={route}
+                      />
+                    )}
                   </div>
                 </main>
                 <footer>
                   <div id="footer">
-                    {route && <Placeholder name="headless-footer" rendering={route} />}
+                    {route && (
+                      <AppPlaceholder
+                        page={page}
+                        componentMap={componentMap}
+                        name="headless-footer"
+                        rendering={route}
+                      />
+                    )}
                   </div>
                 </footer>
               </>

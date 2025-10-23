@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { VideoComponentFields, VideoComponentProps } from './video-props';

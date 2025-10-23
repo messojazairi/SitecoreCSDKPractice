@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Text, Link } from '@sitecore-content-sdk/nextjs';

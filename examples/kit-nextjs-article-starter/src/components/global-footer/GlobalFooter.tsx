@@ -1,15 +1,16 @@
 import type React from 'react';
-import { Placeholder, Text, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { Text } from '@sitecore-content-sdk/nextjs';
 import { GlobalFooterProps } from '@/components/global-footer/global-footer.props';
 import { Default as FooterCallout } from '@/components/footer-navigation-callout/FooterNavigationCallout.dev';
 import { Default as Logo } from '@/components/logo/Logo.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { EditableImageButton } from 'components/button-component/ButtonComponent';
 import { cn } from 'lib/utils';
+import Placeholder from 'components/content-sdk/Placeholder';
+import componentMap from '.sitecore/component-map';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
-  const { fields, rendering } = props;
-  const { page } = useSitecore();
+  const { fields, rendering, page } = props;
   const isPageEditing = page.mode.isEditing;
 
   const {
@@ -33,7 +34,12 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
           </div>
           {/* Main footer columns */}
           <div className="@md:grid-cols-3 @md:col-span-2 @lg:col-span-6 grid grid-cols-1 gap-8">
-            <Placeholder name="container-footer-column" rendering={rendering} />
+            <Placeholder
+              name="container-footer-column"
+              rendering={rendering}
+              page={page}
+              componentMap={componentMap}
+            />
           </div>
           {/* Callout section */}
           <div className="@md:col-span-2 @lg:col-span-4">

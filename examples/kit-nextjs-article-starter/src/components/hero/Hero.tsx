@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Text, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { cva } from 'class-variance-authority';

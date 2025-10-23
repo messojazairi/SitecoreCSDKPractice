@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useId } from 'react';
 import {
   Accordion,

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { Text, RichText, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';

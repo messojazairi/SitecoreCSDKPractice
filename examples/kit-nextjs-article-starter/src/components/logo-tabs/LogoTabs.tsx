@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { Text, Image, Field, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { NoDataFallback } from '@/utils/NoDataFallback';
