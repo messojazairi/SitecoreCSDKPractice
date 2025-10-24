@@ -1,4 +1,3 @@
-import { Placeholder, useSitecore } from '@sitecore-content-sdk/nextjs';
 import {
   getContainerPlaceholderProps,
   isContainerPlaceholderEmpty,
@@ -7,6 +6,8 @@ import { cn } from '@/lib/utils';
 import { ComponentProps } from '@/lib/component-props';
 
 import type { JSX } from 'react';
+import componentMap from '.sitecore/component-map';
+import Placeholder from 'components/content-sdk/Placeholder';
 
 export type Container25252525Props = ComponentProps & {
   col1?: JSX.Element;
@@ -17,9 +18,7 @@ export type Container25252525Props = ComponentProps & {
 };
 
 export const Default: React.FC<Container25252525Props> = (props) => {
-  const { rendering, col1, col2, col3, col4 } = props;
-
-  const { page } = useSitecore();
+  const { rendering, col1, col2, col3, col4, page } = props;
 
   const isPageEditing = page.mode.isEditing;
 
@@ -44,21 +43,21 @@ export const Default: React.FC<Container25252525Props> = (props) => {
     <section
       className={cn('container--25252525', 'mt-10', {
         'mt-0': excludeTopMargin,
-        [props.params.styles]: props?.params?.styles,
+        [props.params.styles as any]: props?.params?.styles,
       })}
     >
       <div className="w-full mx-auto max-w-[1760px] flex flex-wrap items-stretch">
         <FlexItem>
-          <Placeholder name={col1Placeholder.dynamicKey} rendering={rendering} />
+          <Placeholder name={col1Placeholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap}/>
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col2Placeholder.dynamicKey} rendering={rendering} />
+          <Placeholder name={col2Placeholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col3Placeholder.dynamicKey} rendering={rendering} />
+          <Placeholder name={col3Placeholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col4Placeholder.dynamicKey} rendering={rendering} />
+          <Placeholder name={col4Placeholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
       </div>
     </section>

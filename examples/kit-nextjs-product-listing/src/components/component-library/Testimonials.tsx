@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Carousel,
   CarouselContent,
@@ -254,7 +256,7 @@ const TestimonialCard = (props: TestimonialCardProps) => {
   }
 };
 
-export const Default = (props: TestimonialsProps): JSX.Element => {
+export const Default: (props: TestimonialsProps) => JSX.Element = (props) => {
   const datasource = useMemo(() => props.fields.data?.datasource, [props.fields.data?.datasource]);
 
   if (!props.fields) {

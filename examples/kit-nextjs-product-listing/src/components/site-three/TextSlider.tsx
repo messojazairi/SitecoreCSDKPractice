@@ -1,17 +1,20 @@
-import { Text as ContentSdkText, Field, useSitecore } from '@sitecore-content-sdk/nextjs';
+'use client';
+
+import { Text as ContentSdkText, Field } from '@sitecore-content-sdk/nextjs';
+import { ComponentProps } from 'lib/component-props';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface Fields {
   Text: Field<string>;
 }
 
-type TextSliderProps = {
+type TextSliderProps = ComponentProps & {
   params: { [key: string]: string };
   fields: Fields;
 };
 
 export const Default = (props: TextSliderProps) => {
-  const { page } = useSitecore();
+  const page = props.page;
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const [repeatCount, setRepeatCount] = useState(1);

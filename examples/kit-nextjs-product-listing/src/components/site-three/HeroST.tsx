@@ -1,3 +1,5 @@
+'use client';
+
 import { useContainerOffsets } from '@/hooks/useContainerOffsets';
 import {
   Text as ContentSdkText,

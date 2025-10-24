@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight } from 'lucide-react';
 import {
   NextImage as ContentSdkImage,

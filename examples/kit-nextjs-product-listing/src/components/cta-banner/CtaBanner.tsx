@@ -1,3 +1,5 @@
+'use client';
+
 import { cva } from 'class-variance-authority';
 import { Text, Link, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { CtaBannerProps } from './cta-banner.props';

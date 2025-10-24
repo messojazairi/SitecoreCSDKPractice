@@ -26,7 +26,7 @@ export const AccordionBlockOneColumnTitleLeft: React.FC<AccordionProps> = (props
         className={cn(
           '@container @md:py-16 @lg:py-20 bg-background text-foreground border-b-2 border-t-2 py-10 [.border-b-2+&]:border-t-0',
           {
-            [props.params.styles]: props?.params?.styles,
+            [props.params.styles as any]: props?.params?.styles,
           }
         )}
         data-class-change

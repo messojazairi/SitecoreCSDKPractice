@@ -26,14 +26,18 @@
       "types/*": [
         "src/types/*"
       ],
+      ".sitecore/*": [
+        ".sitecore/*"
+      ],
       "react": [
         "node_modules/react"
       ],
       "@/*": [
         "./src/*"
-      ]
+      ],
+      "next/*": ["node_modules/next/*"]
     },
-    "target": "es5",
+    "target": "ES2017",
     "types": [
       "node"
     ],
@@ -61,12 +65,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "incremental": true,
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": false,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -4,7 +4,7 @@ import { Link as ContentSdkLink, LinkField } from '@sitecore-content-sdk/nextjs'
 import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 
 const DICTIONARY_KEYS = {
   GO_TO_CART_LABEL: 'Go_To_Cart',
@@ -13,7 +13,7 @@ const DICTIONARY_KEYS = {
 };
 
 export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
-  const { t } = useI18n();
+  const t = useTranslations();
   const { isVisible, setIsVisible, ref } = useToggleWithClickOutside<HTMLDivElement>(false);
 
   return (

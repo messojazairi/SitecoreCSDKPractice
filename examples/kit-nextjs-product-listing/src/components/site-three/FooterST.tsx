@@ -7,9 +7,10 @@ import {
   Field,
   RichTextField,
   LinkField,
-  Placeholder,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import componentMap from '.sitecore/component-map';
+import Placeholder from 'components/content-sdk/Placeholder';
 
 interface Fields {
   Title: Field<string>;
@@ -39,12 +40,16 @@ export const Default = (props: FooterSTProps) => {
           <Placeholder
             name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
             rendering={props.rendering}
+            page={props.page}
+            componentMap={componentMap}
           />
         </div>
         <div className="max-w-5xl mx-auto font-(family-name:--font-accent) font-medium">
           <Placeholder
             name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
             rendering={props.rendering}
+            page={props.page}
+            componentMap={componentMap}
           />
         </div>
       </div>
@@ -88,12 +93,16 @@ export const LogoLeft = (props: FooterSTProps) => {
               <Placeholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
               <Placeholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
           </div>
@@ -138,12 +147,16 @@ export const LogoRight = (props: FooterSTProps) => {
               <Placeholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
               <Placeholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
           </div>
@@ -187,12 +200,16 @@ export const Centered = (props: FooterSTProps) => {
               <Placeholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
               <Placeholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </div>
           </div>

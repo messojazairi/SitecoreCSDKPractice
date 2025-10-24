@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'shadcn/components/ui/button';
 import {
   Link as ContentSdkLink,

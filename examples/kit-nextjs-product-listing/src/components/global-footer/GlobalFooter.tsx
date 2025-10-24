@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { GlobalFooterProps } from './global-footer.props';
@@ -6,7 +8,7 @@ import { GlobalFooterBlackCompact } from './GlobalFooterBlackCompact.dev';
 import { GlobalFooterBlackLarge } from './GlobalFooterBlackLarge.dev';
 import { GlobalFooterBlueCentered } from './GlobalFooterBlueCentered.dev';
 import { GlobalFooterBlueCompact } from './GlobalFooterBlueCompact.dev';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 // Data source checks are done in the child components
 
@@ -14,7 +16,7 @@ import { dictionaryKeys } from '@/variables/dictionary';
 export const Default: React.FC<GlobalFooterProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     FOOTER_EmailSubmitLabel: t(dictionaryKeys.FOOTER_EmailSubmitLabel),
     FOOTER_EmailPlaceholder: t(dictionaryKeys.FOOTER_EmailPlaceholder),
@@ -30,7 +32,7 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
 export const BlackCompactVariant: React.FC<GlobalFooterProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     FOOTER_EmailSubmitLabel: t(dictionaryKeys.FOOTER_EmailSubmitLabel),
     FOOTER_EmailPlaceholder: t(dictionaryKeys.FOOTER_EmailPlaceholder),
@@ -45,7 +47,7 @@ export const BlackCompactVariant: React.FC<GlobalFooterProps> = (props) => {
 export const BlackLargeVariant: React.FC<GlobalFooterProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     FOOTER_EmailSubmitLabel: t(dictionaryKeys.FOOTER_EmailSubmitLabel),
     FOOTER_EmailPlaceholder: t(dictionaryKeys.FOOTER_EmailPlaceholder),
@@ -60,7 +62,7 @@ export const BlackLargeVariant: React.FC<GlobalFooterProps> = (props) => {
 export const BlueCenteredVariant: React.FC<GlobalFooterProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     FOOTER_EmailSubmitLabel: t(dictionaryKeys.FOOTER_EmailSubmitLabel),
     FOOTER_EmailPlaceholder: t(dictionaryKeys.FOOTER_EmailPlaceholder),
@@ -75,7 +77,7 @@ export const BlueCenteredVariant: React.FC<GlobalFooterProps> = (props) => {
 export const BlueCompactVariant: React.FC<GlobalFooterProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     FOOTER_EmailSubmitLabel: t(dictionaryKeys.FOOTER_EmailSubmitLabel),
     FOOTER_EmailPlaceholder: t(dictionaryKeys.FOOTER_EmailPlaceholder),

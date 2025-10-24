@@ -4,7 +4,7 @@ import { Link as ContentSdkLink, LinkField } from '@sitecore-content-sdk/nextjs'
 import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 
 const DICTIONARY_KEYS = {
   SEARCH_GO_LABEL: 'Go',
@@ -13,7 +13,7 @@ const DICTIONARY_KEYS = {
 };
 
 export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
-  const { t } = useI18n();
+  const t = useTranslations();
   const { isVisible, setIsVisible, ref } = useToggleWithClickOutside<HTMLDivElement>(false);
   const [searchTerm, setSearchTerm] = useState('');
 

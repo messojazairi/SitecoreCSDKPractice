@@ -1,5 +1,3 @@
-'use client';
-
 import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,12 +6,13 @@ import {
   NextImage as ContentSdkImage,
   LinkField,
   ImageField,
-  Placeholder,
 } from '@sitecore-content-sdk/nextjs';
 import Link from 'next/link';
 import { MiniCart } from './non-sitecore/MiniCart';
 import { SearchBox } from './non-sitecore/SearchBox';
 import { ComponentProps } from 'lib/component-props';
+import componentMap from '.sitecore/component-map';
+import Placeholder from 'components/content-sdk/Placeholder';
 
 interface Fields {
   Logo: ImageField;
@@ -61,6 +60,8 @@ export const Default = (props: HeaderSTProps) => {
               <Placeholder
                 name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
                 rendering={props.rendering}
+                page={props.page}
+                componentMap={componentMap}
               />
             </ul>
             <hr className="lg:hidden w-full border-border" />

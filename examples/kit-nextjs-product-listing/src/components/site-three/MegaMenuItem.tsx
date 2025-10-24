@@ -1,19 +1,18 @@
-'use client';
-
 import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import {
   Text as ContentSdkText,
   Link as ContentSdkLink,
   NextImage as ContentSdkImage,
   LinkField,
-  Placeholder,
   Field,
   ImageField,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ArrowLeft } from 'lucide-react';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import componentMap from '.sitecore/component-map';
+import Placeholder from 'components/content-sdk/Placeholder';
 
 interface Fields {
   Title: Field<string>;
@@ -39,7 +38,7 @@ const DICTIONARY_KEYS = {
 };
 
 export const Default = (props: MegaMenuItemProps) => {
-  const { t } = useI18n();
+  const t = useTranslations();
 
   const {
     isVisible: isSubmenuVisible,
@@ -91,12 +90,16 @@ export const Default = (props: MegaMenuItemProps) => {
                 <Placeholder
                   name={`mega-menu-item-primary-links-${props.params?.DynamicPlaceholderId}`}
                   rendering={props.rendering}
+                  page={props.page}
+                  componentMap={componentMap}
                 />
               </div>
               <div className="flex flex-col gap-6 pb-8">
                 <Placeholder
                   name={`mega-menu-item-secondary-links-${props.params?.DynamicPlaceholderId}`}
                   rendering={props.rendering}
+                  page={props.page}
+                  componentMap={componentMap}
                 />
               </div>
 
