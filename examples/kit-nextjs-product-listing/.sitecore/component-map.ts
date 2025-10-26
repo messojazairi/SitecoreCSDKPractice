@@ -1,4 +1,4 @@
-﻿// Below are built-in components that are available in the app, it's recommended to keep them as is
+// Below are built-in components that are available in the app, it's recommended to keep them as is
 import { BYOCWrapper, NextjsContentSdkComponent, FEaaSWrapper } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
 // end of built-in components
@@ -46,6 +46,8 @@ import * as ProductPageHeader from 'src/components/site-three/ProductPageHeader'
 import * as ProductComparison from 'src/components/site-three/ProductComparison';
 import * as PageHeaderST from 'src/components/site-three/PageHeaderST';
 import * as MultiPromo from 'src/components/site-three/MultiPromo';
+import * as MobileMenuWrapper from 'src/components/site-three/MobileMenuWrapper';
+import * as MegaMenuItemWrapper from 'src/components/site-three/MegaMenuItemWrapper';
 import * as MegaMenuItem from 'src/components/site-three/MegaMenuItem';
 import * as ImageCarousel from 'src/components/site-three/ImageCarousel';
 import * as ImageBanner from 'src/components/site-three/ImageBanner';
@@ -103,6 +105,7 @@ import * as LogoItem from 'src/components/logo-tabs/LogoItem';
 import * as logotabsprops from 'src/components/logo-tabs/logo-tabs.props';
 import * as logoprops from 'src/components/logo/logo.props';
 import * as Logodev from 'src/components/logo/Logo.dev';
+import * as utils from 'src/components/location-search/utils';
 import * as LocationSearchTitleZipCentereddev from 'src/components/location-search/LocationSearchTitleZipCentered.dev';
 import * as LocationSearchMapTopAllCentereddev from 'src/components/location-search/LocationSearchMapTopAllCentered.dev';
 import * as LocationSearchMapRightTitleZipCentereddev from 'src/components/location-search/LocationSearchMapRightTitleZipCentered.dev';
@@ -210,11 +213,11 @@ import * as ProductsSection from 'src/components/component-library/ProductsSecti
 import * as PlaceholderTabs from 'src/components/component-library/PlaceholderTabs';
 import * as NewsletterSection from 'src/components/component-library/NewsletterSection';
 import * as logocloud from 'src/components/component-library/logo-cloud';
-import * as CLHero from 'src/components/component-library/Hero';
 import * as Header from 'src/components/component-library/Header';
 import * as FeaturesSection from 'src/components/component-library/FeaturesSection';
 import * as FAQ from 'src/components/component-library/FAQ';
 import * as ContactSection from 'src/components/component-library/ContactSection';
+import * as CLHero from 'src/components/component-library/CLHero';
 import * as CallToAction from 'src/components/component-library/CallToAction';
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
@@ -253,7 +256,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TestimonialCarousel', { ...{ ...TestimonialCarousel }, componentType: 'client' }],
   ['testimonial-carousel', { ...testimonialcarouselprops }],
   ['Title', { ...{ ...Title }, componentType: 'client' }],
-  ['RowSplitter', RowSplitter],
+  ['RowSplitter', { ...RowSplitter }],
   ['RichText', { ...RichText }],
   ['Promo', { ...Promo }],
   ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
@@ -279,6 +282,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ProductComparison', { ...{ ...ProductComparison }, componentType: 'client' }],
   ['PageHeaderST', { ...PageHeaderST }],
   ['MultiPromo', { ...{ ...MultiPromo }, componentType: 'client' }],
+  ['MobileMenuWrapper', { ...{ ...MobileMenuWrapper }, componentType: 'client' }],
+  ['MegaMenuItemWrapper', { ...{ ...MegaMenuItemWrapper }, componentType: 'client' }],
   ['MegaMenuItem', { ...MegaMenuItem }],
   ['ImageCarousel', { ...{ ...ImageCarousel }, componentType: 'client' }],
   ['ImageBanner', { ...{ ...ImageBanner }, componentType: 'client' }],
@@ -334,6 +339,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['logo-tabs', { ...logotabsprops }],
   ['logo', { ...logoprops }],
   ['Logo', { ...Logodev }],
+  ['utils', { ...utils }],
   ['LocationSearchTitleZipCentered', { ...LocationSearchTitleZipCentereddev }],
   ['LocationSearchMapTopAllCentered', { ...LocationSearchMapTopAllCentereddev }],
   ['LocationSearchMapRightTitleZipCentered', { ...LocationSearchMapRightTitleZipCentereddev }],
@@ -355,7 +361,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageWrapper', { ...ImageWrapperdev }],
   ['ImageBlock', { ...ImageBlock }],
   ['image', { ...imageprops }],
-  ['image-optimization', { ...{ ...imageoptimizationcontext }, componentType: 'client' }],
+  ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...{ ...Icon }, componentType: 'client' }],
   ['YoutubeIcon', { ...YoutubeIcondev }],
   ['TwitterIcon', { ...TwitterIcondev }],
@@ -436,11 +442,11 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['PlaceholderTabs', { ...PlaceholderTabs }],
   ['NewsletterSection', { ...NewsletterSection }],
   ['logo-cloud', { ...{ ...logocloud }, componentType: 'client' }],
-  ['CLHero', { ...{ ...CLHero }, componentType: 'client' }],
   ['Header', { ...{ ...Header }, componentType: 'client' }],
   ['FeaturesSection', { ...{ ...FeaturesSection }, componentType: 'client' }],
   ['FAQ', { ...{ ...FAQ }, componentType: 'client' }],
   ['ContactSection', { ...{ ...ContactSection }, componentType: 'client' }],
+  ['CLHero', { ...{ ...CLHero }, componentType: 'client' }],
   ['CallToAction', { ...{ ...CallToAction }, componentType: 'client' }],
   ['Carousel', { ...{ ...Carousel }, componentType: 'client' }],
   ['card-spotlight', { ...cardspotlightdev }],

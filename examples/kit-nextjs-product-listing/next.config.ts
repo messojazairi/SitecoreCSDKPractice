@@ -91,6 +91,18 @@ const nextConfig: NextConfig = {
         buffer: false,
       };
 
+      // Force single React instance to prevent duplicate React errors
+      // Use path.resolve to get absolute path to the main react package
+      const path = require('path');
+      const reactPath = path.dirname(require.resolve('react/package.json'));
+      const reactDomPath = path.dirname(require.resolve('react-dom/package.json'));
+      
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'react': reactPath,
+        'react-dom': reactDomPath,
+      };
+
       // Add a loader to strip out getServerSideProps and getStaticProps from components
       config.module.rules.unshift({
         test: /src[\\/]components[\\/].*\.tsx$/,

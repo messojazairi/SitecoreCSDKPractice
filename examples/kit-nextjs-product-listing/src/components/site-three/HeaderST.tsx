@@ -1,4 +1,3 @@
-import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,6 +12,7 @@ import { SearchBox } from './non-sitecore/SearchBox';
 import { ComponentProps } from 'lib/component-props';
 import componentMap from '.sitecore/component-map';
 import Placeholder from 'components/content-sdk/Placeholder';
+import { MobileMenuWrapper } from './MobileMenuWrapper';
 
 interface Fields {
   Logo: ImageField;
@@ -27,9 +27,6 @@ type HeaderSTProps = ComponentProps & {
 };
 
 export const Default = (props: HeaderSTProps) => {
-  const { isVisible: isMobileMenuVisible, setIsVisible: setIsMobileMenuVisible } =
-    useToggleWithClickOutside<HTMLDivElement>(false);
-
   return (
     <section className={`${props.params?.styles}`} data-class-change>
       <div className="flex justify-between items-start">
@@ -45,17 +42,7 @@ export const Default = (props: HeaderSTProps) => {
           className="relative flex [.partial-editing-mode_&]:flex-col-reverse justify-between items-start gap-10 grow max-w-7xl lg:px-4 bg-background"
           role="navigation"
         >
-          <div
-            className={`${
-              isMobileMenuVisible
-                ? 'opacity-100 pointer-events-auto'
-                : 'opacity-0 pointer-events-none'
-            } lg:!opacity-100 lg:!pointer-events-auto
-              fixed lg:static top-14 left-0 right-0
-              flex flex-col lg:flex-row items-center justify-center
-              h-[calc(100vh-3.5rem)] lg:h-auto p-4 lg:p-0
-              overflow-auto bg-background transition-all duration-300 ease-in-out`}
-          >
+          <MobileMenuWrapper>
             <ul className="flex flex-col my-auto lg:my-0 lg:flex-row lg:[.partial-editing-mode_&]:!flex-col text-center lg:text-left bg-background">
               <Placeholder
                 name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
@@ -74,7 +61,7 @@ export const Default = (props: HeaderSTProps) => {
                 />
               </li>
             </ul>
-          </div>
+          </MobileMenuWrapper>
           <div className="basis-full lg:basis-auto lg:ml-auto">
             <ul className="flex">
               <li className="hidden lg:block">
@@ -95,28 +82,9 @@ export const Default = (props: HeaderSTProps) => {
                   />
                 )}
               </li>
-              <li
-                className="lg:hidden flex justify-center items-center p-4 cursor-pointer"
-                onClick={() => setIsMobileMenuVisible(!isMobileMenuVisible)}
-              >
-                <span className="relative w-5 h-4">
-                  <span
-                    className={`absolute left-0 top-0 w-full h-0.5 bg-current origin-top-right transition-transform duration-300 ease-in-out ${
-                      isMobileMenuVisible ? '-rotate-47' : ''
-                    }`}
-                  />
-                  <span
-                    className={`absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-current transition-all duration-300 ease-in-out ${
-                      isMobileMenuVisible ? 'opacity-0' : ''
-                    }`}
-                  />
-                  <span
-                    className={`absolute left-0 bottom-0 w-full h-0.5 bg-current origin-bottom-right transition-transform duration-300 ease-in-out ${
-                      isMobileMenuVisible ? 'rotate-47' : ''
-                    }`}
-                  />
-                </span>
-              </li>
+              <MobileMenuWrapper>
+                <></>
+              </MobileMenuWrapper>
               <li>
                 {props.params.showMiniCart ? (
                   <MiniCart cartLink={props.fields?.CartLink} />
