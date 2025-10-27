@@ -42,26 +42,14 @@ export const Default = (props: HeaderSTProps) => {
           className="relative flex [.partial-editing-mode_&]:flex-col-reverse justify-between items-start gap-10 grow max-w-7xl lg:px-4 bg-background"
           role="navigation"
         >
-          <MobileMenuWrapper>
-            <ul className="flex flex-col my-auto lg:my-0 lg:flex-row lg:[.partial-editing-mode_&]:!flex-col text-center lg:text-left bg-background">
-              <Placeholder
-                name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
-                rendering={props.rendering}
-                page={props.page}
-                componentMap={componentMap}
-              />
-            </ul>
-            <hr className="lg:hidden w-full border-border" />
-            <ul className="lg:hidden">
-              <li>
-                <ContentSdkLink
-                  field={props.fields?.SupportLink}
-                  prefetch={false}
-                  className="block p-4 font-(family-name:--font-accent) font-medium"
-                />
-              </li>
-            </ul>
-          </MobileMenuWrapper>
+          <ul className="hidden lg:flex flex-row lg:[.partial-editing-mode_&]:!flex-col text-left bg-background">
+            <Placeholder
+              name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
+              rendering={props.rendering}
+              page={props.page}
+              componentMap={componentMap}
+            />
+          </ul>
           <div className="basis-full lg:basis-auto lg:ml-auto">
             <ul className="flex">
               <li className="hidden lg:block">
@@ -83,7 +71,30 @@ export const Default = (props: HeaderSTProps) => {
                 )}
               </li>
               <MobileMenuWrapper>
-                <></>
+                <div className="lg:hidden flex flex-col w-full h-full">
+                  <div className="flex-1 flex items-center justify-center">
+                    <ul className="flex flex-col text-center bg-background">
+                      <Placeholder
+                        name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
+                        rendering={props.rendering}
+                        page={props.page}
+                        componentMap={componentMap}
+                      />
+                    </ul>
+                  </div>
+                  <div className="w-full">
+                    <hr className="w-full border-border" />
+                    <ul className="text-center">
+                      <li>
+                        <ContentSdkLink
+                          field={props.fields?.SupportLink}
+                          prefetch={false}
+                          className="block p-4 font-(family-name:--font-accent) font-medium"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </MobileMenuWrapper>
               <li>
                 {props.params.showMiniCart ? (
