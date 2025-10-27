@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { SubmissionFormProps } from './submission-form.props';

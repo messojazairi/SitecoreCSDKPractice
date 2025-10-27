@@ -1,5 +1,6 @@
+'use client'
 import React, { JSX } from 'react';
-import { Placeholder } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import { ComponentProps } from 'lib/component-props';
 
 /**
@@ -44,7 +45,7 @@ export const Default = ({ params, rendering }: ColumnSplitterProps): JSX.Element
         return (
           <div key={index} className={columnClassNames}>
             <div className="row">
-              <Placeholder name={`column-${columnNum}-{*}`} rendering={rendering} />
+              <AppPlaceholder name={`column-${columnNum}-{*}`} rendering={rendering} />
             </div>
           </div>
         );

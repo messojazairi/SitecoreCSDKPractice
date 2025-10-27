@@ -1,3 +1,4 @@
+'use client';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { PromoAnimatedProps } from './promo-animated.props';
 import { PromoAnimatedDefault } from './PromoAnimatedDefault.dev';

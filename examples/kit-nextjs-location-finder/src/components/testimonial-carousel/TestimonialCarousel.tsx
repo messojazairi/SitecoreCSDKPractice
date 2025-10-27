@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef, useCallback, MouseEvent } from 'react';
 import { debounce } from 'radash';
 import {

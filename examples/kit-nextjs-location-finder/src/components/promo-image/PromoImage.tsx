@@ -1,3 +1,4 @@
+'use client';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { PromoImageProps } from './promo-image.props';
 import { PromoImageDefault } from './PromoImageDefault.dev';

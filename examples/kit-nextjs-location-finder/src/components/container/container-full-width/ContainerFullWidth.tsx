@@ -1,4 +1,6 @@
-import { Placeholder, useSitecore } from '@sitecore-content-sdk/nextjs';
+'use client'
+import { useSitecore } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import { ContainerFullWidthProps } from '@/components/container/container-full-width/container-full-width.props';
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { cn } from '@/lib/utils';
@@ -28,12 +30,12 @@ export const Default: React.FC<ContainerFullWidthProps> = (props) => {
       className={cn('@container container--full-width group', {
         'mt-0': excludeTopMargin,
         'mt-4': !excludeTopMargin,
-        [props.params.styles]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <Flex className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
-          <Placeholder name={PLACEHOLDER_NAME} rendering={rendering} />
+          <AppPlaceholder name={PLACEHOLDER_NAME} rendering={rendering} />
         </FlexItem>
       </Flex>
     </section>

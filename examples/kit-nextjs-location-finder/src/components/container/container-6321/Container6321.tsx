@@ -1,4 +1,6 @@
-import { Placeholder, useSitecore } from '@sitecore-content-sdk/nextjs';
+'use client'
+import { useSitecore } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import {
   getContainerPlaceholderProps,
   isContainerPlaceholderEmpty,
@@ -52,27 +54,27 @@ export const Default: React.FC<Container6321Props> = (props) => {
     <section
       className={cn('container--6321', 'mt-10 bg-[#f5f5f5]', {
         'mt-0': excludeTopMargin,
-        [props.params.styles]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <div className="w-full mx-auto max-w-[1760px] flex flex-wrap">
         <FlexItem>
-          <Placeholder name={col1Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col1Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col2Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col2Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col3Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col3Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col4Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col4Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col5Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col5Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem>
-          <Placeholder name={col6Placeholder.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={col6Placeholder.dynamicKey} rendering={rendering} />
         </FlexItem>
       </div>
     </section>

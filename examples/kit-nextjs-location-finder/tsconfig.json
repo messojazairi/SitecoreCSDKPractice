@@ -20,6 +20,12 @@
       "assets/*": [
         "src/assets/*"
       ],
+      ".sitecore/*": [
+        ".sitecore/*"
+      ],
+      "next/*": [
+        "node_modules/next/*"
+      ],
       "enumerations/*": [
         "src/enumerations/*"
       ],
@@ -34,9 +40,9 @@
       ],
       "@/*": [
         "./src/*"
-      ],
+      ]
     },
-    "target": "es5",
+    "target": "ES2017",
     "types": [
       "node"
     ],
@@ -48,28 +54,29 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "strictFunctionTypes": false,
-    "downlevelIteration": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "strictFunctionTypes": false,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "incremental": true,
-    "forceConsistentCasingInFileNames": false
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next\\dev/types/**/*.ts",
+    ".next\\dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,3 +1,4 @@
+'use client';
 import { cva } from 'class-variance-authority';
 import { Text, Link, useSitecore, Field, LinkField } from '@sitecore-content-sdk/nextjs';
 import { Button } from '@/components/ui/button';
