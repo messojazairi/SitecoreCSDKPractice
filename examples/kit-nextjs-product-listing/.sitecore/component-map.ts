@@ -41,6 +41,7 @@ import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.d
 import * as slidecarouselprops from 'src/components/slide-carousel/slide-carousel.props';
 import * as Video from 'src/components/site-three/Video';
 import * as TextSlider from 'src/components/site-three/TextSlider';
+import * as sitethreedictionary from 'src/components/site-three/site-three.dictionary';
 import * as SignupBanner from 'src/components/site-three/SignupBanner';
 import * as ProductPageHeader from 'src/components/site-three/ProductPageHeader';
 import * as ProductComparison from 'src/components/site-three/ProductComparison';
@@ -277,6 +278,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['slide-carousel', { ...slidecarouselprops }],
   ['Video', { ...Video }],
   ['TextSlider', { ...{ ...TextSlider }, componentType: 'client' }],
+  ['site-three', { ...sitethreedictionary }],
   ['SignupBanner', { ...SignupBanner }],
   ['ProductPageHeader', { ...{ ...ProductPageHeader }, componentType: 'client' }],
   ['ProductComparison', { ...{ ...ProductComparison }, componentType: 'client' }],
@@ -290,8 +292,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['HeroST', { ...{ ...HeroST }, componentType: 'client' }],
   ['HeaderST', { ...HeaderST }],
   ['FooterST', { ...FooterST }],
-  ['FeatureBanner', { ...FeatureBanner }],
-  ['AccordionBlock', { ...AccordionBlock }],
+  ['FeatureBanner', { ...{ ...FeatureBanner }, componentType: 'client' }],
+  ['AccordionBlock', { ...{ ...AccordionBlock }, componentType: 'client' }],
   ['SearchBox', { ...{ ...SearchBox }, componentType: 'client' }],
   ['MiniCart', { ...{ ...MiniCart }, componentType: 'client' }],
   ['SiteMetadata', { ...SiteMetadata }],

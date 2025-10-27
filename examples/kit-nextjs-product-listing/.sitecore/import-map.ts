@@ -3,7 +3,7 @@
 import { combineImportEntries, defaultImportEntries } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { useState, useEffect, useRef, useCallback, useMemo, useId, useContext, createContext } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo, createContext, useContext, useId } from 'react';
 import React_c6c9d5c02e9182eb22f40bc4cf21fc656783d24a from 'react';
 import * as React from 'react';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -102,11 +102,13 @@ import { SubmissionFormCentered } from 'src/components/submission-form/Submissio
 import { VideoBase } from 'components/video/Video';
 import { Carousel as Carousel_ce3eef99455ea7c2afccc224600715d860faabdd, CarouselContent as CarouselContent_ce3eef99455ea7c2afccc224600715d860faabdd, CarouselItem as CarouselItem_ce3eef99455ea7c2afccc224600715d860faabdd, CarouselNext as CarouselNext_ce3eef99455ea7c2afccc224600715d860faabdd, CarouselPrevious as CarouselPrevious_ce3eef99455ea7c2afccc224600715d860faabdd } from 'shadcd/components/ui/carousel';
 import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
+import { MegaMenuToggle, MegaMenuContent, MegaMenuBackButton } from 'src/components/site-three/MegaMenuItemWrapper';
 import { useContainerOffsets } from '@/hooks/useContainerOffsets';
 import { faShoppingCart, faStar, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MiniCart } from 'src/components/site-three/non-sitecore/MiniCart';
 import { SearchBox } from 'src/components/site-three/non-sitecore/SearchBox';
+import { MobileMenuWrapper } from 'src/components/site-three/MobileMenuWrapper';
 import { faFacebook, faInstagram, faLinkedinIn, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from 'shadcd/components/ui/accordion';
 import Head from 'next/head';
@@ -236,9 +238,9 @@ const importMap = [
       { name: 'useRef', value: useRef },
       { name: 'useCallback', value: useCallback },
       { name: 'useMemo', value: useMemo },
-      { name: 'useId', value: useId },
-      { name: 'useContext', value: useContext },
       { name: 'createContext', value: createContext },
+      { name: 'useContext', value: useContext },
+      { name: 'useId', value: useId },
       { name: 'default', value: React_c6c9d5c02e9182eb22f40bc4cf21fc656783d24a },
       { name: '*', value: React },
     ]
@@ -899,6 +901,14 @@ const importMap = [
     ]
   },
   {
+    module: 'src/components/site-three/MegaMenuItemWrapper',
+    exports: [
+      { name: 'MegaMenuToggle', value: MegaMenuToggle },
+      { name: 'MegaMenuContent', value: MegaMenuContent },
+      { name: 'MegaMenuBackButton', value: MegaMenuBackButton },
+    ]
+  },
+  {
     module: '@/hooks/useContainerOffsets',
     exports: [
       { name: 'useContainerOffsets', value: useContainerOffsets },
@@ -928,6 +938,12 @@ const importMap = [
     module: 'src/components/site-three/non-sitecore/SearchBox',
     exports: [
       { name: 'SearchBox', value: SearchBox },
+    ]
+  },
+  {
+    module: 'src/components/site-three/MobileMenuWrapper',
+    exports: [
+      { name: 'MobileMenuWrapper', value: MobileMenuWrapper },
     ]
   },
   {

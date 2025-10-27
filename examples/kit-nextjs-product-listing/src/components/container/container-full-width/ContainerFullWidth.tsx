@@ -27,7 +27,7 @@ export const Default: React.FC<ContainerFullWidthProps> = (props) => {
       className={cn('@container container--full-width group', {
         'mt-0': excludeTopMargin,
         'mt-4': !excludeTopMargin,
-        [props.params.styles as any]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <Flex className="group-[.is-inset]:p-0">

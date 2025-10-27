@@ -30,7 +30,7 @@ export const Default: React.FC<Container6040Props> = (props) => {
     <section
       className={cn('container--6040', 'mt-4', {
         'mt-0': excludeTopMargin,
-        [props.params.styles as any]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <Flex wrap="nowrap">

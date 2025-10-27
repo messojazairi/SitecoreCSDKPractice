@@ -30,7 +30,7 @@ export const Default: React.FC<Container70Props> = (props) => {
       className={cn({
         'mt-4': !excludeTopMargin,
         'mt-0': excludeTopMargin,
-        [props.params?.styles as any]: props?.params?.styles,
+        [props.params?.styles as string]: props?.params?.styles,
       })}
     >
       <Flex className="group-[.is-inset]:p-0">

@@ -43,7 +43,7 @@ export const Default: React.FC<Container25252525Props> = (props) => {
     <section
       className={cn('container--25252525', 'mt-10', {
         'mt-0': excludeTopMargin,
-        [props.params.styles as any]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <div className="w-full mx-auto max-w-[1760px] flex flex-wrap items-stretch">
