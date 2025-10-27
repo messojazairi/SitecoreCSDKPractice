@@ -25,7 +25,7 @@ interface MegaMenuToggleProps {
   children: ReactNode;
 }
 
-export const MegaMenuToggle = ({ className, trigger, children }: MegaMenuToggleProps) => {
+export const MegaMenuToggle = ({ menuId, className, trigger, children }: MegaMenuToggleProps) => {
   const {
     isVisible,
     setIsVisible,

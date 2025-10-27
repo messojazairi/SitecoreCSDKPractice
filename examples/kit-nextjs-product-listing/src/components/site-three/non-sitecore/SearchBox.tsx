@@ -71,7 +71,7 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
                 }
               }}
             />
-            <Link href={buildSearchUrl()} className="btn btn-primary btn-sharp">
+            <Link href={buildSearchUrl()} prefetch={false} className="btn btn-primary btn-sharp">
               {t(DICTIONARY_KEYS.SEARCH_GO_LABEL) || 'Go'}
             </Link>
           </div>

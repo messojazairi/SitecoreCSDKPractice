@@ -203,20 +203,17 @@ export const FooterLinks = (props: LinkListProps): JSX.Element => {
         const href = link?.value?.href || '';
 
         return (
-          <>
+          <React.Fragment key={`${key}${href}`}>
             <ContentSdkLink
               key={`${key}${href}-link`}
               className="font-[inherit]"
               field={element.field.link}
               prefetch={false}
             />
-            <span
-              key={`${key}${href}-separator`}
-              className="font-[inherit] last:!hidden hidden lg:[.with-separators_&]:inline-block"
-            >
+            <span className="font-[inherit] last:!hidden hidden lg:[.with-separators_&]:inline-block">
               /
             </span>
-          </>
+          </React.Fragment>
         );
       });
 
