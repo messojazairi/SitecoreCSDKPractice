@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+'use client';
+
+import { useContext, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { ImageField, Image as ContentSdkImage, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { ImageOptimizationContext } from '@/components/image/image-optimization.context';
-import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
 import placeholderImageLoader from '@/utils/placeholderImageLoader';

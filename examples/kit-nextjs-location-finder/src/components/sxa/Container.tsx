@@ -1,4 +1,6 @@
-import { ComponentParams, ComponentRendering, Placeholder } from '@sitecore-content-sdk/nextjs';
+'use client'
+import { ComponentParams, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import React, { type JSX } from 'react';
 
 interface ComponentProps {
@@ -27,7 +29,7 @@ const DefaultContainer = (props: ComponentProps): JSX.Element => {
     <div className={`component container-default ${styles}`} id={id ? id : undefined}>
       <div className="component-content bg-cover" style={backgroundStyle}>
         <div className="row">
-          <Placeholder name={phKey} rendering={props.rendering} />
+          <AppPlaceholder name={phKey} rendering={props.rendering} />
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+'use client';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { TextBannerProps } from './text-banner.props';
 import { TextBannerDefault } from './TextBannerDefault.dev';

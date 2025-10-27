@@ -1,4 +1,6 @@
-import { Placeholder, useSitecore } from '@sitecore-content-sdk/nextjs';
+'use client'
+import { useSitecore } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import { Container5050Props } from '@/components/container/container-5050/container-5050.props';
 import {
   getContainerPlaceholderProps,
@@ -31,15 +33,15 @@ export const Default: React.FC<Container5050Props> = (props) => {
     <section
       className={cn('container--5050', 'mt-4', {
         'mt-0': excludeTopMargin,
-        [props.params.styles]: props?.params?.styles,
+        [props.params.styles as string]: props?.params?.styles,
       })}
     >
       <Flex wrap="nowrap">
         <FlexItem as="div" basis="1/2">
-          <Placeholder name={leftPlaceholders.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={leftPlaceholders.dynamicKey} rendering={rendering} />
         </FlexItem>
         <FlexItem as="div" basis="1/2">
-          <Placeholder name={rightPlaceholders.dynamicKey} rendering={rendering} />
+          <AppPlaceholder name={rightPlaceholders.dynamicKey} rendering={rendering} />
         </FlexItem>
       </Flex>
     </section>

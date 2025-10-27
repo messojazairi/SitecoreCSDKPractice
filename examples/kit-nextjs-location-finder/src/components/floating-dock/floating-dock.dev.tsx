@@ -13,7 +13,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import { Portal } from '@/components/portal/portal.dev';
 
 export const FloatingDock = ({
   items,
@@ -155,7 +155,7 @@ const FloatingDockMobile = ({
       aria-label="Share menu"
     >
       <AnimatePresence>
-        {open && isMounted && createPortal(<Backdrop onClick={closeMenu} />, document.body)}
+        {open && <Portal><Backdrop onClick={closeMenu} /></Portal>}
       </AnimatePresence>
 
       <AnimatePresence>

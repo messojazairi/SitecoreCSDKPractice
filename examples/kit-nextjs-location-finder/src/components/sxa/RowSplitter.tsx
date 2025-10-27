@@ -1,5 +1,7 @@
+'use client'
 import React, { JSX } from 'react';
-import { ComponentRendering, Placeholder } from '@sitecore-content-sdk/nextjs';
+import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import AppPlaceholder from 'components/content-sdk/Placeholder';
 import { ComponentProps } from 'lib/component-props';
 
 /**
@@ -36,7 +38,7 @@ export const Default = ({ params, rendering }: RowSplitterProps): JSX.Element =>
           <div key={index} className={`container-fluid ${rowStyles}`.trimEnd()}>
             <div>
               <div className="row">
-                <Placeholder name={placeholderKey} rendering={rendering} />
+                <AppPlaceholder name={placeholderKey} rendering={rendering} />
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+'use client'
 import type React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { AccordionProps } from './accordion-block.props';

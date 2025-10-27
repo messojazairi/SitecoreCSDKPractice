@@ -1,3 +1,4 @@
+'use client';
 import type React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { ImageCarouselProps } from './image-carousel.props';
