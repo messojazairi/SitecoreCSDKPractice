@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "config": {
-    "appName": "kit-nextjs-product-starter",
+    "appName": "kit-nextjs-product-starter-app-router",
     "graphQLEndpointPath": "/sitecore/api/graph/edge",
     "language": "en",
     "template": "nextjs"
