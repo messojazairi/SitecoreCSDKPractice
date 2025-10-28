@@ -54,15 +54,7 @@ const nextConfig: NextConfig = {
         module: false,
         path: false,
       };
-    }
-    
-    // Force all React imports to use the same instance to prevent "Invalid hook call" errors
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      react: 'react',
-      'react-dom': 'react-dom',
-    };
-    
+    }    
     return config;
   },
 };
