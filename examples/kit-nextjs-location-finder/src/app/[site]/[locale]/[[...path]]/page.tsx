@@ -21,7 +21,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
 
-  // Set site and locale to be available in src/i18n/request.ts for fetching the dictionary
   setRequestLocale(`${site}_${locale}`);
 
   // Fetch the page data from Sitecore
@@ -37,12 +36,10 @@ export default async function Page({ params, searchParams }: PageProps) {
     page = await client.getPage(path ?? [], { site, locale });
   }
 
-  // If the page is not found, return a 404
   if (!page) {
     notFound();
   }
 
-  // Fetch the component data from Sitecore (Likely will be deprecated)
   const componentProps = await client.getComponentData(page.layout, {}, components);
 
   return (
@@ -60,7 +57,6 @@ export const dynamic = 'force-dynamic';
 
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
-// Note: With dynamic='force-dynamic', this is not used, but kept for future reference
 export const generateStaticParams = async () => {
   if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
     return await client.getAppRouterStaticParams(
