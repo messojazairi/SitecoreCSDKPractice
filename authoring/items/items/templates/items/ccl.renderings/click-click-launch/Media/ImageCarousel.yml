@@ -38,6 +38,7 @@ SharedFields:
         }
       }
     }
+    
 - ID: "1a7c85e5-dc0b-490d-9187-bb1dbcb4c72f"
   Hint: Datasource Template
   Value: "/sitecore/templates/Branches/Project/click-click-launch/Components/Media/Image Carousel"
