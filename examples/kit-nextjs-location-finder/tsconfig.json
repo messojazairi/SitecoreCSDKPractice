@@ -2,9 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/tw/*": [
-        "tailwind-config/*"
-      ],
       "components/*": [
         "src/components/*"
       ],
@@ -20,37 +17,23 @@
       "assets/*": [
         "src/assets/*"
       ],
-      ".sitecore/*": [
-        ".sitecore/*"
-      ],
-      "next/*": [
-        "node_modules/next/*"
-      ],
       "enumerations/*": [
         "src/enumerations/*"
       ],
       "types/*": [
         "src/types/*"
       ],
-      "graphql-types": [
-        "node_modules/@types/graphql-let/__generated__/__types__"
+      ".sitecore/*": [
+        ".sitecore/*"
       ],
-      "react": [
-        "node_modules/react"
-      ],
+      "next/*": ["node_modules/next/*"],
       "@/*": [
         "./src/*"
-      ]
+      ],
     },
     "target": "ES2017",
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "types": ["node"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -59,26 +42,17 @@
     "strictFunctionTypes": false,
     "module": "esnext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
     "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    ".next\\dev/types/**/*.ts",
-    ".next\\dev/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
