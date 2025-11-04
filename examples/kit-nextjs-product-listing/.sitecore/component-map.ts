@@ -1,4 +1,4 @@
-﻿// Below are built-in components that are available in the app, it's recommended to keep them as is
+// Below are built-in components that are available in the app, it's recommended to keep them as is
 import { BYOCWrapper, FEaaSWrapper, NextjsContentSdkComponent } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
 // end of built-in components
@@ -60,7 +60,7 @@ import * as LogoTabs from 'components/logo-tabs/LogoTabs';
 import * as MegaMenuItem from 'components/site-three/MegaMenuItem';
 import * as MediaSection from 'components/media-section/MediaSection.dev';
 import * as ModeToggle from 'components/mode-toggle/mode-toggle.dev';
-import * as MultiPromo from 'components/multi-promo/MultiPromo';
+import * as MultiPromo from 'components/site-three/MultiPromo';
 import * as MultiPromoTabs from 'components/multi-promo-tabs/MultiPromoTabs';
 import * as Navigation from 'components/sxa/Navigation';
 import * as NewsletterSection from 'components/component-library/NewsletterSection';
