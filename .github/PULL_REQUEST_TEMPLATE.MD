@@ -23,4 +23,4 @@
 <!-- Place an X in the [] to check. -->
 
 <!-- The Code of Conduct helps create a safe space for everyone. We require that everyone agrees to it. -->
-- [ ] I agree to follow this project's [Code of Conduct](CODE_OF_CONDUCT.md).
+- [ ] I agree to follow this project's [Code of Conduct](../CODE_OF_CONDUCT.md).
