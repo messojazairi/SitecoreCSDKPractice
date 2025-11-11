@@ -1,4 +1,4 @@
-import { ComponentParams, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
+import { ComponentParams, ComponentRendering, Page, NextjsContentSdkComponent } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Shared component props
@@ -21,6 +21,7 @@ export type ComponentProps = {
     EnabledPlaceholders?: string;
   };
   page: Page;
+  componentMap: Map<string, NextjsContentSdkComponent>;
 };
 
 /**

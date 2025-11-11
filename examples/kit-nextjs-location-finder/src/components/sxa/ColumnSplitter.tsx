@@ -1,6 +1,6 @@
 'use client'
 import React, { JSX } from 'react';
-import AppPlaceholder from 'components/content-sdk/Placeholder';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 
 /**
@@ -29,7 +29,7 @@ interface ColumnSplitterProps extends ComponentProps {
   params: ComponentProps['params'] & ColumnWidths & ColumnStyles;
 }
 
-export const Default = ({ params, rendering }: ColumnSplitterProps): JSX.Element => {
+export const Default = ({ params, rendering, page, componentMap }: ColumnSplitterProps): JSX.Element => {
   const { EnabledPlaceholders, RenderingIdentifier: id, styles } = params;
 
   const enabledColumns = EnabledPlaceholders?.split(',') ?? [];
@@ -45,7 +45,7 @@ export const Default = ({ params, rendering }: ColumnSplitterProps): JSX.Element
         return (
           <div key={index} className={columnClassNames}>
             <div className="row">
-              <AppPlaceholder name={`column-${columnNum}-{*}`} rendering={rendering} />
+              <AppPlaceholder page={page} componentMap={componentMap} name={`column-${columnNum}-{*}`} rendering={rendering} />
             </div>
           </div>
         );

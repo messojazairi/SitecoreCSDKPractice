@@ -1,6 +1,8 @@
 // Client-safe component map for App Router
-import { BYOCWrapper, NextjsContentSdkComponent, FEaaSWrapper } from '@sitecore-content-sdk/nextjs';
+
+import { BYOCClientWrapper, NextjsContentSdkComponent, FEaaSClientWrapper } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
+
 import * as zipcodemodaldev from 'src/components/zipcode-modal/zipcode-modal.dev';
 import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
 import * as VideoModaldev from 'src/components/video/VideoModal.dev';
@@ -119,8 +121,8 @@ import * as AccordionBlockOneColumnTitleLeftdev from 'src/components/accordion-b
 import * as AccordionBlock from 'src/components/accordion-block/AccordionBlock';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
-  ['BYOCWrapper', BYOCWrapper],
-  ['FEaaSWrapper', FEaaSWrapper],
+  ['BYOCWrapper', BYOCClientWrapper],
+  ['FEaaSWrapper', FEaaSClientWrapper],
   ['Form', Form],
   ['zipcode-modal', { ...zipcodemodaldev }],
   ['VideoPlayer', { ...VideoPlayerdev }],

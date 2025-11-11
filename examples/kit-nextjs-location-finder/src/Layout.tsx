@@ -8,7 +8,7 @@ import { Sora, Roboto } from 'next/font/google';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { DesignLibraryLayout } from './DesignLibraryLayout';
 import componentMap from '.sitecore/component-map';
-import AppPlaceholder from 'components/content-sdk/Placeholder';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 const heading = Sora({
   weight: ['300', '400', '500'],
