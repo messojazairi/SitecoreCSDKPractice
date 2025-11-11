@@ -326,7 +326,7 @@ jobs:
 
             **Next Steps:**
             ${'${{ job.status }}' === 'success' ? 
-              '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, main will be fast-forwarded automatically' : 
+              '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, dmz can be manually merged to main using a merge commit' : 
               '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- If formatting issues: Run `npm run prettier`\n- Check the build logs for specific errors'
             }
 
