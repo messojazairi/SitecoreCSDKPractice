@@ -20,6 +20,11 @@ type ImageWrapperProps = {
   [key: string]: any;
 };
 
+/**
+ * ImageWrapper component
+ * Note: This component uses useSitecore() hook because it's a utility component
+ * used throughout the codebase and needs to access page context from SitecoreProvider.
+ */
 export const Default: React.FC<ImageWrapperProps> = (props) => {
   const { image, className, wrapperClass, sizes, ...rest } = props;
   const { page } = useSitecore();

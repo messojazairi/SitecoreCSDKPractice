@@ -6,7 +6,7 @@ import {
   Link as ContentSdkLink,
   LinkField,
   Text,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import React, { CSSProperties, type JSX } from 'react';
 
@@ -19,6 +19,7 @@ interface Fields {
 type ImageProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 const ImageDefault = (props: ImageProps): JSX.Element => (
@@ -31,8 +32,7 @@ const ImageDefault = (props: ImageProps): JSX.Element => (
 
 export const Banner = (props: ImageProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
   const classHeroBannerEmpty =
     isEditing && props.fields?.Image?.value?.class === 'scEmptyImage' ? 'hero-banner-empty' : '';
   const backgroundStyle = (props?.fields?.Image?.value?.src && {
@@ -59,8 +59,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
 };
 
 export const Default = (props: ImageProps): JSX.Element => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   if (props.fields) {
     const Image = () => <ContentSdkImage field={props.fields.Image} />;

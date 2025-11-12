@@ -8,7 +8,7 @@ import {
   ImageField,
   Field,
   LinkField,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 
 interface Fields {
@@ -22,6 +22,7 @@ interface Fields {
 type CTAProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 export const Default = (props: CTAProps) => {
@@ -29,8 +30,7 @@ export const Default = (props: CTAProps) => {
 };
 
 export const CallToAction1 = (props: CTAProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>
@@ -85,8 +85,7 @@ export const CallToAction1 = (props: CTAProps) => {
 };
 
 export const CallToAction2 = (props: CTAProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>
@@ -135,8 +134,7 @@ export const CallToAction2 = (props: CTAProps) => {
 };
 
 export const CallToAction3 = (props: CTAProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>
@@ -185,8 +183,7 @@ export const CallToAction3 = (props: CTAProps) => {
 };
 
 export const CallToAction4 = (props: CTAProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>

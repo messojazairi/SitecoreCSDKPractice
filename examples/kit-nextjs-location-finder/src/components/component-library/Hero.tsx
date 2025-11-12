@@ -8,7 +8,7 @@ import {
   ImageField,
   Field,
   LinkField,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 
 interface Fields {
@@ -23,6 +23,7 @@ interface Fields {
 type HeroProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 export const Default = (props: HeroProps) => {
@@ -30,8 +31,7 @@ export const Default = (props: HeroProps) => {
 };
 
 export const Hero1 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section
@@ -102,8 +102,7 @@ export const Hero1 = (props: HeroProps) => {
 };
 
 export const Hero2 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>
@@ -157,8 +156,7 @@ export const Hero2 = (props: HeroProps) => {
 };
 
 export const Hero3 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   const backgroundImageUrl = props.fields?.HeroImage1?.value?.src;
   const backgroundStyle = {
@@ -219,8 +217,7 @@ export const Hero3 = (props: HeroProps) => {
 };
 
 export const Hero4 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`w-full px-[5%] ${props.params.styles}`} data-class-change>
@@ -272,8 +269,7 @@ export const Hero4 = (props: HeroProps) => {
 };
 
 export const Hero5 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] py-12 md:py-24 ${props.params.styles}`} data-class-change>
@@ -326,8 +322,7 @@ export const Hero5 = (props: HeroProps) => {
 };
 
 export const Hero6 = (props: HeroProps) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  const { isEditing } = props.page.mode;
 
   return (
     <section className={`px-[5%] ${props.params.styles}`} data-class-change>

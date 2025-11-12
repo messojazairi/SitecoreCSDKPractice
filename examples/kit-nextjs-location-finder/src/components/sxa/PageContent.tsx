@@ -3,7 +3,7 @@ import React, { type JSX } from 'react';
 import {
   RichText as ContentSdkRichText,
   Text as ContentSdkText,
-  useSitecore,
+  Page,
   RichTextField,
   LinkField,
   TextField,
@@ -19,6 +19,7 @@ interface Fields {
 type PageContentProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 type ComponentContentProps = {
@@ -39,8 +40,7 @@ const ComponentContent = (props: ComponentContentProps) => {
 };
 
 export const Default = (props: PageContentProps): JSX.Element => {
-  const { page } = useSitecore();
-  const { layout } = page;
+  const { layout } = props.page;
   const routeFields = layout?.sitecore?.route?.fields;
   const id = props.params.RenderingIdentifier;
 
@@ -66,8 +66,7 @@ export const Default = (props: PageContentProps): JSX.Element => {
 };
 
 export const TitleAndBody = (props: PageContentProps): JSX.Element => {
-  const { page } = useSitecore();
-  const { layout } = page;
+  const { layout } = props.page;
   const routeFields = layout?.sitecore?.route?.fields;
 
   const fields = {

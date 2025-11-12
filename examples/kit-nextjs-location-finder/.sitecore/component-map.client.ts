@@ -16,7 +16,6 @@ import * as TextBanner02dev from 'src/components/text-banner/TextBanner02.dev';
 import * as TextBanner01dev from 'src/components/text-banner/TextBanner01.dev';
 import * as TextBanner from 'src/components/text-banner/TextBanner';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
-import * as Title from 'src/components/sxa/Title';
 import * as RowSplitter from 'src/components/sxa/RowSplitter';
 import * as Promo from 'src/components/sxa/Promo';
 import * as PartialDesignDynamicPlaceholder from 'src/components/sxa/PartialDesignDynamicPlaceholder';
@@ -100,7 +99,6 @@ import * as ZipcodeSearchFormdev from 'src/components/forms/zipcode/ZipcodeSearc
 import * as SubmitInfoFormdev from 'src/components/forms/submitinfo/SubmitInfoForm.dev';
 import * as EmailSignupFormdev from 'src/components/forms/email/EmailSignupForm.dev';
 import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev';
-import * as CtaBanner from 'src/components/cta-banner/CtaBanner';
 import * as ContainerFullWidth from 'src/components/container/container-full-width/ContainerFullWidth';
 import * as Container7030 from 'src/components/container/container-7030/Container7030';
 import * as Container70 from 'src/components/container/container-70/Container70';
@@ -113,7 +111,6 @@ import * as Container303030 from 'src/components/container/container-303030/Cont
 import * as Container25252525 from 'src/components/container/container-25252525/Container25252525';
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
-import * as BackgroundThumbnaildev from 'src/components/background-thumbnail/BackgroundThumbnail.dev';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
 import * as AccordionBlockTwoColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockTwoColumnTitleLeft.dev';
@@ -137,7 +134,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TextBanner01', { ...TextBanner01dev }],
   ['TextBanner', { ...TextBanner }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
-  ['Title', { ...Title }],
   ['RowSplitter', { ...RowSplitter }],
   ['Promo', { ...Promo }],
   ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
@@ -220,7 +216,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmitInfoForm', { ...SubmitInfoFormdev }],
   ['EmailSignupForm', { ...EmailSignupFormdev }],
   ['floating-dock', { ...floatingdockdev }],
-  ['CtaBanner', { ...CtaBanner }],
   ['ContainerFullWidth', { ...ContainerFullWidth }],
   ['Container7030', { ...Container7030 }],
   ['Container70', { ...Container70 }],
@@ -233,7 +228,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Container25252525', { ...Container25252525 }],
   ['Carousel', { ...Carousel }],
   ['card-spotlight', { ...cardspotlightdev }],
-  ['BackgroundThumbnail', { ...BackgroundThumbnaildev }],
   ['ArticleHeader', { ...ArticleHeader }],
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockTwoColumnTitleLeft', { ...AccordionBlockTwoColumnTitleLeftdev }],

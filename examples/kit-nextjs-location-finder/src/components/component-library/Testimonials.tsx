@@ -13,7 +13,7 @@ import {
   Link as ContentSdkLink,
   RichText as ContentSdkRichText,
   Text as ContentSdkText,
-  useSitecore,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import { IGQLImageField, IGQLLinkField, IGQLRichTextField, IGQLTextField } from 'src/types/igql';
 import { useMemo, type JSX } from 'react';
@@ -50,6 +50,7 @@ interface TestimonialFields {
 type TestimonialsProps = {
   params: { [key: string]: string };
   fields: Fields;
+  page: Page;
 };
 
 type TestimonialCardProps = {
@@ -58,10 +59,10 @@ type TestimonialCardProps = {
   withRating?: boolean;
   withLogo?: boolean;
   className?: string;
+  page: Page;
 };
 
-const StarRating = ({ r: ratingField }: { r: IGQLTextField }) => {
-  const { page } = useSitecore();
+const StarRating = ({ r: ratingField, page }: { r: IGQLTextField; page: Page }) => {
   const { isEditing } = page.mode;
 
   const rating = Math.min(Number(ratingField.jsonValue?.value) || 0, 5);
@@ -85,7 +86,7 @@ const TestimonialCard = (props: TestimonialCardProps) => {
     return (
       <>
         {props.withRating ? (
-          <StarRating r={props.testimonial.testimonialRating} />
+          <StarRating r={props.testimonial.testimonialRating} page={props.page} />
         ) : props.withLogo ? (
           <div className="h-12 mb-12">
             <ContentSdkImage
@@ -105,6 +106,7 @@ const TestimonialCard = (props: TestimonialCardProps) => {
     props.testimonial.testimonialRating,
     props.testimonial.testimonialIcon?.jsonValue,
     props.withLogo,
+    props.page,
   ]);
 
   const testimonialAuthorCard = useMemo(() => {
@@ -282,6 +284,7 @@ export const Default = (props: TestimonialsProps): JSX.Element => {
               type="centered"
               withLogo
               className="flex-1"
+              page={props.page}
             />
           )) || []}
         </div>
@@ -313,7 +316,7 @@ export const Testimonials1 = (props: TestimonialsProps): JSX.Element => {
             <CarouselContent>
               {datasource?.children?.results?.map((testimonial) => (
                 <CarouselItem key={testimonial.id}>
-                  <TestimonialCard testimonial={testimonial} type="centered" withLogo withRating />
+                  <TestimonialCard testimonial={testimonial} type="centered" withLogo withRating page={props.page} />
                 </CarouselItem>
               )) || []}
             </CarouselContent>
@@ -349,7 +352,7 @@ export const Testimonials2 = (props: TestimonialsProps): JSX.Element => {
           <CarouselContent>
             {datasource?.children?.results?.map((testimonial) => (
               <CarouselItem key={testimonial.id} className="pr-4 md:basis-1/2">
-                <TestimonialCard testimonial={testimonial} type="simple" withLogo withRating />
+                <TestimonialCard testimonial={testimonial} type="simple" withLogo withRating page={props.page} />
               </CarouselItem>
             )) || []}
           </CarouselContent>
@@ -392,6 +395,7 @@ export const Testimonials3 = (props: TestimonialsProps): JSX.Element => {
                     type="boxed"
                     withLogo
                     className="h-full"
+                    page={props.page}
                   />
                 </CarouselItem>
               )) || []}
@@ -431,7 +435,7 @@ export const Testimonials4 = (props: TestimonialsProps): JSX.Element => {
             <CarouselContent>
               {datasource?.children?.results?.map((testimonial) => (
                 <CarouselItem key={testimonial.id}>
-                  <TestimonialCard testimonial={testimonial} type="boxed" withRating />
+                  <TestimonialCard testimonial={testimonial} type="boxed" withRating page={props.page} />
                 </CarouselItem>
               )) || []}
             </CarouselContent>
@@ -469,7 +473,7 @@ export const Testimonials5 = (props: TestimonialsProps): JSX.Element => {
           <CarouselContent>
             {datasource?.children?.results?.map((testimonial) => (
               <CarouselItem key={testimonial.id}>
-                <TestimonialCard testimonial={testimonial} type="large" withLogo withRating />
+                <TestimonialCard testimonial={testimonial} type="large" withLogo withRating page={props.page} />
               </CarouselItem>
             )) || []}
           </CarouselContent>
@@ -509,6 +513,7 @@ export const Testimonials6 = (props: TestimonialsProps): JSX.Element => {
               type="boxed"
               withRating
               className="mb-8"
+              page={props.page}
             />
           )) || []}
         </div>
@@ -543,6 +548,7 @@ export const Testimonials7 = (props: TestimonialsProps): JSX.Element => {
               type="boxed"
               withRating
               className="flex-1"
+              page={props.page}
             />
           )) || []}
         </div>
@@ -580,6 +586,7 @@ export const Testimonials8 = (props: TestimonialsProps): JSX.Element => {
                   withLogo
                   withRating
                   className="h-full"
+                  page={props.page}
                 />
               </CarouselItem>
             )) || []}
@@ -629,7 +636,7 @@ export const Testimonials9 = (props: TestimonialsProps): JSX.Element => {
 
           {datasource?.children?.results?.map((testimonial) => (
             <TabsContent value={testimonial.id} key={testimonial.id} className="py-16">
-              <TestimonialCard testimonial={testimonial} type="centered" withRating />
+              <TestimonialCard testimonial={testimonial} type="centered" withRating page={props.page} />
             </TabsContent>
           )) || []}
         </Tabs>
