@@ -3,8 +3,8 @@ import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { cn } from '@/lib/utils';
 import { PlaceholderProps } from '@/types/Placeholder.props';
 import { ComponentProps } from '@/lib/component-props';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Model used for Sitecore Component integration
@@ -50,7 +50,7 @@ export const Default: React.FC<Container70Props> = (props) => {
       <Flex className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
           <div className="mx-auto md:max-w-[70%]">
-            <Placeholder
+            <AppPlaceholder
               name={PLACEHOLDER_NAME}
               rendering={rendering}
               page={page}

@@ -3,29 +3,23 @@
 import { combineImportEntries, defaultImportEntries } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { useState, useEffect, useRef, useCallback, useId, useContext, createContext, Fragment, useMemo } from 'react';
+import { useState, useEffect, useRef, useCallback, useId, Fragment } from 'react';
 import React from 'react';
 import * as React_7214d18997ee864dd178de7b3a8430f6783e8b89 from 'react';
-import YouTube from 'react-youtube';
-import { useVideo } from '@/contexts/VideoContext';
-import { Default } from '@/components/icon/Icon';
-import { extractVideoId } from '@/utils/video';
-import { FocusTrap } from 'focus-trap-react';
-import { motion, AnimatePresence, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { X, PanelLeft, Check, ChevronDown, ChevronUp, GripVertical, Circle, ChevronLeft, ChevronRight, MoreHorizontal, Dot, Search, ArrowLeft, ArrowRight, Moon, Sun, Play, Pause, Menu, Share2, Facebook, Linkedin, Twitter, Link as Link_6b289e2de0a07a8bed65fcf19e83723e986797b2, Mail } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { preventScroll, allowScroll } from '@/utils/bodyClass';
-import { Portal } from '@/components/portal/portal.dev';
-import { useSitecore, Text, Link, RichText, NextImage, withDatasourceCheck, Image, Placeholder as Placeholder_8a80e63291fea86e0744df19113dc44bec187216, getFieldValue, ServerPlaceholder, CdpHelper, DateField } from '@sitecore-content-sdk/nextjs';
+import { useSitecore, Text, Link, AppPlaceholder, RichText, NextImage, withDatasourceCheck, Image, CdpHelper, DateField } from '@sitecore-content-sdk/nextjs';
 import { VideoPlayer } from 'src/components/video/VideoPlayer.dev';
 import { VideoModal } from 'src/components/video/VideoModal.dev';
 import { useVideoModal } from 'src/hooks/useVideoModal';
+import { useVideo } from '@/contexts/VideoContext';
+import { Default } from '@/components/icon/Icon';
 import { Default as Default_e49b8b0315b5c2e1dfc6d29366b41ef250099b77 } from 'src/components/image/ImageWrapper.dev';
+import { motion, AnimatePresence } from 'framer-motion';
 import { isMobile } from '@/utils/isMobile';
+import { extractVideoId } from '@/utils/video';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { cn, getYouTubeThumbnail } from '@/lib/utils';
 import { Default as Default_86213dc9d44683259b98a62fc55d1fe1127767c5 } from '@/components/image/ImageWrapper.dev';
-import { EditableButton, ButtonBase } from '@/components/button-component/ButtonComponent';
+import { EditableButton } from '@/components/button-component/ButtonComponent';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { cva } from 'class-variance-authority';
@@ -34,13 +28,15 @@ import { toggleVariants } from '@/components/ui/toggle';
 import { useToast } from '@/hooks/use-toast';
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';
 import * as ToastPrimitives from '@radix-ui/react-toast';
+import { X, PanelLeft, Check, ChevronDown, ChevronUp, GripVertical, Circle, ChevronLeft, ChevronRight, MoreHorizontal, Dot, Search, ArrowLeft, ArrowRight, Play, Pause, Menu, Facebook, Linkedin, Twitter, Link as Link_6b289e2de0a07a8bed65fcf19e83723e986797b2, Mail } from 'lucide-react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
-import { useTheme, ThemeProvider } from 'next-themes';
+import { useTheme } from 'next-themes';
 import { Toaster } from 'sonner';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { Slot } from '@radix-ui/react-slot';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -77,15 +73,12 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { Meteors } from '@/components/magicui/meteors';
 import { TopicItem } from 'src/components/topic-listing/TopicItem.dev';
-import { ButtonVariants, ButtonType } from '@/enumerations/ButtonStyle.enum';
-import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { Default as Default_9c943e7f61c2c6a8bdaf3a4e8f1aeba5a19a6639 } from 'src/components/text-banner/TextBannerDefault.dev';
 import { Default as Default_b7b9c2d49612cce49665fcafdf4020a775dae9a6 } from 'src/components/text-banner/TextBanner01.dev';
 import { Default as Default_d90c163300dcab5740e1badcbbe8ffad62e34ea5 } from 'src/components/text-banner/TextBanner02.dev';
 import { debounce } from 'radash';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Default as Default_f14713561e7127543a30e797b8ea6464ba634f1f } from 'src/components/testimonial-carousel/TestimonialCarouselItem';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { useTranslations } from 'next-intl';
@@ -95,26 +88,18 @@ import NextLink from 'next/link';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { Orientation } from '@/enumerations/Orientation.enum';
 import { Variation } from '@/enumerations/Variation.enum';
-import { Default as Default_ab2672a1842323b1b2777329b20d99d0ca10e44b } from '@/components/animated-section/AnimatedSection.dev';
-import { animatedSpriteRenderingParams, imageBgExtensionRenderingParams } from 'src/components/promo-animated/promo-animated.util';
+import { ButtonType, ButtonVariants } from '@/enumerations/ButtonStyle.enum';
+import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { PromoAnimatedDefault } from 'src/components/promo-animated/PromoAnimatedDefault.dev';
 import { PromoAnimatedImageRight } from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
-import { createPortal } from 'react-dom';
+import { Default as Default_ab2672a1842323b1b2777329b20d99d0ca10e44b } from '@/components/animated-section/AnimatedSection.dev';
 import { VideoBase } from '@/components/video/Video';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Default as Default_5a87dea7e5d774773867b417bc52e56f48fe590a } from 'src/components/multi-promo-tabs/MultiPromoTab.dev';
-import { EditableButton as EditableButton_f96768c33c6d085e6eaeb7c734d327903ea8ccc6 } from 'src/components/button-component/ButtonComponent';
 import { Default as Default_567cb87e41254de18670d2d9e5ed4fb167d328d0 } from 'src/components/multi-promo/MultiPromoItem.dev';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { getImageProps } from 'next/image';
-import NextImage_5d8ce56058442d94361877e28c501c951a554a6a from 'next/image';
-import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { LogoItem } from 'src/components/logo-tabs/LogoItem';
-import { ImageOptimizationContext } from '@/components/image/image-optimization.context';
-import placeholderImageLoader from '@/utils/placeholderImageLoader';
 import { IconName } from '@/enumerations/Icon.enum';
-import { sharedAttributes } from 'src/components/icon/Icon';
 import { Default as Default_98f9a884be463e0a12213c7e328a0762b2348f8b } from '@/components/media-section/MediaSection.dev';
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from '@/components/ui/navigation-menu';
 import { Default as Default_baa9f9ad92261321a3b6e2412b7ce62fbe646851 } from '@/components/logo/Logo.dev';
@@ -123,24 +108,18 @@ import { EditableImageButton } from 'components/button-component/ButtonComponent
 import { cn as cn_b4c06b3218abd6b3fb46a1f6d67407cec902c758 } from 'lib/utils';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useMatchMedia } from '@/hooks/use-match-media';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import * as e from '@/lib/enum';
-import { twMerge } from 'tailwind-merge';
 import client from 'src/lib/sitecore-client';
-import { rsc } from 'rsc-env';
 import { pageView } from '@sitecore-cloudsdk/events/browser';
 import config from 'sitecore.config';
 import { getContainerPlaceholderProps, isContainerPlaceholderEmpty } from '@/components/container/container.util';
 import { getContainerPlaceholderProps as getContainerPlaceholderProps_03d5b83eecf523d9d179cef494dfbdc6653f0843, isContainerPlaceholderEmpty as isContainerPlaceholderEmpty_03d5b83eecf523d9d179cef494dfbdc6653f0843 } from 'components/container/container.util';
 import { IconPosition } from '@/enumerations/IconPosition.enum';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import { FloatingDock } from '@/components/floating-dock/floating-dock.dev';
 import { Toaster as Toaster_a6eeadbb1255ee8f188f6a41d0d7b974840e71b1 } from '@/components/ui/toaster';
 import { formatDateInUTC } from '@/utils/date-utils';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AccordionBlockItem } from 'src/components/accordion-block/AccordionBlockItem.dev';
 import { AccordionBlockDefault } from 'src/components/accordion-block/AccordionBlockDefault.dev';
 
 const importMap = [
@@ -152,103 +131,9 @@ const importMap = [
       { name: 'useRef', value: useRef },
       { name: 'useCallback', value: useCallback },
       { name: 'useId', value: useId },
-      { name: 'useContext', value: useContext },
-      { name: 'createContext', value: createContext },
       { name: 'Fragment', value: Fragment },
-      { name: 'useMemo', value: useMemo },
       { name: 'default', value: React },
       { name: '*', value: React_7214d18997ee864dd178de7b3a8430f6783e8b89 },
-    ]
-  },
-  {
-    module: 'react-youtube',
-    exports: [
-      { name: 'default', value: YouTube },
-    ]
-  },
-  {
-    module: '@/contexts/VideoContext',
-    exports: [
-      { name: 'useVideo', value: useVideo },
-    ]
-  },
-  {
-    module: '@/components/icon/Icon',
-    exports: [
-      { name: 'Default', value: Default },
-    ]
-  },
-  {
-    module: '@/utils/video',
-    exports: [
-      { name: 'extractVideoId', value: extractVideoId },
-    ]
-  },
-  {
-    module: 'focus-trap-react',
-    exports: [
-      { name: 'FocusTrap', value: FocusTrap },
-    ]
-  },
-  {
-    module: 'framer-motion',
-    exports: [
-      { name: 'motion', value: motion },
-      { name: 'AnimatePresence', value: AnimatePresence },
-      { name: 'useInView', value: useInView },
-      { name: 'useMotionValue', value: useMotionValue },
-      { name: 'useSpring', value: useSpring },
-      { name: 'useTransform', value: useTransform },
-    ]
-  },
-  {
-    module: 'lucide-react',
-    exports: [
-      { name: 'X', value: X },
-      { name: 'PanelLeft', value: PanelLeft },
-      { name: 'Check', value: Check },
-      { name: 'ChevronDown', value: ChevronDown },
-      { name: 'ChevronUp', value: ChevronUp },
-      { name: 'GripVertical', value: GripVertical },
-      { name: 'Circle', value: Circle },
-      { name: 'ChevronLeft', value: ChevronLeft },
-      { name: 'ChevronRight', value: ChevronRight },
-      { name: 'MoreHorizontal', value: MoreHorizontal },
-      { name: 'Dot', value: Dot },
-      { name: 'Search', value: Search },
-      { name: 'ArrowLeft', value: ArrowLeft },
-      { name: 'ArrowRight', value: ArrowRight },
-      { name: 'Moon', value: Moon },
-      { name: 'Sun', value: Sun },
-      { name: 'Play', value: Play },
-      { name: 'Pause', value: Pause },
-      { name: 'Menu', value: Menu },
-      { name: 'Share2', value: Share2 },
-      { name: 'Facebook', value: Facebook },
-      { name: 'Linkedin', value: Linkedin },
-      { name: 'Twitter', value: Twitter },
-      { name: 'Link', value: Link_6b289e2de0a07a8bed65fcf19e83723e986797b2 },
-      { name: 'Mail', value: Mail },
-    ]
-  },
-  {
-    module: '@/components/ui/button',
-    exports: [
-      { name: 'Button', value: Button },
-      { name: 'buttonVariants', value: buttonVariants },
-    ]
-  },
-  {
-    module: '@/utils/bodyClass',
-    exports: [
-      { name: 'preventScroll', value: preventScroll },
-      { name: 'allowScroll', value: allowScroll },
-    ]
-  },
-  {
-    module: '@/components/portal/portal.dev',
-    exports: [
-      { name: 'Portal', value: Portal },
     ]
   },
   {
@@ -257,13 +142,11 @@ const importMap = [
       { name: 'useSitecore', value: useSitecore },
       { name: 'Text', value: Text },
       { name: 'Link', value: Link },
+      { name: 'AppPlaceholder', value: AppPlaceholder },
       { name: 'RichText', value: RichText },
       { name: 'NextImage', value: NextImage },
       { name: 'withDatasourceCheck', value: withDatasourceCheck },
       { name: 'Image', value: Image },
-      { name: 'Placeholder', value: Placeholder_8a80e63291fea86e0744df19113dc44bec187216 },
-      { name: 'getFieldValue', value: getFieldValue },
-      { name: 'ServerPlaceholder', value: ServerPlaceholder },
       { name: 'CdpHelper', value: CdpHelper },
       { name: 'DateField', value: DateField },
     ]
@@ -287,15 +170,40 @@ const importMap = [
     ]
   },
   {
+    module: '@/contexts/VideoContext',
+    exports: [
+      { name: 'useVideo', value: useVideo },
+    ]
+  },
+  {
+    module: '@/components/icon/Icon',
+    exports: [
+      { name: 'Default', value: Default },
+    ]
+  },
+  {
     module: 'src/components/image/ImageWrapper.dev',
     exports: [
       { name: 'Default', value: Default_e49b8b0315b5c2e1dfc6d29366b41ef250099b77 },
     ]
   },
   {
+    module: 'framer-motion',
+    exports: [
+      { name: 'motion', value: motion },
+      { name: 'AnimatePresence', value: AnimatePresence },
+    ]
+  },
+  {
     module: '@/utils/isMobile',
     exports: [
       { name: 'isMobile', value: isMobile },
+    ]
+  },
+  {
+    module: '@/utils/video',
+    exports: [
+      { name: 'extractVideoId', value: extractVideoId },
     ]
   },
   {
@@ -321,7 +229,6 @@ const importMap = [
     module: '@/components/button-component/ButtonComponent',
     exports: [
       { name: 'EditableButton', value: EditableButton },
-      { name: 'ButtonBase', value: ButtonBase },
     ]
   },
   {
@@ -378,6 +285,33 @@ const importMap = [
     ]
   },
   {
+    module: 'lucide-react',
+    exports: [
+      { name: 'X', value: X },
+      { name: 'PanelLeft', value: PanelLeft },
+      { name: 'Check', value: Check },
+      { name: 'ChevronDown', value: ChevronDown },
+      { name: 'ChevronUp', value: ChevronUp },
+      { name: 'GripVertical', value: GripVertical },
+      { name: 'Circle', value: Circle },
+      { name: 'ChevronLeft', value: ChevronLeft },
+      { name: 'ChevronRight', value: ChevronRight },
+      { name: 'MoreHorizontal', value: MoreHorizontal },
+      { name: 'Dot', value: Dot },
+      { name: 'Search', value: Search },
+      { name: 'ArrowLeft', value: ArrowLeft },
+      { name: 'ArrowRight', value: ArrowRight },
+      { name: 'Play', value: Play },
+      { name: 'Pause', value: Pause },
+      { name: 'Menu', value: Menu },
+      { name: 'Facebook', value: Facebook },
+      { name: 'Linkedin', value: Linkedin },
+      { name: 'Twitter', value: Twitter },
+      { name: 'Link', value: Link_6b289e2de0a07a8bed65fcf19e83723e986797b2 },
+      { name: 'Mail', value: Mail },
+    ]
+  },
+  {
     module: '@radix-ui/react-tabs',
     exports: [
       { name: '*', value: TabsPrimitive },
@@ -393,7 +327,6 @@ const importMap = [
     module: 'next-themes',
     exports: [
       { name: 'useTheme', value: useTheme },
-      { name: 'ThemeProvider', value: ThemeProvider },
     ]
   },
   {
@@ -418,6 +351,13 @@ const importMap = [
     module: '@/hooks/use-mobile',
     exports: [
       { name: 'useIsMobile', value: useIsMobile },
+    ]
+  },
+  {
+    module: '@/components/ui/button',
+    exports: [
+      { name: 'Button', value: Button },
+      { name: 'buttonVariants', value: buttonVariants },
     ]
   },
   {
@@ -647,20 +587,6 @@ const importMap = [
     ]
   },
   {
-    module: '@/enumerations/ButtonStyle.enum',
-    exports: [
-      { name: 'ButtonVariants', value: ButtonVariants },
-      { name: 'ButtonType', value: ButtonType },
-    ]
-  },
-  {
-    module: '@/components/flex/Flex.dev',
-    exports: [
-      { name: 'Flex', value: Flex },
-      { name: 'FlexItem', value: FlexItem },
-    ]
-  },
-  {
     module: 'src/components/text-banner/TextBannerDefault.dev',
     exports: [
       { name: 'Default', value: Default_9c943e7f61c2c6a8bdaf3a4e8f1aeba5a19a6639 },
@@ -698,12 +624,6 @@ const importMap = [
     module: 'src/components/testimonial-carousel/TestimonialCarouselItem',
     exports: [
       { name: 'Default', value: Default_f14713561e7127543a30e797b8ea6464ba634f1f },
-    ]
-  },
-  {
-    module: 'components/content-sdk/Placeholder',
-    exports: [
-      { name: 'default', value: Placeholder },
     ]
   },
   {
@@ -765,16 +685,17 @@ const importMap = [
     ]
   },
   {
-    module: '@/components/animated-section/AnimatedSection.dev',
+    module: '@/enumerations/ButtonStyle.enum',
     exports: [
-      { name: 'Default', value: Default_ab2672a1842323b1b2777329b20d99d0ca10e44b },
+      { name: 'ButtonType', value: ButtonType },
+      { name: 'ButtonVariants', value: ButtonVariants },
     ]
   },
   {
-    module: 'src/components/promo-animated/promo-animated.util',
+    module: '@/components/flex/Flex.dev',
     exports: [
-      { name: 'animatedSpriteRenderingParams', value: animatedSpriteRenderingParams },
-      { name: 'imageBgExtensionRenderingParams', value: imageBgExtensionRenderingParams },
+      { name: 'Flex', value: Flex },
+      { name: 'FlexItem', value: FlexItem },
     ]
   },
   {
@@ -790,9 +711,9 @@ const importMap = [
     ]
   },
   {
-    module: 'react-dom',
+    module: '@/components/animated-section/AnimatedSection.dev',
     exports: [
-      { name: 'createPortal', value: createPortal },
+      { name: 'Default', value: Default_ab2672a1842323b1b2777329b20d99d0ca10e44b },
     ]
   },
   {
@@ -827,37 +748,9 @@ const importMap = [
     ]
   },
   {
-    module: 'src/components/button-component/ButtonComponent',
-    exports: [
-      { name: 'EditableButton', value: EditableButton_f96768c33c6d085e6eaeb7c734d327903ea8ccc6 },
-    ]
-  },
-  {
     module: 'src/components/multi-promo/MultiPromoItem.dev',
     exports: [
       { name: 'Default', value: Default_567cb87e41254de18670d2d9e5ed4fb167d328d0 },
-    ]
-  },
-  {
-    module: '@/components/ui/dropdown-menu',
-    exports: [
-      { name: 'DropdownMenu', value: DropdownMenu },
-      { name: 'DropdownMenuContent', value: DropdownMenuContent },
-      { name: 'DropdownMenuItem', value: DropdownMenuItem },
-      { name: 'DropdownMenuTrigger', value: DropdownMenuTrigger },
-    ]
-  },
-  {
-    module: 'next/image',
-    exports: [
-      { name: 'getImageProps', value: getImageProps },
-      { name: 'default', value: NextImage_5d8ce56058442d94361877e28c501c951a554a6a },
-    ]
-  },
-  {
-    module: '@/hooks/use-intersection-observer',
-    exports: [
-      { name: 'useIntersectionObserver', value: useIntersectionObserver },
     ]
   },
   {
@@ -867,27 +760,9 @@ const importMap = [
     ]
   },
   {
-    module: '@/components/image/image-optimization.context',
-    exports: [
-      { name: 'ImageOptimizationContext', value: ImageOptimizationContext },
-    ]
-  },
-  {
-    module: '@/utils/placeholderImageLoader',
-    exports: [
-      { name: 'default', value: placeholderImageLoader },
-    ]
-  },
-  {
     module: '@/enumerations/Icon.enum',
     exports: [
       { name: 'IconName', value: IconName },
-    ]
-  },
-  {
-    module: 'src/components/icon/Icon',
-    exports: [
-      { name: 'sharedAttributes', value: sharedAttributes },
     ]
   },
   {
@@ -944,37 +819,9 @@ const importMap = [
     ]
   },
   {
-    module: '@/components/ui/card',
-    exports: [
-      { name: 'Card', value: Card },
-      { name: 'CardContent', value: CardContent },
-      { name: 'CardHeader', value: CardHeader },
-      { name: 'CardTitle', value: CardTitle },
-      { name: 'CardFooter', value: CardFooter },
-    ]
-  },
-  {
-    module: '@/lib/enum',
-    exports: [
-      { name: '*', value: e },
-    ]
-  },
-  {
-    module: 'tailwind-merge',
-    exports: [
-      { name: 'twMerge', value: twMerge },
-    ]
-  },
-  {
     module: 'src/lib/sitecore-client',
     exports: [
       { name: 'default', value: client },
-    ]
-  },
-  {
-    module: 'rsc-env',
-    exports: [
-      { name: 'rsc', value: rsc },
     ]
   },
   {
@@ -1021,17 +868,17 @@ const importMap = [
     ]
   },
   {
-    module: '@/components/ui/badge',
-    exports: [
-      { name: 'Badge', value: Badge },
-    ]
-  },
-  {
     module: '@/components/ui/avatar',
     exports: [
       { name: 'Avatar', value: Avatar },
       { name: 'AvatarFallback', value: AvatarFallback },
       { name: 'AvatarImage', value: AvatarImage },
+    ]
+  },
+  {
+    module: '@/components/ui/badge',
+    exports: [
+      { name: 'Badge', value: Badge },
     ]
   },
   {
@@ -1050,20 +897,6 @@ const importMap = [
     module: '@/utils/date-utils',
     exports: [
       { name: 'formatDateInUTC', value: formatDateInUTC },
-    ]
-  },
-  {
-    module: '@/components/ui/alert',
-    exports: [
-      { name: 'Alert', value: Alert },
-      { name: 'AlertDescription', value: AlertDescription },
-      { name: 'AlertTitle', value: AlertTitle },
-    ]
-  },
-  {
-    module: 'src/components/accordion-block/AccordionBlockItem.dev',
-    exports: [
-      { name: 'AccordionBlockItem', value: AccordionBlockItem },
     ]
   },
   {

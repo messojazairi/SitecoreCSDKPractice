@@ -6,8 +6,8 @@ import { Default as Logo } from '@/components/logo/Logo.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { EditableImageButton } from 'components/button-component/ButtonComponent';
 import { cn } from 'lib/utils';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
   const { fields, rendering, page } = props;
@@ -34,7 +34,7 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
           </div>
           {/* Main footer columns */}
           <div className="@md:grid-cols-3 @md:col-span-2 @lg:col-span-6 grid grid-cols-1 gap-8">
-            <Placeholder
+            <AppPlaceholder
               name="container-footer-column"
               rendering={rendering}
               page={page}

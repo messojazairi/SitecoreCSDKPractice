@@ -1,13 +1,14 @@
 // Client-safe component map for App Router
-import { BYOCWrapper, NextjsContentSdkComponent, FEaaSWrapper } from '@sitecore-content-sdk/nextjs';
+
+import { BYOCClientWrapper, NextjsContentSdkComponent, FEaaSClientWrapper } from '@sitecore-content-sdk/nextjs';
 import { Form } from '@sitecore-content-sdk/nextjs';
+
 import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
 import * as VideoModaldev from 'src/components/video/VideoModal.dev';
 import * as Video from 'src/components/video/Video';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
 import * as TopicItemdev from 'src/components/topic-listing/TopicItem.dev';
 import * as themeproviderdev from 'src/components/theme-provider/theme-provider.dev';
-import * as TextBanner from 'src/components/text-banner/TextBanner';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
 import * as Title from 'src/components/sxa/Title';
 import * as PageContent from 'src/components/sxa/PageContent';
@@ -42,8 +43,8 @@ import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
 import * as AccordionBlock from 'src/components/accordion-block/AccordionBlock';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
-  ['BYOCWrapper', BYOCWrapper],
-  ['FEaaSWrapper', FEaaSWrapper],
+  ['BYOCWrapper', BYOCClientWrapper],
+  ['FEaaSWrapper', FEaaSClientWrapper],
   ['Form', Form],
   ['VideoPlayer', { ...VideoPlayerdev }],
   ['VideoModal', { ...VideoModaldev }],
@@ -51,7 +52,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['VerticalImageAccordion', { ...VerticalImageAccordion }],
   ['TopicItem', { ...TopicItemdev }],
   ['theme-provider', { ...themeproviderdev }],
-  ['TextBanner', { ...TextBanner }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
   ['Title', { ...Title }],
   ['PageContent', { ...PageContent }],

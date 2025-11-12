@@ -3,8 +3,8 @@ import { cva } from 'class-variance-authority';
 import { PlaceholderProps } from '@/types/Placeholder.props';
 import { ComponentProps } from '@/lib/component-props';
 import { BackgroundColor } from '@/enumerations/BackgroundColor.enum';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Model used for Sitecore Component integration
@@ -96,7 +96,7 @@ export const Default: React.FC<ContainerFullBleedProps> = (props) => {
     >
       <Flex fullBleed={true} className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
-          <Placeholder
+          <AppPlaceholder
             name={PLACEHOLDER_NAME}
             rendering={rendering}
             page={page}

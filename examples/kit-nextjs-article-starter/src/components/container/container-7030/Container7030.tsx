@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 import { PlaceholderProps } from '@/types/Placeholder.props';
 import { ComponentProps } from '@/lib/component-props';
 import type { JSX } from 'react';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Model used for Sitecore Component integration
@@ -54,7 +54,7 @@ export const Default: React.FC<Container7030Props> = (props) => {
     >
       <Flex wrap="nowrap">
         <FlexItem as="div" basis="7/10">
-          <Placeholder
+          <AppPlaceholder
             name={leftPlaceholders.dynamicKey}
             rendering={rendering}
             page={page}
@@ -62,7 +62,7 @@ export const Default: React.FC<Container7030Props> = (props) => {
           />
         </FlexItem>
         <FlexItem as="div" basis="3/10">
-          <Placeholder
+          <AppPlaceholder
             name={rightPlaceholders.dynamicKey}
             rendering={rendering}
             page={page}

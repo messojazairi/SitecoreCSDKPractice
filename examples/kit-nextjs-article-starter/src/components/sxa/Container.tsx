@@ -3,9 +3,9 @@ import {
   ComponentParams,
   ComponentRendering,
 } from '@sitecore-content-sdk/nextjs';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
 import { ComponentProps } from 'lib/component-props';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 interface ContainerProps extends ComponentProps {
   rendering: ComponentRendering & { params: ComponentParams };
@@ -37,7 +37,7 @@ const DefaultContainer = (props: ContainerProps): JSX.Element => {
     >
       <div className="component-content" style={backgroundStyle}>
         <div className="row">
-          <Placeholder
+          <AppPlaceholder
             name={phKey}
             rendering={props.rendering}
             page={props.page}

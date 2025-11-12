@@ -9,9 +9,9 @@ import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { Figtree } from 'next/font/google';
 import { VideoProvider } from './contexts/VideoContext';
 import { DesignLibraryLayout } from './DesignLibraryLayout';
-import AppPlaceholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
 import { ThemeProvider } from 'components/theme-provider/theme-provider.dev';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 const heading = Figtree({
   weight: ['400', '500'],

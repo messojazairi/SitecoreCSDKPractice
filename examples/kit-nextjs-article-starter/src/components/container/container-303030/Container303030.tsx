@@ -8,8 +8,8 @@ import { FlexItemProps } from 'components/flex/Flex.dev';
 import { ComponentProps } from '@/lib/component-props';
 import type { JSX } from 'react';
 import { PlaceholderProps } from '@/types/Placeholder.props';
-import Placeholder from 'components/content-sdk/Placeholder';
 import componentMap from '.sitecore/component-map';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Model used for Sitecore Component integration
@@ -60,7 +60,7 @@ export const Default: React.FC<Container303030Props> = (props) => {
     >
       <div className="w-full mx-auto max-w-[1760px] flex flex-wrap items-stretch">
         <FlexItem as="div" basis="1/3">
-          <Placeholder
+          <AppPlaceholder
             name={leftPlaceholder.dynamicKey}
             rendering={rendering}
             page={page}
@@ -68,7 +68,7 @@ export const Default: React.FC<Container303030Props> = (props) => {
           />
         </FlexItem>
         <FlexItem as="div" basis="1/3">
-          <Placeholder
+          <AppPlaceholder
             name={centerPlaceholder.dynamicKey}
             rendering={rendering}
             page={page}
@@ -76,7 +76,7 @@ export const Default: React.FC<Container303030Props> = (props) => {
           />
         </FlexItem>
         <FlexItem as="div" basis="1/3">
-          <Placeholder
+          <AppPlaceholder
             name={rightPlaceholder.dynamicKey}
             rendering={rendering}
             page={page}

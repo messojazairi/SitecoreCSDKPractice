@@ -1,8 +1,8 @@
 import React, { JSX } from 'react';
 import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 import { ComponentProps } from 'lib/component-props';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 type DynamicPlaceholderProps = ComponentProps & {
   rendering: ComponentRendering;
@@ -11,7 +11,7 @@ type DynamicPlaceholderProps = ComponentProps & {
 const PartialDesignDynamicPlaceholder = (
   props: DynamicPlaceholderProps,
 ): JSX.Element => (
-  <Placeholder
+  <AppPlaceholder
     name={props.rendering?.params?.sig || ''}
     rendering={props.rendering}
     page={props.page}
