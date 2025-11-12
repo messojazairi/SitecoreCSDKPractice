@@ -111,12 +111,12 @@ Timeline:
 2. Developer A adds commits D, E
 3. Developer A's PR validation checks: based on latest main? ✅
 4. PR is squash merged to dmz as commit F
-5. Main is manually merged with dmz (merge commit M)
+5. dmz is manually merged into main (creates merge commit M)
 6. Developer B created feature-b from main at step 1 (has A→B→C)
 7. Developer B's PR validation checks: based on latest main? ❌
 8. PR is REJECTED with clear instructions
 9. Developer B rebases: git rebase origin/main
-10. Now Developer B's branch has A→B→C→M→F→G→H
+10. Now Developer B's branch has A→B→C→F→M→G→H
 11. Developer B's PR validation checks: based on latest main? ✅
 12. Developer B's PR shows only commits G, H ✅
 ```
