@@ -1,8 +1,8 @@
 import { ContainerFullWidthProps } from '@/components/container/container-full-width/container-full-width.props';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { cn } from '@/lib/utils';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 
 export const Default: React.FC<ContainerFullWidthProps> = (props) => {
   const { rendering, children, page } = props;
@@ -32,7 +32,7 @@ export const Default: React.FC<ContainerFullWidthProps> = (props) => {
     >
       <Flex className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
-          <Placeholder name={PLACEHOLDER_NAME} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder name={PLACEHOLDER_NAME} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
       </Flex>
     </section>

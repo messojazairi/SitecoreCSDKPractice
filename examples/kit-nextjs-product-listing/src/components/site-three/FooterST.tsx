@@ -7,10 +7,10 @@ import {
   Field,
   RichTextField,
   LinkField,
+  AppPlaceholder,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 
 interface Fields {
   Title: Field<string>;
@@ -37,7 +37,7 @@ export const Default = (props: FooterSTProps) => {
           <ContentSdkText field={props.fields?.Title} />
         </h2>
         <div className="max-w-5xl mx-auto mb-6 lg:mb-12 font-(family-name:--font-heading) text-2xl uppercase">
-          <Placeholder
+          <AppPlaceholder
             name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
             rendering={props.rendering}
             page={props.page}
@@ -45,7 +45,7 @@ export const Default = (props: FooterSTProps) => {
           />
         </div>
         <div className="max-w-5xl mx-auto font-(family-name:--font-accent) font-medium">
-          <Placeholder
+          <AppPlaceholder
             name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
             rendering={props.rendering}
             page={props.page}
@@ -90,7 +90,7 @@ export const LogoLeft = (props: FooterSTProps) => {
           </h2>
           <div className="lg:flex justify-end items-start gap-12">
             <div className="mb-6 lg:mb-0 font-(family-name:--font-heading) uppercase text-2xl">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}
@@ -98,7 +98,7 @@ export const LogoLeft = (props: FooterSTProps) => {
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}
@@ -144,7 +144,7 @@ export const LogoRight = (props: FooterSTProps) => {
           </h2>
           <div className="lg:flex items-start gap-12">
             <div className="mb-6 lg:mb-0 font-(family-name:--font-heading) uppercase text-2xl">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}
@@ -152,7 +152,7 @@ export const LogoRight = (props: FooterSTProps) => {
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}
@@ -197,7 +197,7 @@ export const Centered = (props: FooterSTProps) => {
           </h2>
           <div>
             <div className="mb-6 lg:mb-12 font-(family-name:--font-heading) uppercase text-2xl">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-primary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}
@@ -205,7 +205,7 @@ export const Centered = (props: FooterSTProps) => {
               />
             </div>
             <div className="font-(family-name:--font-accent) font-medium">
-              <Placeholder
+              <AppPlaceholder
                 name={`footer-secondary-links-${props.params.DynamicPlaceholderId}`}
                 rendering={props.rendering}
                 page={props.page}

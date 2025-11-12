@@ -2,7 +2,7 @@ import { Container70Props } from '@/components/container/container-70/container-
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { cn } from '@/lib/utils';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 export const Default: React.FC<Container70Props> = (props) => {
   const { rendering, children, page } = props;
@@ -36,7 +36,7 @@ export const Default: React.FC<Container70Props> = (props) => {
       <Flex className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
           <div className="mx-auto md:max-w-[70%]">
-            <Placeholder name={PLACEHOLDER_NAME} rendering={rendering} page={page} componentMap={componentMap} />
+            <AppPlaceholder name={PLACEHOLDER_NAME} rendering={rendering} page={page} componentMap={componentMap} />
           </div>
         </FlexItem>
       </Flex>

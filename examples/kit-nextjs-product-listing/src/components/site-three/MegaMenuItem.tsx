@@ -5,13 +5,13 @@ import {
   LinkField,
   Field,
   ImageField,
+  AppPlaceholder,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 import { MegaMenuToggle, MegaMenuContent, MegaMenuBackButton } from './MegaMenuItemWrapper';
 
 interface Fields {
@@ -70,7 +70,7 @@ export const Default = (props: MegaMenuItemProps) => {
           </MegaMenuBackButton>
 
           <div className="text-2xl **:font-(family-name:--font-heading) uppercase pb-8">
-            <Placeholder
+            <AppPlaceholder
               name={`mega-menu-item-primary-links-${props.params?.DynamicPlaceholderId}`}
               rendering={props.rendering}
               page={props.page}
@@ -78,7 +78,7 @@ export const Default = (props: MegaMenuItemProps) => {
             />
           </div>
           <div className="flex flex-col gap-6 pb-8">
-            <Placeholder
+            <AppPlaceholder
               name={`mega-menu-item-secondary-links-${props.params?.DynamicPlaceholderId}`}
               rendering={props.rendering}
               page={props.page}

@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils';
 import * as e from '@/lib/enum';
 
 import {
+  AppPlaceholder,
   ComponentFields,
   ComponentParams,
   ComponentRendering,
@@ -12,7 +13,6 @@ import { Slot } from '@radix-ui/react-slot';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { twMerge } from 'tailwind-merge';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 
 /** Flex Component
  * This component is designed for easy layout within a container,
@@ -349,7 +349,7 @@ export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields }) => 
       gap={getFieldValue(fields, 'gap')}
       className={getFieldValue(fields, 'className')}
     >
-      <Placeholder name={phKey} rendering={rendering} page={page} componentMap={componentMap} />
+      <AppPlaceholder name={phKey} rendering={rendering} page={page} componentMap={componentMap} />
     </Flex>
   );
 };
@@ -365,7 +365,7 @@ export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields })
       alignSelf={getFieldValue(fields, 'alignSelf')}
       className={getFieldValue(fields, 'className')}
     >
-      <Placeholder name={phKey} rendering={rendering} page={page} componentMap={componentMap} />
+      <AppPlaceholder name={phKey} rendering={rendering} page={page} componentMap={componentMap} />
     </FlexItem>
   );
 };

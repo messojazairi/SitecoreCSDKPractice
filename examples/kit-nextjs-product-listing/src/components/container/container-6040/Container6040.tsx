@@ -3,10 +3,10 @@ import {
   getContainerPlaceholderProps,
   isContainerPlaceholderEmpty,
 } from '@/components/container/container.util';
+import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';
 import { cn } from '@/lib/utils';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 
 export const Default: React.FC<Container6040Props> = (props) => {
   const { rendering, left, right, page } = props;
@@ -35,10 +35,10 @@ export const Default: React.FC<Container6040Props> = (props) => {
     >
       <Flex wrap="nowrap">
         <FlexItem as="div" basis="6/10">
-          <Placeholder name={leftPlaceholders.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder name={leftPlaceholders.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
         <FlexItem as="div" basis="4/10">
-          <Placeholder name={rightPlaceholders.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder name={rightPlaceholders.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
         </FlexItem>
       </Flex>
     </section>

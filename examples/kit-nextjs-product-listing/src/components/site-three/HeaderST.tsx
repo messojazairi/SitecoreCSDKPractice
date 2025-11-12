@@ -5,13 +5,13 @@ import {
   NextImage as ContentSdkImage,
   LinkField,
   ImageField,
+  AppPlaceholder,
 } from '@sitecore-content-sdk/nextjs';
 import Link from 'next/link';
 import { MiniCart } from './non-sitecore/MiniCart';
 import { SearchBox } from './non-sitecore/SearchBox';
 import { ComponentProps } from 'lib/component-props';
 import componentMap from '.sitecore/component-map';
-import Placeholder from 'components/content-sdk/Placeholder';
 import { MobileMenuWrapper } from './MobileMenuWrapper';
 
 interface Fields {
@@ -43,7 +43,7 @@ export const Default = (props: HeaderSTProps) => {
           role="navigation"
         >
           <ul className="hidden lg:flex flex-row lg:[.partial-editing-mode_&]:!flex-col text-left bg-background">
-            <Placeholder
+            <AppPlaceholder
               name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
               rendering={props.rendering}
               page={props.page}
@@ -74,7 +74,7 @@ export const Default = (props: HeaderSTProps) => {
                 <div className="lg:hidden flex flex-col w-full h-full">
                   <div className="flex-1 flex items-center justify-center">
                     <ul className="flex flex-col text-center bg-background">
-                      <Placeholder
+                      <AppPlaceholder
                         name={`header-navigation-${props.params?.DynamicPlaceholderId}`}
                         rendering={props.rendering}
                         page={props.page}
