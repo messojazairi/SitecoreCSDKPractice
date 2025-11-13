@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from 'shadcn/components/ui/button';
 import {
   Link as ContentSdkLink,
@@ -9,8 +7,8 @@ import {
   ImageField,
   Field,
   LinkField,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
+import { ComponentProps } from '@/lib/component-props';
 
 interface Fields {
   CTATitle: Field<string>;
@@ -20,7 +18,7 @@ interface Fields {
   CTAImage: ImageField;
 }
 
-type CTAProps = {
+type CTAProps = ComponentProps & {
   params: { [key: string]: string };
   fields: Fields;
 };
@@ -30,7 +28,7 @@ export const Default = (props: CTAProps) => {
 };
 
 export const CallToAction1 = (props: CTAProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -86,7 +84,7 @@ export const CallToAction1 = (props: CTAProps) => {
 };
 
 export const CallToAction2 = (props: CTAProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -136,7 +134,7 @@ export const CallToAction2 = (props: CTAProps) => {
 };
 
 export const CallToAction3 = (props: CTAProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -186,7 +184,7 @@ export const CallToAction3 = (props: CTAProps) => {
 };
 
 export const CallToAction4 = (props: CTAProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (

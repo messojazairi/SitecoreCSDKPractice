@@ -7,12 +7,12 @@ import {
   ComponentParams,
   ComponentRendering,
   getFieldValue,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { Slot } from '@radix-ui/react-slot';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { twMerge } from 'tailwind-merge';
 import componentMap from '.sitecore/component-map';
+import type { ComponentProps } from '@/lib/component-props';
 
 /** Flex Component
  * This component is designed for easy layout within a container,
@@ -263,9 +263,8 @@ export interface FlexItemProps {
 }
 
 // XM Cloud Component Props
-export interface XMComponent {
+export interface XMComponent extends ComponentProps {
   rendering: ComponentRendering & { params: ComponentParams };
-  params: ComponentParams;
   fields: ComponentFields;
 }
 
@@ -338,9 +337,8 @@ export const FlexItem: React.FC<FlexItemProps> = ({
   );
 };
 
-export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields }) => {
+export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields, page }) => {
   const phKey = `flex-${params.DynamicPlaceholderId}`;
-  const {page} = useSitecore();
   return (
     <Flex
       direction={getFieldValue(fields, 'direction')}
@@ -354,9 +352,8 @@ export const XMFlex: React.FC<XMComponent> = ({ params, rendering, fields }) => 
   );
 };
 
-export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields }) => {
+export const XMFlexItem: React.FC<XMComponent> = ({ params, rendering, fields, page }) => {
   const phKey = `flex-item-${params.DynamicPlaceholderId}`;
-  const {page} = useSitecore();
   return (
     <FlexItem
       grow={getFieldValue(fields, 'grow')}

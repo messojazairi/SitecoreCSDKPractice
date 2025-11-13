@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { SubmissionFormProps } from './submission-form.props';
 import { SubmissionFormDefault } from './SubmissionFormDefault.dev';
 import { SubmissionFormCentered } from './SubmissionFormCentered.dev';
@@ -10,7 +7,7 @@ import { SubmissionFormCentered } from './SubmissionFormCentered.dev';
 // Default display of the component
 
 export const Default: React.FC<SubmissionFormProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
 
   return <SubmissionFormDefault {...props} isPageEditing={isPageEditing} />;
@@ -18,7 +15,7 @@ export const Default: React.FC<SubmissionFormProps> = (props) => {
 
 // Variants
 export const Centered: React.FC<SubmissionFormProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
 
   return <SubmissionFormCentered {...props} isPageEditing={isPageEditing} />;

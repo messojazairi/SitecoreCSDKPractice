@@ -1,7 +1,4 @@
-'use client';
-
 import type React from 'react';
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { GlobalFooterProps } from './global-footer.props';
 import { GlobalFooterDefault } from './GlobalFooterDefault.dev';
 import { GlobalFooterBlackCompact } from './GlobalFooterBlackCompact.dev';
@@ -14,7 +11,7 @@ import { dictionaryKeys } from '@/variables/dictionary';
 
 // Default display of the component
 export const Default: React.FC<GlobalFooterProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -30,7 +27,7 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
 
 // Variants
 export const BlackCompactVariant: React.FC<GlobalFooterProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -45,7 +42,7 @@ export const BlackCompactVariant: React.FC<GlobalFooterProps> = (props) => {
 };
 
 export const BlackLargeVariant: React.FC<GlobalFooterProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -60,7 +57,7 @@ export const BlackLargeVariant: React.FC<GlobalFooterProps> = (props) => {
 };
 
 export const BlueCenteredVariant: React.FC<GlobalFooterProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -75,7 +72,7 @@ export const BlueCenteredVariant: React.FC<GlobalFooterProps> = (props) => {
 };
 
 export const BlueCompactVariant: React.FC<GlobalFooterProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {

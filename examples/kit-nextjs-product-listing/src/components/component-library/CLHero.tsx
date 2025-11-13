@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   NextImage as ContentSdkImage,
@@ -9,8 +7,8 @@ import {
   ImageField,
   Field,
   LinkField,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
+import { ComponentProps } from '@/lib/component-props';
 
 interface Fields {
   HeroTitle: Field<string>;
@@ -21,7 +19,7 @@ interface Fields {
   HeroImage2: ImageField;
 }
 
-type HeroProps = {
+type HeroProps = ComponentProps & {
   params: { [key: string]: string };
   fields: Fields;
 };
@@ -31,7 +29,7 @@ export const Default = (props: HeroProps) => {
 };
 
 export const Hero1 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -103,7 +101,7 @@ export const Hero1 = (props: HeroProps) => {
 };
 
 export const Hero2 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -158,7 +156,7 @@ export const Hero2 = (props: HeroProps) => {
 };
 
 export const Hero3 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   const backgroundImageUrl = props.fields?.HeroImage1?.value?.src;
@@ -220,7 +218,7 @@ export const Hero3 = (props: HeroProps) => {
 };
 
 export const Hero4 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -273,7 +271,7 @@ export const Hero4 = (props: HeroProps) => {
 };
 
 export const Hero5 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
@@ -327,7 +325,7 @@ export const Hero5 = (props: HeroProps) => {
 };
 
 export const Hero6 = (props: HeroProps) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (

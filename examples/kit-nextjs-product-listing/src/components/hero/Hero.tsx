@@ -1,7 +1,4 @@
-'use client';
-
 import type React from 'react';
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { HeroProps } from './hero.props';
 import { HeroDefault } from './HeroDefault.dev';
 import { HeroImageBottom } from './HeroImageBottom.dev';
@@ -14,7 +11,7 @@ import { dictionaryKeys } from '@/variables/dictionary';
 
 // Default display of the component
 export const Default: React.FC<HeroProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -30,7 +27,7 @@ export const Default: React.FC<HeroProps> = (props) => {
 
 // Variants
 export const ImageBottom: React.FC<HeroProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -45,7 +42,7 @@ export const ImageBottom: React.FC<HeroProps> = (props) => {
 };
 
 export const ImageBottomInset: React.FC<HeroProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -60,7 +57,7 @@ export const ImageBottomInset: React.FC<HeroProps> = (props) => {
 };
 
 export const ImageBackground: React.FC<HeroProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
@@ -75,7 +72,7 @@ export const ImageBackground: React.FC<HeroProps> = (props) => {
 };
 
 export const ImageRight: React.FC<HeroProps> = (props) => {
-  const { page } = useSitecore();
+  const { page } = props;
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {

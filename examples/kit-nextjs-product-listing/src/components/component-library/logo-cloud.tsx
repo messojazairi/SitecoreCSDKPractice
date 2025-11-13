@@ -1,17 +1,15 @@
-'use client';
-
 import { ArrowRight } from 'lucide-react';
 import {
   NextImage as ContentSdkImage,
   Link as ContentSdkLink,
   RichText as ContentSdkRichText,
   Text as ContentSdkText,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { Button } from 'shadcd/components/ui/button';
 import { IGQLImageField, IGQLLinkField, IGQLRichTextField, IGQLTextField } from 'src/types/igql';
 
 import type { JSX } from 'react';
+import { ComponentProps } from 'lib/component-props';
 
 interface Fields {
   data: {
@@ -32,13 +30,13 @@ interface LogoFields {
   logoLink: IGQLLinkField;
 }
 
-type LogoCloudProps = {
+type LogoCloudProps = ComponentProps & {
   params: { [key: string]: string };
   fields: Fields;
 };
 
 export const Default = (props: LogoCloudProps): JSX.Element => {
-  const { page } = useSitecore();
+  const { page } = props;
   const { isEditing } = page.mode;
 
   return (
