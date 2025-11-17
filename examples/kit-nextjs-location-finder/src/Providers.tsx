@@ -8,6 +8,8 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 import scConfig from 'sitecore.config';
 import components from '.sitecore/component-map.client';
+import { ThemeProvider } from '@/components/theme-provider/theme-provider.dev';
+import { VideoProvider } from './contexts/VideoContext';
 
 export default function Providers({
   children,
@@ -20,7 +22,18 @@ export default function Providers({
 }) {
   return (
     <SitecoreProvider api={scConfig.api} componentMap={components} page={page}>
-      <ComponentPropsContext value={componentProps}>{children}</ComponentPropsContext>
+      <ComponentPropsContext value={componentProps}>
+        <VideoProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </VideoProvider>
+      </ComponentPropsContext>
     </SitecoreProvider>
   );
 }
