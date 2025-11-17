@@ -1,4 +1,3 @@
-'use client'
 import React, { JSX } from 'react';
 import { ComponentRendering, AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';

@@ -1,4 +1,3 @@
-'use client'
 import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import {
   getContainerPlaceholderProps,

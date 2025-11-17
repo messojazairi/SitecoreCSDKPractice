@@ -1,4 +1,3 @@
-'use client'
 import { ComponentParams, ComponentRendering, AppPlaceholder, NextjsContentSdkComponent, Page } from '@sitecore-content-sdk/nextjs';
 import React, { type JSX } from 'react';
 

@@ -1,4 +1,3 @@
-'use client'
 import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { ContainerFullWidthProps } from '@/components/container/container-full-width/container-full-width.props';
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';

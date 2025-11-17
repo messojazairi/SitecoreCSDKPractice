@@ -1,4 +1,3 @@
-'use client'
 import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { Container3070Props } from '@/components/container/container-3070/container-3070.props';
 import {

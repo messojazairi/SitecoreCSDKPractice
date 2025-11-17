@@ -1,4 +1,3 @@
-'use client';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Field } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';

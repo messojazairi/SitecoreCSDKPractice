@@ -1,4 +1,3 @@
-'use client';
 import React, { type JSX } from 'react';
 import {
   RichText as ContentSdkRichText,

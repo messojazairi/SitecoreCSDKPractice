@@ -1,4 +1,3 @@
-'use client'
 import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { Container70Props } from '@/components/container/container-70/container-70.props';
 import { Flex, FlexItem } from '@/components/flex/Flex.dev';

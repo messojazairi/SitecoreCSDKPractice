@@ -16,21 +16,13 @@ import * as TextBanner02dev from 'src/components/text-banner/TextBanner02.dev';
 import * as TextBanner01dev from 'src/components/text-banner/TextBanner01.dev';
 import * as TextBanner from 'src/components/text-banner/TextBanner';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
-import * as RowSplitter from 'src/components/sxa/RowSplitter';
-import * as Promo from 'src/components/sxa/Promo';
-import * as PartialDesignDynamicPlaceholder from 'src/components/sxa/PartialDesignDynamicPlaceholder';
-import * as PageContent from 'src/components/sxa/PageContent';
 import * as Navigation from 'src/components/sxa/Navigation';
 import * as LinkList from 'src/components/sxa/LinkList';
-import * as Image from 'src/components/sxa/Image';
-import * as Container from 'src/components/sxa/Container';
-import * as ColumnSplitter from 'src/components/sxa/ColumnSplitter';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SubmissionFormDefaultdev from 'src/components/submission-form/SubmissionFormDefault.dev';
 import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
 import * as SubmissionForm from 'src/components/submission-form/SubmissionForm';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
-import * as SiteMetadata from 'src/components/site-metadata/SiteMetadata';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
 import * as PromoImage from 'src/components/promo-image/PromoImage';
 import * as PromoAnimatedImageRightdev from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
@@ -99,16 +91,6 @@ import * as ZipcodeSearchFormdev from 'src/components/forms/zipcode/ZipcodeSearc
 import * as SubmitInfoFormdev from 'src/components/forms/submitinfo/SubmitInfoForm.dev';
 import * as EmailSignupFormdev from 'src/components/forms/email/EmailSignupForm.dev';
 import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev';
-import * as ContainerFullWidth from 'src/components/container/container-full-width/ContainerFullWidth';
-import * as Container7030 from 'src/components/container/container-7030/Container7030';
-import * as Container70 from 'src/components/container/container-70/Container70';
-import * as Container6321 from 'src/components/container/container-6321/Container6321';
-import * as Container6040 from 'src/components/container/container-6040/Container6040';
-import * as Container5050 from 'src/components/container/container-5050/Container5050';
-import * as Container4060 from 'src/components/container/container-4060/Container4060';
-import * as Container3070 from 'src/components/container/container-3070/Container3070';
-import * as Container303030 from 'src/components/container/container-303030/Container303030';
-import * as Container25252525 from 'src/components/container/container-25252525/Container25252525';
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
@@ -134,21 +116,13 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TextBanner01', { ...TextBanner01dev }],
   ['TextBanner', { ...TextBanner }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
-  ['RowSplitter', { ...RowSplitter }],
-  ['Promo', { ...Promo }],
-  ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
-  ['PageContent', { ...PageContent }],
   ['Navigation', { ...Navigation }],
   ['LinkList', { ...LinkList }],
-  ['Image', { ...Image }],
-  ['Container', { ...Container }],
-  ['ColumnSplitter', { ...ColumnSplitter }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
   ['SubmissionFormDefault', { ...SubmissionFormDefaultdev }],
   ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
   ['SubmissionForm', { ...SubmissionForm }],
   ['SlideCarousel', { ...SlideCarouseldev }],
-  ['SiteMetadata', { ...SiteMetadata }],
   ['SecondaryNavigation', { ...SecondaryNavigation }],
   ['PromoImage', { ...PromoImage }],
   ['PromoAnimatedImageRight', { ...PromoAnimatedImageRightdev }],
@@ -216,16 +190,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmitInfoForm', { ...SubmitInfoFormdev }],
   ['EmailSignupForm', { ...EmailSignupFormdev }],
   ['floating-dock', { ...floatingdockdev }],
-  ['ContainerFullWidth', { ...ContainerFullWidth }],
-  ['Container7030', { ...Container7030 }],
-  ['Container70', { ...Container70 }],
-  ['Container6321', { ...Container6321 }],
-  ['Container6040', { ...Container6040 }],
-  ['Container5050', { ...Container5050 }],
-  ['Container4060', { ...Container4060 }],
-  ['Container3070', { ...Container3070 }],
-  ['Container303030', { ...Container303030 }],
-  ['Container25252525', { ...Container25252525 }],
   ['Carousel', { ...Carousel }],
   ['card-spotlight', { ...cardspotlightdev }],
   ['ArticleHeader', { ...ArticleHeader }],
