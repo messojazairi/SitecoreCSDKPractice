@@ -15,8 +15,6 @@ import * as TestimonialCarousel from 'src/components/testimonial-carousel/Testim
 import * as Navigation from 'src/components/sxa/Navigation';
 import * as LinkList from 'src/components/sxa/LinkList';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
-import * as SubmissionFormDefaultdev from 'src/components/submission-form/SubmissionFormDefault.dev';
-import * as SubmissionFormCentereddev from 'src/components/submission-form/SubmissionFormCentered.dev';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
 import * as TextSlider from 'src/components/site-three/TextSlider';
 import * as ProductPageHeader from 'src/components/site-three/ProductPageHeader';
@@ -25,7 +23,6 @@ import * as MultiPromo from 'src/components/site-three/MultiPromo';
 import * as MobileMenuWrapper from 'src/components/site-three/MobileMenuWrapper';
 import * as MegaMenuItemWrapper from 'src/components/site-three/MegaMenuItemWrapper';
 import * as ImageCarousel from 'src/components/site-three/ImageCarousel';
-import * as ImageBanner from 'src/components/site-three/ImageBanner';
 import * as HeroST from 'src/components/site-three/HeroST';
 import * as FeatureBanner from 'src/components/site-three/FeatureBanner';
 import * as AccordionBlock from 'src/components/site-three/AccordionBlock';
@@ -52,7 +49,6 @@ import * as LocationSearchTitleZipCentereddev from 'src/components/location-sear
 import * as LocationSearchMapTopAllCentereddev from 'src/components/location-search/LocationSearchMapTopAllCentered.dev';
 import * as LocationSearchMapRightTitleZipCentereddev from 'src/components/location-search/LocationSearchMapRightTitleZipCentered.dev';
 import * as LocationSearchMapRightdev from 'src/components/location-search/LocationSearchMapRight.dev';
-import * as LocationSearchItemdev from 'src/components/location-search/LocationSearchItem.dev';
 import * as LocationSearchDefaultdev from 'src/components/location-search/LocationSearchDefault.dev';
 import * as GoogleMapdev from 'src/components/location-search/GoogleMap.dev';
 import * as ImageGalleryNoSpacingdev from 'src/components/image-gallery/ImageGalleryNoSpacing.dev';
@@ -60,7 +56,6 @@ import * as ImageGalleryGriddev from 'src/components/image-gallery/ImageGalleryG
 import * as ImageGalleryFiftyFiftydev from 'src/components/image-gallery/ImageGalleryFiftyFifty.dev';
 import * as ImageGalleryFeaturedImagedev from 'src/components/image-gallery/ImageGalleryFeaturedImage.dev';
 import * as ImageGallerydev from 'src/components/image-gallery/ImageGallery.dev';
-import * as nextImageSrcdev from 'src/components/image/nextImageSrc.dev';
 import * as ImageWrapperdev from 'src/components/image/ImageWrapper.dev';
 import * as imageoptimizationcontext from 'src/components/image/image-optimization.context';
 import * as Icon from 'src/components/icon/Icon';
@@ -88,7 +83,6 @@ import * as FAQ from 'src/components/component-library/FAQ';
 import * as ContactSection from 'src/components/component-library/ContactSection';
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
-import * as ButtonComponent from 'src/components/button-component/ButtonComponent';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
@@ -109,8 +103,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Navigation', { ...Navigation }],
   ['LinkList', { ...LinkList }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
-  ['SubmissionFormDefault', { ...SubmissionFormDefaultdev }],
-  ['SubmissionFormCentered', { ...SubmissionFormCentereddev }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['TextSlider', { ...TextSlider }],
   ['ProductPageHeader', { ...ProductPageHeader }],
@@ -119,7 +111,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['MobileMenuWrapper', { ...MobileMenuWrapper }],
   ['MegaMenuItemWrapper', { ...MegaMenuItemWrapper }],
   ['ImageCarousel', { ...ImageCarousel }],
-  ['ImageBanner', { ...ImageBanner }],
   ['HeroST', { ...HeroST }],
   ['FeatureBanner', { ...FeatureBanner }],
   ['AccordionBlock', { ...AccordionBlock }],
@@ -146,7 +137,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['LocationSearchMapTopAllCentered', { ...LocationSearchMapTopAllCentereddev }],
   ['LocationSearchMapRightTitleZipCentered', { ...LocationSearchMapRightTitleZipCentereddev }],
   ['LocationSearchMapRight', { ...LocationSearchMapRightdev }],
-  ['LocationSearchItem', { ...LocationSearchItemdev }],
   ['LocationSearchDefault', { ...LocationSearchDefaultdev }],
   ['GoogleMap', { ...GoogleMapdev }],
   ['ImageGalleryNoSpacing', { ...ImageGalleryNoSpacingdev }],
@@ -154,7 +144,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageGalleryFiftyFifty', { ...ImageGalleryFiftyFiftydev }],
   ['ImageGalleryFeaturedImage', { ...ImageGalleryFeaturedImagedev }],
   ['ImageGallery', { ...ImageGallerydev }],
-  ['nextImageSrc', { ...nextImageSrcdev }],
   ['ImageWrapper', { ...ImageWrapperdev }],
   ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...Icon }],
@@ -182,7 +171,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ContactSection', { ...ContactSection }],
   ['Carousel', { ...Carousel }],
   ['card-spotlight', { ...cardspotlightdev }],
-  ['ButtonComponent', { ...ButtonComponent }],
   ['ArticleHeader', { ...ArticleHeader }],
   ['AnimatedSection', { ...AnimatedSectiondev }],
   ['AlertBanner', { ...AlertBannerdev }],

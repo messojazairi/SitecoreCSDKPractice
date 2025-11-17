@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import { Text } from '@sitecore-content-sdk/nextjs';
 import { Default as SubmitInfoForm } from '@/components/forms/submitinfo/SubmitInfoForm.dev';

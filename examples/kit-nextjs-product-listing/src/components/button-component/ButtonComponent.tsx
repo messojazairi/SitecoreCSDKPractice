@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
 
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
