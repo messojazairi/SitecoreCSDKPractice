@@ -13,6 +13,7 @@ import { isMobile } from '@/utils/isMobile';
 import { extractVideoId } from '@/utils/video';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { cn, getYouTubeThumbnail } from '@/lib/utils';
+import Image from 'next/image';
 export function VideoBase({
   fields,
   params,
@@ -108,11 +109,13 @@ export function VideoBase({
                 />
               ) : (
                 <div className="cover-image absolute inset-0">
-                  <img
-                    src={fallbackImage}
+                  <Image
+                    src={fallbackImage || '/placeholder.svg'}
                     aria-hidden="true"
                     alt=""
-                    className="absolute inset-0 h-full w-full object-cover"
+                    fill
+                    className="object-cover"
+                    unoptimized={fallbackImage?.includes('youtube.com') || fallbackImage?.includes('ytimg.com')}
                   />
                 </div>
               )}

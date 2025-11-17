@@ -68,16 +68,10 @@ const FloatingDockMobile = ({
   forceCollapse?: boolean;
 }) => {
   const [open, setOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const firstItemRef = useRef<HTMLButtonElement>(null);
   const lastItemRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
 
   const closeMenu = useCallback(() => setOpen(false), []);
 
