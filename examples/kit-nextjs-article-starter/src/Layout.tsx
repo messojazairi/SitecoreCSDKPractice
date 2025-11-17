@@ -3,7 +3,12 @@
  */
 import React, { type JSX } from 'react';
 import Head from 'next/head';
-import { Page, Field, ImageField } from '@sitecore-content-sdk/nextjs';
+import {
+  Page,
+  Field,
+  ImageField,
+  AppPlaceholder,
+} from '@sitecore-content-sdk/nextjs';
 import Scripts from 'src/Scripts';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { Figtree } from 'next/font/google';
@@ -11,7 +16,6 @@ import { VideoProvider } from './contexts/VideoContext';
 import { DesignLibraryLayout } from './DesignLibraryLayout';
 import componentMap from '.sitecore/component-map';
 import { ThemeProvider } from 'components/theme-provider/theme-provider.dev';
-import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 const heading = Figtree({
   weight: ['400', '500'],
@@ -52,16 +56,21 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
   const classNamesMain = `${mainClassPageEditing} ${body.variable} ${heading.variable} main-layout`;
 
   const metaTitle =
-    fields?.metadataTitle?.value?.toString() || fields?.pageTitle?.value?.toString() || 'Page';
+    fields?.metadataTitle?.value?.toString() ||
+    fields?.pageTitle?.value?.toString() ||
+    'Page';
   const metaDescription =
-    fields?.metadataDescription?.value?.toString() || fields?.pageSummary?.value?.toString() || '';
+    fields?.metadataDescription?.value?.toString() ||
+    fields?.pageSummary?.value?.toString() ||
+    '';
   const metaKeywords = fields?.metadataKeywords?.value?.toString() || '';
   const ogTitle =
     fields?.ogTitle?.value?.toString() ||
     fields?.metadataTitle?.value?.toString() ||
     fields?.pageTitle?.value?.toString() ||
     'Page';
-  const ogImage = fields?.ogImage?.value?.src || fields?.thumbnailImage?.value?.src;
+  const ogImage =
+    fields?.ogImage?.value?.src || fields?.thumbnailImage?.value?.src;
   const ogDescription =
     fields?.ogDescription?.value?.toString() ||
     fields?.metadataDescription?.value?.toString() ||
@@ -74,11 +83,15 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
       <Head>
         <link rel="preconnect" href="https://edge-platform.sitecorecloud.io" />
         <title>{metaTitle}</title>
-        {metaDescription && <meta name="description" content={metaDescription} />}
+        {metaDescription && (
+          <meta name="description" content={metaDescription} />
+        )}
         {metaKeywords && <meta name="keywords" content={metaKeywords} />}
         <link rel="icon" href="/favicon.ico" />
         {ogTitle && <meta property="og:title" content={ogTitle} />}
-        {ogDescription && <meta property="og:description " content={ogDescription} />}
+        {ogDescription && (
+          <meta property="og:description " content={ogDescription} />
+        )}
         {ogImage && <meta property="og:image " content={ogImage} />}
       </Head>
       <VideoProvider>

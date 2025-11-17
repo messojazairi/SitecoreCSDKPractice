@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Text } from '@sitecore-content-sdk/nextjs';
+import { Text, AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 import { GlobalFooterProps } from '@/components/global-footer/global-footer.props';
 import { Default as FooterCallout } from '@/components/footer-navigation-callout/FooterNavigationCallout.dev';
 import { Default as Logo } from '@/components/logo/Logo.dev';
@@ -7,7 +7,6 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { EditableImageButton } from 'components/button-component/ButtonComponent';
 import { cn } from 'lib/utils';
 import componentMap from '.sitecore/component-map';
-import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
   const { fields, rendering, page } = props;
