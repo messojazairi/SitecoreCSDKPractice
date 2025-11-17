@@ -227,7 +227,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['FooterNavigationCallout', { ...FooterNavigationCalloutdev }],
   ['floating-dock', { ...floatingdockdev }],
   ['Flex', { ...Flexdev }],
-  ['CtaBanner', { ...CtaBanner, componentType: 'client' }],
+  ['CtaBanner', { ...CtaBanner }],
   ['container', { ...containerutil }],
   ['ContainerFullWidth', { ...ContainerFullWidth }],
   ['ContainerFullBleed', { ...ContainerFullBleed }],
@@ -251,7 +251,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockItem', { ...AccordionBlockItemdev }],
   ['AccordionBlockDefault', { ...AccordionBlockDefaultdev }],
-  ['AccordionBlock', { ...AccordionBlock, componentType: 'client' }],
+  ['AccordionBlock', { ...AccordionBlock }],
   ['accordion-block', { ...accordionblockprops }],
 ]);
 

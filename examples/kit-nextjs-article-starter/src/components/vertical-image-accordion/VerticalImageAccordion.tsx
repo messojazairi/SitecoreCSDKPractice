@@ -7,12 +7,10 @@ import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { VerticalImageAccordionProps } from './vertical-image-accordion.props';
 import { EditableButton } from '@/components/button-component/ButtonComponent';
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
 
-export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageEditing }) => {
+export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageEditing, page }) => {
   const [activeIndex, setActiveIndex] = useState<number>(1);
   const [isExpanding, setIsExpanding] = useState(false);
-  const { page } = useSitecore();
   const isEditMode = isPageEditing || page.mode.isEditing;
 
   const handleClick = (index: number) => {

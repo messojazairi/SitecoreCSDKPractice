@@ -3,7 +3,6 @@
 import React from 'react';
 import {
   Link,
-  useSitecore,
   Text,
   Field,
   ImageField,
@@ -58,9 +57,9 @@ export const Default: React.FC<ArticleListingProps> = ({
   fields,
   params,
   isPageEditing: propIsEditing,
+  page,
 }) => {
   const { titleOptional, descriptionOptional, linkOptional, featuredContent } = fields || {};
-  const { page } = useSitecore();
   const contextIsEditing = page.mode.isEditing;
 
   // Use the prop value if provided, otherwise fall back to the context value

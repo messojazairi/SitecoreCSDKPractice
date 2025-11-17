@@ -12,7 +12,6 @@ import {
   LinkField,
   Text,
   DateField,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
@@ -77,7 +76,7 @@ interface PersonItem {
   personLinkedIn?: LinkField;
 }
 
-export const Default: React.FC<ArticleHeaderProps> = ({ fields }) => {
+export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
   const { imageRequired, eyebrowOptional } = fields?.data?.datasource ?? {};
   const externalFields = fields?.data?.externalFields ?? {};
   const {
@@ -94,7 +93,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields }) => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [forceCollapse] = useState(true);
   const copyNotificationRef = useRef<HTMLDivElement>(null);
-  const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
   const t = useTranslations();
   const dictionary = {
