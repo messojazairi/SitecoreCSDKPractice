@@ -12,10 +12,9 @@ import {
 import Scripts from 'src/Scripts';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { Figtree } from 'next/font/google';
-import { VideoProvider } from './contexts/VideoContext';
 import { DesignLibraryLayout } from './DesignLibraryLayout';
 import componentMap from '.sitecore/component-map';
-import { ThemeProvider } from 'components/theme-provider/theme-provider.dev';
+import Providers from './Providers';
 
 const heading = Figtree({
   weight: ['400', '500'],
@@ -94,55 +93,53 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
         )}
         {ogImage && <meta property="og:image " content={ogImage} />}
       </Head>
-      <VideoProvider>
+      <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
-        <ThemeProvider attribute="class" disableTransitionOnChange>
-          <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
-            {mode.isDesignLibrary ? (
-              <DesignLibraryLayout />
-            ) : (
-              <>
-                <header>
-                  <div id="header">
-                    {route && (
-                      <AppPlaceholder
-                        page={page}
-                        componentMap={componentMap}
-                        name="headless-header"
-                        rendering={route}
-                      />
-                    )}
-                  </div>
-                </header>
-                <main>
-                  <div id="content" className="antialiased">
-                    {route && (
-                      <AppPlaceholder
-                        page={page}
-                        componentMap={componentMap}
-                        name="headless-main"
-                        rendering={route}
-                      />
-                    )}
-                  </div>
-                </main>
-                <footer>
-                  <div id="footer">
-                    {route && (
-                      <AppPlaceholder
-                        page={page}
-                        componentMap={componentMap}
-                        name="headless-footer"
-                        rendering={route}
-                      />
-                    )}
-                  </div>
-                </footer>
-              </>
-            )}
-          </div>
-        </ThemeProvider>
-      </VideoProvider>
+        <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
+          {mode.isDesignLibrary ? (
+            <DesignLibraryLayout />
+          ) : (
+            <>
+              <header>
+                <div id="header">
+                  {route && (
+                    <AppPlaceholder
+                      page={page}
+                      componentMap={componentMap}
+                      name="headless-header"
+                      rendering={route}
+                    />
+                  )}
+                </div>
+              </header>
+              <main>
+                <div id="content" className="antialiased">
+                  {route && (
+                    <AppPlaceholder
+                      page={page}
+                      componentMap={componentMap}
+                      name="headless-main"
+                      rendering={route}
+                    />
+                  )}
+                </div>
+              </main>
+              <footer>
+                <div id="footer">
+                  {route && (
+                    <AppPlaceholder
+                      page={page}
+                      componentMap={componentMap}
+                      name="headless-footer"
+                      rendering={route}
+                    />
+                  )}
+                </div>
+              </footer>
+            </>
+          )}
+        </div>
+      </Providers>
     </>
   );
 };

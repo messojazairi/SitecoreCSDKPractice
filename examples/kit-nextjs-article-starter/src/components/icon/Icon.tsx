@@ -21,7 +21,7 @@ export type IconProps = SvgProps & {
 export const defaultSvgProps = {};
 
 export const sharedAttributes = (props: SvgProps): Record<string, unknown> => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  
   const { isAriaHidden = true, altText, ...rest } = props;
 
   // attributes where a blank value would not affect user experience can be defined here as default
