@@ -48,7 +48,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
     ...props.fields.Image,
     value: {
       ...props.fields.Image.value,
-      style: { width: '100%', height: '100%' },
+      style: { objectFit: 'cover', width: '100%', height: '100%' },
     },
   };
 
@@ -58,7 +58,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
       id={id ? id : undefined}
     >
       <div className="component-content sc-sxa-image-hero-banner" style={backgroundStyle}>
-        {isPageEditing ? <ContentSdkImage field={modifyImageProps} /> : ''}
+        {isPageEditing ? <ContentSdkImage field={modifyImageProps} loading='eager' fetchPriority='high' /> : ''}
       </div>
     </div>
   );

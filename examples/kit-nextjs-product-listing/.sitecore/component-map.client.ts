@@ -56,7 +56,6 @@ import * as ImageGalleryGriddev from 'src/components/image-gallery/ImageGalleryG
 import * as ImageGalleryFiftyFiftydev from 'src/components/image-gallery/ImageGalleryFiftyFifty.dev';
 import * as ImageGalleryFeaturedImagedev from 'src/components/image-gallery/ImageGalleryFeaturedImage.dev';
 import * as ImageGallerydev from 'src/components/image-gallery/ImageGallery.dev';
-import * as ImageWrapperdev from 'src/components/image/ImageWrapper.dev';
 import * as imageoptimizationcontext from 'src/components/image/image-optimization.context';
 import * as Icon from 'src/components/icon/Icon';
 import * as HeroImageRightdev from 'src/components/hero/HeroImageRight.dev';
@@ -144,7 +143,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageGalleryFiftyFifty', { ...ImageGalleryFiftyFiftydev }],
   ['ImageGalleryFeaturedImage', { ...ImageGalleryFeaturedImagedev }],
   ['ImageGallery', { ...ImageGallerydev }],
-  ['ImageWrapper', { ...ImageWrapperdev }],
   ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...Icon }],
   ['HeroImageRight', { ...HeroImageRightdev }],
