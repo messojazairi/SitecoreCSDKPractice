@@ -9,11 +9,13 @@ import {
 import { NextIntlClientProvider } from 'next-intl';
 import scConfig from 'sitecore.config';
 import components from '.sitecore/component-map.client';
+import { ThemeProvider } from '@/components/theme-provider/theme-provider.dev';
+import { VideoProvider } from './contexts/VideoContext';
 
 export default function Providers({
   children,
   page,
-  componentProps = {},
+  componentProps,
   locale,
   messages,
 }: {
@@ -36,7 +38,19 @@ export default function Providers({
       }}
     >
       <SitecoreProvider api={scConfig.api} componentMap={components} page={page}>
-        <ComponentPropsContext value={componentProps}>{children}</ComponentPropsContext>
+        <ComponentPropsContext value={componentProps || {}}>
+          <VideoProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="light"
+              forcedTheme="light"
+              enableSystem={false}
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </VideoProvider>
+        </ComponentPropsContext>
       </SitecoreProvider>
     </NextIntlClientProvider>
   );
