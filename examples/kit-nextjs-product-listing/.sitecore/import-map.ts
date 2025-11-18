@@ -17,7 +17,8 @@ import { isMobile } from '@/utils/isMobile';
 import { extractVideoId } from '@/utils/video';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { cn, getYouTubeThumbnail } from '@/lib/utils';
-import { Text, Link, AppPlaceholder, RichText, NextImage, useSitecore, withDatasourceCheck, Image, CdpHelper } from '@sitecore-content-sdk/nextjs';
+import Image from 'next/image';
+import { Text, Link, AppPlaceholder, RichText, NextImage, useSitecore, withDatasourceCheck, Image as Image_8a80e63291fea86e0744df19113dc44bec187216, CdpHelper } from '@sitecore-content-sdk/nextjs';
 import { Default as Default_86213dc9d44683259b98a62fc55d1fe1127767c5 } from '@/components/image/ImageWrapper.dev';
 import { ButtonBase } from '@/components/button-component/ButtonComponent';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
@@ -271,6 +272,12 @@ const importMap = [
     ]
   },
   {
+    module: 'next/image',
+    exports: [
+      { name: 'default', value: Image },
+    ]
+  },
+  {
     module: '@sitecore-content-sdk/nextjs',
     exports: [
       { name: 'Text', value: Text },
@@ -280,7 +287,7 @@ const importMap = [
       { name: 'NextImage', value: NextImage },
       { name: 'useSitecore', value: useSitecore },
       { name: 'withDatasourceCheck', value: withDatasourceCheck },
-      { name: 'Image', value: Image },
+      { name: 'Image', value: Image_8a80e63291fea86e0744df19113dc44bec187216 },
       { name: 'CdpHelper', value: CdpHelper },
     ]
   },

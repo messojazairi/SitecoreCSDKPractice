@@ -22,6 +22,7 @@ const heading = localFont({
   ],
   variable: '--font-heading',
   display: 'swap',
+  preload: true,
 });
 
 const body = IBM_Plex_Sans({
@@ -29,6 +30,7 @@ const body = IBM_Plex_Sans({
   variable: '--font-body',
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
+  preload: true,
 });
 
 const accent = IBM_Plex_Mono({
@@ -36,6 +38,7 @@ const accent = IBM_Plex_Mono({
   variable: '--font-accent',
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
+  preload: true,
 });
 
 // tailwindcss-safelist
