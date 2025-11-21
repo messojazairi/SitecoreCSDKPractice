@@ -14,6 +14,7 @@ const ProductListingCard = ({
   link,
   prefersReducedMotion,
   isPageEditing,
+  page,
 }: ProductCardProps) => {
   const t = useTranslations();
   const dictionary = {
@@ -28,7 +29,7 @@ const ProductListingCard = ({
         data-component="ProductListingCard"
       >
         <div className="relative overflow-hidden">
-          <ImageWrapper image={product.productThumbnail?.jsonValue} className="mx-auto" />
+          <ImageWrapper image={product.productThumbnail?.jsonValue} className="mx-auto" page={page} />
         </div>
 
         <div className="space-y-6">

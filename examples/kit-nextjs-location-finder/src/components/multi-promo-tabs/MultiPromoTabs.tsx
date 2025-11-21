@@ -83,7 +83,7 @@ export const Default: React.FC<MultiPromoTabsProps> = (props) => {
           <AnimatePresence mode="wait">
             {tabItems.map((item, index) => (
               <TabsContent key={index} value={index.toString()}>
-                <PromoTab {...item} isEditMode={isEditing} />
+                <PromoTab {...item} isEditMode={isEditing} page={props.page} />
               </TabsContent>
             ))}
           </AnimatePresence>

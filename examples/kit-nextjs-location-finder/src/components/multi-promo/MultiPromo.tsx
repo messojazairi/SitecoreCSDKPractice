@@ -124,7 +124,7 @@ export const Default: React.FC<MultiPromoProps> = (props) => {
                       }
                     )}
                   >
-                    <MultiPromoItem key={index} {...item} />
+                    <MultiPromoItem key={index} {...item} page={props.page} />
                   </CarouselItem>
                 ))}
               </CarouselContent>

@@ -13,15 +13,18 @@ import { isMobile } from '@/utils/isMobile';
 import { extractVideoId } from '@/utils/video';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { cn, getYouTubeThumbnail } from '@/lib/utils';
+import { Page } from '@sitecore-content-sdk/nextjs';
 import Image from 'next/image';
 export function VideoBase({
   fields,
   params,
   playButtonClassName,
+  page,
 }: {
   fields: VideoFields;
   params: VideoParams;
   playButtonClassName?: string;
+  page?: Page;
 }) {
   // playButtonClassName is applied to button but can be use to style the icon
   const [isPlaying, setIsPlaying] = useState(false);
@@ -106,6 +109,7 @@ export function VideoBase({
                   className="absolute inset-0 h-full w-full object-cover"
                   aria-hidden="true"
                   wrapperClass="absolute inset-0 cover-image"
+                  page={page}
                 />
               ) : (
                 <div className="cover-image absolute inset-0">
@@ -172,9 +176,9 @@ export function VideoBase({
   );
 }
 
-export function Default({ fields, params }: VideoComponentProps) {
+export function Default({ fields, params, page }: VideoComponentProps) {
   if (fields) {
-    return <VideoBase fields={fields} params={params} />;
+    return <VideoBase fields={fields} params={params} page={page} />;
   }
   return <NoDataFallback componentName="Video" />;
 }

@@ -134,6 +134,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
                           link={viewAllLink?.jsonValue}
                           prefersReducedMotion={isReducedMotion}
                           isPageEditing={isPageEditing}
+                          page={props.page}
                         />
                       </div>
                     </AnimatedSection>
@@ -166,6 +167,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
                           link={viewAllLink?.jsonValue}
                           prefersReducedMotion={isReducedMotion}
                           isPageEditing={isPageEditing}
+                          page={props.page}
                         />
                       </div>
                     </AnimatedSection>

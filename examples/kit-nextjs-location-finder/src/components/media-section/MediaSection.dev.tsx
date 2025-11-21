@@ -122,6 +122,7 @@ export const Default = ({
             className
           )}
           alt=""
+          page={page}
         />
       ) : null}
     </div>

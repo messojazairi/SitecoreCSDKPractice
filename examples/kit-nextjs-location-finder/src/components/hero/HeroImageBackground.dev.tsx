@@ -51,6 +51,7 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
             priority={true}
             loading='eager'
             fetchPriority='high'
+            page={props.page}
           />
 
           {/* Blur effect for mobile */}

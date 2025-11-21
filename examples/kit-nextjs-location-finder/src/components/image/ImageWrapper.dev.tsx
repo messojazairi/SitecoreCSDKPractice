@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils';
 import {
   ImageField,
   Image as ContentSdkImage,
+  Page,
 } from '@sitecore-content-sdk/nextjs';
 import NextImage, { ImageProps } from 'next/image';
 import placeholderImageLoader from '@/utils/placeholderImageLoader';
@@ -17,6 +18,7 @@ type ImageWrapperProps = {
   wrapperClass?: string;
   isEditing?: boolean;
   isPreview?: boolean;
+  page?: Page; // Optional page prop to auto-detect editing mode
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
@@ -27,11 +29,16 @@ export const Default: React.FC<ImageWrapperProps> = (props) => {
     className,
     wrapperClass,
     sizes,
-    isEditing = false,
-    isPreview = false,
+    isEditing: propIsEditing,
+    isPreview: propIsPreview,
+    page,
     priority,
     ...rest
   } = props;
+
+  // Auto-detect editing/preview mode from page if not explicitly provided
+  const isEditing = propIsEditing ?? page?.mode?.isEditing ?? false;
+  const isPreview = propIsPreview ?? page?.mode?.isPreview ?? false;
 
   // Read unoptimized setting from environment variable
   const unoptimized = process.env.NEXT_PUBLIC_NEXT_IMAGE_UNOPTIMIZED === 'true';
