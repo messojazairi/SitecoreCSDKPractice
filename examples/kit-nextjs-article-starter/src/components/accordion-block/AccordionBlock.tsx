@@ -1,5 +1,3 @@
-'use client';
-
 import type React from 'react';
 import type { AccordionProps } from './accordion-block.props';
 import { AccordionBlockDefault } from './AccordionBlockDefault.dev';
