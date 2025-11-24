@@ -1,0 +1,940 @@
+# Windsurf IDE Rules - XM Cloud Front End Starter Kits
+
+## Project Overview
+
+### Repository Structure
+This is the **XM Cloud Front End Application Starter Kits** repository containing multiple Next.js starter applications and SPA examples for Sitecore XM Cloud development.
+
+**Key Directories:**
+- `/examples/` - Starter front-end applications (Next.js and SPA)
+  - `basic-nextjs` - Simple Next.js starter with basic XM Cloud integration
+  - `kit-nextjs-article-starter` - **Solterra & Co.** - Editorial-style template for lifestyle brands
+  - `kit-nextjs-location-finder` - **Alaris** - Car brand template with location finder functionality
+  - `kit-nextjs-product-listing` - **SYNC** - Product-focused template for audio gear companies
+  - `kit-nextjs-skate-park` - Demo site showcasing component examples
+  - `basic-spa` - SPA starter kit with Angular and Node proxy
+- `/authoring/` - Sitecore content items, templates, and deployment configurations
+- `/local-containers/` - Docker setup for local development environments
+- `xmcloud.build.json` - Primary configuration for XM Cloud deployment
+
+### Technology Stack
+
+**Core Technologies:**
+- **Next.js 14+** - React framework with App Router and Pages Router support
+- **TypeScript** - Strict type safety throughout all components
+- **Sitecore XM Cloud** - Headless content management and delivery
+- **Sitecore Content SDK** (`@sitecore-content-sdk/nextjs`) - Modern SDK for XM Cloud integration
+- **Tailwind CSS** - Utility-first CSS with container queries (@container)
+- **Shadcn/ui** - Modern component library with accessibility features
+
+**Additional Libraries:**
+- **Framer Motion** - Animation library for interactive components
+- **Lucide React** - Icon library for consistent iconography
+- **next-localization** - Internationalization with dictionary support
+- **change-case** - String case transformation utilities
+
+**Development Tools:**
+- **Docker** - Containerized local development with Sitecore CM
+- **Node.js LTS** - JavaScript runtime environment
+- **npm** - Package management across all starter applications
+
+### Architecture Principles
+
+**Multi-Starter Architecture:**
+- Each example is a standalone application with independent deployment
+- Shared patterns and conventions across all starters (no monorepo linking)
+- Common XM Cloud integration patterns
+- Content-first development with field-driven rendering
+
+**Development Workflow:**
+- Each starter maintains its own `src/` directory structure
+- Shared utilities should be copied, not shared
+- Configuration files specific to each starter application
+- Independent package.json for each example
+
+---
+
+## Coding Standards
+
+### TypeScript Configuration
+
+**Strict Mode Requirements:**
+- Enable strict mode in all projects
+- Prefer explicit types over `any`
+- Use discriminated unions for complex state
+- Export types at module boundaries for reusability
+- Define proper interfaces for XM Cloud data structures
+
+```typescript
+// tsconfig.json - Always enable strict mode
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true
+  }
+}
+```
+
+**Type Usage:**
+- Use `type` imports for TypeScript types: `import type React from 'react'`
+- Prefer type assertions over any: `value as LayoutData`
+- Use discriminated unions for complex state management
+- Define interfaces for all component props and XM Cloud data structures
+
+### Naming Conventions
+
+**Variables and Functions:**
+- Use camelCase: `handleClick()`, `isActive`, `prefersReducedMotion`
+- Boolean variables: prefix with `is`, `has`, `can`, `should`
+- Event handlers: prefix with `handle` or `on`: `handleClick`, `handleKeyDown`
+- State variables: descriptive names like `activeIndex`, `isExpanding`
+
+**Components (React):**
+- Use PascalCase: `ArticleHeader`, `ProductListing`, `VerticalImageAccordion`
+- Main component files: `Hero.tsx`, `ProductListing.tsx`
+- Component directories: kebab-case like `article-header/`, `product-listing/`
+
+**Constants and Environment Variables:**
+- Use UPPER_SNAKE_CASE: `USER_ZIPCODE`, `DEFAULT_TIMEOUT`
+- Environment variables: `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`
+- Dictionary keys: `dictionaryKeys.HERO_SubmitCTALabel`
+
+**Types and Interfaces:**
+- Component props: `HeroProps`, `ArticleHeaderProps`, `ProductListingProps`
+- Field interfaces: `ArticleHeaderFields`, `HeroFields`
+- Parameter interfaces: `ArticleHeaderParams`, `VerticalImageAccordionParams`
+- Use `{ [key: string]: any; // eslint-disable-line }` for flexible params
+
+### Import Organization
+
+**Import Order:**
+1. React and Next.js imports
+2. Third-party library imports
+3. Sitecore Content SDK imports
+4. Internal library imports
+5. Component imports
+6. Utility imports
+7. Type imports
+
+```typescript
+// Standard import pattern for XM Cloud components
+'use client'; // When client-side features needed
+
+import type React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
+import { Text, RichText, Image, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { ComponentProps } from '@/lib/component-props';
+import { NoDataFallback } from '@/utils/NoDataFallback';
+import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
+import { ButtonBase } from '@/components/button-component/ButtonComponent';
+```
+
+### Documentation Standards
+
+**JSDoc Comments:**
+- All new functions, interfaces, classes must have JSDoc style comments
+- Include @param tags for all parameters with types and descriptions
+- Include @returns tag for return values with type and description
+- Use descriptive comments that explain the purpose and behavior
+
+```typescript
+/**
+ * Hero component for displaying prominent content on XM Cloud pages
+ * @param {HeroProps} props - Component props from XM Cloud datasource
+ * @returns {JSX.Element} The rendered hero component with variants support
+ */
+export const HeroDefault: React.FC<HeroProps> = (props) => {
+  // Implementation
+};
+```
+
+---
+
+## Folder Structure
+
+### Standard Directory Layout
+
+```
+examples/[starter-name]/
+├── src/
+│   ├── components/          # React components organized by feature
+│   │   ├── hero/           # Component directories with variants
+│   │   │   └── Hero.tsx    # Main component file with props and all variants
+│   │   ├── article-header/ # Component with complex structure
+│   │   ├── product-listing/ # Multi-variant component
+│   │   ├── ui/             # Shadcn/ui components (button, card, etc.)
+│   │   ├── image/          # Reusable image wrapper
+│   │   └── button-component/ # Button variations
+│   ├── lib/                # Configuration and utilities
+│   │   ├── component-props/ # Shared component props
+│   │   ├── constants.ts    # Application constants
+│   │   └── utils.ts        # Common utilities (cn helper)
+│   ├── utils/              # Helper functions and utilities
+│   │   ├── NoDataFallback.tsx # Standard fallback component
+│   │   └── date-utils.ts   # Date formatting utilities
+│   ├── hooks/              # Custom React hooks
+│   ├── variables/          # Constants and dictionary keys
+│   ├── pages/              # Next.js pages (Pages Router)
+│   │   ├── api/           # API routes
+│   │   └── [...path].tsx  # Catch-all route for XM Cloud
+│   ├── app/                # Next.js App Router (if using)
+│   ├── styles/             # Styling files (global CSS)
+│   └── middleware.ts       # Next.js middleware
+├── public/                 # Static assets
+├── .env.local             # Local environment variables
+├── .env.remote.example    # Environment template
+├── next.config.js         # Next.js configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+├── tsconfig.json          # TypeScript configuration
+└── package.json           # Dependencies and scripts
+```
+
+### File Organization Rules
+
+**Component Files:**
+- Main component file should contain all variants and props following the Locality of Behavior pattern
+- Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes difficult
+- Component directories use kebab-case naming
+- Main component files use PascalCase naming
+
+**Shared Utilities:**
+- Place in dedicated directories (`lib/`, `utils/`, `hooks/`)
+- Group UI components in `ui/` subdirectory
+- Keep utilities focused and single-purpose
+
+---
+
+## Best Practices
+
+### Functional Programming Principles (RO-RO Pattern)
+
+**Receive an Object, Return an Object (RO-RO):**
+- Functions should receive a single object parameter
+- Functions should return a single object
+- Makes code more maintainable and extendable
+
+```typescript
+// Good: RO-RO pattern
+function processUser({ name, email, role }: UserInput): UserResult {
+  return {
+    success: true,
+    user: { name, email, role },
+    timestamp: Date.now()
+  };
+}
+
+// Avoid: Multiple parameters
+function processUser(name: string, email: string, role: string): User {
+  return { name, email, role };
+}
+```
+
+**Immutability:**
+- Prefer immutable data patterns
+- Use spread operators for copying objects and arrays
+- Avoid mutating function parameters
+- Use `readonly` types where appropriate
+
+```typescript
+// Good: Immutable pattern
+const updatedUser = { ...user, name: 'New Name' };
+const newItems = [...items, newItem];
+
+// Avoid: Mutation
+user.name = 'New Name';
+items.push(newItem);
+```
+
+**Pure Functions:**
+- Prefer pure functions where possible
+- Avoid side effects in business logic
+- Compose small, focused functions
+- Use React hooks appropriately
+
+**Functional Components:**
+- Use functional components with hooks exclusively
+- Implement proper prop validation with TypeScript
+- Handle loading and error states explicitly
+- Use React.memo for performance optimization when needed
+
+### XM Cloud Component Patterns
+
+**Component Structure - Locality of Behavior:**
+- Create a single `ComponentName.tsx` with all variants and props
+- Export named variants: `Default`, `ThreeUp`, `Slider`, `ImageBottom`, etc.
+- Extend from `ComponentProps` from `@/lib/component-props`
+
+```typescript
+import type React from 'react';
+import { useSitecore } from '@sitecore-content-sdk/nextjs';
+import { ComponentProps } from '@/lib/component-props';
+import { Field, ImageField } from '@sitecore-jss/sitecore-jss-nextjs';
+
+interface HeroParams {
+  [key: string]: any; // eslint-disable-line
+}
+
+interface HeroFields {
+  title?: { jsonValue: Field<string> };
+  subtitle?: { jsonValue: Field<string> };
+  backgroundImage?: { jsonValue: ImageField };
+}
+
+interface HeroProps extends ComponentProps {
+  params: HeroParams;
+  fields: {
+    data: {
+      datasource: HeroFields;
+    };
+  };
+  isPageEditing?: boolean;
+}
+
+// Export wrapper that provides editing context
+export const Default: React.FC<HeroProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <HeroDefault {...props} isPageEditing={isEditing} />;
+};
+
+// Main component implementation
+const HeroDefault: React.FC<HeroProps> = (props) => {
+  const { fields, isPageEditing } = props;
+  
+  // Always validate datasource
+  if (!fields?.data?.datasource) {
+    return <NoDataFallback componentName="Hero" />;
+  }
+  
+  // Safe destructuring with fallbacks
+  const { title, subtitle, backgroundImage } = fields.data.datasource;
+  
+  return (
+    <section className="hero">
+      {(title?.jsonValue?.value || isPageEditing) && (
+        <Text field={title?.jsonValue} tag="h1" />
+      )}
+      {(subtitle?.jsonValue?.value || isPageEditing) && (
+        <Text field={subtitle?.jsonValue} tag="p" />
+      )}
+      {(backgroundImage?.jsonValue?.value?.src || isPageEditing) && (
+        <Image field={backgroundImage?.jsonValue} />
+      )}
+    </section>
+  );
+};
+```
+
+**Safe Destructuring:**
+- Always use fallbacks when destructuring nested objects
+- Use optional chaining for field access
+- Handle null/undefined gracefully
+
+```typescript
+// ✅ Safe destructuring with fallbacks
+const { titleRequired, descriptionOptional } = fields || {};
+const { data: { datasource } = {} } = fields || {};
+field={fields.data?.datasource?.title?.jsonValue}
+
+// ❌ Unsafe - can throw destructuring errors
+const { title } = fields.data.datasource; // Error if fields.data is null
+field={fields.data.datasource.title.jsonValue} // Error if any part is null/undefined
+```
+
+**Data Source Validation:**
+- Always check `fields?.data?.datasource` existence
+- Use `NoDataFallback` component for missing datasources
+- Handle both editing and preview modes
+- Provide meaningful error messages
+
+### Error Handling
+
+**Error Strategy:**
+- Fail fast with clear, actionable messages
+- Provide context in error messages
+- Use custom error classes for domain-specific errors
+- Handle edge cases explicitly with guard clauses
+- Log errors appropriately for debugging
+
+```typescript
+// API error handling pattern
+async function fetchLayoutData(path: string): Promise<LayoutData> {
+  if (!path) {
+    throw new Error('Path is required for layout data fetch');
+  }
+  
+  try {
+    const response = await sitecoreLayoutService.getRouteData(path);
+    return response.sitecore.route;
+  } catch (error) {
+    throw new XMCloudFetchError(`Failed to fetch layout data for path: ${path}`, error);
+  }
+}
+```
+
+**XM Cloud Error Patterns:**
+- Handle missing datasource gracefully
+- Provide fallback content for failed API calls
+- Implement proper error boundaries for component failures
+- Handle both connected and disconnected mode errors
+
+### Security Best Practices
+
+**Input Validation:**
+- Sanitize user inputs and XM Cloud content before processing
+- Validate data at application boundaries
+- Use type guards for runtime type checking
+- Escape content when rendering to prevent XSS
+
+**Environment Variables:**
+- Never hardcode sensitive values in source code
+- Use environment variables for all configuration
+- Validate environment variables at application startup
+- Use different .env files for different environments
+- Never commit `.env.local` or sensitive files
+
+```typescript
+// Environment validation example
+const requiredEnvVars = [
+  'SITECORE_EDGE_CONTEXT_ID',
+  'NEXT_PUBLIC_DEFAULT_SITE_NAME',
+  'SITECORE_EDITING_SECRET'
+];
+
+requiredEnvVars.forEach(envVar => {
+  if (!process.env[envVar]) {
+    throw new Error(`Missing required environment variable: ${envVar}`);
+  }
+});
+```
+
+### Performance Optimization
+
+**React Performance:**
+- Use useCallback and useMemo appropriately
+- Implement proper key props for list rendering
+- Avoid unnecessary re-renders
+- Use React.lazy for component lazy loading
+- Profile performance in development mode
+
+**Next.js Optimization:**
+- Use Next.js Image component for optimized images (via Sitecore Content SDK)
+- Implement proper ISR patterns for XM Cloud content
+- Use dynamic imports for code splitting
+- Optimize bundle size with tree shaking
+- Implement proper caching strategies
+
+**XM Cloud Performance:**
+- Cache XM Cloud API responses appropriately
+- Use proper loading states for content fetching
+- Implement error boundaries to prevent cascade failures
+- Consider content freshness vs. performance trade-offs
+- Use proper GraphQL query optimization
+
+---
+
+## Styling
+
+### Tailwind CSS Standards
+
+**Utility-First CSS:**
+- Use Tailwind CSS utility classes throughout
+- Follow utility-first principles
+- Use `cn()` utility for conditional classes
+- Implement responsive design patterns
+- Maintain consistent design tokens
+
+```typescript
+import { cn } from '@/lib/utils';
+
+<div className={cn(
+  '@container bg-primary rounded-default',
+  'relative mx-auto my-6 max-w-7xl px-4 py-16',
+  isActive && '@md:w-full',
+  isError && 'border-2 border-red-500'
+)}>
+```
+
+**Container Queries:**
+- Use `@container` classes for responsive components
+- Implement component-level responsiveness
+- Prefer container queries over media queries for components
+
+### Shadcn/ui Integration
+
+**Component Usage:**
+- Import UI components from `@/components/ui/`
+- Use Shadcn/ui components for common UI elements
+- Customize components via Tailwind classes
+- Maintain accessibility features
+
+```typescript
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+```
+
+### Accessibility Standards
+
+**ARIA and Semantic HTML:**
+- Use proper semantic HTML tags
+- Implement proper ARIA attributes for interactive components
+- Ensure keyboard navigation support
+- Provide meaningful alt text for images
+
+**Motion Preferences:**
+- Check for `prefers-reduced-motion` when using animations
+- Respect user accessibility preferences
+- Provide alternatives to motion-based interactions
+
+```typescript
+'use client';
+
+import { useState, useEffect } from 'react';
+
+export const AnimatedComponent: React.FC<Props> = (props) => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+  }, []);
+  
+  // Conditionally apply animations based on preference
+};
+```
+
+### Responsive Design
+
+**Mobile-First Approach:**
+- Design for mobile devices first
+- Use Tailwind responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- Test across multiple device sizes
+- Ensure touch-friendly interactive elements
+
+---
+
+## Data Handling
+
+### XM Cloud Field Handling
+
+**Sitecore Field Components:**
+- Use `@sitecore-content-sdk/nextjs` field components
+- Access field values through `jsonValue` property
+- Handle optional fields with conditional rendering
+- Use proper semantic HTML tags
+
+```typescript
+import { Text, RichText, Image } from '@sitecore-content-sdk/nextjs';
+
+// Field rendering patterns
+{title?.jsonValue && (
+  <Text
+    tag="h1"
+    field={title.jsonValue}
+    className="hero-title text-4xl font-bold"
+  />
+)}
+
+{description?.jsonValue && (
+  <RichText field={description.jsonValue} />
+)}
+
+{image?.jsonValue && (
+  <Image
+    field={image.jsonValue}
+    alt={title?.jsonValue?.value || 'Hero image'}
+    className="w-full h-auto"
+  />
+)}
+```
+
+### Type Safety with Readonly Types
+
+**Readonly Interfaces:**
+- Use `readonly` modifier for immutable properties
+- Define readonly arrays with `ReadonlyArray<T>` or `readonly T[]`
+- Prevent accidental mutations at compile time
+
+```typescript
+interface UserData {
+  readonly id: string;
+  readonly name: string;
+  readonly roles: readonly string[];
+}
+
+// ✅ Cannot mutate readonly properties
+const user: UserData = {
+  id: '123',
+  name: 'John',
+  roles: ['admin']
+};
+
+// ❌ TypeScript error: Cannot assign to 'name' because it is a read-only property
+// user.name = 'Jane';
+```
+
+### Data Validation (Zod Pattern)
+
+**Runtime Validation:**
+- Validate external data at boundaries
+- Use Zod or similar libraries for schema validation
+- Provide clear error messages for validation failures
+- Validate environment variables at startup
+
+```typescript
+import { z } from 'zod';
+
+// Schema definition
+const UserSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1),
+  email: z.string().email(),
+  role: z.enum(['admin', 'user', 'guest'])
+});
+
+type User = z.infer<typeof UserSchema>;
+
+// Validation usage
+function processUserData(data: unknown): User {
+  try {
+    return UserSchema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('Validation failed:', error.errors);
+    }
+    throw new Error('Invalid user data');
+  }
+}
+```
+
+### Content SDK Import Guidelines
+
+**Client-Safe Imports (Components & Client Code):**
+
+```typescript
+// ✅ SAFE - Client-side component usage
+import { 
+  Text, 
+  RichText, 
+  Image, 
+  Link,
+  Field, 
+  LinkField, 
+  ImageField,
+  useSitecore,
+  SitecoreProvider,
+  Placeholder 
+} from '@sitecore-content-sdk/nextjs';
+
+// ✅ SAFE - Middleware usage (edge runtime)
+import { 
+  LocalizationMiddleware,
+  RedirectsMiddleware 
+} from '@sitecore-content-sdk/nextjs/middleware';
+```
+
+**Server-Only Imports (Configuration & Build):**
+
+```typescript
+// ❌ NEVER in client components
+// ✅ ONLY in server-side contexts (sitecore.config.ts, sitecore.cli.config.ts)
+import { defineConfig } from '@sitecore-content-sdk/nextjs/config';
+import { defineCliConfig } from '@sitecore-content-sdk/nextjs/config-cli';
+import { generateSites, generateMetadata, extractFiles } from '@sitecore-content-sdk/nextjs/tools';
+
+// ✅ ONLY in lib/sitecore-client.ts or server utilities
+import { SitecoreClient, GraphQLRequestClient } from '@sitecore-content-sdk/nextjs/client';
+```
+
+**Import Context Rules:**
+- **Configuration Files**: `sitecore.config.ts` uses `/config`, `sitecore.cli.config.ts` uses `/config-cli` and `/tools`
+- **Component Files**: React components use main package only
+- **Server Utilities**: `lib/sitecore-client.ts` uses `/client` submodule
+- **Page Files**: Page components use main package + `/utils` for path utilities
+- **API Routes**: Use `/middleware`, `/editing`, `/monitoring` as needed
+
+---
+
+## Testing
+
+### Testing Strategy
+
+**Component Testing:**
+- Test component rendering with various XM Cloud field configurations
+- Mock XM Cloud services and API calls
+- Test error scenarios (missing fields, API failures)
+- Verify proper handling of editing vs. preview modes
+- Test responsive behavior and accessibility
+
+**Integration Testing:**
+- Test complete page rendering with XM Cloud data
+- Verify API route functionality
+- Test middleware behavior for XM Cloud integration
+- Validate environment variable handling
+- Test deployment and build processes
+
+### Testing Tools
+
+**Recommended Stack:**
+- **Jest** or **Vitest** for unit testing
+- **React Testing Library** for component testing
+- **MSW (Mock Service Worker)** for API mocking
+- **Playwright** or **Cypress** for E2E testing
+- **Storybook** for component documentation and testing
+
+### Testing Patterns
+
+**Component Test Example:**
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import { Hero } from './Hero';
+
+// Mock XM Cloud field data
+const mockHeroFields = {
+  data: {
+    datasource: {
+      title: { 
+        jsonValue: { value: 'Test Hero Title', editable: false }
+      },
+      subtitle: { 
+        jsonValue: { value: 'Test Hero Subtitle', editable: false }
+      },
+      backgroundImage: {
+        jsonValue: {
+          value: {
+            src: '/test-image.jpg',
+            alt: 'Test Image',
+            width: 1200,
+            height: 600,
+          },
+          editable: false,
+        }
+      }
+    }
+  }
+};
+
+describe('Hero Component', () => {
+  it('renders with all fields present', () => {
+    render(<Hero fields={mockHeroFields} />);
+    
+    expect(screen.getByText('Test Hero Title')).toBeInTheDocument();
+    expect(screen.getByText('Test Hero Subtitle')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'Test Image');
+  });
+  
+  it('handles missing fields gracefully', () => {
+    render(<Hero fields={{}} />);
+    
+    expect(screen.getByText(/content not configured/i)).toBeInTheDocument();
+  });
+});
+```
+
+**API Route Test Example:**
+
+```typescript
+import { createMocks } from 'node-mocks-http';
+import handler from '../pages/api/robots';
+
+describe('/api/robots', () => {
+  it('returns robots.txt content', async () => {
+    const { req, res } = createMocks({
+      method: 'GET',
+    });
+    
+    await handler(req, res);
+    
+    expect(res._getStatusCode()).toBe(200);
+    expect(res._getHeaders()['content-type']).toBe('text/plain');
+  });
+});
+```
+
+**E2E Test Example (Playwright):**
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('homepage loads and displays content', async ({ page }) => {
+  await page.goto('/');
+  
+  // Wait for XM Cloud content to load
+  await page.waitForSelector('[data-testid="hero-component"]');
+  
+  // Verify content is displayed
+  await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('nav')).toBeVisible();
+});
+```
+
+### Test Data Management
+
+**Test Data Factory:**
+
+```typescript
+// Test data factory for XM Cloud structures
+export const createMockLayoutData = (overrides = {}) => ({
+  sitecore: {
+    context: {
+      pageEditing: false,
+      language: 'en',
+      site: { name: 'test-site' },
+    },
+    route: {
+      name: 'Test Page',
+      displayName: 'Test Page',
+      fields: {},
+      placeholders: {},
+      ...overrides,
+    },
+  },
+});
+```
+
+### Coverage Expectations
+
+**Quality Standards:**
+- Tests should be comprehensive enough to cover business logic
+- Validate that sites and components are working as intended
+- Ensure different rendering scenarios are tested:
+  - Design Library
+  - Page Editor
+  - Preview mode
+  - Hosted Vercel Sites
+  - Local Deployments
+- Test error scenarios and edge cases
+- Maintain test quality over quantity
+
+**Testing Commands:**
+- `npm test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:e2e` - Run end-to-end tests
+- `npm run test:ci` - Run all tests in CI mode
+
+### Continuous Integration
+
+**Quality Gates:**
+- All tests must pass before merging
+- Coverage thresholds must be met
+- No linting errors allowed
+- Performance budgets must be maintained
+- Security scans must pass
+
+---
+
+## Safety Rules
+
+### Never Edit These Files
+
+**Compiled Artifacts:**
+- `node_modules/` - Installed packages
+- `.next/`, `dist/`, `out/`, `build/` - Generated during build
+- `.cache/`, `.sitecore/` - Cache directories (except component-map.ts)
+- `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml` - Lock files
+- `*.js.map`, `*.css.map`, `*.d.ts.map` - Source maps
+
+**Configuration Files:**
+- `scjssconfig.json`, `.sitecore/user.json` - Sitecore configs
+- `Dockerfile`, `docker-compose*.yml` - Docker files
+- `.github/workflows/` - CI/CD configs
+
+**Package Files:**
+- `*.itempackage`, `*.sicpackage` - Sitecore packages
+- `*.tgz`, `*.tar.gz`, `*.zip` - Archive files
+- `*.exe`, `*.dll`, `*.obj` - Binary files
+
+**Environment Files:**
+- Never commit `.env.local`, `.env.*.local`
+- Never commit `*.deploysecret.config`
+- Never commit `.sitecore/user.json`
+
+### Editable Source Files
+
+**Focus on:**
+- Source code: `.ts`, `.tsx`, `.js`, `.jsx` files in `src/`
+- Configuration: `next.config.js`, `tsconfig.json`, `package.json`
+- Documentation: `README.md`, `CONTRIBUTING.md`
+- Styles: `.css`, `.scss` files
+- Component maps: `.sitecore/component-map.ts`
+
+---
+
+## Development Workflow
+
+### Local Development Setup
+
+```bash
+# Navigate to any starter
+cd examples/kit-nextjs-article-starter
+
+# Copy environment template
+cp .env.remote.example .env.local
+
+# Edit .env.local with your XM Cloud values
+# Required variables:
+# - SITECORE_EDGE_CONTEXT_ID
+# - NEXT_PUBLIC_DEFAULT_SITE_NAME
+# - SITECORE_EDITING_SECRET
+
+# Install dependencies and start
+npm install
+npm run dev
+```
+
+### Git Workflow (DMZ Pattern - Planned)
+
+**Planned DMZ git flow for future implementation:**
+- Shared main repo (`upstream repository`) with two key branches: `main` and `dmz`
+- Each contributor uses their own fork as workspace
+- Feature branches sourced from `main`, PRs merged to `dmz` branch
+- `main` branch always clean (deployable, branchable, reliable) - no direct PRs
+- Developers push to feature branches in fork, create PRs to `dmz`
+- PRs merged to `dmz` after review and validation
+- CI server validates full build of `dmz` HEAD
+- Only clean builds fast-forward `main` to `dmz` HEAD
+- Failed builds keep `main` clean; problematic merges reverted from `dmz`
+
+### Deployment
+
+**XM Cloud Deployment:**
+- Uses `xmcloud.build.json` for rendering host configuration
+- Each starter can be enabled/disabled via `enabled` flag
+- Supports multiple rendering hosts in single repository
+- Automatic editing host creation when split deployment is disabled
+- Environment-specific configuration through XM Cloud Deploy Portal
+
+---
+
+## Code Quality and Linting
+
+### Standards
+
+**Continuous Quality:**
+- Keep ESLint + Prettier passing at all times
+- Follow configured style rules consistently
+- Use automated formatting on save
+- Address linting warnings promptly
+- Maintain consistent code style across all starters
+
+**Pre-Commit Checks:**
+- Run linter before committing
+- Ensure tests pass
+- Check TypeScript compilation
+- Verify build process completes
+
+---
+
+## Summary
+
+This repository follows modern web development best practices with a focus on:
+- **Type Safety**: TypeScript strict mode throughout
+- **Performance**: Optimized builds, ISR, code splitting
+- **Accessibility**: WCAG compliance, semantic HTML, ARIA
+- **Maintainability**: Clear patterns, documentation, testing
+- **XM Cloud Integration**: Proper field handling, editing support, Content SDK usage
+
