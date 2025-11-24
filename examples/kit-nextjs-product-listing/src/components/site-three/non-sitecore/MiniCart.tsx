@@ -22,6 +22,7 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
         field={cartLink}
         prefetch={false}
         className="block p-4"
+        aria-label="Shopping cart"
         onClick={(e) => {
           e.preventDefault();
           setIsVisible(!isVisible);
