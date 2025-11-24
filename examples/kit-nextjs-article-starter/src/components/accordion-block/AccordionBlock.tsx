@@ -6,8 +6,8 @@ import { AccordionBlockDefault } from './AccordionBlockDefault.dev';
 
 // Default display of the component
 export const Default: React.FC<AccordionProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <AccordionBlockDefault {...props} isPageEditing={isPageEditing} />;
 };
