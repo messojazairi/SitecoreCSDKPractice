@@ -6,7 +6,8 @@ import { combineImportEntries, defaultImportEntries } from '@sitecore-content-sd
 import { useState, useEffect, useRef, useCallback, useId, Fragment } from 'react';
 import React from 'react';
 import * as React_7214d18997ee864dd178de7b3a8430f6783e8b89 from 'react';
-import { useSitecore, Text, Link, AppPlaceholder, RichText, NextImage, withDatasourceCheck, Image, CdpHelper, DateField } from '@sitecore-content-sdk/nextjs';
+import Image from 'next/image';
+import { useSitecore, Text, Link, AppPlaceholder, RichText, NextImage, withDatasourceCheck, Image as Image_8a80e63291fea86e0744df19113dc44bec187216, CdpHelper, DateField } from '@sitecore-content-sdk/nextjs';
 import { VideoPlayer } from 'src/components/video/VideoPlayer.dev';
 import { VideoModal } from 'src/components/video/VideoModal.dev';
 import { useVideoModal } from 'src/hooks/useVideoModal';
@@ -137,6 +138,12 @@ const importMap = [
     ]
   },
   {
+    module: 'next/image',
+    exports: [
+      { name: 'default', value: Image },
+    ]
+  },
+  {
     module: '@sitecore-content-sdk/nextjs',
     exports: [
       { name: 'useSitecore', value: useSitecore },
@@ -146,7 +153,7 @@ const importMap = [
       { name: 'RichText', value: RichText },
       { name: 'NextImage', value: NextImage },
       { name: 'withDatasourceCheck', value: withDatasourceCheck },
-      { name: 'Image', value: Image },
+      { name: 'Image', value: Image_8a80e63291fea86e0744df19113dc44bec187216 },
       { name: 'CdpHelper', value: CdpHelper },
       { name: 'DateField', value: DateField },
     ]
