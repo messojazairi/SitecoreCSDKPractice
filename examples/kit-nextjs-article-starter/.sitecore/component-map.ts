@@ -251,7 +251,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockItem', { ...AccordionBlockItemdev }],
   ['AccordionBlockDefault', { ...AccordionBlockDefaultdev }],
-  ['AccordionBlock', { ...AccordionBlock }],
+  ['AccordionBlock', { ...AccordionBlock, componentType: 'client' }],
   ['accordion-block', { ...accordionblockprops }],
 ]);
 
