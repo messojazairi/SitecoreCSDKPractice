@@ -27,7 +27,7 @@ export default async function NotFound() {
     if (page) {
       return (
         <NextIntlClientProvider>
-          <Providers page={page} componentProps={{}}>
+          <Providers page={page}>
             <Layout page={page} />
           </Providers>
         </NextIntlClientProvider>

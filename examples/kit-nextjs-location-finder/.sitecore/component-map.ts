@@ -406,7 +406,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['AccordionBlockItem', { ...AccordionBlockItemdev }],
   ['AccordionBlockDefault', { ...AccordionBlockDefaultdev }],
   ['AccordionBlockCentered', { ...AccordionBlockCentereddev }],
-  ['AccordionBlock', { ...AccordionBlock, componentType: 'client' }],
+  ['AccordionBlock', { ...AccordionBlock }],
   ['Accordion5050TitleAbove', { ...Accordion5050TitleAbovedev }],
   ['accordion-block', { ...accordionblockprops }],
 ]);

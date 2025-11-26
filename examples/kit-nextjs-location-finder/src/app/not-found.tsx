@@ -16,7 +16,7 @@ export default async function NotFound() {
 
       if (page) {
         return (
-          <Providers page={page} componentProps={{}}>
+          <Providers page={page}>
             <Layout page={page} />
           </Providers>
         );

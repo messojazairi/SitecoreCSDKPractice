@@ -96,7 +96,6 @@ import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
 import * as AccordionBlockTwoColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockTwoColumnTitleLeft.dev';
 import * as AccordionBlockOneColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockOneColumnTitleLeft.dev';
-import * as AccordionBlock from 'src/components/accordion-block/AccordionBlock';
 
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCClientWrapper],
@@ -194,7 +193,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockTwoColumnTitleLeft', { ...AccordionBlockTwoColumnTitleLeftdev }],
   ['AccordionBlockOneColumnTitleLeft', { ...AccordionBlockOneColumnTitleLeftdev }],
-  ['AccordionBlock', { ...AccordionBlock }],
 ]);
 
 export default componentMap;
