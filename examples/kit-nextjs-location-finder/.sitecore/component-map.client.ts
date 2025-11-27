@@ -68,7 +68,6 @@ import * as ImageCarouselFeaturedImageLeftdev from 'src/components/image-carouse
 import * as ImageCarouselEditModedev from 'src/components/image-carousel/ImageCarouselEditMode.dev';
 import * as ImageCarouselDefaultdev from 'src/components/image-carousel/ImageCarouselDefault.dev';
 import * as ImageCarousel from 'src/components/image-carousel/ImageCarousel';
-import * as imageoptimizationcontext from 'src/components/image/image-optimization.context';
 import * as Icon from 'src/components/icon/Icon';
 import * as HeroImageRightdev from 'src/components/hero/HeroImageRight.dev';
 import * as HeroImageBottomInsetdev from 'src/components/hero/HeroImageBottomInset.dev';
@@ -166,7 +165,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ImageCarouselEditMode', { ...ImageCarouselEditModedev }],
   ['ImageCarouselDefault', { ...ImageCarouselDefaultdev }],
   ['ImageCarousel', { ...ImageCarousel }],
-  ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...Icon }],
   ['HeroImageRight', { ...HeroImageRightdev }],
   ['HeroImageBottomInset', { ...HeroImageBottomInsetdev }],

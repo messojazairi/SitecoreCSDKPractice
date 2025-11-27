@@ -26,6 +26,17 @@ export default defineCliConfig({
       'src/components/ui/*',
       'src/components/lib/*',
       'src/components/component-library/*',
+      // Exclude non-component files (props, utils, dictionaries, contexts)
+      '**/*.props.ts',
+      '**/*.props.tsx',
+      '**/*.util.ts',
+      '**/*.util.tsx',
+      '**/*.dictionary.ts',
+      '**/*.dictionary.tsx',
+      '**/*.context.ts',
+      '**/*.context.tsx',
+      '**/utils.ts',
+      '**/utils.tsx',
     ],
   },
 });
