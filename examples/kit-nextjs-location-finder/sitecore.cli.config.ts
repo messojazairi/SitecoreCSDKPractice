@@ -19,24 +19,25 @@ export default defineCliConfig({
       }),
     ],
   },
-  componentMap: {
-    paths: ['src/components'],
-    exclude: [
-      'src/components/content-sdk/*',
-      'src/components/ui/*',
-      'src/components/lib/*',
-      'src/components/component-library/*',
-      // Exclude non-component files (props, utils, dictionaries, contexts)
-      '**/*.props.ts',
-      '**/*.props.tsx',
-      '**/*.util.ts',
-      '**/*.util.tsx',
-      '**/*.dictionary.ts',
-      '**/*.dictionary.tsx',
-      '**/*.context.ts',
-      '**/*.context.tsx',
-      '**/utils.ts',
-      '**/utils.tsx',
-    ],
-  },
+  // Component map configuration disabled - using manual component maps
+  // componentMap: {
+  //   paths: ['src/components'],
+  //   exclude: [
+  //     'src/components/content-sdk/*',
+  //     'src/components/ui/*',
+  //     'src/components/lib/*',
+  //     'src/components/component-library/*',
+  //     // Exclude non-component files (props, utils, dictionaries, contexts)
+  //     '**/*.props.ts',
+  //     '**/*.props.tsx',
+  //     '**/*.util.ts',
+  //     '**/*.util.tsx',
+  //     '**/*.dictionary.ts',
+  //     '**/*.dictionary.tsx',
+  //     '**/*.context.ts',
+  //     '**/*.context.tsx',
+  //     '**/utils.ts',
+  //     '**/utils.tsx',
+  //   ],
+  // },
 });
