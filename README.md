@@ -108,7 +108,7 @@ This repository uses a **DMZ git workflow** to ensure the `main` branch is alway
 
 This repository includes comprehensive AI guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications:
 
-- **Claude Code Guide** (`claude-guide.md`) - Comprehensive guide for Claude Code and AI assistants with project architecture, coding standards, and best practices
+- **Claude Code Guide** (`CLAUDE.md`) - Comprehensive guide for Claude Code and AI assistants with project architecture, coding standards, and best practices
 - **Cursor AI Rules** (`.cursor/rules/`) - Automatically provide context and enforce patterns when using Cursor AI
 - **GitHub Copilot Instructions** (`copilot-instructions.md`) - Detailed development patterns and component guidelines for GitHub Copilot
 - **LLM Guidance** (`LLMs.txt`) - Concise guidance for various AI assistants covering architecture principles and safety rules

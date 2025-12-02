@@ -68,7 +68,7 @@ This repository includes comprehensive AI coding agent guidance files to help ma
 
 ### Claude Code Guide
 
-The repository includes **`claude-guide.md`** - a comprehensive guide for Claude Code and AI assistants:
+The repository includes **`CLAUDE.md`** - a comprehensive guide for Claude Code and AI assistants:
 - Project architecture and technology stack
 - Coding standards with TypeScript and modular layout
 - Security and performance guidelines
@@ -116,7 +116,7 @@ The repository includes dedicated GitHub Copilot guidance files:
 When using AI coding assistants:
 
 **Claude Code:**
-- Reference `claude-guide.md` for comprehensive project architecture and coding standards
+- Reference `CLAUDE.md` for comprehensive project architecture and coding standards
 - Follow the Locality of Behavior pattern for component development
 - Use safe destructuring patterns and proper data validation
 - Refer to example prompts and common patterns for guidance
@@ -142,7 +142,7 @@ When using AI coding assistants:
 To improve the AI guidance files:
 
 **For Claude Code Guide:**
-1. Edit `claude-guide.md` for comprehensive project guidance
+1. Edit `CLAUDE.md` for comprehensive project guidance
 2. Include complete examples with TypeScript interfaces and implementations
 3. Add example prompts that demonstrate Claude Code usage
 4. Ensure all code examples follow the project's coding standards
