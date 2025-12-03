@@ -3,7 +3,6 @@ import { getImageProps } from 'next/image';
 import { ImageProps } from './image.props';
 
 const getImageUrl = (imageField: ImageField, mode: ImageProps['page']['mode']) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const src = imageField?.value?.src;
 
   if (!mode.isNormal && src?.startsWith('/')) {
