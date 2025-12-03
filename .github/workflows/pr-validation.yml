@@ -145,6 +145,43 @@ jobs:
             fi
           done
 
+      - name: Generate Sitecore files for changed starters
+        run: |
+          echo "Generating Sitecore configuration files..."
+
+          for starter in ${{ steps.detect-changes.outputs.changed-starters }}; do
+            if [ -d "examples/$starter" ]; then
+              echo "Generating files for $starter..."
+              cd "examples/$starter"
+              
+              # Try to generate files with Sitecore tools, fallback to minimal files if credentials are missing
+              if npm run sitecore-tools:generate-map 2>/dev/null; then
+                echo "✅ Sitecore files generated successfully for $starter"
+              else
+                echo "⚠️ Sitecore tools failed (likely missing credentials), creating minimal files for $starter"
+                
+                # Create minimal .sitecore directory and files
+                mkdir -p .sitecore
+                
+                # Create minimal sites.json
+                echo '[{"name":"basic","hostName":"*","language":"en"}]' > .sitecore/sites.json
+                
+                # Create minimal metadata.json
+                echo '{"packages":{"@sitecore-content-sdk/core":"1.1.0","@sitecore-content-sdk/nextjs":"1.1.0"}}' > .sitecore/metadata.json
+                
+                # Create minimal component-map.ts
+                echo 'export default new Map();' > .sitecore/component-map.ts
+                
+                # Create minimal import-map.ts
+                echo 'export default [];' > .sitecore/import-map.ts
+                
+                echo "✅ Minimal Sitecore files created for $starter"
+              fi
+              
+              cd ../..
+            fi
+          done
+
       - name: Lint and format check
         run: |
           echo "Running linting and formatting checks..."
@@ -184,33 +221,7 @@ jobs:
               echo "Type checking $starter..."
               cd "examples/$starter"
               
-              # Generate Sitecore files first (needed for type checking)
-              echo "Generating Sitecore configuration files..."
-              
-              # Try to generate files with Sitecore tools, fallback to minimal files if credentials are missing
-              if npm run sitecore-tools:generate-map 2>/dev/null; then
-                echo "✅ Sitecore files generated successfully"
-              else
-                echo "⚠️ Sitecore tools failed (likely missing credentials), creating minimal files for type checking"
-                
-                # Create minimal .sitecore directory and files
-                mkdir -p .sitecore
-                
-                # Create minimal sites.json
-                echo '[{"name":"basic","hostName":"*","language":"en"}]' > .sitecore/sites.json
-                
-                # Create minimal metadata.json
-                echo '{"packages":{"@sitecore-content-sdk/core":"1.1.0","@sitecore-content-sdk/nextjs":"1.1.0"}}' > .sitecore/metadata.json
-                
-                # Create minimal component-map.ts
-                echo 'export default new Map();' > .sitecore/component-map.ts
-                
-                # Create minimal import-map.ts
-                echo 'export default [];' > .sitecore/import-map.ts
-                
-                echo "✅ Minimal Sitecore files created for type checking"
-              fi
-              
+              # Sitecore files already generated in previous step
               if npm run type-check 2>/dev/null; then
                 echo "✅ Type checking passed for $starter"
               else
