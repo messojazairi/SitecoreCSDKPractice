@@ -1,6 +1,7 @@
 import React, { JSX } from 'react';
 import { Placeholder } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
 /**
  * The number of columns that can be inserted into the column splitter component.
@@ -28,7 +29,21 @@ interface ColumnSplitterProps extends ComponentProps {
   params: ComponentProps['params'] & ColumnWidths & ColumnStyles;
 }
 
-export const Default = ({ params, rendering }: ColumnSplitterProps): JSX.Element => {
+// Import componentMap - this will only be used in production
+let componentMap: any;
+try {
+  // Dynamic require to avoid circular dependency during module initialization
+  componentMap = require('.sitecore/component-map').default;
+} catch {
+  // In test environment, componentMap might not be available
+  componentMap = {};
+}
+
+export const Default = ({
+  params,
+  rendering,
+  page,
+}: ColumnSplitterProps): JSX.Element => {
   const { EnabledPlaceholders, RenderingIdentifier: id, styles } = params;
 
   const enabledColumns = EnabledPlaceholders?.split(',') ?? [];

@@ -1,6 +1,7 @@
 import { Placeholder } from '@sitecore-content-sdk/nextjs';
 import React, { JSX } from 'react';
 import { ComponentProps } from 'lib/component-props';
+import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
 interface ContainerProps extends ComponentProps {
   params: ComponentProps['params'] & {
@@ -9,7 +10,21 @@ interface ContainerProps extends ComponentProps {
   };
 }
 
-const Container = ({ params, rendering }: ContainerProps): JSX.Element => {
+// Import componentMap - this will only be used in production
+let componentMap: any;
+try {
+  // Dynamic require to avoid circular dependency during module initialization
+  componentMap = require('.sitecore/component-map').default;
+} catch {
+  // In test environment, componentMap might not be available
+  componentMap = {};
+}
+
+const Container = ({
+  params,
+  rendering,
+  page,
+}: ContainerProps): JSX.Element => {
   const {
     styles,
     RenderingIdentifier: id,

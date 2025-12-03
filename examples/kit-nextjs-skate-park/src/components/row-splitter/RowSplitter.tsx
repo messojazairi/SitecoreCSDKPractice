@@ -1,6 +1,7 @@
 import React, { JSX } from 'react';
 import { ComponentRendering, Placeholder } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
 /**
  * The number of rows that can be inserted into the row splitter component.
@@ -21,8 +22,22 @@ interface RowSplitterProps extends ComponentProps {
   params: ComponentProps['params'] & RowStyles;
 }
 
-export const Default = ({ params, rendering }: RowSplitterProps): JSX.Element => {
-  const enabledPlaceholders = params.EnabledPlaceholders?.split(',') ?? [];
+// Import componentMap - this will only be used in production
+let componentMap: any;
+try {
+  // Dynamic require to avoid circular dependency during module initialization
+  componentMap = require('.sitecore/component-map').default;
+} catch {
+  // In test environment, componentMap might not be available
+  componentMap = {};
+}
+
+export const Default = ({
+  params,
+  rendering,
+  page,
+}: RowSplitterProps): JSX.Element => {
+  const enabledPlaceholders = params.EnabledPlaceholders?.split(",") ?? [];
   const id = params.RenderingIdentifier;
 
   return (

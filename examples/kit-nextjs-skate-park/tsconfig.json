@@ -7,8 +7,12 @@
       "temp/*": ["src/temp/*"],
       "assets/*": ["src/assets/*"],
     },
-    "target": "es5",
-    "types": ["node"],
+    "target": "ES2017",
+    "types": [
+      "node",
+      "jest",
+      "@testing-library/jest-dom"
+    ],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
