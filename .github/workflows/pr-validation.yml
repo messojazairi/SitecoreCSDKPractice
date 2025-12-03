@@ -3,8 +3,6 @@ name: PR Validation for DMZ Branch
 on:
   pull_request:
     branches: [dmz]
-  pull_request_target:
-    branches: [dmz]
 
 env:
   NODE_VERSION: "22.11.0"
@@ -13,6 +11,10 @@ jobs:
   pr-validation:
     name: Validate Pull Request
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout PR
@@ -294,57 +296,67 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && 
-              comment.body.includes('## 🔍 PR Validation Results')
-            );
-
-            const status = '${{ job.status }}' === 'success' ? '✅ **PASSED**' : '❌ **FAILED**';
-            const emoji = '${{ job.status }}' === 'success' ? '✅' : '❌';
-
-            const body = `## 🔍 PR Validation Results
-
-            ${emoji} **Status:** ${status}
-
-            **Base Branch Check:** ${'${{ steps.base-check.outputs.base-check-passed }}' === 'true' ? '✅ Based on latest main' : '❌ Not based on latest main - rebase required'}
-
-            **Merge Check:** ${'${{ steps.merge-check.outputs.merge-check-passed }}' === 'true' ? '✅ Can be squash merged' : '❌ Merge conflicts detected'}
-
-            **Validated Starters:** ${{ steps.detect-changes.outputs.changed-starters }}
-
-            **Checks Performed:**
-            - ✅ Linting and formatting
-            - ✅ TypeScript type checking  
-            - ✅ Build verification
-            - ✅ Test execution
-
-            **Next Steps:**
-            ${'${{ job.status }}' === 'success' ? 
-              '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, main will be fast-forwarded automatically' : 
-              '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- If formatting issues: Run `npm run prettier`\n- Check the build logs for specific errors'
-            }
-
-            ---
-            *This comment will be updated on each validation run*`;
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: body
-              });
-            } else {
-              await github.rest.issues.createComment({
+            try {
+              const { data: comments } = await github.rest.issues.listComments({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: body
               });
+
+              const botComment = comments.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('## 🔍 PR Validation Results')
+              );
+
+              const status = '${{ job.status }}' === 'success' ? '✅ **PASSED**' : '❌ **FAILED**';
+              const emoji = '${{ job.status }}' === 'success' ? '✅' : '❌';
+
+              const body = `## 🔍 PR Validation Results
+
+              ${emoji} **Status:** ${status}
+
+              **Base Branch Check:** ${'${{ steps.base-check.outputs.base-check-passed }}' === 'true' ? '✅ Based on latest main' : '❌ Not based on latest main - rebase required'}
+
+              **Merge Check:** ${'${{ steps.merge-check.outputs.merge-check-passed }}' === 'true' ? '✅ Can be squash merged' : '❌ Merge conflicts detected'}
+
+              **Validated Starters:** ${{ steps.detect-changes.outputs.changed-starters }}
+
+              **Checks Performed:**
+              - ✅ Linting and formatting
+              - ✅ TypeScript type checking
+              - ✅ Build verification
+              - ✅ Test execution
+
+              **Next Steps:**
+              ${'${{ job.status }}' === 'success' ? 
+                '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, dmz can be manually merged to main using a merge commit' : 
+                '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- If formatting issues: Run `npm run prettier`\n- Check the build logs for specific errors'
+              }
+
+              ---
+              *This comment will be updated on each validation run*`;
+
+              if (botComment) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: botComment.id,
+                  body: body
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: body
+                });
+              }
+            } catch (error) {
+              // Handle permission errors gracefully (e.g., PRs from forks)
+              if (error.status === 403 || error.status === 404) {
+                console.log('⚠️ Unable to comment on PR (may be from a fork or insufficient permissions). Validation results are still available in the workflow logs.');
+                console.log('Validation Status:', '${{ job.status }}');
+              } else {
+                throw error;
+              }
             }
