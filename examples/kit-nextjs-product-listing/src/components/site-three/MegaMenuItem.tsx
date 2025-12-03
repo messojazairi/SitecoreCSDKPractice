@@ -86,27 +86,25 @@ export const Default = (props: MegaMenuItemProps) => {
             />
           </div>
 
-          {featuredProduct &&
-            featuredProduct.fields &&
-            featuredProduct.fields.FeaturedImage && (
-              <div className="relative self-end lg:justify-self-end max-w-lg pb-12 lg:pb-0 lg:pl-[20%]">
-                <div className="aspect-square">
-                  <ContentSdkImage
-                    field={featuredProduct.fields.FeaturedImage}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute bottom-0 lg:bottom-8 left-0 p-4 text-center bg-background shadow-lg">
-                  <h5 className="mb-4 text-sm">
-                    <ContentSdkText field={featuredProduct.fields.ProductName} />
-                  </h5>
-                  <Link href={featuredProduct.url} className="btn btn-primary btn-sharp">
-                    {t(DICTIONARY_KEYS.EXPLORE_BUTTON_LABEL) || 'Explore'}
-                    {featuredProduct.fields.ProductName?.value}
-                  </Link>
-                </div>
+          {featuredProduct && featuredProduct.fields && featuredProduct.fields.FeaturedImage && (
+            <div className="relative self-end lg:justify-self-end max-w-lg pb-12 lg:pb-0 lg:pl-[20%]">
+              <div className="aspect-square">
+                <ContentSdkImage
+                  field={featuredProduct.fields.FeaturedImage}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            )}
+              <div className="absolute bottom-0 lg:bottom-8 left-0 p-4 text-center bg-background shadow-lg">
+                <h5 className="mb-4 text-sm">
+                  <ContentSdkText field={featuredProduct.fields.ProductName} />
+                </h5>
+                <Link href={featuredProduct.url} className="btn btn-primary btn-sharp">
+                  {t(DICTIONARY_KEYS.EXPLORE_BUTTON_LABEL) || 'Explore'}
+                  {featuredProduct.fields.ProductName?.value}
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </MegaMenuContent>
     </MegaMenuToggle>

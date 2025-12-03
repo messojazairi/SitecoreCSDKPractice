@@ -46,7 +46,12 @@ export const Default = ({ params, rendering, page }: ColumnSplitterProps): JSX.E
         return (
           <div key={index} className={columnClassNames}>
             <div className="row">
-              <AppPlaceholder name={`column-${columnNum}-{*}`} rendering={rendering} page={page} componentMap={componentMap} />
+              <AppPlaceholder
+                name={`column-${columnNum}-{*}`}
+                rendering={rendering}
+                page={page}
+                componentMap={componentMap}
+              />
             </div>
           </div>
         );

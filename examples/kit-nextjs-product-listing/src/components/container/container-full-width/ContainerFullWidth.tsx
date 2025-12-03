@@ -32,7 +32,12 @@ export const Default: React.FC<ContainerFullWidthProps> = (props) => {
     >
       <Flex className="group-[.is-inset]:p-0">
         <FlexItem basis="full">
-          <AppPlaceholder name={PLACEHOLDER_NAME} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder
+            name={PLACEHOLDER_NAME}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
       </Flex>
     </section>

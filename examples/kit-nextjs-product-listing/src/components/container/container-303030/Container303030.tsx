@@ -37,13 +37,28 @@ export const Default: React.FC<Container303030Props> = (props) => {
     >
       <div className="w-full mx-auto max-w-[1760px] flex flex-wrap items-stretch">
         <FlexItem as="div" basis="1/3">
-          <AppPlaceholder name={leftPlaceholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder
+            name={leftPlaceholder.dynamicKey}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
         <FlexItem as="div" basis="1/3">
-          <AppPlaceholder name={centerPlaceholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder
+            name={centerPlaceholder.dynamicKey}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
         <FlexItem as="div" basis="1/3">
-          <AppPlaceholder name={rightPlaceholder.dynamicKey} rendering={rendering} page={page} componentMap={componentMap} />
+          <AppPlaceholder
+            name={rightPlaceholder.dynamicKey}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
       </div>
     </section>

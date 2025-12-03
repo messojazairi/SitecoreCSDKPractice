@@ -122,13 +122,21 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
         <ContentSdkLink field={props.tm.facebook?.jsonValue} prefetch={false} aria-label="Facebook">
           <FontAwesomeIcon icon={faFacebook} width={20} height={20} />
         </ContentSdkLink>
-        <ContentSdkLink field={props.tm.instagram?.jsonValue} prefetch={false} aria-label="Instagram">
+        <ContentSdkLink
+          field={props.tm.instagram?.jsonValue}
+          prefetch={false}
+          aria-label="Instagram"
+        >
           <FontAwesomeIcon icon={faInstagram} width={22} height={22} />
         </ContentSdkLink>
         <ContentSdkLink field={props.tm.linkedIn?.jsonValue} prefetch={false} aria-label="LinkedIn">
           <FontAwesomeIcon icon={faLinkedinIn} width={24} height={24} />
         </ContentSdkLink>
-        <ContentSdkLink field={props.tm.twitterX?.jsonValue} prefetch={false} aria-label="X (Twitter)">
+        <ContentSdkLink
+          field={props.tm.twitterX?.jsonValue}
+          prefetch={false}
+          aria-label="X (Twitter)"
+        >
           <FontAwesomeIcon icon={faXTwitter} width={22} height={22} />
         </ContentSdkLink>
       </div>

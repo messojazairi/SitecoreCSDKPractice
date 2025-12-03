@@ -8,8 +8,11 @@ interface MobileMenuWrapperProps {
 }
 
 export const MobileMenuWrapper = ({ children }: MobileMenuWrapperProps) => {
-  const { isVisible: isMobileMenuVisible, setIsVisible: setIsMobileMenuVisible, ref } =
-    useToggleWithClickOutside<HTMLLIElement>(false);
+  const {
+    isVisible: isMobileMenuVisible,
+    setIsVisible: setIsMobileMenuVisible,
+    ref,
+  } = useToggleWithClickOutside<HTMLLIElement>(false);
 
   return (
     <li
@@ -45,9 +48,7 @@ export const MobileMenuWrapper = ({ children }: MobileMenuWrapperProps) => {
       {/* Mobile Menu Content */}
       <div
         className={`${
-          isMobileMenuVisible
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
+          isMobileMenuVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }
           fixed top-14 left-0 right-0
           flex flex-col items-center justify-center

@@ -38,7 +38,12 @@ export const Default = ({ params, rendering, page }: RowSplitterProps): JSX.Elem
           <div key={index} className={`container-fluid ${rowStyles}`.trimEnd()}>
             <div>
               <div className="row">
-                <AppPlaceholder name={placeholderKey} rendering={rendering} page={page} componentMap={componentMap} />
+                <AppPlaceholder
+                  name={placeholderKey}
+                  rendering={rendering}
+                  page={page}
+                  componentMap={componentMap}
+                />
               </div>
             </div>
           </div>

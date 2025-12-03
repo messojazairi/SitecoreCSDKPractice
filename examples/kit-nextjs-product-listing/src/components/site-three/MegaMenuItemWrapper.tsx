@@ -26,11 +26,7 @@ interface MegaMenuToggleProps {
 }
 
 export const MegaMenuToggle = ({ className, trigger, children }: MegaMenuToggleProps) => {
-  const {
-    isVisible,
-    setIsVisible,
-    ref: menuRef,
-  } = useToggleWithClickOutside<HTMLLIElement>(false);
+  const { isVisible, setIsVisible, ref: menuRef } = useToggleWithClickOutside<HTMLLIElement>(false);
 
   return (
     <MegaMenuContext.Provider value={{ isVisible, setIsVisible }}>
@@ -89,4 +85,3 @@ export const MegaMenuBackButton = ({ menuId, children }: MegaMenuBackButtonProps
     </div>
   );
 };
-

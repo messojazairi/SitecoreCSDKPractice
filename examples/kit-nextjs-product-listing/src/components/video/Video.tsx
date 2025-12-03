@@ -122,7 +122,9 @@ export function VideoBase({
                     aria-hidden="true"
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover"
-                    unoptimized={fallbackImage?.includes('youtube.com') || fallbackImage?.includes('ytimg.com')}
+                    unoptimized={
+                      fallbackImage?.includes('youtube.com') || fallbackImage?.includes('ytimg.com')
+                    }
                   />
                 </div>
               )}

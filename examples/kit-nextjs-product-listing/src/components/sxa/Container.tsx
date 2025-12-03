@@ -1,4 +1,9 @@
-import { AppPlaceholder, ComponentParams, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
+import {
+  AppPlaceholder,
+  ComponentParams,
+  ComponentRendering,
+  Page,
+} from '@sitecore-content-sdk/nextjs';
 import React, { type JSX } from 'react';
 import componentMap from '.sitecore/component-map';
 

@@ -58,7 +58,11 @@ export const Banner = (props: ImageProps): JSX.Element => {
       id={id ? id : undefined}
     >
       <div className="component-content sc-sxa-image-hero-banner" style={backgroundStyle}>
-        {isPageEditing ? <ContentSdkImage field={modifyImageProps} loading='eager' fetchPriority='high' /> : ''}
+        {isPageEditing ? (
+          <ContentSdkImage field={modifyImageProps} loading="eager" fetchPriority="high" />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
