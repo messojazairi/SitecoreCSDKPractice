@@ -2,22 +2,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components/*": [
-        "src/components/*"
-      ],
-      "lib/*": [
-        "src/lib/*"
-      ],
-      "temp/*": [
-        "src/temp/*"
-      ],
-      "assets/*": [
-        "src/assets/*"
-      ],
-      ".sitecore/*": [
-        ".sitecore/*"
-      ],
-      "next/*": ["node_modules/next/*"],
+      "components/*": ["src/components/*"],
+      "lib/*": ["src/lib/*"],
+      "temp/*": ["src/temp/*"],
+      "assets/*": ["src/assets/*"],
     },
     "target": "ES2017",
     "types": [
@@ -29,22 +17,24 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictFunctionTypes": false,
+    "downlevelIteration": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "strictFunctionTypes": false,
     "module": "esnext",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "forceConsistentCasingInFileNames": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

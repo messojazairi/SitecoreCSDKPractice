@@ -1,9 +1,10 @@
 {
-  "name": "content-sdk-nextjs-skate-park-app-router",
+  "name": "content-sdk-nextjs",
+  "description": "Application utilizing Content SDK and Next.js",
   "version": "1.0.0",
   "private": true,
   "config": {
-    "appName": "content-sdk-nextjs-skate-park-app-router",
+    "appName": "content-sdk-nextjs",
     "graphQLEndpointPath": "/sitecore/api/graph/edge",
     "language": "en",
     "template": "nextjs"
@@ -21,18 +22,23 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@sitecore-cloudsdk/core": "^0.5.4",
-    "@sitecore-cloudsdk/events": "^0.5.4",
+    "@sitecore-cloudsdk/core": "^0.5.1",
+    "@sitecore-cloudsdk/events": "^0.5.1",
     "@sitecore-content-sdk/nextjs": "^1.0.0",
-    "next": "^15.5.0",
-    "next-intl": "^4.3.5",
+    "@sitecore-feaas/clientside": "^0.6.0",
+    "@sitecore/components": "~2.1.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "font-awesome": "^4.7.0",
+    "next": "^15.3.2",
+    "next-localization": "^0.12.0",
+    "postcss": "^8.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "rsc-env": "0.0.2",
-    "tailwind-bootstrap-grid": "^6.0.0"
+    "sharp": "0.34.1",
+    "tailwind-bootstrap-grid": "^6.0.0",
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@sitecore-content-sdk/cli": "^1.0.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -52,8 +58,14 @@
     "typescript": "~5.8.3"
   },
   "scripts": {
+    "fix": "npm-run-all --serial lint:fix prettier",
     "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build next:build",
     "lint": "eslint ./src/**/*.tsx ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.tsx ./src/**/*.ts --fix",
+    "prettier": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,md}",
+    "format:check": "prettier --check ./src/**/*.{ts,tsx,js,jsx,json,css,md}",
+    "type-check": "tsc --noEmit",
+    "test": "echo 'No tests implemented yet' && exit 0",
     "next:build": "next build",
     "next:dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "next:start": "next start",

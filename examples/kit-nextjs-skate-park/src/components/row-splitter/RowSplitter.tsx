@@ -1,5 +1,5 @@
 import React, { JSX } from 'react';
-import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import { ComponentRendering, Placeholder } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
@@ -19,7 +19,7 @@ type RowStyles = {
 
 interface RowSplitterProps extends ComponentProps {
   rendering: ComponentRendering;
-  params: ComponentProps["params"] & RowStyles;
+  params: ComponentProps['params'] & RowStyles;
 }
 
 // Import componentMap - this will only be used in production
@@ -45,18 +45,13 @@ export const Default = ({
       {enabledPlaceholders.map((ph, index) => {
         const num = Number(ph) as RowNumber;
         const placeholderKey = `row-${num}-{*}`;
-        const rowStyles = `${params[`Styles${num}`] ?? ""}`.trimEnd();
+        const rowStyles = `${params[`Styles${num}`] ?? ''}`.trimEnd();
 
         return (
           <div key={index} className={`container-fluid ${rowStyles}`.trimEnd()}>
             <div>
               <div className="row">
-                <AppPlaceholder
-                  name={placeholderKey}
-                  rendering={rendering}
-                  page={page}
-                  componentMap={componentMap}
-                />
+                <Placeholder name={placeholderKey} rendering={rendering} />
               </div>
             </div>
           </div>

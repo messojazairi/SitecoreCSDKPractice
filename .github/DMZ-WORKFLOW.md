@@ -4,7 +4,17 @@
 
 This repository uses a DMZ git workflow to ensure the `main` branch is always clean, deployable, and never breaks. All changes go through a **two-tier validation system** before being merged to `main`.
 
+## Problem Solved
 
+When using **squash and merge** to `dmz` followed by **fast-forward** to `main`, developers were seeing "previous commits appearing in their PRs." This happened when developers created feature branches from an outdated `main` that hadn't yet been fast-forwarded with the latest squashed commits.
+
+## Solution Overview
+
+A **two-tier validation system** that:
+1. ✅ Prevents PRs based on outdated `main` from being merged
+2. ✅ Validates code quality at PR time (before merge)
+3. ✅ Double-checks everything after merge to `dmz` (before fast-forward to `main`)
+4. ✅ Maintains both requirements: squash merge + fast-forward
 
 ## Branch Structure
 
@@ -21,7 +31,7 @@ feature branches (developer forks)
 - **Main branch is always clean**: Never accepts direct PRs from developers
 - **DMZ branch is the integration point**: All PRs target the `dmz` branch
 - **Automated validation**: All changes are validated before reaching `main`
-- **Manual merge commits**: `main` is updated via manual merge commits from `dmz`
+- **Fast-forward only**: `main` is only updated via fast-forward from `dmz`
 - **Automatic rollback**: Failed builds can be automatically reverted
 
 ## Workflow Architecture
@@ -62,13 +72,13 @@ feature branches (developer forks)
 
 **Key Features**:
 - **Comprehensive validation**: Tests all enabled starters
-- **Validation gate**: Ensures `dmz` is ready for manual merge to `main`
-- **Mandatory testing**: All tests must pass before merging to main
+- **Automatic fast-forward**: Updates `main` only when validation passes
+- **Mandatory testing**: All tests must pass before main branch updates
 - **Detailed reporting**: Provides clear success/failure summaries
 
 **Result**:
-- If validation fails → `main` should NOT be updated, `dmz` can be rebased
-- If validation passes → `dmz` is ready for manual merge to `main` via merge commit
+- If validation fails → `main` is NOT updated, `dmz` can be rebased
+- If validation passes → `main` is automatically fast-forwarded to `dmz`
 
 ### Gate 3: DMZ Revert (`.github/workflows/revert-dmz.yml`)
 
@@ -111,12 +121,12 @@ Timeline:
 2. Developer A adds commits D, E
 3. Developer A's PR validation checks: based on latest main? ✅
 4. PR is squash merged to dmz as commit F
-5. dmz is manually merged into main (creates merge commit M)
+5. Main is fast-forwarded to include F
 6. Developer B created feature-b from main at step 1 (has A→B→C)
 7. Developer B's PR validation checks: based on latest main? ❌
 8. PR is REJECTED with clear instructions
 9. Developer B rebases: git rebase origin/main
-10. Now Developer B's branch has A→B→C→F→M→G→H
+10. Now Developer B's branch has A→B→C→F→G→H
 11. Developer B's PR validation checks: based on latest main? ✅
 12. Developer B's PR shows only commits G, H ✅
 ```
@@ -186,25 +196,14 @@ Once approved, reviewers will:
 2. Ensure the squash commit message is descriptive
 3. Delete the feature branch after merging
 
-### 6. Manual Merge to Main
+### 6. Automatic Validation and Fast-Forward
 
 After merging to `dmz`:
 1. The DMZ validation workflow runs as a **final gate** (double-checks everything)
-2. If validation passes: Manually merge `dmz` into `main` using a merge commit via GitHub web interface
+2. If validation passes: `main` is automatically fast-forwarded to `dmz`
 3. If validation fails: `dmz` can be rebased to remove the problematic commits
 
 **Note**: Since PR validation already checked everything, dmz validation should almost always pass. This is a safety net in case something changes between PR approval and merge.
-
-**To merge dmz to main using GitHub web interface:**
-1. Go to the repository on GitHub
-2. Create a Pull Request from `dmz` to `main`
-3. Review the changes (if needed)
-4. Click **"Merge pull request"**
-5. **Important**: Select **"Create a merge commit"** (not "Squash and merge" or "Rebase and merge")
-6. Click **"Confirm merge"**
-7. Delete the PR branch if prompted (optional, since dmz is a permanent branch)
-
-This creates a merge commit in `main` that preserves the history from `dmz` while clearly showing when the merge occurred.
 
 ### 7. Keep Your Branches Updated
 
@@ -265,16 +264,11 @@ To ensure the DMZ workflow provides maximum security, the following branch prote
 
 #### For `main` branch:
 
-- **Require Pull Request Before Merging**: ENABLED (for merging dmz to main via web interface)
-  - **Require Approvals**: Optional (recommended for additional review)
-  - **Merge Strategy**: 
-    - **Allow Merge Commits**: ENABLED (required - use "Create a merge commit" option)
-    - **Allow Squash Merging**: DISABLED (not used for dmz→main merges)
-    - **Allow Rebase Merging**: DISABLED (not used for dmz→main merges)
-- **Require Status Checks**: Optional (DMZ validation already ensures quality)
+- **Require Status Checks**: DISABLED (we use fast-forward, not PRs)
 - **Restrict Push Access**: ENABLED
-  - Add: Repository admins (for manual merges and emergency fixes)
-- **Require Linear History**: DISABLED (allows merge commits from dmz)
+  - Add: `github-actions[bot]` (allows CI to fast-forward)
+  - Optionally add: Repository admins (for emergency fixes)
+- **Require Linear History**: ENABLED (prevents merge commits)
 - **Do Not Allow Force Pushes**: ENABLED (protects history)
 - **Allow Deletions**: DISABLED
 
@@ -376,13 +370,12 @@ npm run type-check
 3. **Push fixes** to trigger re-validation
 4. **Use revert workflow** if needed to remove problematic commits
 
-#### Merge to Main Issues
+#### Fast-Forward Issues
 
 1. **Check if `dmz` is ahead** of `main`
-2. **Verify validation passed** before merging
+2. **Verify validation passed** before fast-forward
 3. **Fix validation failures** - no bypassing allowed
-4. **Check for merge conflicts** when creating the PR
-5. **Ensure you use "Create a merge commit"** option in GitHub web interface (not "Squash and merge" or "Rebase and merge")
+4. **Check for merge conflicts** in the logs
 
 ### Emergency Procedures
 
@@ -421,10 +414,10 @@ This workflow uses **defense in depth** with two validation layers:
    - Catches issues early, before they reach dmz
    - Provides fast feedback to developers
 
-2. **DMZ Validation** (after merge to dmz, before manual merge to main):
+2. **DMZ Validation** (after merge to dmz, before fast-forward to main):
    - Double-checks everything again
    - Safety net in case something changes between PR approval and merge
-   - Indicates when dmz is ready for manual merge to main
+   - Only fast-forwards to main if validation passes
    - Protects main from any issues that slip through
 
 ### Benefits
@@ -434,7 +427,7 @@ This workflow uses **defense in depth** with two validation layers:
 | **No Duplicate Commits** | PRs only show new changes, not previous squashed commits |
 | **Early Feedback** | Issues caught at PR time, not after merge |
 | **Always Clean Main** | Two validation gates ensure main never breaks |
-| **Manual Control** | Manual merge commits provide explicit control over main updates |
+| **Fast-Forward Works** | Enforcing base branch makes fast-forward reliable |
 | **Clean History** | Squash merge creates one commit per feature |
 | **Safety Net** | Two tiers of validation catch issues before they reach main |
 | **Clear Process** | Automated checks guide developers with clear messages |
@@ -446,14 +439,12 @@ This workflow uses **defense in depth** with two validation layers:
 - Easy to revert entire features
 - Removes "fix typo" and "address review comments" noise
 
-### Why Manual Merge Commits?
+### Why Fast-Forward?
 
-- **Explicit merge commits** provide clear history of when dmz was merged to main
-- **Easy to understand** what's deployed
-- **Allows for merge commit messages** documenting the merge
-- **Maintains clear separation** between dmz integration and main deployment
-- **Allows testing on dmz** (automatic+manual tests) before merging to main
-- **Done via GitHub web interface** using "Create a merge commit" option for consistency and audit trail
+- `main` and `dmz` share the same commit SHAs
+- No merge commits cluttering history
+- Easy to understand what's deployed
+- Predictable git graph
 
 ## Testing the Solution
 
@@ -503,11 +494,7 @@ git push --force-with-lease origin test-outdated
 ```bash
 # After merging a PR to dmz
 # Check Actions tab on GitHub
-# Expected: ✅ DMZ validation passes
-# Then manually merge dmz to main using GitHub web interface:
-# 1. Create PR from dmz to main
-# 2. Select "Create a merge commit" option
-# 3. Confirm merge
+# Expected: ✅ DMZ validation passes and main is fast-forwarded
 ```
 
 
