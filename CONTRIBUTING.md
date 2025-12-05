@@ -136,6 +136,7 @@ When using AI coding assistants:
 - Focus on TypeScript-first development with strict mode
 - Always validate Sitecore datasource existence
 - Implement proper error handling and accessibility features
+- Maintain consistency across all AI guidance files (Claude, Cursor, Copilot)
 
 ### Contributing to AI Guidance
 
@@ -161,7 +162,6 @@ To improve the AI guidance files:
 4. Test changes with AI coding assistants to ensure effectiveness
 5. Consider impact across all starter applications
 6. Keep guidance files synchronized with actual codebase patterns
-7. Maintain consistency across all AI guidance files (Claude, Cursor, Copilot)
 
 5. 🚀 Submitting a Pull Request
 Once your changes are ready:

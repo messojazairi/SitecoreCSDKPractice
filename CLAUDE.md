@@ -1,8 +1,4 @@
-# Claude Code Guide for XM Cloud Starter Applications
-
-This guide enables Claude Code to generate consistent, idiomatic code for Sitecore XM Cloud starter applications. All content is derived from the repository's cursor rules.
-
-## Project Context
+# Project Context
 
 ### Repository Overview
 
@@ -62,6 +58,56 @@ Each starter demonstrates:
 - Field-driven rendering with proper fallbacks
 - Support for both connected and disconnected development modes
 - Proper handling of content authoring scenarios
+
+### Constraints and Guidelines
+
+**File Organization:**
+- Each starter maintains its own `src/` directory structure
+- Shared utilities should be copied, not shared (no monorepo linking)
+- Configuration files specific to each starter application
+- Independent package.json for each example
+
+**Development Workflow:**
+
+DMZ git flow will be implemented in the future to support better development practices, scaling, efficiency and developer productivity.
+Below is an outline of the planned workflow and processes that will be followed:
+
+- Has a shared main repo (`upstream repository`) with two key branches: `main` and `dmz`
+- Each contributor uses their own fork as their workspace
+- Feature branches are sourced from `main` but Pull Requests (PRs) with changes are merged to `dmz` branch 
+- `main` branch in the `upstream repository` is always clean (deployable, branchable and reliable). It does not accept PRs created by developers.
+- Developers should push changes to feature branches in their own fork and then create PRs to `dmz` branch in the `upstream repository`.  
+- PRs are merged by reviewers to the `dmz` branch after review and validation. Conflicts should be resolved by rebasing onto main. 
+- Once a PR has been merged into `dmz` branch the code changes are validated through an automated full build of the `dmz` branch `HEAD` in the Continous Integration server.  
+- The `dmz` branch acts as a staging/integration branch and once sevearl chnages are integrated and tested in the `dmz` branch they can be manually merged to the `main` branch using merge commits (usually at the end of 1 or 2 weeks)
+- If the build fails, the changes are or issues are found in the `dmz` branch during integration, the problamatic commits can be reverted
+
+- Each starter can be developed independently in its own directory
+- Copy `.env.remote.example` to `.env.local` for local development
+- Required environment variables: `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `SITECORE_EDITING_SECRET`
+- Docker containers available for full local Sitecore development stack
+
+**Local Development Setup:**
+
+```bash
+# Navigate to any starter
+cd examples/kit-nextjs-article-starter
+
+# Copy environment template
+cp .env.remote.example .env.local
+
+# Edit .env.local with your XM Cloud values
+# Install dependencies and start
+npm install
+npm run dev
+```
+
+**Deployment:**
+- Uses `xmcloud.build.json` for rendering host configuration
+- Each starter can be enabled/disabled for deployment via `enabled` flag
+- Supports multiple rendering hosts in single repository
+- Automatic editing host creation when split deployment is disabled
+- Environment-specific configuration through XM Cloud Deploy Portal
 
 ## Code Style
 
@@ -1277,7 +1323,3 @@ If unsure whether to edit a file:
 2. Check if it's generated during build - never edit
 3. Check if it contains secrets - never edit
 4. Ask yourself: "Did I create this file?" - if no, be cautious
-
----
-
-*This guide is derived from the repository's cursor rules and maintained as part of the XM Cloud Starter Applications repository.*
