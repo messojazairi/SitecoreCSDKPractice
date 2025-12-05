@@ -14,9 +14,6 @@ const nextConfig: NextConfig = {
   // Enable compression
   compress: true,
 
-  // Enable SWC minification (default in Next.js 13+, but explicit for clarity)
-  swcMinify: true,
-
   // use this configuration to ensure that only images from the whitelisted domains
   // can be served from the Next.js Image Optimization API
   // see https://nextjs.org/docs/app/api-reference/components/image#remotepatterns
