@@ -87,8 +87,8 @@ Below is an outline of the planned workflow and processes that will be followed:
 - Developers should push changes to feature branches in their own fork and then create PRs to `dmz` branch in the `upstream repository`.  
 - PRs are merged by reviewers to the `dmz` branch after review and validation. Conflicts should be resolved by rebasing onto main. 
 - Once a PR has been merged into `dmz` branch the code changes are validated through an automated full build of the `dmz` branch `HEAD` in the Continous Integration server.  
-- Only if the build is clean, the CI server then automatically fast-forwards `main` to the clean HEAD of `dmz` and pushes the results, ensuring that the `main` branch is updated with latest changes merged to `dmz` 
-- If the build fails, the changes are not pushed to main and the main branch remains clean. The merge causing errors can be reverted by reviewers by rebasing out the commits from `dmz` and force-pushing it. 
+- The `dmz` branch acts as a staging/integration branch and once sevearl chnages are integrated and tested in the `dmz` branch they can be manually merged to the `main` branch using merge commits (usually at the end of 1 or 2 weeks)
+- If the build fails, the changes are or issues are found in the `dmz` branch during integration, the problamatic commits can be reverted 
 
 - Each starter can be developed independently in its own directory
 - Copy `.env.remote.example` to `.env.local` for local development

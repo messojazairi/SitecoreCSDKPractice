@@ -94,7 +94,7 @@ This repository uses a **DMZ git workflow** to ensure the `main` branch is alway
 3. ✅ Use **Squash and merge** only (enforced)
 4. ✅ Ensure your branch is based on the latest `main` before creating a PR
 5. ✅ PR validation runs automatically (lint, build, test, type-check)
-6. ✅ After merge to `dmz`, CI validates again and auto-fast-forwards `main`
+6. ✅ After merge to `dmz`, CI validates the build; `main` is manually updated via merge commits periodically (every 1-2 weeks)
 
 ### For Contributors
 

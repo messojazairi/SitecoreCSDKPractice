@@ -81,6 +81,20 @@ The repository contains `.cursor/rules/` directory with AI guidance files:
   - `nextjs.mdc` - Next.js specific patterns, routing, and API development
   - `testing.mdc` - Testing strategies for XM Cloud components and integrations
 
+### Windsurf IDE Rules
+
+The repository includes a **`.windsurfrules`** file for Windsurf's agentic IDE workflows:
+
+- **Comprehensive Standards** - Consolidated rules covering:
+  - Project overview with multi-starter architecture
+  - TypeScript strict mode and naming conventions
+  - Complete folder structure with examples
+  - Best practices (RO-RO pattern, functional components, immutability)
+  - Tailwind CSS styling and Shadcn/ui integration
+  - XM Cloud data handling with Zod validation and readonly types
+  - Testing patterns with Jest/Playwright and coverage expectations
+  - Safety rules and development workflow
+
 ### GitHub Copilot Support
 
 The repository includes dedicated GitHub Copilot guidance files:
@@ -119,6 +133,7 @@ When using AI coding assistants:
 - Focus on TypeScript-first development with strict mode
 - Always validate Sitecore datasource existence
 - Implement proper error handling and accessibility features
+- When updating standards, propagate changes to all AI guidance files (Cursor, Windsurf, Copilot)
 
 ### Contributing to AI Guidance
 
