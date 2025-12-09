@@ -22,7 +22,7 @@ feature branches (developer forks)
 - **DMZ branch is the integration point**: All PRs target the `dmz` branch
 - **Automated validation**: All changes are validated before reaching `main`
 - **Manual merge commits**: `main` is updated via manual merge commits from `dmz`
-- **Automatic rollback**: Failed builds can be automatically reverted
+- **Manual rollback**: Failed builds can be reverted using the revert workflow
 
 ## Workflow Architecture
 
