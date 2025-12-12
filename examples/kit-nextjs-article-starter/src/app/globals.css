@@ -1,5 +1,6 @@
 @import '../assets/styles/globals.css';
 @import '../assets/styles/tailwind-bootstrap-grid.css';
+@import '../assets/styles/column-splitter.css';
 @import 'tailwindcss';
 
 /* bootstrap grid to tailwind plugin */
