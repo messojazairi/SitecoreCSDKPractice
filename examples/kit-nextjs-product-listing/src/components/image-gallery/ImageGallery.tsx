@@ -1,3 +1,5 @@
+'use client';
+
 import type React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import type { ImageGalleryProps } from './image-gallery.props';
