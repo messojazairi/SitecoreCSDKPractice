@@ -92,6 +92,7 @@ import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev
 import * as Carousel from 'src/components/carousel/Carousel';
 import * as cardspotlightdev from 'src/components/card-spotlight/card-spotlight.dev';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
+import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
 import * as AlertBannerdev from 'src/components/alert-banner/AlertBanner.dev';
 import * as AccordionBlockTwoColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockTwoColumnTitleLeft.dev';
 import * as AccordionBlockOneColumnTitleLeftdev from 'src/components/accordion-block/AccordionBlockOneColumnTitleLeft.dev';
@@ -189,6 +190,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Carousel', { ...Carousel }],
   ['card-spotlight', { ...cardspotlightdev }],
   ['ArticleHeader', { ...ArticleHeader }],
+  ['AnimatedSection', { ...AnimatedSectiondev }],
   ['AlertBanner', { ...AlertBannerdev }],
   ['AccordionBlockTwoColumnTitleLeft', { ...AccordionBlockTwoColumnTitleLeftdev }],
   ['AccordionBlockOneColumnTitleLeft', { ...AccordionBlockOneColumnTitleLeftdev }],
