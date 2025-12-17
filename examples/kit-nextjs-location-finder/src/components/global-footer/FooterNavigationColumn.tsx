@@ -1,47 +1,81 @@
 'use client';
 
-import { type FC, useRef } from 'react';
-import { ComponentProps } from '@/lib/component-props';
-import { Field } from '@sitecore-content-sdk/nextjs';
+import { FC, useId } from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
+import {
+  FooterNavigationColumnProps,
+  FooterNavigationLink,
+} from '@/components/global-footer/global-footer.props';
+import { Button } from '@/components/ui/button';
+import { Link, Text } from '@sitecore-content-sdk/nextjs';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import { Default as FooterNavigationColumnDev } from './FooterNavigationColumn.dev';
-import type { FooterNavigationLink } from './global-footer.props';
-
-export type FooterNavigationColumnWrapperProps = ComponentProps & {
-  fields: {
-    data?: {
-      datasource?: {
-        header?: {
-          jsonValue: Field<string>;
-        };
-        items?: {
-          results: FooterNavigationLink[];
-        };
-      };
-    };
-  };
-};
-
-export const Default: FC<FooterNavigationColumnWrapperProps> = (props) => {
+import { useMatchMedia } from '@/hooks/use-match-media';
+/**
+ * FooterNavigationColumn component renders a navigation column in the footer.
+ * It displays a header and a list of navigation links.
+ */
+export const Default: FC<FooterNavigationColumnProps> = (props) => {
   const { fields, page } = props;
-  const { header, items } = fields?.data?.datasource ?? {};
-  const isPageEditing = page?.mode?.isEditing ?? false;
+  const { items, header } = fields.data?.datasource ?? {};
+  const isPageEditing = page.mode.isEditing;
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const accordionId = useId();
+  const isMobile = useMatchMedia('(max-width: 767px)');
 
-  // If no data, show fallback in editing mode
-  if (!fields?.data?.datasource && isPageEditing) {
-    return <NoDataFallback componentName="Footer Navigation Column" />;
+  if (fields) {
+    return (
+      <nav>
+        {isMobile ? (
+          <Accordion type="single" collapsible className="w-full" aria-labelledby={accordionId}>
+            <AccordionItem value={`item-${header?.jsonValue?.value}`}>
+              <AccordionTrigger className="text-lg font-medium" id={accordionId}>
+                <Text field={header?.jsonValue} />
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="space-y-2 py-2">
+                  {items?.results?.map((item: FooterNavigationLink, index) => (
+                    <li key={`footerlinks-${index}-accordion-item`}>
+                      <Button
+                        variant="link"
+                        asChild
+                        className="h-auto text-pretty p-0 text-base font-normal text-white"
+                      >
+                        <Link field={item.link?.jsonValue} />
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ) : (
+          <ul className="mt-6 space-y-6" aria-labelledby={accordionId}>
+            {(isPageEditing || header?.jsonValue?.value) && (
+              <li className="text-lg font-medium" id={accordionId}>
+                <Text field={header?.jsonValue} />
+              </li>
+            )}
+            {items?.results?.map((item: FooterNavigationLink, index) => (
+              <li key={`footerlinks-${index}`}>
+                <Button
+                  variant="link"
+                  asChild
+                  className="h-auto text-pretty p-0 text-base font-normal text-white"
+                >
+                  <Link field={item.link?.jsonValue} />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </nav>
+    );
   }
-
-  return (
-    <div ref={containerRef} className="@container">
-      <FooterNavigationColumnDev
-        items={items?.results}
-        header={header}
-        isPageEditing={isPageEditing}
-        parentRef={containerRef}
-      />
-    </div>
-  );
+  return <NoDataFallback componentName="Footer Navigation Column" />;
 };
