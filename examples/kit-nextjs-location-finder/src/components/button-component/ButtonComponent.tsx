@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { type JSX } from 'react';
+import NextLink from 'next/link';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
 import { Link, LinkField, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
@@ -76,23 +77,25 @@ const ButtonBase = (
       {isPageEditing ? (
         <Link field={buttonLink} editable={true} />
       ) : (
-        <Link field={buttonLink} editable={isPageEditing}>
-          {iconPosition === IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-          {buttonLink?.value?.text}
-          {iconPosition !== IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-        </Link>
+        buttonLink?.value?.href && (
+          <NextLink href={buttonLink.value.href}>
+            {iconPosition === IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+            {buttonLink?.value?.text}
+            {iconPosition !== IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+          </NextLink>
+        )
       )}
     </Button>
   );
