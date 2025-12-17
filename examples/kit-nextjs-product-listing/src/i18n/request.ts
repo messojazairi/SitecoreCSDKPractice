@@ -38,9 +38,6 @@ export default getRequestConfig(async ({ requestLocale }: GetRequestConfigParams
     onError(error) {
       if (error.code === IntlErrorCode.MISSING_MESSAGE) {
         // Log in development for debugging
-        if (process.env.NODE_ENV === 'development') {
-          console.warn(`Missing translation: ${error.message}`);
-        }
         // Don't throw, just suppress the error
       } else {
         // Log other errors
@@ -50,12 +47,6 @@ export default getRequestConfig(async ({ requestLocale }: GetRequestConfigParams
     // Return empty string for missing translations to enable fallback values
     getMessageFallback({ key }) {
       const path = [key].flat().join('.');
-
-      // Log missing translations in development for debugging
-      if (process.env.NODE_ENV === 'development') {
-        console.warn(`[i18n] Missing translation key: "${path}" - using fallback`);
-      }
-
       // Return empty string so || operator in components uses the fallback
       return '';
     },
