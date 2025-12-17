@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC } from 'react';
+import { type FC, useRef } from 'react';
 import { ComponentProps } from '@/lib/component-props';
 import { Field } from '@sitecore-content-sdk/nextjs';
 import { NoDataFallback } from '@/utils/NoDataFallback';
@@ -27,18 +27,21 @@ export const Default: FC<FooterNavigationColumnWrapperProps> = (props) => {
   const { header, items } = fields?.data?.datasource ?? {};
   const isPageEditing = page?.mode?.isEditing ?? false;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // If no data, show fallback in editing mode
   if (!fields?.data?.datasource && isPageEditing) {
     return <NoDataFallback componentName="Footer Navigation Column" />;
   }
 
-  // Pass transformed props to the dev component
   return (
-    <FooterNavigationColumnDev
-      items={items?.results}
-      header={header}
-      isPageEditing={isPageEditing}
-      parentRef={{ current: null }}
-    />
+    <div ref={containerRef} className="@container">
+      <FooterNavigationColumnDev
+        items={items?.results}
+        header={header}
+        isPageEditing={isPageEditing}
+        parentRef={containerRef}
+      />
+    </div>
   );
 };
