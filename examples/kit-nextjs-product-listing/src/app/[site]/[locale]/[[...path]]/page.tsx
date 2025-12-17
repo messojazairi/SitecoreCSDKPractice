@@ -9,7 +9,8 @@ import client from 'src/lib/sitecore-client';
 import Layout, { RouteFields } from 'src/Layout';
 import components from '.sitecore/component-map';
 import Providers from 'src/Providers';
-import { setRequestLocale, getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
 
 type PageProps = {
   params: Promise<{
@@ -49,13 +50,12 @@ export default async function Page({ params, searchParams }: PageProps) {
   // Fetch the component data from Sitecore (Likely will be deprecated)
   const componentProps = await client.getComponentData(page.layout, {}, components);
 
-  // Get messages for client components
-  const messages = await getMessages();
-
   return (
-    <Providers page={page} componentProps={componentProps} locale={locale} messages={messages}>
+    <NextIntlClientProvider>
+      <Providers page={page} componentProps={componentProps}>
       <Layout page={page} />
     </Providers>
+    </NextIntlClientProvider>
   );
 }
 // This function gets called at build and export time to determine

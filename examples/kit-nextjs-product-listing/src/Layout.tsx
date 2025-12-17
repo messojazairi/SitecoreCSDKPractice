@@ -86,7 +86,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
     <>
       <Scripts />
       <SitecoreStyles layoutData={layout} />
-      <Providers page={page} locale={scConfig.defaultLanguage}>
+      <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
           {page.mode.isDesignLibrary ? (
