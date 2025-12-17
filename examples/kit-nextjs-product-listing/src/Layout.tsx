@@ -10,7 +10,6 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
-import scConfig from 'sitecore.config';
 
 const heading = localFont({
   src: [

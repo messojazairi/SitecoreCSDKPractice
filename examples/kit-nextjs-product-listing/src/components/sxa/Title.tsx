@@ -1,4 +1,4 @@
-import { Link, LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
 import NextLink from 'next/link';
 import { ComponentProps } from 'lib/component-props';
 import React, { type JSX } from 'react';
