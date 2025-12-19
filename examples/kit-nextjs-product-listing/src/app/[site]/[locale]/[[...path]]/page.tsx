@@ -53,8 +53,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   return (
     <NextIntlClientProvider>
       <Providers page={page} componentProps={componentProps}>
-      <Layout page={page} />
-    </Providers>
+        <Layout page={page} />
+      </Providers>
     </NextIntlClientProvider>
   );
 }
@@ -62,10 +62,16 @@ export default async function Page({ params, searchParams }: PageProps) {
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
   if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
-    return await client.getAppRouterStaticParams(
-      sites.map((site: SiteInfo) => site.name),
-      routing.locales.slice()
-    );
+    // Filter sites to only include the sites this starter is designed to serve.
+    // This prevents cross-site build errors when multiple starters share the same XM Cloud instance.
+    const defaultSite = scConfig.defaultSite;
+    const allowedSites = defaultSite
+      ? sites
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
+      : sites.map((site: SiteInfo) => site.name);
+
+    return await client.getAppRouterStaticParams(allowedSites, routing.locales.slice());
   }
   return [];
 };
@@ -102,7 +108,5 @@ export const generateMetadata = async ({ params }: PageProps) => {
         ogImageSrc ||
         'https://edge.sitecorecloud.io/sitecoresaa60dc-chahcontentabf6-maina179-91b6/media/Feature/JSS-Experience-Accelerator/Basic-Site/banner-image.jpg?h=2001&iar=0&w=3000',
     },
-    
   };
 };
-
