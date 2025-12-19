@@ -30,8 +30,6 @@ import * as AccordionBlock from 'src/components/site-three/AccordionBlock';
 import * as SearchBox from 'src/components/site-three/non-sitecore/SearchBox';
 import * as MiniCart from 'src/components/site-three/non-sitecore/MiniCart';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
-import * as SearchExperienceLoadMore from 'src/components/search-experience/SearchExperience.LoadMore';
-import * as SearchExperience from 'src/components/search-experience/SearchExperience';
 import * as PromoAnimatedImageRightdev from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
 import * as PromoAnimatedDefaultdev from 'src/components/promo-animated/PromoAnimatedDefault.dev';
 import * as PromoAnimated from 'src/components/promo-animated/PromoAnimated';
@@ -130,7 +128,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SearchBox', { ...SearchBox }],
   ['MiniCart', { ...MiniCart }],
   ['SecondaryNavigation', { ...SecondaryNavigation }],
-  ['SearchExperience', { ...SearchExperienceLoadMore, ...SearchExperience }],
   ['PromoAnimatedImageRight', { ...PromoAnimatedImageRightdev }],
   ['PromoAnimatedDefault', { ...PromoAnimatedDefaultdev }],
   ['PromoAnimated', { ...PromoAnimated }],

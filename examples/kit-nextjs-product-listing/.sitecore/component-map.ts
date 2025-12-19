@@ -64,8 +64,6 @@ import * as SiteMetadata from 'src/components/site-metadata/SiteMetadata';
 import * as sitemetadataprops from 'src/components/site-metadata/site-metadata.props';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
 import * as secondarynavigationprops from 'src/components/secondary-navigation/secondary-navigation.props';
-import * as SearchExperienceLoadMore from 'src/components/search-experience/SearchExperience.LoadMore';
-import * as SearchExperience from 'src/components/search-experience/SearchExperience';
 import * as RichTextBlock from 'src/components/rich-text-block/RichTextBlock';
 import * as richtextblockprops from 'src/components/rich-text-block/rich-text-block.props';
 import * as PromoImageTitlePartialOverlaydev from 'src/components/promo-image/PromoImageTitlePartialOverlay.dev';
@@ -303,7 +301,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['site-metadata', { ...sitemetadataprops }],
   ['SecondaryNavigation', { ...SecondaryNavigation, componentType: 'client' }],
   ['secondary-navigation', { ...secondarynavigationprops }],
-  ['SearchExperience', { ...SearchExperienceLoadMore, ...SearchExperience, componentType: 'client' }],
   ['RichTextBlock', { ...RichTextBlock }],
   ['rich-text-block', { ...richtextblockprops }],
   ['PromoImageTitlePartialOverlay', { ...PromoImageTitlePartialOverlaydev }],
