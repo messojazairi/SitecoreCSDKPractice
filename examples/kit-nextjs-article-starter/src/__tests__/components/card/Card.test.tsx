@@ -15,16 +15,70 @@ import {
   propsWithoutClassName,
 } from './Card.mockProps';
 
+// Type definitions for mock components
+interface MockFieldValue {
+  value?: string;
+}
+
+interface MockLinkFieldValue {
+  href?: string;
+  url?: string;
+  text?: string;
+}
+
+interface MockImageFieldValue {
+  src?: string;
+  alt?: string;
+}
+
+interface MockTextProps {
+  field?: MockFieldValue;
+  tag?: keyof JSX.IntrinsicElements;
+}
+
+interface MockRichTextProps {
+  field?: MockFieldValue;
+}
+
+interface MockLinkProps {
+  field?: { value?: MockLinkFieldValue };
+  children?: React.ReactNode;
+  editable?: boolean;
+}
+
+interface MockCardProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+interface MockChildrenProps {
+  children?: React.ReactNode;
+}
+
+interface MockButtonProps {
+  children?: React.ReactNode;
+  asChild?: boolean;
+}
+
+interface MockIconProps {
+  iconName?: string;
+}
+
+interface MockImageWrapperProps {
+  image?: { value?: MockImageFieldValue };
+  className?: string;
+}
+
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag }: any) => {
+  Text: ({ field, tag }: MockTextProps) => {
     const Tag = tag || 'span';
     return React.createElement(Tag, { 'data-testid': 'text-field' }, field?.value || '');
   },
-  RichText: ({ field }: any) => (
+  RichText: ({ field }: MockRichTextProps) => (
     <div data-testid="rich-text-field" dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
   ),
-  Link: ({ field, children, editable }: any) => (
+  Link: ({ field, children, editable }: MockLinkProps) => (
     <a
       href={field?.value?.href || field?.value?.url}
       data-testid="sitecore-link"
@@ -37,18 +91,18 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 // Mock UI components
 jest.mock('@/components/ui/card', () => ({
-  Card: ({ children, className }: any) => (
+  Card: ({ children, className }: MockCardProps) => (
     <div data-testid="card" className={className}>
       {children}
     </div>
   ),
-  CardHeader: ({ children }: any) => <div data-testid="card-header">{children}</div>,
-  CardTitle: ({ children }: any) => <div data-testid="card-title">{children}</div>,
-  CardFooter: ({ children }: any) => <div data-testid="card-footer">{children}</div>,
+  CardHeader: ({ children }: MockChildrenProps) => <div data-testid="card-header">{children}</div>,
+  CardTitle: ({ children }: MockChildrenProps) => <div data-testid="card-title">{children}</div>,
+  CardFooter: ({ children }: MockChildrenProps) => <div data-testid="card-footer">{children}</div>,
 }));
 
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild }: any) => (
+  Button: ({ children, asChild }: MockButtonProps) => (
     <div data-testid="button" data-as-child={asChild}>
       {children}
     </div>
@@ -56,23 +110,27 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName }: any) => <span data-testid={`icon-${iconName}`}>{iconName}</span>,
+  Default: ({ iconName }: MockIconProps) => <span data-testid={`icon-${iconName}`}>{iconName}</span>,
 }));
 
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className }: any, ref: any) => {
-    if (!image?.value?.src) return null;
-    return (
-      <img
-        ref={ref}
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        data-testid="image-wrapper"
-      />
-    );
-  }),
-}));
+jest.mock('@/components/image/ImageWrapper.dev', () => {
+  const MockImageWrapper = React.forwardRef<HTMLImageElement, MockImageWrapperProps>(
+    ({ image, className }, ref) => {
+      if (!image?.value?.src) return null;
+      return (
+        <img
+          ref={ref}
+          src={image?.value?.src}
+          alt={image?.value?.alt}
+          className={className}
+          data-testid="image-wrapper"
+        />
+      );
+    }
+  );
+  MockImageWrapper.displayName = 'MockImageWrapper';
+  return { Default: MockImageWrapper };
+});
 
 jest.mock('@/lib/utils', () => ({
   cn: (...classes: (string | undefined)[]) => classes.filter(Boolean).join(' '),

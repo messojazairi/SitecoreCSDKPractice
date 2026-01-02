@@ -7,6 +7,7 @@ import {
   propsWithoutLinks,
   propsWithoutContact,
   propsWithEmptyItem,
+  propsEditing,
   mockPageData,
   mockPageDataEditing,
 } from './GlobalHeader.mockProps';
@@ -169,8 +170,7 @@ describe('GlobalHeader Component', () => {
     });
 
     it('should render logo as Image when in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      render(<GlobalHeader {...defaultProps} />);
+      render(<GlobalHeader {...propsEditing} />);
 
       expect(screen.getByTestId('header-logo-image')).toBeInTheDocument();
     });
@@ -271,8 +271,7 @@ describe('GlobalHeader Component', () => {
 
   describe('Editing mode behavior', () => {
     it('should render Sitecore Link components in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      render(<GlobalHeader {...defaultProps} />);
+      render(<GlobalHeader {...propsEditing} />);
 
       // In editing mode, links are rendered differently
       expect(screen.getByRole('banner')).toBeInTheDocument();
@@ -280,8 +279,7 @@ describe('GlobalHeader Component', () => {
     });
 
     it('should render CTA with Sitecore Link in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      render(<GlobalHeader {...defaultProps} />);
+      render(<GlobalHeader {...propsEditing} />);
 
       const ctaButtons = screen.getAllByText('Get Started');
       expect(ctaButtons.length).toBeGreaterThanOrEqual(1);

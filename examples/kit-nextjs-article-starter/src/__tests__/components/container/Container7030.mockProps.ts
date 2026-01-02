@@ -30,6 +30,7 @@ export const defaultProps = {
       'container-thirty-right-main-7030': [{ componentName: 'RightContent' }],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithExcludeTopMargin = {
@@ -46,6 +47,7 @@ export const propsWithExcludeTopMargin = {
       'container-thirty-right-no-margin': [{ componentName: 'RightContent' }],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithEmptyPlaceholders = {
@@ -59,6 +61,7 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithOnlyLeftPlaceholder = {
@@ -74,6 +77,7 @@ export const propsWithOnlyLeftPlaceholder = {
       'container-seventy-left-left-only': [{ componentName: 'LeftContent' }],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithOnlyRightPlaceholder = {
@@ -89,5 +93,6 @@ export const propsWithOnlyRightPlaceholder = {
       'container-thirty-right-right-only': [{ componentName: 'RightContent' }],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 

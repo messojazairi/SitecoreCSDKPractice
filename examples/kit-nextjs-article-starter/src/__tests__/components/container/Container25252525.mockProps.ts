@@ -24,7 +24,8 @@ export const defaultProps = {
       'container-25-four-main-25': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
-  children: undefined as any,
+  children: undefined as React.ReactNode,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithExcludeTopMargin = {
@@ -43,7 +44,8 @@ export const propsWithExcludeTopMargin = {
       'container-25-four-no-margin': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
-  children: undefined as any,
+  children: undefined as React.ReactNode,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithEmptyPlaceholders = {
@@ -57,6 +59,7 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
-  children: undefined as any,
+  children: undefined as React.ReactNode,
+  page: mockSitecoreContext.page,
 };
 

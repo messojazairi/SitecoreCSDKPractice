@@ -38,9 +38,53 @@ import {
   editableImageButtonPropsWithoutSrc,
 } from './ButtonComponent.mockProps';
 
+// Type definitions for mock components
+interface MockLinkFieldValue {
+  href?: string;
+  url?: string;
+  text?: string;
+}
+
+interface MockLinkProps {
+  field?: { value?: MockLinkFieldValue };
+  children?: React.ReactNode;
+  editable?: boolean;
+  className?: string;
+  'aria-label'?: string;
+}
+
+interface MockButtonProps {
+  children?: React.ReactNode;
+  asChild?: boolean;
+  variant?: string;
+  size?: string;
+  className?: string;
+}
+
+interface MockIconProps {
+  iconName?: string;
+  className?: string;
+  isAriaHidden?: boolean;
+}
+
+interface MockImageFieldValue {
+  src?: string;
+  alt?: string;
+}
+
+interface MockImageWrapperProps {
+  image?: { value?: MockImageFieldValue };
+  className?: string;
+  'aria-hidden'?: boolean;
+}
+
+interface MockNoDataFallbackProps {
+  componentName?: string;
+}
+
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Link: ({ field, children, editable, className, 'aria-label': ariaLabel }: any) => (
+  Link: ({ field, children, editable, className, 'aria-label': ariaLabel }: MockLinkProps) => (
     <a
       href={field?.value?.href || field?.value?.url}
       data-testid="sitecore-link"
@@ -55,7 +99,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 // Mock UI components
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, variant, size, className }: any) => (
+  Button: ({ children, asChild, variant, size, className }: MockButtonProps) => (
     <div
       data-testid="button"
       data-as-child={asChild}
@@ -69,7 +113,7 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName, className, isAriaHidden }: any) => (
+  Default: ({ iconName, className, isAriaHidden }: MockIconProps) => (
     <span
       data-testid={`icon-${iconName}`}
       className={className}
@@ -80,21 +124,25 @@ jest.mock('@/components/icon/Icon', () => ({
   ),
 }));
 
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className, 'aria-hidden': ariaHidden }: any, ref: any) => (
-    <img
-      ref={ref}
-      src={image?.value?.src}
-      alt={image?.value?.alt}
-      className={className}
-      aria-hidden={ariaHidden}
-      data-testid="image-wrapper"
-    />
-  )),
-}));
+jest.mock('@/components/image/ImageWrapper.dev', () => {
+  const MockImageWrapper = React.forwardRef<HTMLImageElement, MockImageWrapperProps>(
+    ({ image, className, 'aria-hidden': ariaHidden }, ref) => (
+      <img
+        ref={ref}
+        src={image?.value?.src}
+        alt={image?.value?.alt}
+        className={className}
+        aria-hidden={ariaHidden}
+        data-testid="image-wrapper"
+      />
+    )
+  );
+  MockImageWrapper.displayName = 'MockImageWrapper';
+  return { Default: MockImageWrapper };
+});
 
 jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
+  NoDataFallback: ({ componentName }: MockNoDataFallbackProps) => (
     <div data-testid="no-data-fallback">{componentName}</div>
   ),
 }));

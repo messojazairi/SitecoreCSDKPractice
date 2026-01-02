@@ -1,3 +1,5 @@
+/// <reference types="jest" />
+import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Default as ArticleListing } from '@/components/article-listing/ArticleListing';
@@ -40,6 +42,22 @@ jest.mock('@/components/button-component/ButtonComponent', () => ({
     </a>
   ),
 }));
+
+// Silence React DOM attribute warnings (e.g., fill boolean) for this suite
+const originalConsoleError = console.error;
+beforeAll(() => {
+  console.error = (...args: unknown[]) => {
+    const firstArg = args[0];
+    if (typeof firstArg === 'string' && firstArg.includes('Received `true` for a non-boolean attribute `fill`')) {
+      return;
+    }
+    originalConsoleError(...args);
+  };
+});
+
+afterAll(() => {
+  console.error = originalConsoleError;
+});
 
 describe('ArticleListing Component', () => {
   beforeEach(() => {
@@ -436,6 +454,7 @@ describe('ArticleListing Component', () => {
         fields: undefined as any,
         isPageEditing: false,
         rendering: defaultProps.rendering,
+        page: defaultProps.page,
       };
 
       const { container } = render(<ArticleListing {...propsUndefinedFields} />);

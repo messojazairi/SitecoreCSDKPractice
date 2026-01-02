@@ -14,10 +14,10 @@ import {
   propsWithUndefinedParams,
 } from './RowSplitter.mockProps';
 
-// Mock the Placeholder component
+// Mock the AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering.componentName}>
+  AppPlaceholder: ({ name, rendering }: any) => (
+    <div data-testid={`placeholder-${name}`} data-rendering={rendering?.componentName}>
       Placeholder Content for {name}
     </div>
   ),

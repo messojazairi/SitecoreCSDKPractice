@@ -12,7 +12,7 @@ import {
 
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: any) => (
+  AppPlaceholder: ({ name, rendering }: any) => (
     <div data-testid={`placeholder-${name}`} data-rendering={rendering.componentName}>
       Placeholder Content
     </div>

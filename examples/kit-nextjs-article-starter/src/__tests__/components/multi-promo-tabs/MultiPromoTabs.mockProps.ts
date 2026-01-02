@@ -266,6 +266,7 @@ export const defaultProps: MultiPromoTabsProps = {
   fields: mockFields as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutDroplistLabel: MultiPromoTabsProps = {
@@ -273,6 +274,7 @@ export const propsWithoutDroplistLabel: MultiPromoTabsProps = {
   fields: mockFieldsWithoutDroplistLabel as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutTitle: MultiPromoTabsProps = {
@@ -280,6 +282,7 @@ export const propsWithoutTitle: MultiPromoTabsProps = {
   fields: mockFieldsWithoutTitle as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutChildren: MultiPromoTabsProps = {
@@ -287,6 +290,7 @@ export const propsWithoutChildren: MultiPromoTabsProps = {
   fields: mockFieldsWithoutChildren as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithEmptyChildren: MultiPromoTabsProps = {
@@ -294,6 +298,7 @@ export const propsWithEmptyChildren: MultiPromoTabsProps = {
   fields: mockFieldsWithEmptyChildren as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutDatasource: MultiPromoTabsProps = {
@@ -301,6 +306,7 @@ export const propsWithoutDatasource: MultiPromoTabsProps = {
   fields: mockFieldsWithoutDatasource as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutFields: MultiPromoTabsProps = {
@@ -308,6 +314,7 @@ export const propsWithoutFields: MultiPromoTabsProps = {
   fields: null as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsEditing: MultiPromoTabsProps = {
@@ -315,5 +322,6 @@ export const propsEditing: MultiPromoTabsProps = {
   fields: mockFields as any,
   rendering: { componentName: 'MultiPromoTabs' } as any,
   isPageEditing: true,
+  page: mockPageDataEditing.page as any,
 };
 

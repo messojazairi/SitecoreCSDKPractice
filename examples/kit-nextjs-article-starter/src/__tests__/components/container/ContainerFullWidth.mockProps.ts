@@ -1,21 +1,42 @@
 import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
 
-export const mockSitecoreContext = {
-  page: {
-    mode: {
-      isEditing: false,
-      isPreview: false,
+// Mock page object with all required Page properties
+const mockPageBase = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal',
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
     },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing = {
+  ...mockPageBase,
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit',
+    designLibrary: false,
+    isDesignLibrary: false,
   },
 };
 
+export const mockSitecoreContext = {
+  page: mockPageBase,
+};
+
 export const mockSitecoreContextEditing = {
-  page: {
-    mode: {
-      isEditing: true,
-      isPreview: false,
-    },
-  },
+  page: mockPageEditing,
 };
 
 export const defaultProps = {
@@ -35,6 +56,7 @@ export const defaultProps = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithExcludeTopMargin = {
@@ -54,6 +76,7 @@ export const propsWithExcludeTopMargin = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithEmptyPlaceholders = {
@@ -67,11 +90,12 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 export const propsWithChildren = {
   ...defaultProps,
-  children: 'Test child content' as any,
+  children: 'Test child content' as React.ReactNode,
 };
 
 export const propsWithoutDynamicId = {
@@ -91,5 +115,6 @@ export const propsWithoutDynamicId = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
