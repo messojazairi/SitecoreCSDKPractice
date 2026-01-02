@@ -1,5 +1,21 @@
 import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
+export const mockPageData = {
+  page: {
+    mode: {
+      isEditing: false,
+    },
+  },
+};
+
+export const mockPageDataEditing = {
+  page: {
+    mode: {
+      isEditing: true,
+    },
+  },
+};
+
 // Mock article 1
 export const mockArticle1 = {
   url: '/articles/article-1',
@@ -259,6 +275,7 @@ export const defaultProps = {
   fields: mockFields,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutTitle = {
@@ -266,6 +283,7 @@ export const propsWithoutTitle = {
   fields: mockFieldsWithoutTitle,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutDescription = {
@@ -273,6 +291,7 @@ export const propsWithoutDescription = {
   fields: mockFieldsWithoutDescription,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutLink = {
@@ -280,6 +299,7 @@ export const propsWithoutLink = {
   fields: mockFieldsWithoutLink,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsTwoArticles = {
@@ -287,6 +307,7 @@ export const propsTwoArticles = {
   fields: mockFieldsTwoArticles,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsOneArticle = {
@@ -294,6 +315,7 @@ export const propsOneArticle = {
   fields: mockFieldsOneArticle,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsNoArticles = {
@@ -301,6 +323,7 @@ export const propsNoArticles = {
   fields: mockFieldsNoArticles,
   isPageEditing: false,
   rendering: mockRendering,
+  page: mockPageData.page as any,
 };
 
 export const propsEditing = {
@@ -308,6 +331,7 @@ export const propsEditing = {
   fields: mockFields,
   isPageEditing: true,
   rendering: mockRendering,
+  page: mockPageDataEditing.page as any,
 };
 
 

@@ -3,6 +3,23 @@ import { IconName } from '@/enumerations/Icon.enum';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
 import { IconPosition } from '@/enumerations/IconPosition.enum';
 
+// Mock page data
+export const mockPageData = {
+  page: {
+    mode: {
+      isEditing: false,
+    },
+  },
+};
+
+export const mockPageDataEditing = {
+  page: {
+    mode: {
+      isEditing: true,
+    },
+  },
+};
+
 // Mock link fields
 export const mockButtonLink: LinkField = {
   value: {
@@ -144,6 +161,7 @@ export const defaultProps = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithLeadingIcon = {
@@ -151,6 +169,7 @@ export const propsWithLeadingIcon = {
   params: mockParamsLeadingIcon,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutIcon = {
@@ -158,12 +177,14 @@ export const propsWithoutIcon = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsInEditing = {
   fields: mockFieldsDefault,
   params: mockParamsEditing,
   rendering: { componentName: 'ButtonComponent' } as any,
+  page: mockPageDataEditing.page as any,
 };
 
 export const propsWithInvalidLink = {
@@ -171,6 +192,7 @@ export const propsWithInvalidLink = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsPrimary = {
@@ -178,6 +200,7 @@ export const propsPrimary = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsSecondary = {
@@ -185,6 +208,7 @@ export const propsSecondary = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsDestructive = {
@@ -192,6 +216,7 @@ export const propsDestructive = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsGhost = {
@@ -199,6 +224,7 @@ export const propsGhost = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsOutline = {
@@ -206,6 +232,7 @@ export const propsOutline = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsLink = {
@@ -213,6 +240,7 @@ export const propsLink = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsTertiary = {
@@ -220,6 +248,7 @@ export const propsTertiary = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsLargeSize = {
@@ -227,6 +256,7 @@ export const propsLargeSize = {
   params: mockParamsLarge,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsSmallSize = {
@@ -234,6 +264,7 @@ export const propsSmallSize = {
   params: mockParamsSmall,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsExternalLink = {
@@ -241,6 +272,7 @@ export const propsExternalLink = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutFields = {
@@ -248,6 +280,7 @@ export const propsWithoutFields = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithHttpOnlyLink = {
@@ -257,6 +290,7 @@ export const propsWithHttpOnlyLink = {
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 // Props for EditableButton

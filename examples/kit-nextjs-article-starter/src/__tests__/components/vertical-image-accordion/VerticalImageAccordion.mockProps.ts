@@ -4,6 +4,18 @@ import {
   AccordionItem,
 } from '@/components/vertical-image-accordion/vertical-image-accordion.props';
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+  },
+};
+
+const mockPageEditing = {
+  mode: {
+    isEditing: true,
+  },
+};
+
 // Mock accordion items
 export const mockAccordionItem1: AccordionItem = {
   title: {
@@ -182,6 +194,7 @@ export const defaultProps: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props in editing mode
@@ -201,6 +214,7 @@ export const propsInEditingMode: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: true,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPageEditing as any,
 };
 
 // Props with single item
@@ -220,6 +234,7 @@ export const propsWithSingleItem: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props with two items
@@ -239,6 +254,7 @@ export const propsWithTwoItems: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props without title
@@ -255,6 +271,7 @@ export const propsWithoutTitle: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props with item without link
@@ -274,6 +291,7 @@ export const propsWithItemWithoutLink: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props with item without image
@@ -293,6 +311,7 @@ export const propsWithItemWithoutImage: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props with empty items array
@@ -312,6 +331,7 @@ export const propsWithEmptyItems: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props without items
@@ -328,6 +348,7 @@ export const propsWithoutItems: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props without fields (null scenario)
@@ -336,6 +357,7 @@ export const propsWithoutFields: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 
 // Props with undefined fields
@@ -344,5 +366,6 @@ export const propsWithUndefinedFields: VerticalImageAccordionProps = {
   params: {},
   isPageEditing: false,
   rendering: { componentName: 'VerticalImageAccordion' } as any,
+  page: mockPage as any,
 };
 

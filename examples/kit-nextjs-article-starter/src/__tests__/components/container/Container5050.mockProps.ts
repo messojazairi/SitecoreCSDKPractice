@@ -44,6 +44,7 @@ export const defaultProps = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props with exclude top margin
@@ -69,6 +70,7 @@ export const propsWithExcludeTopMargin = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props without styles
@@ -94,6 +96,7 @@ export const propsWithoutStyles = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props with empty placeholders (not editing mode)
@@ -108,6 +111,7 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props with left child element - children are passed in tests directly
@@ -143,6 +147,7 @@ export const propsWithOnlyLeftPlaceholder = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props with only right placeholder populated
@@ -163,6 +168,7 @@ export const propsWithOnlyRightPlaceholder = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props without DynamicPlaceholderId
@@ -188,15 +194,17 @@ export const propsWithoutDynamicId = {
       ],
     },
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 
 // Props with undefined params
 export const propsWithUndefinedParams = {
-  params: {} as any,
+  params: {} as Record<string, string>,
   rendering: {
     componentName: 'Container5050',
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
+  page: mockSitecoreContext.page,
 };
 

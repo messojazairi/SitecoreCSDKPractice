@@ -7,21 +7,23 @@ import {
   propsWithoutSocialLinks,
   propsWithoutDatasource,
   propsWithoutFields,
+  propsEditing,
   mockPageData,
   mockPageDataEditing,
 } from './GlobalFooter.mockProps';
 
 // Mock the cn utility
+type ClassValue = string | number | boolean | undefined | null | Record<string, boolean>;
 jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
+  cn: (...args: ClassValue[]) => {
     return args
       .flat()
       .filter(Boolean)
       .map((arg) => {
         if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
+        if (typeof arg === 'object' && arg !== null) {
           return Object.keys(arg)
-            .filter((key) => arg[key])
+            .filter((key) => (arg as Record<string, boolean>)[key])
             .join(' ');
         }
         return '';
@@ -31,23 +33,66 @@ jest.mock('@/lib/utils', () => ({
   },
 }));
 
+// Mock component prop interfaces
+interface MockTextProps {
+  field?: { value?: string };
+  className?: string;
+  encode?: boolean;
+}
+
+interface MockAppPlaceholderProps {
+  name?: string;
+  rendering?: { uid?: string };
+  page?: unknown;
+  componentMap?: unknown;
+}
+
 // Mock the useSitecore hook
 const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
-  Text: ({ field, className, encode }: any) => {
+  Text: ({ field, className }: MockTextProps) => {
     return React.createElement('span', { className }, field?.value || '');
   },
-  Placeholder: ({ name, rendering }: any) => (
+  AppPlaceholder: ({ name, rendering }: MockAppPlaceholderProps) => (
     <div data-testid={`placeholder-${name}`} data-rendering={rendering?.uid}>
       Placeholder: {name}
     </div>
   ),
 }));
 
+// Mock Logo props interface
+interface MockLogoProps {
+  logo?: { value?: { src?: string; alt?: string } };
+}
+
+// Mock FooterCallout props interface
+interface MockFooterCalloutProps {
+  fields: {
+    title?: { value?: string };
+    description?: { value?: string };
+    linkOptional?: { value?: { href?: string; text?: string } };
+  };
+}
+
+// Mock EditableImageButton props interface
+interface MockEditableImageButtonProps {
+  buttonLink?: { value?: { href?: string } };
+  icon?: { value?: { src?: string; alt?: string } };
+  className?: string;
+  variant?: string;
+  size?: string;
+  isPageEditing?: boolean;
+}
+
+// Mock NoDataFallback props interface
+interface MockNoDataFallbackProps {
+  componentName?: string;
+}
+
 // Mock the Logo component
 jest.mock('@/components/logo/Logo.dev', () => ({
-  Default: ({ logo }: any) => (
+  Default: ({ logo }: MockLogoProps) => (
     <div data-testid="footer-logo">
       <img src={logo?.value?.src} alt={logo?.value?.alt} />
     </div>
@@ -56,7 +101,7 @@ jest.mock('@/components/logo/Logo.dev', () => ({
 
 // Mock FooterCallout component
 jest.mock('@/components/footer-navigation-callout/FooterNavigationCallout.dev', () => ({
-  Default: ({ fields }: any) => (
+  Default: ({ fields }: MockFooterCalloutProps) => (
     <div data-testid="footer-callout">
       <div data-testid="callout-title">{fields.title?.value}</div>
       <div data-testid="callout-description">{fields.description?.value}</div>
@@ -71,7 +116,7 @@ jest.mock('@/components/footer-navigation-callout/FooterNavigationCallout.dev', 
 
 // Mock EditableImageButton component
 jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableImageButton: ({ buttonLink, icon, className, variant, size, isPageEditing }: any) => (
+  EditableImageButton: ({ buttonLink, icon, className, variant, size, isPageEditing }: MockEditableImageButtonProps) => (
     <button
       data-testid="social-link-button"
       data-href={buttonLink?.value?.href}
@@ -87,7 +132,7 @@ jest.mock('@/components/button-component/ButtonComponent', () => ({
 
 // Mock NoDataFallback
 jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
+  NoDataFallback: ({ componentName }: MockNoDataFallbackProps) => (
     <div data-testid="no-data-fallback">{componentName}</div>
   ),
 }));
@@ -187,8 +232,7 @@ describe('GlobalFooter Component', () => {
     });
 
     it('should render social links with default size in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      render(<GlobalFooter {...defaultProps} />);
+      render(<GlobalFooter {...propsEditing} />);
 
       const socialButtons = screen.getAllByTestId('social-link-button');
       socialButtons.forEach((button) => {

@@ -207,71 +207,84 @@ export const defaultProps: HeroProps = {
   params: mockParamsLight,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithPrimaryScheme: HeroProps = {
   params: mockParamsPrimary,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithSecondaryScheme: HeroProps = {
   params: mockParamsSecondary,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithTertiaryScheme: HeroProps = {
   params: mockParamsTertiary,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithDarkScheme: HeroProps = {
   params: mockParamsDark,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutDescription: HeroProps = {
   params: mockParamsLight,
   fields: mockFieldsWithoutDescription,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutLink: HeroProps = {
   params: mockParamsLight,
   fields: mockFieldsWithoutLink,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithOnlyTitle: HeroProps = {
   params: mockParamsLight,
   fields: mockFieldsWithOnlyTitle,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithImagesOnly: HeroProps = {
   params: mockParamsLight,
   fields: mockFieldsWithImagesOnly,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutColorScheme: HeroProps = {
   params: mockParamsWithoutColorScheme,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutFields: HeroProps = {
   params: mockParamsLight,
   fields: null as any,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageData.page as any,
 };
 
 export const propsEditing: HeroProps = {
   params: mockParamsLight,
   fields: mockFields,
   rendering: { componentName: 'Hero' } as any,
+  page: mockPageDataEditing.page as any,
+  isPageEditing: true,
 };
 

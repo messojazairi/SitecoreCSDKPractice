@@ -9,13 +9,22 @@ import {
   mockSitecoreContextEditing,
 } from './Container25252525.mockProps';
 
+interface MockPlaceholderProps {
+  name?: string;
+}
+
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
   useSitecore: jest.fn(),
+  withDatasourceCheck:
+    () =>
+    <T extends object>(Component: React.ComponentType<T>) =>
+      Component,
 }));
 
 jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) =>
+  cn: (...args: (string | Record<string, boolean> | undefined)[]) =>
     args
       .flat()
       .filter(Boolean)
@@ -118,8 +127,12 @@ describe('Container25252525 Component', () => {
     });
 
     it('should render when placeholders are empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as any);
-      const { container } = render(<Container25252525 {...propsWithEmptyPlaceholders} />);
+      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      const propsEditing = {
+        ...propsWithEmptyPlaceholders,
+        page: mockSitecoreContextEditing.page,
+      };
+      const { container } = render(<Container25252525 {...propsEditing} />);
 
       expect(container.querySelector('section')).toBeInTheDocument();
     });

@@ -13,17 +13,37 @@ import {
   propsWithInsetAndTransparent,
 } from './ContainerFullBleed.mockProps';
 
+interface MockPlaceholderProps {
+  name?: string;
+}
+
+interface MockFlexProps {
+  children?: React.ReactNode;
+  fullBleed?: boolean;
+  className?: string;
+}
+
+interface MockFlexItemProps {
+  children?: React.ReactNode;
+  basis?: string;
+}
+
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  withDatasourceCheck:
+    () =>
+    <T extends object>(Component: React.ComponentType<T>) =>
+      Component,
 }));
 
 jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, fullBleed, className }: any) => (
+  Flex: ({ children, fullBleed, className }: MockFlexProps) => (
     <div data-testid="flex" data-full-bleed={fullBleed} className={className}>
       {children}
     </div>
   ),
-  FlexItem: ({ children, basis }: any) => (
+  FlexItem: ({ children, basis }: MockFlexItemProps) => (
     <div data-testid="flex-item" data-basis={basis}>
       {children}
     </div>
