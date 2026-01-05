@@ -16,13 +16,14 @@ type Props = {
   [key: string]: any;
 };
 
-export default function ClientImage({ image, className, sizes, ...rest }: Props) {
+export default function ClientImage({ image, className, sizes, priority, ...rest }: Props) {
   const { page } = useSitecore();
   const { isEditing, isPreview } = page.mode;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
-  const inView = useInView(ref);
+  // Only use inView hook for non-priority images to avoid unnecessary re-renders for LCP images
+  const inView = useInView(ref, { once: true });
 
   const src = image?.value?.src ?? '';
   const isSvg = src.endsWith('.svg');
@@ -44,19 +45,30 @@ export default function ClientImage({ image, className, sizes, ...rest }: Props)
     return <ContentSdkImage field={image} className={className} />;
   }
 
+  // For priority images (LCP), use priority prop, otherwise use inView for lazy loading
+  const shouldPrioritize = priority === true;
+ const imagePriority: boolean = shouldPrioritize ? true : inView;
+
+  // Extract priority, loading, and fetchPriority from rest and image.value to avoid conflicts
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { priority: _restPriority, loading: _restLoading, fetchPriority: _restFetchPriority, ...restProps } = rest;
+  const imageValueProps = (image?.value as ImageProps) || {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { priority: _imageValuePriority, loading: _imageValueLoading, fetchPriority: _imageValueFetchPriority, ...imageValueRest } = imageValueProps;
+
   return (
     <NextImage
       ref={ref}
-      {...(image?.value as ImageProps)}
+      {...imageValueRest}
       className={className}
       unoptimized={isUnoptimized}
-      priority={inView}
       loader={isPicsum ? placeholderImageLoader : undefined}
       placeholder="blur"
       blurDataURL={src}
       sizes={sizes}
       {...(!image?.value?.width && isSvg ? { width: 16, height: 16 } : {})}
-      {...rest}
+      {...restProps}
+      priority={imagePriority}
     />
   );
 }
