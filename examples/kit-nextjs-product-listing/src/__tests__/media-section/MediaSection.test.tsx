@@ -18,6 +18,7 @@ import {
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: jest.fn(),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 jest.mock('@/components/image/ImageWrapper.dev', () => ({
@@ -273,9 +274,18 @@ describe('MediaSection Component', () => {
 
   describe('Editing mode', () => {
     it('should handle editing mode with relative URLs', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      const editingProps = {
+        ...defaultProps,
+        page: {
+          mode: {
+            isEditing: true,
+            isNormal: false,
+            isPreview: false,
+          },
+        },
+      };
 
-      const { container } = render(<MediaSection {...defaultProps} />);
+      const { container } = render(<MediaSection {...editingProps} />);
 
       const video = container.querySelector('video');
       expect(video).toBeInTheDocument();

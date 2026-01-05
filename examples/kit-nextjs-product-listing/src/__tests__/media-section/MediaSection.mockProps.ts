@@ -46,90 +46,180 @@ export const mockSitecoreContextEditing = {
 
 // Default props with video and image
 export const defaultProps = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/test-video.mp4',
   image: mockImageField,
   className: 'custom-media-class',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with only video
 export const propsWithOnlyVideo = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/only-video.mp4',
   image: undefined,
   className: '',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with only image
 export const propsWithOnlyImage = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: undefined,
   image: mockImageField,
   className: 'image-only',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with reduced motion enabled
 export const propsWithReducedMotion = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/test-video.mp4',
   image: mockImageField,
   className: '',
   pause: false,
   reducedMotion: true,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with video paused
 export const propsWithPausedVideo = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/test-video.mp4',
   image: mockImageField,
   className: '',
   pause: true,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with large image
 export const propsWithLargeImage = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: undefined,
   image: mockImageFieldLarge,
   className: 'aspect-16/9',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with image without size
 export const propsWithImageNoSize = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: undefined,
   image: mockImageFieldNoSize,
   className: '',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with no media (should not render)
 export const propsWithNoMedia = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: undefined,
   image: undefined,
   className: '',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with both video and reduced motion
 export const propsWithVideoAndReducedMotion = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/test-video.mp4',
   image: mockImageField,
   className: 'reduced-motion-test',
   pause: false,
   reducedMotion: true,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 // Props with custom dimensions
 export const propsWithCustomClass = {
+  rendering: { componentName: 'MediaSection', params: {} },
+  params: {},
   video: '/videos/custom-video.mp4',
   image: mockImageField,
   className: 'aspect-280/356 custom-class',
   pause: false,
   reducedMotion: false,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };

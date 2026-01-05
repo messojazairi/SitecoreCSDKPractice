@@ -53,6 +53,13 @@ const mockUtilityNavLinks = [
 export const defaultGlobalHeaderProps: GlobalHeaderProps = {
   rendering: { componentName: 'GlobalHeader', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       item: {
@@ -69,6 +76,13 @@ export const defaultGlobalHeaderProps: GlobalHeaderProps = {
 export const globalHeaderPropsNoFields: GlobalHeaderProps = {
   rendering: { componentName: 'GlobalHeader', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       item: {
@@ -82,6 +96,13 @@ export const globalHeaderPropsNoFields: GlobalHeaderProps = {
 export const globalHeaderPropsMinimal: GlobalHeaderProps = {
   rendering: { componentName: 'GlobalHeader', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       item: {
@@ -95,6 +116,13 @@ export const globalHeaderPropsMinimal: GlobalHeaderProps = {
 
 export const globalHeaderPropsEditing: GlobalHeaderProps = {
   ...defaultGlobalHeaderProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 

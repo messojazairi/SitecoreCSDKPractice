@@ -9,11 +9,22 @@ jest.mock('lucide-react', () => ({
   ChevronRight: () => <span data-testid="chevron-right">→</span>,
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => key,
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
   }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
 }));
 
 // Mock Carousel components

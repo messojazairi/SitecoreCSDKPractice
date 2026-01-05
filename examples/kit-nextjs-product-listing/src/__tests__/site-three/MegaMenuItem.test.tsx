@@ -8,11 +8,22 @@ jest.mock('lucide-react', () => ({
   ArrowLeft: () => <span data-testid="arrow-left-icon">←</span>,
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => key,
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
   }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
 }));
 
 // Mock useToggleWithClickOutside hook - allow control of state for testing
@@ -29,6 +40,12 @@ jest.mock('@/hooks/useToggleWithClickOutside', () => ({
   }),
 }));
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, ...props }: any) => <span {...props}>{field?.value || ''}</span>,
@@ -41,7 +58,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     <img src={field?.value?.src || ''} alt={field?.value?.alt || ''} className={className} />
   ),
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`} />,
+  AppPlaceholder: ({ name }: any) => <div data-testid={`app-placeholder-${name}`} />,
   Field: ({ field }: any) => <span>{field?.value || ''}</span>,
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 describe('MegaMenuItem', () => {
@@ -140,10 +159,10 @@ describe('MegaMenuItem', () => {
     it('renders placeholder components', () => {
       render(<MegaMenuItemDefault {...mockProps} />);
       expect(
-        screen.getByTestId('placeholder-mega-menu-item-primary-links-undefined')
+        screen.getByTestId('app-placeholder-mega-menu-item-primary-links-undefined')
       ).toBeInTheDocument();
       expect(
-        screen.getByTestId('placeholder-mega-menu-item-secondary-links-undefined')
+        screen.getByTestId('app-placeholder-mega-menu-item-secondary-links-undefined')
       ).toBeInTheDocument();
     });
 
@@ -281,10 +300,10 @@ describe('MegaMenuItem', () => {
 
       render(<MegaMenuItemDefault {...propsWithDynamicId} />);
       expect(
-        screen.getByTestId('placeholder-mega-menu-item-primary-links-test-123')
+        screen.getByTestId('app-placeholder-mega-menu-item-primary-links-test-123')
       ).toBeInTheDocument();
       expect(
-        screen.getByTestId('placeholder-mega-menu-item-secondary-links-test-123')
+        screen.getByTestId('app-placeholder-mega-menu-item-secondary-links-test-123')
       ).toBeInTheDocument();
     });
   });

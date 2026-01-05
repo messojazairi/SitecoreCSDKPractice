@@ -23,6 +23,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement(tag, { className }, f.value);
   },
   useSitecore: jest.fn(() => ({ page: { mode: { isEditing: false } } })),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock complex hooks and utilities
