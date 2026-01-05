@@ -86,6 +86,23 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     if (!field) return React.createElement(Tag, { className }, '');
     return React.createElement(Tag, { className }, field.value || '');
   },
+  useSitecore: () => ({
+    page: {
+      mode: {
+        isEditing: false,
+        isNormal: true,
+        isPreview: false,
+      },
+      layout: {
+        sitecore: {
+          route: {
+            fields: {},
+          },
+        },
+      },
+      locale: 'en',
+    },
+  }),
 }));
 
 describe('LinkList Component', () => {
