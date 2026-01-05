@@ -2,14 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/tw/*": [
-        "tailwind-config/*"
-      ],
       "components/*": [
         "src/components/*"
-      ],
-      "shadcd/*": [
-        "shadcn//*"
       ],
       "lib/*": [
         "src/lib/*"
@@ -20,23 +14,15 @@
       "assets/*": [
         "src/assets/*"
       ],
-      "enumerations/*": [
-        "src/enumerations/*"
+      ".sitecore/*": [
+        ".sitecore/*"
       ],
-      "types/*": [
-        "src/types/*"
-      ],
-      "graphql-types": [
-        "node_modules/@types/graphql-let/__generated__/__types__"
-      ],
-      "react": [
-        "node_modules/react"
-      ],
+      "next/*": ["node_modules/next/*"],
       "@/*": [
         "./src/*"
-      ]
+      ],
     },
-    "target": "es5",
+    "target": "ES2017",
     "types": [
       "node",
       "jest",
@@ -50,30 +36,22 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "strictFunctionTypes": false,
-    "downlevelIteration": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "strictFunctionTypes": false,
     "module": "esnext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "allowSyntheticDefaultImports": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "incremental": true,
-    "forceConsistentCasingInFileNames": false
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

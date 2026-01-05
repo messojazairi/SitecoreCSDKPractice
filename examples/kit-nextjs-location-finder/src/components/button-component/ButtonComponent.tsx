@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { type JSX } from 'react';
+import NextLink from 'next/link';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import {
+  Link,
+  LinkField,
+  ComponentRendering,
+  Page,
+} from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -34,18 +40,24 @@ export type ButtonFields = {
 
 export type ButtonRendering = { rendering: ComponentRendering };
 const linkIsValid = (link: LinkField) => {
+  const href = link?.value?.href || link?.value?.url;
   return (
     !!link?.value?.text &&
-    (!!link?.value?.href || !!link?.value?.url) &&
-    link?.value?.href !== 'http://'
+    !!href &&
+    href !== 'http://' &&
+    href !== 'http://#' &&
+    href !== '#'
   );
 };
 const isValidEditableLink = (link: LinkField, icon?: ImageField) => {
+  const href = link?.value?.href || link?.value?.url;
   return (
     !!link?.value?.text ||
     (icon?.value?.src &&
-      (!!link?.value?.href || !!link?.value?.url) &&
-      link?.value?.href !== 'http://')
+      !!href &&
+      href !== 'http://' &&
+      href !== 'http://#' &&
+      href !== '#')
   );
 };
 
@@ -54,7 +66,7 @@ const ButtonBase = (
   props: ButtonFields['params'] &
     ButtonFields['fields'] & { variant?: EnumValues<typeof ButtonVariants> } & {
       className?: string;
-    }
+    },
 ): JSX.Element | null => {
   const {
     buttonLink,
@@ -76,23 +88,25 @@ const ButtonBase = (
       {isPageEditing ? (
         <Link field={buttonLink} editable={true} />
       ) : (
-        <Link field={buttonLink} editable={isPageEditing}>
-          {iconPosition === IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-          {buttonLink?.value?.text}
-          {iconPosition !== IconPosition.LEADING && icon ? (
-            <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
-              className={iconClassName}
-              isAriaHidden={ariaHidden}
-            />
-          ) : null}
-        </Link>
+        buttonLink?.value?.href && (
+          <NextLink href={buttonLink.value.href} prefetch={false}>
+            {iconPosition === IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+            {buttonLink?.value?.text}
+            {iconPosition !== IconPosition.LEADING && icon ? (
+              <Icon
+                iconName={iconName ? iconName : IconName.ARROW_LEFT}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
+            ) : null}
+          </NextLink>
+        )
       )}
     </Button>
   );
@@ -110,6 +124,7 @@ const EditableButton = (props: {
   size?: EnumValues<typeof ButtonSize>;
   //if asIconLink is set the text will not show up in the link but as an aria label
   asIconLink?: boolean;
+  page?: Page;
   [key: string]: any;
 }): JSX.Element | null => {
   const {
@@ -123,6 +138,7 @@ const EditableButton = (props: {
     className,
     isPageEditing = false,
     asIconLink = false,
+    page,
   } = props || {};
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
@@ -132,28 +148,50 @@ const EditableButton = (props: {
       {isPageEditing ? (
         <span className="flex">
           {iconPosition === IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+              page={page}
+            />
           ) : null}
           <Link field={buttonLink} editable={isPageEditing} />
           {iconPosition !== IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+              page={page}
+            />
           ) : null}
         </span>
       ) : (
-        <Link
-          className={className}
-          field={buttonLink}
-          editable={isPageEditing}
-          aria-label={asIconLink ? buttonLink?.value?.text : undefined}
-        >
-          {iconPosition === IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
-          ) : null}
-          {!asIconLink && buttonLink?.value?.text}
-          {iconPosition !== IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
-          ) : null}
-        </Link>
+        buttonLink?.value?.href && (
+          <NextLink
+            href={buttonLink.value.href}
+            className={className}
+            aria-label={asIconLink ? buttonLink?.value?.text : undefined}
+            prefetch={false}
+          >
+            {iconPosition === IconPosition.LEADING && icon?.value?.src ? (
+              <ImageWrapper
+                className={iconClassName}
+                image={icon}
+                aria-hidden={ariaHidden}
+                page={page}
+              />
+            ) : null}
+            {!asIconLink && buttonLink?.value?.text}
+            {iconPosition !== IconPosition.LEADING && icon?.value?.src ? (
+              <ImageWrapper
+                className={iconClassName}
+                image={icon}
+                aria-hidden={ariaHidden}
+                page={page}
+              />
+            ) : null}
+          </NextLink>
+        )
       )}
     </Button>
   );
@@ -162,7 +200,12 @@ const EditableButton = (props: {
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { fields, params, page } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
+  const {
+    size,
+    iconPosition = 'trailing',
+    iconClassName,
+    isPageEditing,
+  } = params || {};
   const variant = props?.variant || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
@@ -171,7 +214,9 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
 
   // Only set a button icon if one is explicitly provided
   const buttonIcon: EnumValues<typeof IconName> | undefined =
-    iconName || (buttonLink?.value?.linktype as EnumValues<typeof IconName>) || undefined;
+    iconName ||
+    (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
+    undefined;
 
   // Default icon size for buttons if not provided
   const iconClass = iconClassName || 'h-4 w-4';
@@ -182,23 +227,41 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
         {isEditing ? (
           <span className="inline-flex items-center gap-2">
             {iconPosition === IconPosition.LEADING && buttonIcon && (
-              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+              <Icon
+                iconName={buttonIcon}
+                className={iconClass}
+                isAriaHidden={ariaHidden}
+              />
             )}
             <Link field={buttonLink} editable={true} />
             {iconPosition !== IconPosition.LEADING && buttonIcon && (
-              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
+              <Icon
+                iconName={buttonIcon}
+                className={iconClass}
+                isAriaHidden={ariaHidden}
+              />
             )}
           </span>
         ) : (
-          <Link editable={isEditing} field={buttonLink}>
-            {iconPosition === IconPosition.LEADING && buttonIcon && (
-              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
-            )}
-            {buttonLink?.value?.text}
-            {iconPosition !== IconPosition.LEADING && buttonIcon && (
-              <Icon iconName={buttonIcon} className={iconClass} isAriaHidden={ariaHidden} />
-            )}
-          </Link>
+          buttonLink?.value?.href && (
+            <NextLink href={buttonLink.value.href} prefetch={false}>
+              {iconPosition === IconPosition.LEADING && buttonIcon && (
+                <Icon
+                  iconName={buttonIcon}
+                  className={iconClass}
+                  isAriaHidden={ariaHidden}
+                />
+              )}
+              {buttonLink?.value?.text}
+              {iconPosition !== IconPosition.LEADING && buttonIcon && (
+                <Icon
+                  iconName={buttonIcon}
+                  className={iconClass}
+                  isAriaHidden={ariaHidden}
+                />
+              )}
+            </NextLink>
+          )
         )}
       </Button>
     );

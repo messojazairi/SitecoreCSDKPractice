@@ -3,9 +3,6 @@
 # dependencies
 /node_modules
 
-# Lock files
-package-lock.json
-
 # next.js
 /.next*/
 /out/
@@ -29,3 +26,4 @@ package-lock.json
 # except for component-map
 !.sitecore/component-map.ts
 !.sitecore/import-map.ts
+!.sitecore/component-map.client.ts
