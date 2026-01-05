@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CardSpotlight } from '@/components/card-spotlight/card-spotlight.dev';
 import type { ProductCardProps } from './product-listing.props';
 import Link from 'next/link';
-import { useI18n } from 'next-localization';
+import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 
 const ProductListingCard = ({
@@ -13,7 +13,7 @@ const ProductListingCard = ({
   prefersReducedMotion,
   isPageEditing,
 }: ProductCardProps) => {
-  const { t } = useI18n();
+  const t = useTranslations();
   const dictionary = {
     PRODUCTLISTING_DrivingRange: t(dictionaryKeys.PRODUCTLISTING_DrivingRange),
     PRODUCTLISTING_Price: t(dictionaryKeys.PRODUCTLISTING_Price),
@@ -68,12 +68,17 @@ const ProductListingCard = ({
           </div>
 
           <div className="space-y-2 pt-2">
-            {isPageEditing ||
-              (link?.value?.href && (
+            {isPageEditing ? (
+              <Button className="w-full" asChild>
+                <EditableLink field={link} />
+              </Button>
+            ) : (
+              link?.value?.href && (
                 <Button className="w-full" asChild>
-                  <EditableLink field={link} />
+                  <Link href={link.value.href}>{link.value.text}</Link>
                 </Button>
-              ))}
+              )
+            )}
             {product.url?.path && (
               <Button variant="outline" className="w-full bg-transparent" asChild>
                 <Link href={product.url.path}>{dictionary.PRODUCTLISTING_SeeFullSpecs}</Link>

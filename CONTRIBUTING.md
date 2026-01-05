@@ -66,6 +66,17 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 This repository includes comprehensive AI coding agent guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across multiple AI assistants.
 
+### Claude Code Guide
+
+The repository includes **`CLAUDE.md`** - a comprehensive guide for Claude Code and AI assistants:
+- Project architecture and technology stack
+- Coding standards with TypeScript and modular layout
+- Security and performance guidelines
+- Component development patterns with examples
+- Safe destructuring and data validation patterns
+- Sitecore Content SDK import guidelines
+- Example prompts and common patterns reference
+
 ### Cursor AI Rules
 
 The repository contains `.cursor/rules/` directory with AI guidance files:
@@ -80,6 +91,20 @@ The repository contains `.cursor/rules/` directory with AI guidance files:
   - `sitecore.mdc` - Sitecore XM Cloud development patterns and component guidelines
   - `nextjs.mdc` - Next.js specific patterns, routing, and API development
   - `testing.mdc` - Testing strategies for XM Cloud components and integrations
+
+### Windsurf IDE Rules
+
+The repository includes a **`.windsurfrules`** file for Windsurf's agentic IDE workflows:
+
+- **Comprehensive Standards** - Consolidated rules covering:
+  - Project overview with multi-starter architecture
+  - TypeScript strict mode and naming conventions
+  - Complete folder structure with examples
+  - Best practices (RO-RO pattern, functional components, immutability)
+  - Tailwind CSS styling and Shadcn/ui integration
+  - XM Cloud data handling with Zod validation and readonly types
+  - Testing patterns with Jest/Playwright and coverage expectations
+  - Safety rules and development workflow
 
 ### GitHub Copilot Support
 
@@ -104,10 +129,22 @@ The repository includes dedicated GitHub Copilot guidance files:
 
 When using AI coding assistants:
 
+**Claude Code:**
+- Reference `CLAUDE.md` for comprehensive project architecture and coding standards
+- Follow the Locality of Behavior pattern for component development
+- Use safe destructuring patterns and proper data validation
+- Refer to example prompts and common patterns for guidance
+
 **Cursor AI:**
 - Rules automatically provide context based on the files you're working with
 - Follow the naming conventions and architectural guidance provided
 - Refer to the rules when uncertain about XM Cloud implementation approaches
+
+**Windsurf IDE:**
+- The `.windsurfrules` file provides comprehensive coding standards and patterns
+- Optimized for multi-line autocompletion with full context awareness
+- Enables chat-based code navigation with architectural guidance
+- Supports agentic workflows with XM Cloud-specific component patterns
 
 **GitHub Copilot:**
 - Reference `copilot-instructions.md` for detailed development patterns
@@ -119,15 +156,28 @@ When using AI coding assistants:
 - Focus on TypeScript-first development with strict mode
 - Always validate Sitecore datasource existence
 - Implement proper error handling and accessibility features
+- When updating standards, propagate changes to all AI guidance files (Claude, Cursor, Windsurf, Copilot)
 
 ### Contributing to AI Guidance
 
 To improve the AI guidance files:
 
+**For Claude Code Guide:**
+1. Edit `CLAUDE.md` for comprehensive project guidance
+2. Include complete examples with TypeScript interfaces and implementations
+3. Add example prompts that demonstrate Claude Code usage
+4. Ensure all code examples follow the project's coding standards
+
 **For Cursor Rules:**
 1. Edit the relevant `.mdc` files in `.cursor/rules/`
 2. Keep rules under 500 lines and focused on specific concerns
 3. Include concrete examples and file references using `@filepath` syntax
+
+**For Windsurf IDE:**
+1. Update `.windsurfrules` for comprehensive standards and patterns
+2. Organize content into clear sections (Overview, Standards, Structure, Best Practices, etc.)
+3. Include code examples demonstrating proper XM Cloud patterns
+4. Keep synchronized with Cursor rules and Copilot instructions
 
 **For GitHub Copilot:**
 1. Update `copilot-instructions.md` for detailed patterns and examples
@@ -138,6 +188,7 @@ To improve the AI guidance files:
 4. Test changes with AI coding assistants to ensure effectiveness
 5. Consider impact across all starter applications
 6. Keep guidance files synchronized with actual codebase patterns
+7. When updating standards, propagate changes to all AI guidance files (Cursor, Windsurf, Copilot)
 
 5. 🚀 Submitting a Pull Request
 Once your changes are ready:

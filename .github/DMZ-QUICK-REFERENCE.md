@@ -14,7 +14,7 @@ git commit -m "feat: add my feature"
 git push origin feature/my-feature
 
 # 3. Create PR to dmz (not main!) on GitHub
-# 4. After merge, main is auto-updated
+# 4. Wait for validation, then maintainer manually merges dmz to main
 ```
 
 ## ⚠️ Common Error: "Not based on latest main"
@@ -37,13 +37,19 @@ git rebase origin/main
 git push --force-with-lease origin feature/my-feature
 ```
 
+## 🔀 After Your PR is Merged to DMZ
+
+1. ✅ Wait for DMZ validation workflow to complete
+2. 👤 Maintainer will manually merge `dmz` to `main` via GitHub web interface
+3. 📝 Main is updated with a merge commit
+
 ## ❌ Common Mistakes
 
 | ❌ Don't Do This | ✅ Do This Instead |
 |-----------------|-------------------|
 | Create branch from `dmz` | Create branch from `main` |
 | Create PR to `main` | Create PR to `dmz` |
-| Use "Merge commit" | Use "Squash and merge" |
+| Use "Merge commit" for PRs to dmz | Use "Squash and merge" for PRs to dmz |
 | Push directly to `main` | Always go through `dmz` |
 | Ignore "not based on latest main" error | Rebase onto latest `main` |
 
@@ -79,7 +85,7 @@ git push --force-with-lease origin dmz
 ## 📚 Full Documentation
 
 - **[Complete Workflow Guide](.github/DMZ-WORKFLOW.md)** - Detailed explanations and troubleshooting
-- **[Branch Protection Setup](.github/BRANCH-PROTECTION-SETUP.md)** - For repository maintainers
+- **[Branch Protection Setup](.github/DMZ-WORKFLOW.md#security-requirements)** - For repository maintainers
 
 ## 🆘 Still Stuck?
 

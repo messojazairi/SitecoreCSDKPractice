@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useEffect, useState, type JSX } from 'react';
-import { Link as ContentSdkLink, Text, LinkField, TextField } from '@sitecore-content-sdk/nextjs';
+import { Link as ContentSdkLink, Text, LinkField, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import Link from 'next/link';
 
 type ResultsFieldLink = {
   field: {
@@ -32,7 +35,9 @@ type LinkListItemProps = {
   field: LinkField;
 };
 
-const LinkListItem = (props: LinkListItemProps) => {
+const LinkListItem = (props: LinkListItemProps & { isPageEditing?: boolean }) => {
+  const { page } = useSitecore();
+  const isEditing = props.isPageEditing || page?.mode?.isEditing;
   let className = `item${props.index}`;
   className += (props.index + 1) % 2 == 0 ? ' even' : ' odd';
   if (props.index == 0) {
@@ -44,17 +49,31 @@ const LinkListItem = (props: LinkListItemProps) => {
   return (
     <li className={className}>
       <div>
-        <ContentSdkLink
-          className="text-gray-600 hover:underline focus:border focus:border-dashed focus:border-gray-500 inline-block px-2 py-2 focus:bg-gray-50 focus:outline focus:outline-dashed focus:ring-gray-500 aria-selected:bg-gray-100 text-nowrap word-break-[break-word] text-sm"
-          field={props.field}
-          prefetch={false}
-        />
+        {isEditing ? (
+          <ContentSdkLink
+            className="text-gray-600 hover:underline focus:border focus:border-dashed focus:border-gray-500 inline-block px-2 py-2 focus:bg-gray-50 focus:outline focus:outline-dashed focus:ring-gray-500 aria-selected:bg-gray-100 text-nowrap word-break-[break-word] text-sm"
+            field={props.field}
+            prefetch={false}
+          />
+        ) : (
+          props.field?.value?.href && (
+            <Link
+              href={props.field.value.href}
+              className="text-gray-600 hover:underline focus:border focus:border-dashed focus:border-gray-500 inline-block px-2 py-2 focus:bg-gray-50 focus:outline focus:outline-dashed focus:ring-gray-500 aria-selected:bg-gray-100 text-nowrap word-break-[break-word] text-sm"
+              prefetch={false}
+            >
+              {props.field?.value?.text}
+            </Link>
+          )
+        )}
       </div>
     </li>
   );
 };
 
 export const Default = (props: LinkListProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const datasource = props.fields?.data?.datasource;
   const styles = `max-w-xs p-5 font-sans ${props.params.styles}`.trimEnd();
   const id = props.params.RenderingIdentifier;
@@ -68,6 +87,7 @@ export const Default = (props: LinkListProps): JSX.Element => {
           key={`${key}${element.field.link}`}
           total={datasource.children.results.length}
           field={element.field.link}
+          isPageEditing={isPageEditing}
         />
       ));
 
@@ -79,7 +99,7 @@ export const Default = (props: LinkListProps): JSX.Element => {
             field={datasource?.field?.title}
             className="text-nowrap mb-5 text-xl font-bold text-gray-600"
           />
-          <ul className="list-none p-0 m-0" role="listbox" aria-label="Navigation options">
+          <ul className="list-none p-0 m-0" aria-label="Navigation options">
             {list}
           </ul>
         </div>
@@ -189,6 +209,8 @@ export const AnchorNav = (props: LinkListProps): JSX.Element => {
 };
 
 export const FooterLinks = (props: LinkListProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const datasource = props.fields?.data?.datasource;
   const styles = `font-[inherit] ${props.params.styles}`.trimEnd();
   const id = props.params.RenderingIdentifier;
@@ -201,20 +223,30 @@ export const FooterLinks = (props: LinkListProps): JSX.Element => {
         const href = link?.value?.href || '';
 
         return (
-          <>
-            <ContentSdkLink
-              key={`${key}${href}-link`}
-              className="font-[inherit]"
-              field={element.field.link}
-              prefetch={false}
-            />
-            <span
-              key={`${key}${href}-separator`}
-              className="font-[inherit] last:!hidden hidden lg:[.with-separators_&]:inline-block"
-            >
+          <React.Fragment key={`${key}${href}`}>
+            {isPageEditing ? (
+              <ContentSdkLink
+                key={`${key}${href}-link`}
+                className="font-[inherit]"
+                field={element.field.link}
+                prefetch={false}
+              />
+            ) : (
+              href && (
+                <Link
+                  key={`${key}${href}-link`}
+                  href={href}
+                  className="font-[inherit]"
+                  prefetch={false}
+                >
+                  {link?.value?.text}
+                </Link>
+              )
+            )}
+            <span className="font-[inherit] last:!hidden hidden lg:[.with-separators_&]:inline-block">
               /
             </span>
-          </>
+          </React.Fragment>
         );
       });
 
@@ -242,6 +274,8 @@ export const FooterLinks = (props: LinkListProps): JSX.Element => {
 };
 
 export const HeaderPrimaryLinks = (props: LinkListProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const datasource = props.fields?.data?.datasource;
   const styles = `font-[inherit] ${props.params.styles}`.trimEnd();
   const id = props.params.RenderingIdentifier;
@@ -255,7 +289,15 @@ export const HeaderPrimaryLinks = (props: LinkListProps): JSX.Element => {
 
         return (
           <li key={`${key}${href}-link`}>
-            <ContentSdkLink field={element.field.link} prefetch={false} />
+            {isPageEditing ? (
+              <ContentSdkLink field={element.field.link} prefetch={false} />
+            ) : (
+              href && (
+                <Link href={href} prefetch={false}>
+                  {link?.value?.text}
+                </Link>
+              )
+            )}
           </li>
         );
       });
@@ -277,6 +319,8 @@ export const HeaderPrimaryLinks = (props: LinkListProps): JSX.Element => {
 };
 
 export const HeaderSecondaryLinks = (props: LinkListProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const datasource = props.fields?.data?.datasource;
   const styles = `font-[inherit] ${props.params.styles}`.trimEnd();
   const id = props.params.RenderingIdentifier;
@@ -290,7 +334,15 @@ export const HeaderSecondaryLinks = (props: LinkListProps): JSX.Element => {
 
         return (
           <li key={`${key}${href}-link`}>
-            <ContentSdkLink field={element.field.link} prefetch={false} />
+            {isPageEditing ? (
+              <ContentSdkLink field={element.field.link} prefetch={false} />
+            ) : (
+              href && (
+                <Link href={href} prefetch={false}>
+                  {link?.value?.text}
+                </Link>
+              )
+            )}
           </li>
         );
       });

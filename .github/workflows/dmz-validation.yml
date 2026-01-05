@@ -1,4 +1,4 @@
-name: DMZ Branch Validation and Main Fast-Forward
+name: DMZ Branch Validation
 
 on:
   push:
@@ -57,6 +57,44 @@ jobs:
             cd ../..
           fi
 
+      - name: Generate Sitecore files for all starters
+        run: |
+          echo "Generating Sitecore configuration files..."
+
+          # Generate files for each enabled starter
+          for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
+            if [ -d "$starter" ]; then
+              echo "Generating files for $starter..."
+              cd "$starter"
+              
+              # Try to generate files with Sitecore tools, fallback to minimal files if credentials are missing
+              if npm run sitecore-tools:generate-map 2>/dev/null; then
+                echo "✅ Sitecore files generated successfully for $starter"
+              else
+                echo "⚠️ Sitecore tools failed (likely missing credentials), creating minimal files for $starter"
+                
+                # Create minimal .sitecore directory and files
+                mkdir -p .sitecore
+                
+                # Create minimal sites.json
+                echo '[{"name":"basic","hostName":"*","language":"en"}]' > .sitecore/sites.json
+                
+                # Create minimal metadata.json
+                echo '{"packages":{"@sitecore-content-sdk/core":"1.1.0","@sitecore-content-sdk/nextjs":"1.1.0"}}' > .sitecore/metadata.json
+                
+                # Create minimal component-map.ts
+                echo 'export default new Map();' > .sitecore/component-map.ts
+                
+                # Create minimal import-map.ts
+                echo 'export default [];' > .sitecore/import-map.ts
+                
+                echo "✅ Minimal Sitecore files created for $starter"
+              fi
+              
+              cd ../..
+            fi
+          done
+
       - name: Lint and format check
         run: |
           set -e  # Exit immediately if any command fails
@@ -100,33 +138,6 @@ jobs:
             if [ -d "$starter" ]; then
               echo "Type checking $starter..."
               cd "$starter"
-              
-              # Generate Sitecore files first (needed for type checking)
-              echo "Generating Sitecore configuration files..."
-              
-              # Try to generate files with Sitecore tools, fallback to minimal files if credentials are missing
-              if npm run sitecore-tools:generate-map 2>/dev/null; then
-                echo "✅ Sitecore files generated successfully"
-              else
-                echo "⚠️ Sitecore tools failed (likely missing credentials), creating minimal files for type checking"
-                
-                # Create minimal .sitecore directory and files
-                mkdir -p .sitecore
-                
-                # Create minimal sites.json
-                echo '[{"name":"basic","hostName":"*","language":"en"}]' > .sitecore/sites.json
-                
-                # Create minimal metadata.json
-                echo '{"packages":{"@sitecore-content-sdk/core":"1.1.0","@sitecore-content-sdk/nextjs":"1.1.0"}}' > .sitecore/metadata.json
-                
-                # Create minimal component-map.ts
-                echo 'export default new Map();' > .sitecore/component-map.ts
-                
-                # Create minimal import-map.ts
-                echo 'export default [];' > .sitecore/import-map.ts
-                
-                echo "✅ Minimal Sitecore files created for type checking"
-              fi
               
               if npm run type-check 2>/dev/null; then
                 echo "✅ Type checking passed for $starter"
@@ -215,60 +226,23 @@ jobs:
             fi
           done
 
-  fast-forward-main:
-    name: Fast-Forward DMZ-Test-Main Branch
-    runs-on: ubuntu-latest
-    needs: validate-dmz
-    if: needs.validate-dmz.result == 'success'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
-
-      - name: Fast-forward dmz-test-main to dmz
-        run: |
-          echo "Fast-forwarding dmz-test-main branch to dmz..."
-
-          # Fetch latest changes
-          git fetch origin
-
-          # Check if dmz is ahead of dmz-test-main
-          DMZ_COMMITS=$(git rev-list --count origin/dmz-test-main..origin/dmz)
-
-          if [ "$DMZ_COMMITS" -gt 0 ]; then
-            echo "DMZ is $DMZ_COMMITS commits ahead of dmz-test-main. Fast-forwarding..."
-            
-            # Fast-forward dmz-test-main to dmz
-            git checkout dmz-test-main
-            git merge --ff-only origin/dmz
-            
-            # Push the fast-forwarded dmz-test-main branch
-            git push origin dmz-test-main
-            
-            echo "✅ Successfully fast-forwarded dmz-test-main to dmz"
-          else
-            echo "ℹ️ DMZ-test-main is already up to date with dmz"
-          fi
-
       - name: Create success notification
         if: success()
         run: |
           echo "## ✅ DMZ Validation Successful" >> $GITHUB_STEP_SUMMARY
-          echo "Main branch has been successfully fast-forwarded to dmz." >> $GITHUB_STEP_SUMMARY
+          echo "The dmz branch has passed all validation checks." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Validation Results:**" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ All builds passed" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ All tests passed" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Linting and formatting checks passed" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Type checking passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+          echo "You can now merge dmz into main via GitHub web interface:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Create a Pull Request from \`dmz\` to \`main\`" >> $GITHUB_STEP_SUMMARY
+          echo "2. Select **\"Create a merge commit\"** option (not Squash or Rebase)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Confirm the merge" >> $GITHUB_STEP_SUMMARY
 
   notify-failure:
     name: Notify Build Failure
@@ -280,7 +254,7 @@ jobs:
       - name: Create failure notification
         run: |
           echo "## ❌ DMZ Validation Failed" >> $GITHUB_STEP_SUMMARY
-          echo "The dmz branch failed validation and will not be fast-forwarded to main." >> $GITHUB_STEP_SUMMARY
+          echo "The dmz branch failed validation and should not be merged to main." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
           echo "1. Review the failed checks above" >> $GITHUB_STEP_SUMMARY
