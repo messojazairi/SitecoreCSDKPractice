@@ -2,7 +2,7 @@
  * Test fixtures and mock data for ColumnSplitter component
  */
 
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps, Page } from 'lib/component-props';
 
 type ColumnNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -17,6 +17,25 @@ type ColumnStyles = {
 interface ColumnSplitterProps extends ComponentProps {
   params: ComponentProps['params'] & ColumnWidths & ColumnStyles;
 }
+
+/**
+ * Mock page object
+ */
+export const mockPage: Page = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  locale: 'en',
+};
 
 /**
  * Mock rendering object
@@ -47,6 +66,7 @@ export const twoColumnSplitterProps: ColumnSplitterProps = {
     Styles1: 'column-style-1',
     Styles2: 'column-style-2',
   },
+  page: mockPage,
 };
 
 /**
@@ -65,6 +85,7 @@ export const threeColumnSplitterProps: ColumnSplitterProps = {
     Styles2: '',
     Styles3: '',
   },
+  page: mockPage,
 };
 
 /**
@@ -81,6 +102,7 @@ export const fourColumnSplitterProps: ColumnSplitterProps = {
     ColumnWidth3: 'col-3',
     ColumnWidth4: 'col-3',
   },
+  page: mockPage,
 };
 
 /**
@@ -94,6 +116,7 @@ export const singleColumnSplitterProps: ColumnSplitterProps = {
     styles: '',
     ColumnWidth1: 'col-12',
   },
+  page: mockPage,
 };
 
 /**
@@ -106,6 +129,7 @@ export const noColumnsSplitterProps: ColumnSplitterProps = {
     RenderingIdentifier: 'column-splitter-empty',
     styles: '',
   },
+  page: mockPage,
 };
 
 /**
@@ -117,6 +141,7 @@ export const missingPlaceholdersProps: ColumnSplitterProps = {
     RenderingIdentifier: 'column-splitter-missing',
     styles: 'test-style',
   },
+  page: mockPage,
 };
 
 /**
@@ -133,4 +158,5 @@ export const varyingWidthsProps: ColumnSplitterProps = {
     Styles1: 'primary-column',
     Styles2: 'sidebar-column',
   },
+  page: mockPage,
 };

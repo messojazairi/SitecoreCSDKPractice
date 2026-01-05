@@ -14,27 +14,8 @@ import {
   titlePropsSpecialChars,
 } from './Title.mockProps';
 
-// Mock the useSitecore hook to avoid complex Sitecore context setup
+// Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => ({
-    page: {
-      layout: {
-        sitecore: {
-          route: {
-            fields: {
-              pageTitle: { value: 'Mock Page Title' },
-            },
-          },
-        },
-      },
-      mode: {
-        isNormal: true,
-        isEditing: false,
-        isPreview: false,
-      },
-      locale: 'en',
-    },
-  }),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Text: ({ field, tag: Tag = 'span' }: { field: any; tag?: string }) => {
     if (!field || !field.value) return null;

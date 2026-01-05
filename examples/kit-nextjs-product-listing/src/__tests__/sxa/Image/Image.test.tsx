@@ -17,10 +17,8 @@ import {
   bannerImagePropsWithBackground,
 } from './Image.mockProps';
 
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
+// Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   NextImage: ({ field }: { field: any }) => {
     if (!field || !field.value) return null;
@@ -56,16 +54,6 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 describe('Image Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Default mock: non-editing mode
-    mockUseSitecore.mockReturnValue({
-      page: {
-        mode: {
-          isEditing: false,
-          isNormal: true,
-          isPreview: false,
-        },
-      },
-    } as ReturnType<typeof mockUseSitecore>);
   });
   describe('Default Variant', () => {
     it('should render image with basic structure', () => {
@@ -135,17 +123,6 @@ describe('Image Component', () => {
 
   describe('Empty States', () => {
     it('should render component with empty image in editing mode', () => {
-      // Mock editing mode
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-            isNormal: false,
-            isPreview: false,
-          },
-        },
-      } as ReturnType<typeof mockUseSitecore>);
-
       const { container } = render(<Image {...imagePropsEmptyImage} />);
 
       // Component may render differently or not at all with empty image

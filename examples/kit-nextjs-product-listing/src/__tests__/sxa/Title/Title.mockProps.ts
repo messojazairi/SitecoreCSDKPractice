@@ -2,7 +2,7 @@
  * Test fixtures and mock data for Title component
  */
 
-import type { LinkField, TextField } from '@sitecore-content-sdk/nextjs';
+import type { LinkField, TextField, Page } from '@sitecore-content-sdk/nextjs';
 
 interface TitleFields {
   data: {
@@ -36,6 +36,7 @@ interface TitleFields {
 type TitleProps = {
   params: { [key: string]: string };
   fields: TitleFields;
+  page: Page;
 };
 
 /**
@@ -99,92 +100,6 @@ export const mockLinkField: LinkField = {
   value: {
     href: '/sample-page',
     title: mockTitleData.basicTitle,
-  },
-};
-
-/**
- * Default props for Title component testing
- */
-export const defaultTitleProps: TitleProps = {
-  params: {
-    RenderingIdentifier: 'title-1',
-    styles: 'title-styles',
-  },
-  fields: {
-    data: {
-      datasource: mockDatasourceWithTitle,
-      contextItem: mockDatasourceWithTitle,
-    },
-  },
-};
-
-/**
- * Props with empty title
- */
-export const titlePropsEmptyTitle: TitleProps = {
-  params: {
-    RenderingIdentifier: 'title-2',
-    styles: 'title-styles',
-  },
-  fields: {
-    data: {
-      datasource: mockDatasourceWithoutTitle,
-      contextItem: mockDatasourceWithoutTitle,
-    },
-  },
-};
-
-/**
- * Props with minimal parameters
- */
-export const titlePropsMinimal: TitleProps = {
-  params: {},
-  fields: {
-    data: {
-      datasource: mockDatasourceWithTitle,
-      contextItem: mockDatasourceWithTitle,
-    },
-  },
-};
-
-/**
- * Props with null fields (edge case)
- */
-export const titlePropsNullFields: TitleProps = {
-  params: {
-    RenderingIdentifier: 'title-3',
-    styles: 'title-styles',
-  },
-  fields: null as unknown as TitleFields,
-};
-
-/**
- * Props with special characters in title
- */
-export const titlePropsSpecialChars: TitleProps = {
-  params: {
-    RenderingIdentifier: 'title-4',
-    styles: 'title-styles',
-  },
-  fields: {
-    data: {
-      datasource: {
-        ...mockDatasourceWithTitle,
-        field: {
-          jsonValue: {
-            value: mockTitleData.specialCharsTitle,
-          },
-        },
-      },
-      contextItem: {
-        ...mockDatasourceWithTitle,
-        field: {
-          jsonValue: {
-            value: mockTitleData.specialCharsTitle,
-          },
-        },
-      },
-    },
   },
 };
 
@@ -255,4 +170,95 @@ export const mockSitecoreContextEditingEmpty = {
     },
     locale: 'en',
   },
+};
+
+/**
+ * Default props for Title component testing
+ */
+export const defaultTitleProps: TitleProps = {
+  params: {
+    RenderingIdentifier: 'title-1',
+    styles: 'title-styles',
+  },
+  fields: {
+    data: {
+      datasource: mockDatasourceWithTitle,
+      contextItem: mockDatasourceWithTitle,
+    },
+  },
+  page: mockSitecoreContextNormal.page,
+};
+
+/**
+ * Props with empty title
+ */
+export const titlePropsEmptyTitle: TitleProps = {
+  params: {
+    RenderingIdentifier: 'title-2',
+    styles: 'title-styles',
+  },
+  fields: {
+    data: {
+      datasource: mockDatasourceWithoutTitle,
+      contextItem: mockDatasourceWithoutTitle,
+    },
+  },
+  page: mockSitecoreContextNormal.page,
+};
+
+/**
+ * Props with minimal parameters
+ */
+export const titlePropsMinimal: TitleProps = {
+  params: {},
+  fields: {
+    data: {
+      datasource: mockDatasourceWithTitle,
+      contextItem: mockDatasourceWithTitle,
+    },
+  },
+  page: mockSitecoreContextNormal.page,
+};
+
+/**
+ * Props with null fields (edge case)
+ */
+export const titlePropsNullFields: TitleProps = {
+  params: {
+    RenderingIdentifier: 'title-3',
+    styles: 'title-styles',
+  },
+  fields: null as unknown as TitleFields,
+  page: mockSitecoreContextNormal.page,
+};
+
+/**
+ * Props with special characters in title
+ */
+export const titlePropsSpecialChars: TitleProps = {
+  params: {
+    RenderingIdentifier: 'title-4',
+    styles: 'title-styles',
+  },
+  fields: {
+    data: {
+      datasource: {
+        ...mockDatasourceWithTitle,
+        field: {
+          jsonValue: {
+            value: mockTitleData.specialCharsTitle,
+          },
+        },
+      },
+      contextItem: {
+        ...mockDatasourceWithTitle,
+        field: {
+          jsonValue: {
+            value: mockTitleData.specialCharsTitle,
+          },
+        },
+      },
+    },
+  },
+  page: mockSitecoreContextNormal.page,
 };

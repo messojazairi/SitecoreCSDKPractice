@@ -4,6 +4,31 @@
  */
 
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render } from '@testing-library/react';
 import PartialDesignDynamicPlaceholder from 'components/sxa/PartialDesignDynamicPlaceholder';
 import {
@@ -24,6 +49,18 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
       name ? 'Placeholder: ' + name : 'Placeholder: '
     ),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: any }) =>
+    React.createElement(
+      'div',
+      {
+        'data-placeholder-name': name,
+        'data-rendering': JSON.stringify(rendering),
+      },
+      name ? 'Placeholder: ' + name : 'Placeholder: '
+    ),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  withDatasourceCheck: () => (Component: React.ComponentType<any>) => Component,
 }));
 
 describe('PartialDesignDynamicPlaceholder Component', () => {
