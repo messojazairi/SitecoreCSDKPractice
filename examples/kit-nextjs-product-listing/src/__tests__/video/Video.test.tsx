@@ -113,6 +113,22 @@ jest.mock('../../components/icon/Icon', () => ({
   ),
 }));
 
+// Mock Next.js Image component
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ src, alt, className, width, height, ...props }: any) => (
+    <img
+      src={src || '/placeholder.svg'}
+      alt={alt || ''}
+      className={className}
+      width={width || 1920}
+      height={height || 1080}
+      data-testid="next-image"
+      {...props}
+    />
+  ),
+}));
+
 // Mock ImageWrapper component
 jest.mock('../../components/image/ImageWrapper.dev', () => ({
   Default: ({ image, className, wrapperClass, objectFit, ...props }: any) => (

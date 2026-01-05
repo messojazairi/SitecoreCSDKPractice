@@ -22,6 +22,13 @@ const mockLink2Field = createMockLinkField('/about', 'Learn More');
 export const defaultPageHeaderProps: PageHeaderProps = {
   rendering: { componentName: 'PageHeader', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -41,6 +48,13 @@ export const defaultPageHeaderProps: PageHeaderProps = {
 export const pageHeaderPropsMinimal: PageHeaderProps = {
   rendering: { componentName: 'PageHeader', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -58,6 +72,13 @@ export const pageHeaderPropsMinimal: PageHeaderProps = {
 export const pageHeaderPropsNoImage: PageHeaderProps = {
   rendering: { componentName: 'PageHeader', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -77,6 +98,13 @@ export const pageHeaderPropsNoImage: PageHeaderProps = {
 export const pageHeaderPropsNoLinks: PageHeaderProps = {
   rendering: { componentName: 'PageHeader', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -96,11 +124,25 @@ export const pageHeaderPropsWithPositionStyles: PageHeaderProps = {
   params: {
     styles: 'position-center position-bottom',
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 export const pageHeaderPropsEmpty: PageHeaderProps = {
   rendering: { componentName: 'PageHeader', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -115,7 +157,7 @@ export const pageHeaderPropsEmpty: PageHeaderProps = {
   },
 };
 
-// Mock useSitecore contexts
+// Mock useSitecore contexts (kept for backward compatibility but not used)
 export const mockUseSitecoreNormal = {
   page: { mode: { isEditing: false } },
 } as unknown;
@@ -123,3 +165,15 @@ export const mockUseSitecoreNormal = {
 export const mockUseSitecoreEditing = {
   page: { mode: { isEditing: true } },
 } as unknown;
+
+// Editing mode props
+export const pageHeaderPropsEditing: PageHeaderProps = {
+  ...defaultPageHeaderProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
+};

@@ -20,14 +20,11 @@ import {
   submissionFormPropsPositionCenter,
   submissionFormPropsPositionRight,
   submissionFormPropsUndefinedTitle,
-  mockUseSitecoreNormal,
-  mockUseSitecoreEditing,
 } from './SubmissionForm.mockProps';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
-// Mock useSitecore
-const mockUseSitecore = jest.fn();
+// Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag: Tag = 'div', className, ...props }: any) => (
     <Tag className={className} data-testid="sitecore-text" {...props}>
       {field?.value || 'Sitecore Text'}
@@ -70,7 +67,6 @@ jest.mock('../../components/submission-form/SubmissionFormCentered.dev', () => (
 describe('SubmissionForm Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
   });
 
   describe('Default Variant', () => {
@@ -82,18 +78,14 @@ describe('SubmissionForm Component', () => {
     });
 
     it('passes editing mode correctly to child component', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+      render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPageEditing} />);
 
       const defaultComponent = screen.getByTestId('submission-form-default');
       expect(defaultComponent).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes non-editing mode correctly to child component', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-
-      render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+      render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPage} />);
 
       const defaultComponent = screen.getByTestId('submission-form-default');
       expect(defaultComponent).toHaveAttribute('data-editing', 'false');
@@ -134,18 +126,14 @@ describe('SubmissionForm Component', () => {
     });
 
     it('passes editing mode correctly to centered component', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
+      render(<SubmissionFormCentered {...submissionFormPropsCentered} page={mockPageEditing} />);
 
       const centeredComponent = screen.getByTestId('submission-form-centered');
       expect(centeredComponent).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes non-editing mode correctly to centered component', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-
-      render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
+      render(<SubmissionFormCentered {...submissionFormPropsCentered} page={mockPage} />);
 
       const centeredComponent = screen.getByTestId('submission-form-centered');
       expect(centeredComponent).toHaveAttribute('data-editing', 'false');
@@ -232,10 +220,11 @@ describe('SubmissionForm Component', () => {
   });
 
   describe('Component Integration', () => {
-    it('integrates with useSitecore hook correctly', () => {
-      render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+    it('integrates with page prop correctly', () => {
+      render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPage} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
+      const defaultComponent = screen.getByTestId('submission-form-default');
+      expect(defaultComponent).toBeInTheDocument();
     });
 
     it('renders SubmitInfoForm component within child components', () => {
@@ -271,13 +260,11 @@ describe('SubmissionForm Component', () => {
     });
 
     it('passes same editing state to both variants', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+      const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPageEditing} />);
 
       expect(screen.getByTestId('submission-form-default')).toHaveAttribute('data-editing', 'true');
 
-      rerender(<SubmissionFormCentered {...submissionFormPropsCentered} />);
+      rerender(<SubmissionFormCentered {...submissionFormPropsCentered} page={mockPageEditing} />);
 
       expect(screen.getByTestId('submission-form-centered')).toHaveAttribute(
         'data-editing',
@@ -297,15 +284,14 @@ describe('SubmissionForm Component', () => {
       expect(screen.getByTestId('form-title')).toHaveTextContent('Contact Our Audio Experts');
     });
 
-    it('manages useSitecore hook calls efficiently', () => {
-      render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+    it('manages page prop efficiently', () => {
+      const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPage} />);
 
-      const initialCallCount = mockUseSitecore.mock.calls.length;
+      expect(screen.getByTestId('submission-form-default')).toBeInTheDocument();
 
-      render(<SubmissionFormCentered {...submissionFormPropsCentered} />);
+      rerender(<SubmissionFormCentered {...submissionFormPropsCentered} page={mockPage} />);
 
-      // Should call useSitecore for each component instance
-      expect(mockUseSitecore.mock.calls.length).toBeGreaterThan(initialCallCount);
+      expect(screen.getByTestId('submission-form-centered')).toBeInTheDocument();
     });
   });
 
@@ -357,17 +343,15 @@ describe('SubmissionForm Component', () => {
       }).not.toThrow();
     });
 
-    it('handles useSitecore hook errors gracefully', () => {
-      mockUseSitecore.mockImplementation(() => {
-        throw new Error('Hook error');
-      });
+    it('handles missing page prop gracefully', () => {
+      const propsWithoutPage = {
+        ...defaultSubmissionFormProps,
+        page: undefined as any,
+      };
 
       expect(() => {
-        render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
-      }).toThrow('Hook error');
-
-      // Reset mock for other tests
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
+        render(<SubmissionFormDefault {...propsWithoutPage} />);
+      }).toThrow();
     });
 
     it('handles missing rendering prop', () => {
@@ -385,16 +369,12 @@ describe('SubmissionForm Component', () => {
   describe('Data Flow', () => {
     it('correctly passes isPageEditing state to child components', () => {
       // Test editing state
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+      const { rerender } = render(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPageEditing} />);
 
       expect(screen.getByTestId('submission-form-default')).toHaveAttribute('data-editing', 'true');
 
       // Test non-editing state
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-
-      rerender(<SubmissionFormDefault {...defaultSubmissionFormProps} />);
+      rerender(<SubmissionFormDefault {...defaultSubmissionFormProps} page={mockPage} />);
 
       expect(screen.getByTestId('submission-form-default')).toHaveAttribute(
         'data-editing',

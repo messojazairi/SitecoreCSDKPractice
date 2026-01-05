@@ -15,6 +15,7 @@ import {
   pageHeaderPropsNoLinks,
   pageHeaderPropsWithPositionStyles,
   pageHeaderPropsEmpty,
+  pageHeaderPropsEditing,
   mockUseSitecoreNormal,
   mockUseSitecoreEditing,
 } from './PageHeader.mockProps';
@@ -23,6 +24,7 @@ import {
 const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock PageHeader variant components
@@ -125,7 +127,6 @@ Object.defineProperty(window, 'matchMedia', {
 describe('PageHeader Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
   });
 
   describe('Default Variant', () => {
@@ -181,8 +182,17 @@ describe('PageHeader Component', () => {
     });
 
     it('shows links in editing mode even when empty', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      render(<PageHeaderDefault {...pageHeaderPropsNoLinks} />);
+      const propsWithEditing = {
+        ...pageHeaderPropsNoLinks,
+        page: {
+          mode: {
+            isEditing: true,
+            isNormal: false,
+            isPreview: false,
+          },
+        },
+      };
+      render(<PageHeaderDefault {...propsWithEditing} />);
 
       expect(screen.getByTestId('header-link-1')).toBeInTheDocument();
       expect(screen.getByTestId('header-link-2')).toBeInTheDocument();
@@ -196,8 +206,7 @@ describe('PageHeader Component', () => {
     });
 
     it('passes editing state correctly', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      render(<PageHeaderDefault {...defaultPageHeaderProps} />);
+      render(<PageHeaderDefault {...pageHeaderPropsEditing} />);
 
       expect(screen.getByTestId('page-header-default')).toHaveAttribute('data-editing', 'true');
     });
@@ -233,21 +242,19 @@ describe('PageHeader Component', () => {
     });
 
     it('passes editing state to all variants', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      render(<PageHeaderBlueText {...defaultPageHeaderProps} />);
+      render(<PageHeaderBlueText {...pageHeaderPropsEditing} />);
       expect(screen.getByTestId('page-header-blue-text')).toHaveAttribute('data-editing', 'true');
 
-      render(<PageHeaderFiftyFifty {...defaultPageHeaderProps} />);
+      render(<PageHeaderFiftyFifty {...pageHeaderPropsEditing} />);
       expect(screen.getByTestId('page-header-fifty-fifty')).toHaveAttribute('data-editing', 'true');
 
-      render(<PageHeaderBlueBackground {...defaultPageHeaderProps} />);
+      render(<PageHeaderBlueBackground {...pageHeaderPropsEditing} />);
       expect(screen.getByTestId('page-header-blue-background')).toHaveAttribute(
         'data-editing',
         'true'
       );
 
-      render(<PageHeaderCentered {...defaultPageHeaderProps} />);
+      render(<PageHeaderCentered {...pageHeaderPropsEditing} />);
       expect(screen.getByTestId('page-header-centered')).toHaveAttribute('data-editing', 'true');
     });
   });
@@ -263,6 +270,7 @@ describe('PageHeader Component', () => {
     it('uses pageTitle when pageHeaderTitle is not available', () => {
       const propsWithoutHeaderTitle = {
         ...defaultPageHeaderProps,
+        page: defaultPageHeaderProps.page,
         fields: {
           data: {
             ...defaultPageHeaderProps.fields.data,
@@ -293,10 +301,15 @@ describe('PageHeader Component', () => {
 
   describe('Editing Mode Behavior', () => {
     it('shows buttons in editing mode regardless of href', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
       const propsWithEmptyLinks = {
         ...defaultPageHeaderProps,
+        page: {
+          mode: {
+            isEditing: true,
+            isNormal: false,
+            isPreview: false,
+          },
+        },
         fields: {
           data: {
             ...defaultPageHeaderProps.fields.data,
@@ -316,13 +329,11 @@ describe('PageHeader Component', () => {
     });
 
     it('passes editing state (true) to variants', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      render(<PageHeaderDefault {...defaultPageHeaderProps} />);
+      render(<PageHeaderDefault {...pageHeaderPropsEditing} />);
       expect(screen.getByTestId('page-header-default')).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes editing state (false) to variants', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
       render(<PageHeaderDefault {...defaultPageHeaderProps} />);
       expect(screen.getByTestId('page-header-default')).toHaveAttribute('data-editing', 'false');
     });
@@ -330,7 +341,6 @@ describe('PageHeader Component', () => {
 
   describe('Link Behavior', () => {
     it('shows links when they have valid href in normal mode', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
       render(<PageHeaderDefault {...defaultPageHeaderProps} />);
 
       const link1 = screen.getByTestId('header-link-1');
@@ -341,10 +351,9 @@ describe('PageHeader Component', () => {
     });
 
     it('hides links when they have empty href in normal mode', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreNormal);
-
       const propsWithEmptyLinks = {
         ...defaultPageHeaderProps,
+        page: defaultPageHeaderProps.page,
         fields: {
           data: {
             ...defaultPageHeaderProps.fields.data,
@@ -365,15 +374,17 @@ describe('PageHeader Component', () => {
   });
 
   describe('Component Integration', () => {
-    it('integrates with useSitecore hook', () => {
+    it('integrates with page prop', () => {
       render(<PageHeaderDefault {...defaultPageHeaderProps} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
+      // Component should render successfully with page prop
+      expect(screen.getByTestId('page-header-default')).toBeInTheDocument();
     });
 
     it('passes all props to variant components', () => {
       const customProps = {
         ...defaultPageHeaderProps,
+        page: defaultPageHeaderProps.page,
         params: { customParam: 'test-value' },
       };
 

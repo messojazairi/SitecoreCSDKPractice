@@ -18,6 +18,12 @@ jest.mock('@fortawesome/react-fontawesome', () => ({
   ),
 }));
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag: Tag = 'span', ...props }: any) => <Tag {...props}>{field?.value || ''}</Tag>,
@@ -28,6 +34,8 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     </a>
   ),
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`} />,
+  AppPlaceholder: ({ name }: any) => <div data-testid={`placeholder-${name}`} />,
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 describe('FooterST', () => {

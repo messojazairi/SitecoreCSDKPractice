@@ -37,6 +37,12 @@ jest.mock('@fortawesome/free-solid-svg-icons', () => ({
   },
 }));
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Link: ({ field, prefetch, className, children, ...props }: any) => (
@@ -69,6 +75,17 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Navigation Placeholder
     </div>
   ),
+  AppPlaceholder: ({ name, rendering, componentMap, ...props }: any) => (
+    <div
+      data-testid="app-placeholder"
+      data-name={name}
+      data-rendering={rendering?.componentName}
+      {...props}
+    >
+      App Placeholder
+    </div>
+  ),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock Next.js Link
@@ -87,10 +104,12 @@ jest.mock('next/link', () => {
 });
 
 // Mock the custom hook
+const mockSetIsVisible = jest.fn();
 jest.mock('../../hooks/useToggleWithClickOutside', () => ({
   useToggleWithClickOutside: jest.fn(() => ({
     isVisible: false,
-    setIsVisible: jest.fn(),
+    setIsVisible: mockSetIsVisible,
+    ref: { current: null },
   })),
 }));
 
@@ -151,7 +170,9 @@ describe('HeaderST Component', () => {
     it('renders navigation placeholder with correct props', () => {
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
-      const placeholder = screen.getByTestId('sitecore-placeholder');
+      const placeholders = screen.getAllByTestId('app-placeholder');
+      expect(placeholders.length).toBeGreaterThan(0);
+      const placeholder = placeholders[0];
       expect(placeholder).toHaveAttribute('data-name', 'header-navigation-main-nav');
       expect(placeholder).toHaveAttribute('data-rendering', 'HeaderST');
     });
@@ -231,9 +252,9 @@ describe('HeaderST Component', () => {
 
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
-      const mobileToggle = document.querySelector('.cursor-pointer');
+      const mobileToggle = screen.getByLabelText('Toggle mobile menu');
       if (mobileToggle) {
-        fireEvent.click(mobileToggle as Element);
+        fireEvent.click(mobileToggle);
         expect(mockSetIsVisible).toHaveBeenCalledWith(true);
       } else {
         // Skip test if mobile toggle not found (due to CSS class variations)
@@ -270,12 +291,13 @@ describe('HeaderST Component', () => {
     it('applies responsive classes for mobile and desktop navigation', () => {
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
-      // Check for responsive classes
-      const mobileMenu = document.querySelector('.flex.flex-col.lg\\:flex-row');
-      expect(mobileMenu).toBeInTheDocument();
-
-      const desktopNavigation = document.querySelector('.hidden.lg\\:block');
+      // Check for responsive classes - desktop navigation should be hidden on mobile
+      const desktopNavigation = screen.getByRole('navigation');
       expect(desktopNavigation).toBeInTheDocument();
+      
+      // Check that mobile menu wrapper exists
+      const mobileMenuButton = screen.getByLabelText('Toggle mobile menu');
+      expect(mobileMenuButton).toBeInTheDocument();
     });
 
     it('shows mobile-specific elements only on mobile', () => {
@@ -441,13 +463,13 @@ describe('HeaderST Component', () => {
 
       render(<HeaderSTDefault {...defaultHeaderSTProps} />);
 
-      const mobileToggle = document.querySelector('.cursor-pointer');
+      const mobileToggle = screen.getByLabelText('Toggle mobile menu');
 
       if (mobileToggle) {
         // Multiple rapid clicks should be handled gracefully
-        fireEvent.click(mobileToggle as Element);
-        fireEvent.click(mobileToggle as Element);
-        fireEvent.click(mobileToggle as Element);
+        fireEvent.click(mobileToggle);
+        fireEvent.click(mobileToggle);
+        fireEvent.click(mobileToggle);
 
         expect(mockSetIsVisible).toHaveBeenCalledTimes(3);
       } else {

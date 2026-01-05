@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
+import { render, cleanup, screen } from '@testing-library/react';
 import * as ProductListing from '@/components/product-listing/ProductListing';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -8,6 +7,7 @@ import * as ProductListing from '@/components/product-listing/ProductListing';
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: jest.fn(),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock variant components
@@ -35,8 +35,6 @@ jest.mock('@/components/product-listing/ProductListingSlider.dev', () => ({
   ),
 }));
 
-const mockUseSitecore = useSitecore as jest.MockedFunction<typeof useSitecore>;
-
 describe('ProductListing Variants', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockProps: any = {
@@ -46,6 +44,13 @@ describe('ProductListing Variants', () => {
       dataSource: 'test-datasource',
     },
     params: {},
+    page: {
+      mode: {
+        isEditing: false,
+        isNormal: true,
+        isPreview: false,
+      },
+    },
     fields: {
       data: {
         datasource: {
@@ -71,15 +76,6 @@ describe('ProductListing Variants', () => {
 
   describe('Default variant', () => {
     it('renders ProductListingDefault when not in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.Default {...mockProps} />);
 
       expect(getByTestId('product-listing-default')).toBeInTheDocument();
@@ -87,63 +83,38 @@ describe('ProductListing Variants', () => {
     });
 
     it('renders ProductListingDefault when in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
+      const propsWithEditing = {
+        ...mockProps,
         page: {
           mode: {
             isEditing: true,
+            isNormal: false,
+            isPreview: false,
           },
         },
-      } as any);
-
-      const { getByTestId } = render(<ProductListing.Default {...mockProps} />);
+      };
+      const { getByTestId } = render(<ProductListing.Default {...propsWithEditing} />);
 
       expect(getByTestId('product-listing-default')).toBeInTheDocument();
       expect(getByTestId('product-listing-default')).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes all props to ProductListingDefault', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.Default {...mockProps} />);
 
       expect(getByTestId('product-listing-default')).toBeInTheDocument();
     });
 
-    it('calls useSitecore to get page mode', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any);
-
+    it('uses page prop to get page mode', () => {
       render(<ProductListing.Default {...mockProps} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
+      // Component should render successfully with page prop
+      expect(screen.getByTestId('product-listing-default')).toBeInTheDocument();
     });
   });
 
   describe('ThreeUp variant', () => {
     it('renders ProductListingThreeUp when not in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.ThreeUp {...mockProps} />);
 
       expect(getByTestId('product-listing-three-up')).toBeInTheDocument();
@@ -151,62 +122,38 @@ describe('ProductListing Variants', () => {
     });
 
     it('renders ProductListingThreeUp when in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
+      const propsWithEditing = {
+        ...mockProps,
         page: {
           mode: {
             isEditing: true,
+            isNormal: false,
+            isPreview: false,
           },
         },
-      } as any);
-
-      const { getByTestId } = render(<ProductListing.ThreeUp {...mockProps} />);
+      };
+      const { getByTestId } = render(<ProductListing.ThreeUp {...propsWithEditing} />);
 
       expect(getByTestId('product-listing-three-up')).toBeInTheDocument();
       expect(getByTestId('product-listing-three-up')).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes all props to ProductListingThreeUp', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.ThreeUp {...mockProps} />);
 
       expect(getByTestId('product-listing-three-up')).toBeInTheDocument();
     });
 
-    it('calls useSitecore to get page mode', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
+    it('uses page prop to get page mode', () => {
       render(<ProductListing.ThreeUp {...mockProps} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
+      // Component should render successfully with page prop
+      expect(screen.getByTestId('product-listing-three-up')).toBeInTheDocument();
     });
   });
 
   describe('Slider variant', () => {
     it('renders ProductListingSlider when not in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.Slider {...mockProps} />);
 
       expect(getByTestId('product-listing-slider')).toBeInTheDocument();
@@ -214,99 +161,81 @@ describe('ProductListing Variants', () => {
     });
 
     it('renders ProductListingSlider when in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
+      const propsWithEditing = {
+        ...mockProps,
         page: {
           mode: {
             isEditing: true,
+            isNormal: false,
+            isPreview: false,
           },
         },
-      } as any);
-
-      const { getByTestId } = render(<ProductListing.Slider {...mockProps} />);
+      };
+      const { getByTestId } = render(<ProductListing.Slider {...propsWithEditing} />);
 
       expect(getByTestId('product-listing-slider')).toBeInTheDocument();
       expect(getByTestId('product-listing-slider')).toHaveAttribute('data-editing', 'true');
     });
 
     it('passes all props to ProductListingSlider', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId } = render(<ProductListing.Slider {...mockProps} />);
 
       expect(getByTestId('product-listing-slider')).toBeInTheDocument();
     });
 
-    it('calls useSitecore to get page mode', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
+    it('uses page prop to get page mode', () => {
       render(<ProductListing.Slider {...mockProps} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
+      // Component should render successfully with page prop
+      expect(screen.getByTestId('product-listing-slider')).toBeInTheDocument();
     });
   });
 
-  describe('Integration with useSitecore', () => {
-    it('correctly extracts isPageEditing from Sitecore context for all variants', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mockSitecoreContext: any = {
+  describe('Integration with page prop', () => {
+    it('correctly extracts isPageEditing from page prop for all variants', () => {
+      const propsWithEditing = {
+        ...mockProps,
         page: {
           mode: {
             isEditing: true,
+            isNormal: false,
+            isPreview: false,
           },
         },
       };
 
-      mockUseSitecore.mockReturnValue(mockSitecoreContext);
-
-      const { getByTestId: getDefaultTestId } = render(<ProductListing.Default {...mockProps} />);
-      const { getByTestId: getThreeUpTestId } = render(<ProductListing.ThreeUp {...mockProps} />);
-      const { getByTestId: getSliderTestId } = render(<ProductListing.Slider {...mockProps} />);
-
+      const { getByTestId: getDefaultTestId, unmount: unmountDefault } = render(<ProductListing.Default {...propsWithEditing} />);
       expect(getDefaultTestId('product-listing-default')).toHaveAttribute('data-editing', 'true');
+      unmountDefault();
+
+      const { getByTestId: getThreeUpTestId, unmount: unmountThreeUp } = render(<ProductListing.ThreeUp {...propsWithEditing} />);
       expect(getThreeUpTestId('product-listing-three-up')).toHaveAttribute('data-editing', 'true');
+      unmountThreeUp();
+
+      const { getByTestId: getSliderTestId } = render(<ProductListing.Slider {...propsWithEditing} />);
       expect(getSliderTestId('product-listing-slider')).toHaveAttribute('data-editing', 'true');
     });
 
     it('handles different editing states correctly', () => {
       // Test editing mode
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockUseSitecore.mockReturnValue({
+      const propsWithEditing = {
+        ...mockProps,
         page: {
           mode: {
             isEditing: true,
+            isNormal: false,
+            isPreview: false,
           },
         },
-      } as any);
+      };
 
-      const { getByTestId: getEditingTestId } = render(<ProductListing.Default {...mockProps} />);
+      const { getByTestId: getEditingTestId } = render(<ProductListing.Default {...propsWithEditing} />);
       expect(getEditingTestId('product-listing-default')).toHaveAttribute('data-editing', 'true');
 
       // Clean up before rendering in non-editing mode
       cleanup();
 
       // Test non-editing mode
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      } as any);
-
       const { getByTestId: getNonEditingTestId } = render(
         <ProductListing.Default {...mockProps} />
       );

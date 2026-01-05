@@ -11,6 +11,7 @@ import {
   globalHeaderPropsMinimal,
   globalHeaderPropsEditing,
 } from './GlobalHeader.mockProps';
+import { mockPage } from '../test-utils/mockPage';
 
 // Mock the Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
@@ -29,7 +30,8 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     if (!f?.value?.href) return React.createElement(React.Fragment, {}, children);
     return React.createElement('a', { href: f.value.href, className }, children || f.value.text);
   },
-  useSitecore: jest.fn(() => ({ page: { mode: { isEditing: false } } })),
+  useSitecore: jest.fn(() => ({ page: mockPage })),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock lucide-react icons
@@ -166,16 +168,12 @@ describe('GlobalHeader Component', () => {
 
   describe('Editing Mode', () => {
     it('indicates editing state correctly', () => {
-      const { useSitecore: mockUseSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-
       // Test editing mode
-      mockUseSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-      const { unmount } = render(<GlobalHeaderDefault {...globalHeaderPropsEditing} />);
+      const { unmount: unmountEditing } = render(<GlobalHeaderDefault {...globalHeaderPropsEditing} />);
       expect(screen.getByTestId('editing-mode')).toHaveTextContent('editing');
-      unmount();
+      unmountEditing();
 
       // Test normal mode
-      mockUseSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
       render(<GlobalHeaderDefault {...defaultGlobalHeaderProps} />);
       expect(screen.getByTestId('editing-mode')).toHaveTextContent('normal');
     });

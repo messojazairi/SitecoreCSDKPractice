@@ -48,6 +48,13 @@ const mockDictionary = {
 export const defaultGlobalFooterProps: GlobalFooterProps = {
   rendering: { componentName: 'GlobalFooter', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -70,6 +77,13 @@ export const defaultGlobalFooterProps: GlobalFooterProps = {
 export const globalFooterPropsNoFields: GlobalFooterProps = {
   rendering: { componentName: 'GlobalFooter', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -85,6 +99,13 @@ export const globalFooterPropsNoFields: GlobalFooterProps = {
 export const globalFooterPropsMinimal: GlobalFooterProps = {
   rendering: { componentName: 'GlobalFooter', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -100,6 +121,13 @@ export const globalFooterPropsMinimal: GlobalFooterProps = {
 
 export const globalFooterPropsEditing: GlobalFooterProps = {
   ...defaultGlobalFooterProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 

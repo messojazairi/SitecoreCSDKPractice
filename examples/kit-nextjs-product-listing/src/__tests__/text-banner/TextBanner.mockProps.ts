@@ -1,5 +1,6 @@
 import { TextBannerProps } from '../../components/text-banner/text-banner.props';
 import { Field } from '@sitecore-content-sdk/nextjs';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
 const createMockField = <T>(value: T): Field<T> => ({ value }) as unknown as Field<T>;
 
@@ -17,6 +18,7 @@ export const defaultTextBannerProps: TextBannerProps = {
     ),
   },
   isPageEditing: false,
+  page: mockPage,
 };
 
 export const textBannerPropsMinimal: TextBannerProps = {
@@ -26,6 +28,7 @@ export const textBannerPropsMinimal: TextBannerProps = {
     heading: createMockField('Professional Audio Equipment'),
   },
   isPageEditing: false,
+  page: mockPage,
 };
 
 export const textBannerPropsNoDescription: TextBannerProps = {
@@ -88,6 +91,7 @@ export const textBannerPropsNoFields: TextBannerProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fields: null as any,
   isPageEditing: false,
+  page: mockPage,
 };
 
 export const textBannerPropsUndefinedHeading: TextBannerProps = {
@@ -102,6 +106,7 @@ export const textBannerPropsUndefinedHeading: TextBannerProps = {
 export const textBannerPropsEditing: TextBannerProps = {
   ...defaultTextBannerProps,
   isPageEditing: true,
+  page: mockPageEditing,
 };
 
 export const textBannerPropsNoStyles: TextBannerProps = {
