@@ -1,4 +1,29 @@
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render, screen } from '@testing-library/react';
 import { Default as Container6321 } from '../../components/container/container-6321/Container6321';
 import {
@@ -15,6 +40,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
+      AppPlaceholder: {name}
+    </div>
+  ),
   useSitecore: () => ({
     page: {
       mode: {
@@ -22,6 +52,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock cn utility
@@ -74,7 +105,7 @@ describe('Container6321', () => {
   it('renders six placeholders with correct names', () => {
     render(<Container6321 {...defaultContainer6321Props} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(6);
     expect(placeholders[0]).toHaveAttribute('data-name', 'container-sixty-thirty-one-dynamic');
     expect(placeholders[1]).toHaveAttribute('data-name', 'container-sixty-thirty-two-dynamic');
@@ -115,7 +146,7 @@ describe('Container6321', () => {
   it('renders with content in placeholders', () => {
     render(<Container6321 {...container6321WithContent} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(6);
   });
 

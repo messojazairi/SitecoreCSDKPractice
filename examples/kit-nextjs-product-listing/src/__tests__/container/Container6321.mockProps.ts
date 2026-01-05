@@ -1,4 +1,5 @@
 import { Container6321Props } from '../../components/container/container-6321/Container6321';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer6321Props: Container6321Props = {
   rendering: {
@@ -20,6 +21,7 @@ export const defaultContainer6321Props: Container6321Props = {
     DynamicPlaceholderId: '1',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container6321WithStyles: Container6321Props = {
@@ -42,6 +44,7 @@ export const container6321WithStyles: Container6321Props = {
     DynamicPlaceholderId: '2',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container6321NoTopMargin: Container6321Props = {
@@ -64,6 +67,7 @@ export const container6321NoTopMargin: Container6321Props = {
     DynamicPlaceholderId: '3',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container6321WithContent: Container6321Props = {
@@ -122,6 +126,7 @@ export const container6321WithContent: Container6321Props = {
     DynamicPlaceholderId: '4',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container6321EmptyInEditMode: Container6321Props = {
@@ -137,4 +142,5 @@ export const container6321EmptyInEditMode: Container6321Props = {
     DynamicPlaceholderId: '5',
   },
   children: {} as Element,
+  page: mockPage,
 };

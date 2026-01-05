@@ -8,7 +8,7 @@ import {
   Hero4,
   Hero5,
   Hero6,
-} from '../../components/component-library/Hero';
+} from '../../components/component-library/CLHero';
 
 // Mock Sitecore Content SDK
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
@@ -50,8 +50,17 @@ jest.mock('@/components/ui/button', () => ({
   ),
 }));
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 const defaultProps = {
   params: { styles: '' },
+  page: mockPage,
   fields: {
     HeroTitle: { value: 'Welcome to Our Platform' },
     HeroBody: { value: '<p>Discover amazing features and capabilities.</p>' },
@@ -114,6 +123,7 @@ describe('Hero Variants', () => {
     it('handles missing optional fields', () => {
       const minimalProps = {
         params: { styles: '' },
+        page: mockPage,
         fields: {
           HeroTitle: { value: 'Title Only' },
           HeroBody: { value: '' },

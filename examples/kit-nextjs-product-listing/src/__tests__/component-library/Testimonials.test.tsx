@@ -109,8 +109,21 @@ jest.mock('@/utils/NoDataFallback', () => ({
   NoDataFallback: () => <div data-testid="no-data-fallback">No data</div>,
 }));
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 const defaultProps = {
+  rendering: {
+    componentName: 'Testimonials',
+    params: {},
+  },
   params: { styles: '' },
+  page: mockPage,
   fields: {
     data: {
       datasource: {

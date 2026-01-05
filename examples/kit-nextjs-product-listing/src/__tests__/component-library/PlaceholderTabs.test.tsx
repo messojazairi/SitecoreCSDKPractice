@@ -3,6 +3,21 @@ import { render, screen } from '@testing-library/react';
 import { Default as PlaceholderTabs } from '../../components/component-library/PlaceholderTabs';
 import { IGQLTextField } from 'types/igql';
 
+// Mock next-intl (ESM module)
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useFormatter: () => ({
+    dateTime: (date: Date) => date.toISOString(),
+    number: (num: number) => String(num),
+  }),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field }: { field: { value: string } }) => (
@@ -11,6 +26,17 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} />
   ),
+  AppPlaceholder: ({ name }: { name: string; rendering: unknown; page: unknown; componentMap: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} />
+  ),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
+  useSitecore: () => ({
+    page: {
+      mode: {
+        isEditing: false,
+      },
+    },
+  }),
 }));
 
 // Mock shadcn Tabs components
@@ -61,13 +87,25 @@ jest.mock('shadcd/components/ui/tabs', () => ({
   ),
 }));
 
-jest.mock('../../lib/component-props', () => ({}), { virtual: true });
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
 
 const defaultProps = {
+  rendering: {
+    componentName: 'PlaceholderTabs',
+    dataSource: '',
+    params: {},
+  },
   params: {
     styles: '',
     DynamicPlaceholderId: '123',
   },
+  page: mockPage,
   fields: {
     data: {
       datasource: {
@@ -102,10 +140,6 @@ const defaultProps = {
       },
     },
   },
-  rendering: {
-    componentName: 'PlaceholderTabs',
-    dataSource: '',
-  },
 };
 
 describe('PlaceholderTabs', () => {
@@ -136,7 +170,7 @@ describe('PlaceholderTabs', () => {
   it('renders placeholders for each tab', () => {
     render(<PlaceholderTabs {...defaultProps} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(3);
     expect(placeholders[0]).toHaveAttribute('data-name', 'tab-content-one-123');
     expect(placeholders[1]).toHaveAttribute('data-name', 'tab-content-two-123');

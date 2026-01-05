@@ -14,12 +14,13 @@ const customJestConfig = {
     '^shadcn/(.*)$': '<rootDir>/shadcn/$1',
     '^shadcd/(.*)$': '<rootDir>/shadcn/$1',
     'sitecore.config': '<rootDir>/sitecore.config.ts',
+    '^\\.sitecore/(.*)$': '<rootDir>/.sitecore/$1',
   },
   testMatch: [
     '<rootDir>/src/__tests__/**/*.test.[jt]s?(x)',
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(?:@sitecore-content-sdk|@sitecore-feaas|lucide-react|change-case)/)',
+    'node_modules/(?!(?:@sitecore-content-sdk|@sitecore-feaas|lucide-react|change-case|next-intl)/)',
   ],
   collectCoverageFrom: [
     'src/components/**/*.{js,jsx,ts,tsx}',

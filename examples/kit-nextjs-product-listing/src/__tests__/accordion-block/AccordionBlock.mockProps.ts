@@ -7,6 +7,7 @@ import type {
   AccordionProps,
   AccordionItemProps,
 } from '../../components/accordion-block/accordion-block.props';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
 /**
  * Base mock data for AccordionBlock component
@@ -126,6 +127,7 @@ export const defaultAccordionProps: AccordionProps = {
       },
     },
   },
+  page: mockPage,
   isPageEditing: false,
 };
 
@@ -153,6 +155,7 @@ export const accordionPropsEditMode: AccordionProps = {
       },
     },
   },
+  page: mockPageEditing,
   isPageEditing: true,
 };
 
@@ -179,6 +182,7 @@ export const accordionPropsMinimal: AccordionProps = {
       },
     },
   },
+  page: mockPage,
   isPageEditing: false,
 };
 
@@ -206,6 +210,7 @@ export const accordionPropsEmptyItems: AccordionProps = {
       },
     },
   },
+  page: mockPage,
   isPageEditing: false,
 };
 
@@ -233,6 +238,7 @@ export const accordionPropsSingleItem: AccordionProps = {
       },
     },
   },
+  page: mockPage,
   isPageEditing: false,
 };
 
@@ -251,6 +257,7 @@ export const accordionPropsNoFields: AccordionProps = {
   fields: {
     data: {},
   } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  page: mockPage,
   isPageEditing: false,
 };
 
@@ -271,6 +278,7 @@ export const accordionPropsNullDatasource: AccordionProps = {
       datasource: undefined,
     },
   } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  page: mockPage,
   isPageEditing: false,
 };
 

@@ -49,8 +49,21 @@ jest.mock('lucide-react', () => ({
   ArrowRight: ({ className }: any) => <span data-testid="arrow-right" className={className} />,
 }));
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 const defaultProps = {
+  rendering: {
+    componentName: 'LogoCloud',
+    params: {},
+  },
   params: { styles: '' },
+  page: mockPage,
   fields: {
     data: {
       datasource: {

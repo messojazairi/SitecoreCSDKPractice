@@ -80,8 +80,6 @@ jest.mock('shadcn/components/ui/button', () => ({
   ),
 }));
 
-jest.mock('../../lib/component-props', () => ({}), { virtual: true });
-
 describe('CallToAction', () => {
   it('renders with all props', () => {
     render(<CallToAction1 {...defaultCallToActionProps} />);

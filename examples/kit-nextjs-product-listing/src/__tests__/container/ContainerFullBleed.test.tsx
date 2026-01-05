@@ -1,4 +1,29 @@
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render, screen } from '@testing-library/react';
 import { Default as ContainerFullBleed } from '../../components/container/container-full-bleed/ContainerFullBleed';
 import {
@@ -17,6 +42,19 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
+      AppPlaceholder: {name}
+    </div>
+  ),
+  useSitecore: () => ({
+    page: {
+      mode: {
+        isEditing: false,
+      },
+    },
+  }),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock Flex components
@@ -50,7 +88,7 @@ describe('ContainerFullBleed', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<ContainerFullBleed {...defaultContainerFullBleedProps} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-fullbleed-1');
   });
 
@@ -65,35 +103,35 @@ describe('ContainerFullBleed', () => {
     render(<ContainerFullBleed {...containerFullBleedNoTopMargin} />);
 
     // Verify component renders (margin class applied by cva)
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with background image', () => {
     render(<ContainerFullBleed {...containerFullBleedWithBackground} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with primary background color', () => {
     render(<ContainerFullBleed {...containerFullBleedWithBackground} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with inset when specified', () => {
     render(<ContainerFullBleed {...containerFullBleedWithInset} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with transparent background', () => {
     render(<ContainerFullBleed {...containerFullBleedTransparent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

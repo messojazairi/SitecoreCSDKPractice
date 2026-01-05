@@ -3,6 +3,7 @@ import type { LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
 import { IconName } from '@/enumerations/Icon.enum';
 import { IconPosition } from '@/enumerations/IconPosition.enum';
 import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
 // Valid button link
 const mockButtonLink: LinkField = {
@@ -56,6 +57,7 @@ export const defaultButtonProps: ButtonComponentProps = {
     icon: mockIconField,
     isAriaHidden: true,
   },
+  page: mockPage,
 };
 
 // Button with leading icon
@@ -70,6 +72,7 @@ export const buttonWithLeadingIcon: ButtonComponentProps = {
     icon: mockIconField,
     isAriaHidden: true,
   },
+  page: mockPage,
 };
 
 // Button without icon
@@ -82,6 +85,7 @@ export const buttonWithoutIcon: ButtonComponentProps = {
     buttonLink: mockButtonLink,
     isAriaHidden: true,
   },
+  page: mockPage,
 };
 
 // Button in editing mode
@@ -115,6 +119,7 @@ export const buttonNoFields: ButtonComponentProps = {
   rendering: { componentName: 'Button', params: {} },
   params: {},
   fields: undefined as unknown as ButtonComponentProps['fields'],
+  page: mockPage,
 };
 
 // Primary button variant

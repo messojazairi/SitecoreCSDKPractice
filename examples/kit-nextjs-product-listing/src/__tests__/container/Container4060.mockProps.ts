@@ -1,4 +1,5 @@
 import { Container4060Props } from '../../components/container/container-4060/container-4060.props';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
 export const defaultContainer4060Props: Container4060Props = {
   rendering: {
@@ -14,6 +15,7 @@ export const defaultContainer4060Props: Container4060Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container4060WithStyles: Container4060Props = {
@@ -30,6 +32,7 @@ export const container4060WithStyles: Container4060Props = {
     styles: 'custom-container-class',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container4060NoTopMargin: Container4060Props = {
@@ -46,6 +49,7 @@ export const container4060NoTopMargin: Container4060Props = {
     styles: '',
     excludeTopMargin: '1',
   },
+  page: mockPage,
 };
 
 export const container4060WithContent: Container4060Props = {
@@ -74,6 +78,7 @@ export const container4060WithContent: Container4060Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container4060EmptyInEditMode: Container4060Props = {
@@ -90,4 +95,5 @@ export const container4060EmptyInEditMode: Container4060Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPageEditing,
 };

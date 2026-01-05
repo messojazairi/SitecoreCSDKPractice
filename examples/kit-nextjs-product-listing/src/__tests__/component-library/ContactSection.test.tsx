@@ -48,8 +48,17 @@ jest.mock('@fortawesome/react-fontawesome', () => ({
   FontAwesomeIcon: () => <span data-testid="fa-icon" />,
 }));
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 const defaultProps = {
   params: { styles: '' },
+  page: mockPage,
   fields: {
     data: {
       datasource: {

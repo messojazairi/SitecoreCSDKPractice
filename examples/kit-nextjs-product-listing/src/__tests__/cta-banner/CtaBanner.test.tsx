@@ -39,6 +39,14 @@ jest.mock('@/components/ui/button', () => ({
 
 import { Default as CtaBanner } from '@/components/cta-banner/CtaBanner';
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 describe('CtaBanner', () => {
   it('renders title and description when fields provided', () => {
     const props = {
@@ -48,6 +56,7 @@ describe('CtaBanner', () => {
         linkOptional: { url: '/buy', text: 'Buy now' },
       },
       params: {},
+      page: mockPage,
     } as any;
 
     render(<CtaBanner {...props} />);
@@ -60,7 +69,7 @@ describe('CtaBanner', () => {
 
   it('renders NoDataFallback when no fields exist', () => {
     // No fields -> NoDataFallback rendered
-    const props = { fields: undefined } as any;
+    const props = { fields: undefined, page: mockPage } as any;
     render(<CtaBanner {...props} />);
 
     expect(screen.getByText(/CTA Banner/i)).toBeInTheDocument();

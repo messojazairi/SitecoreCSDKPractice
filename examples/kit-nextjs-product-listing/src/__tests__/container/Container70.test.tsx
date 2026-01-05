@@ -1,4 +1,29 @@
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render, screen } from '@testing-library/react';
 import { Default as Container70 } from '../../components/container/container-70/Container70';
 import {
@@ -15,6 +40,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
+      AppPlaceholder: {name}
+    </div>
+  ),
   useSitecore: () => ({
     page: {
       mode: {
@@ -22,6 +52,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock Flex components
@@ -69,7 +100,7 @@ describe('Container70', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<Container70 {...defaultContainer70Props} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-seventy-1');
   });
 
@@ -111,7 +142,7 @@ describe('Container70', () => {
   it('renders with content in placeholder', () => {
     render(<Container70 {...container70WithContent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

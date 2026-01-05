@@ -1,9 +1,15 @@
 import { Field, LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultCallToActionProps = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
+  page: mockPage,
   fields: {
     CTATitle: {
       value: 'Transform Your Business Today',
@@ -45,9 +51,14 @@ export const ctaPropsWithStyles = {
 };
 
 export const ctaPropsNoLinks = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
+  page: mockPage,
   fields: {
     CTATitle: {
       value: 'Special Offer',
@@ -81,9 +92,14 @@ export const ctaPropsNoLinks = {
 };
 
 export const ctaPropsOnlyOneLink = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
+  page: mockPage,
   fields: {
     CTATitle: {
       value: 'Join Us',

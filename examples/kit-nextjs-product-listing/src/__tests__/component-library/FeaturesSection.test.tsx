@@ -158,8 +158,21 @@ jest.mock('@/hooks/useVisibility', () => ({
   default: jest.fn(() => [true, { current: null }]),
 }));
 
+const mockPage = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+};
+
 const defaultProps = {
+  rendering: {
+    componentName: 'FeaturesSection',
+    params: {},
+  },
   params: { styles: '' },
+  page: mockPage,
   fields: {
     data: {
       datasource: {

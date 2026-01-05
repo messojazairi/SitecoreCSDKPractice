@@ -1,4 +1,29 @@
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render, screen } from '@testing-library/react';
 import { Default as ContainerFullWidth } from '../../components/container/container-full-width/ContainerFullWidth';
 import {
@@ -15,6 +40,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
+      AppPlaceholder: {name}
+    </div>
+  ),
   useSitecore: () => ({
     page: {
       mode: {
@@ -22,6 +52,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock Flex components
@@ -66,7 +97,7 @@ describe('ContainerFullWidth', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<ContainerFullWidth {...defaultContainerFullWidthProps} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-fullwidth-1');
   });
 
@@ -108,7 +139,7 @@ describe('ContainerFullWidth', () => {
   it('renders with content in placeholder', () => {
     render(<ContainerFullWidth {...containerFullWidthWithContent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

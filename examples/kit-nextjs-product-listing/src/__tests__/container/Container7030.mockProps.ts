@@ -1,4 +1,5 @@
 import { Container7030Props } from '../../components/container/container-7030/container-7030.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer7030Props: Container7030Props = {
   rendering: {
@@ -15,6 +16,7 @@ export const defaultContainer7030Props: Container7030Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '1',
   },
+  page: mockPage,
 };
 
 export const container7030WithStyles: Container7030Props = {
@@ -32,6 +34,7 @@ export const container7030WithStyles: Container7030Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '2',
   },
+  page: mockPage,
 };
 
 export const container7030NoTopMargin: Container7030Props = {
@@ -49,6 +52,7 @@ export const container7030NoTopMargin: Container7030Props = {
     excludeTopMargin: '1',
     DynamicPlaceholderId: '3',
   },
+  page: mockPage,
 };
 
 export const container7030WithContent: Container7030Props = {
@@ -78,6 +82,7 @@ export const container7030WithContent: Container7030Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '4',
   },
+  page: mockPage,
 };
 
 export const container7030EmptyInEditMode: Container7030Props = {
@@ -92,4 +97,5 @@ export const container7030EmptyInEditMode: Container7030Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '5',
   },
+  page: mockPage,
 };
