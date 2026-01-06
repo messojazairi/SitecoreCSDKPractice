@@ -1,6 +1,10 @@
 import { Field, LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
 
 export const defaultCallToActionProps = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
@@ -35,6 +39,13 @@ export const defaultCallToActionProps = {
       },
     } as ImageField,
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 export const ctaPropsWithStyles = {
@@ -42,9 +53,20 @@ export const ctaPropsWithStyles = {
   params: {
     styles: 'custom-cta-class',
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 export const ctaPropsNoLinks = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
@@ -78,9 +100,20 @@ export const ctaPropsNoLinks = {
       },
     } as ImageField,
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };
 
 export const ctaPropsOnlyOneLink = {
+  rendering: {
+    componentName: 'CallToAction',
+    params: {},
+  },
   params: {
     styles: '',
   },
@@ -113,5 +146,12 @@ export const ctaPropsOnlyOneLink = {
         height: 1080,
       },
     } as ImageField,
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
   },
 };

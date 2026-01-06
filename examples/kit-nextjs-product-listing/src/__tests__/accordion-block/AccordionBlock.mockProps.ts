@@ -126,6 +126,13 @@ export const defaultAccordionProps: AccordionProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   isPageEditing: false,
 };
 
@@ -153,6 +160,13 @@ export const accordionPropsEditMode: AccordionProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 
@@ -177,6 +191,13 @@ export const accordionPropsMinimal: AccordionProps = {
           results: [mockAccordionItem1],
         },
       },
+    },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
     },
   },
   isPageEditing: false,
@@ -206,6 +227,13 @@ export const accordionPropsEmptyItems: AccordionProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   isPageEditing: false,
 };
 
@@ -233,6 +261,13 @@ export const accordionPropsSingleItem: AccordionProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   isPageEditing: false,
 };
 
@@ -251,6 +286,13 @@ export const accordionPropsNoFields: AccordionProps = {
   fields: {
     data: {},
   } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   isPageEditing: false,
 };
 
@@ -271,6 +313,13 @@ export const accordionPropsNullDatasource: AccordionProps = {
       datasource: undefined,
     },
   } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   isPageEditing: false,
 };
 

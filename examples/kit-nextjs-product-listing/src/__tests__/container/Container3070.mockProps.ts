@@ -1,4 +1,5 @@
 import { Container3070Props } from '../../components/container/container-3070/container-3070.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer3070Props: Container3070Props = {
   rendering: {
@@ -14,6 +15,7 @@ export const defaultContainer3070Props: Container3070Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container3070WithStyles: Container3070Props = {
@@ -30,6 +32,7 @@ export const container3070WithStyles: Container3070Props = {
     styles: 'custom-container-class',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container3070NoTopMargin: Container3070Props = {
@@ -46,6 +49,7 @@ export const container3070NoTopMargin: Container3070Props = {
     styles: '',
     excludeTopMargin: '1',
   },
+  page: mockPage,
 };
 
 export const container3070WithContent: Container3070Props = {
@@ -74,6 +78,7 @@ export const container3070WithContent: Container3070Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container3070EmptyInEditMode: Container3070Props = {
@@ -90,4 +95,5 @@ export const container3070EmptyInEditMode: Container3070Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };

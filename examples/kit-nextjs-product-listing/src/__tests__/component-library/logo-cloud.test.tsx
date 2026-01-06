@@ -50,6 +50,10 @@ jest.mock('lucide-react', () => ({
 }));
 
 const defaultProps = {
+  rendering: {
+    componentName: 'LogoCloud',
+    params: {},
+  },
   params: { styles: '' },
   fields: {
     data: {
@@ -87,6 +91,13 @@ const defaultProps = {
           },
         } as IGQLLinkField,
       },
+    },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
     },
   },
 };

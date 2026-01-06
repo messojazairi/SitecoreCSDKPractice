@@ -25,6 +25,7 @@ import {
   mockUseSitecoreNormal,
   mockUseSitecoreEditing,
 } from './TextBanner.mockProps';
+import { mockPageEditing } from '../test-utils/mockPage';
 
 // Mock Sitecore Content SDK
 const mockUseSitecore = jest.fn();
@@ -160,8 +161,7 @@ describe('TextBanner Component', () => {
     });
 
     it('passes editing state correctly', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      render(<TextBannerDefault {...defaultTextBannerProps} />);
+      render(<TextBannerDefault {...defaultTextBannerProps} page={mockPageEditing} />);
 
       const bannerElement = screen.getByTestId('text-banner-default');
       expect(bannerElement).toHaveAttribute('data-editing', 'true');
@@ -189,8 +189,7 @@ describe('TextBanner Component', () => {
     });
 
     it('handles editing state correctly in TextBanner01', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-      render(<TextBanner01 {...defaultTextBannerProps} />);
+      render(<TextBanner01 {...defaultTextBannerProps} page={mockPageEditing} />);
 
       const bannerElement = screen.getByTestId('text-banner-01');
       expect(bannerElement).toHaveAttribute('data-editing', 'true');
@@ -329,21 +328,19 @@ describe('TextBanner Component', () => {
 
   describe('Editing Mode', () => {
     it('passes editing state to all variants', () => {
-      mockUseSitecore.mockReturnValue(mockUseSitecoreEditing);
-
-      const { rerender } = render(<TextBannerDefault {...defaultTextBannerProps} />);
+      const { rerender } = render(<TextBannerDefault {...defaultTextBannerProps} page={mockPageEditing} />);
       expect(screen.getByTestId('text-banner-default')).toHaveAttribute('data-editing', 'true');
 
-      rerender(<TextBanner01 {...defaultTextBannerProps} />);
+      rerender(<TextBanner01 {...defaultTextBannerProps} page={mockPageEditing} />);
       expect(screen.getByTestId('text-banner-01')).toHaveAttribute('data-editing', 'true');
 
-      rerender(<TextBanner02 {...defaultTextBannerProps} />);
+      rerender(<TextBanner02 {...defaultTextBannerProps} page={mockPageEditing} />);
       expect(screen.getByTestId('text-banner-02')).toHaveAttribute('data-editing', 'true');
 
-      rerender(<TextTop {...defaultTextBannerProps} />);
+      rerender(<TextTop {...defaultTextBannerProps} page={mockPageEditing} />);
       expect(screen.getByTestId('text-banner-text-top')).toHaveAttribute('data-editing', 'true');
 
-      rerender(<BlueTitleRight {...defaultTextBannerProps} />);
+      rerender(<BlueTitleRight {...defaultTextBannerProps} page={mockPageEditing} />);
       expect(screen.getByTestId('text-banner-blue-title-right')).toHaveAttribute(
         'data-editing',
         'true'
@@ -360,11 +357,9 @@ describe('TextBanner Component', () => {
   });
 
   describe('Component Integration', () => {
-    it('integrates with useSitecore correctly', () => {
-      mockUseSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-      render(<TextBannerDefault {...defaultTextBannerProps} />);
+    it('integrates with page prop correctly', () => {
+      render(<TextBannerDefault {...defaultTextBannerProps} page={mockPageEditing} />);
 
-      expect(mockUseSitecore).toHaveBeenCalled();
       const bannerElement = screen.getByTestId('text-banner-default');
       expect(bannerElement).toHaveAttribute('data-editing', 'true');
     });

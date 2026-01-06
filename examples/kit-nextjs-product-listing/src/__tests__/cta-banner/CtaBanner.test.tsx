@@ -48,6 +48,17 @@ describe('CtaBanner', () => {
         linkOptional: { url: '/buy', text: 'Buy now' },
       },
       params: {},
+      rendering: {
+        componentName: 'CtaBanner',
+        params: {},
+      },
+      page: {
+        mode: {
+          isEditing: false,
+          isNormal: true,
+          isPreview: false,
+        },
+      },
     } as any;
 
     render(<CtaBanner {...props} />);
@@ -60,7 +71,21 @@ describe('CtaBanner', () => {
 
   it('renders NoDataFallback when no fields exist', () => {
     // No fields -> NoDataFallback rendered
-    const props = { fields: undefined } as any;
+    const props = {
+      fields: undefined,
+      params: {},
+      rendering: {
+        componentName: 'CtaBanner',
+        params: {},
+      },
+      page: {
+        mode: {
+          isEditing: false,
+          isNormal: true,
+          isPreview: false,
+        },
+      },
+    } as any;
     render(<CtaBanner {...props} />);
 
     expect(screen.getByText(/CTA Banner/i)).toBeInTheDocument();

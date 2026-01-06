@@ -1,4 +1,5 @@
 import { Container5050Props } from '../../components/container/container-5050/container-5050.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer5050Props: Container5050Props = {
   rendering: {
@@ -14,6 +15,7 @@ export const defaultContainer5050Props: Container5050Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container5050WithStyles: Container5050Props = {
@@ -30,6 +32,7 @@ export const container5050WithStyles: Container5050Props = {
     styles: 'custom-container-class',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container5050NoTopMargin: Container5050Props = {
@@ -46,6 +49,7 @@ export const container5050NoTopMargin: Container5050Props = {
     styles: '',
     excludeTopMargin: '1',
   },
+  page: mockPage,
 };
 
 export const container5050WithContent: Container5050Props = {
@@ -74,4 +78,5 @@ export const container5050WithContent: Container5050Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };

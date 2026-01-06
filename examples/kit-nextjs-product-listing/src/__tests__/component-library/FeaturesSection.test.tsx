@@ -159,6 +159,10 @@ jest.mock('@/hooks/useVisibility', () => ({
 }));
 
 const defaultProps = {
+  rendering: {
+    componentName: 'FeaturesSection',
+    params: {},
+  },
   params: { styles: '' },
   fields: {
     data: {
@@ -194,6 +198,13 @@ const defaultProps = {
           ],
         },
       },
+    },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
     },
   },
 };

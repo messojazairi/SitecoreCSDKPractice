@@ -110,6 +110,10 @@ jest.mock('@/utils/NoDataFallback', () => ({
 }));
 
 const defaultProps = {
+  rendering: {
+    componentName: 'Testimonials',
+    params: {},
+  },
   params: { styles: '' },
   fields: {
     data: {
@@ -145,6 +149,13 @@ const defaultProps = {
           ],
         },
       },
+    },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
     },
   },
 };

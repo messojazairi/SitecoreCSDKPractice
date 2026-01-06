@@ -8,11 +8,22 @@ import {
   containerFullWidthWithContent,
 } from './ContainerFullWidth.mockProps';
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
       Placeholder: {name}
+    </div>
+  ),
+  AppPlaceholder: ({ name }: { name: string }) => (
+    <div data-testid="app-placeholder" data-name={name}>
+      AppPlaceholder: {name}
     </div>
   ),
   useSitecore: () => ({
@@ -22,10 +33,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock Flex components
-jest.mock('@/components/flex/Flex.dev', () => ({
+jest.mock('../../components/flex/Flex.dev', () => ({
   Flex: ({ children }: { children: React.ReactNode }) => <div data-testid="flex">{children}</div>,
   FlexItem: ({ children, basis }: { children: React.ReactNode; basis?: string }) => (
     <div data-testid="flex-item" data-basis={basis}>
@@ -66,7 +78,7 @@ describe('ContainerFullWidth', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<ContainerFullWidth {...defaultContainerFullWidthProps} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-fullwidth-1');
   });
 
@@ -108,7 +120,7 @@ describe('ContainerFullWidth', () => {
   it('renders with content in placeholder', () => {
     render(<ContainerFullWidth {...containerFullWidthWithContent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

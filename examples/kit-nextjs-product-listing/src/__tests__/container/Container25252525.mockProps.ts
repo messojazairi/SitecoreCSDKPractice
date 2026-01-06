@@ -1,4 +1,5 @@
 import { Container25252525Props } from '../../components/container/container-25252525/Container25252525';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer25252525Props: Container25252525Props = {
   rendering: {
@@ -17,6 +18,7 @@ export const defaultContainer25252525Props: Container25252525Props = {
     excludeTopMargin: '0',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container25252525WithStyles: Container25252525Props = {
@@ -36,6 +38,7 @@ export const container25252525WithStyles: Container25252525Props = {
     excludeTopMargin: '0',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container25252525NoTopMargin: Container25252525Props = {
@@ -55,6 +58,7 @@ export const container25252525NoTopMargin: Container25252525Props = {
     excludeTopMargin: '1',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container25252525WithContent: Container25252525Props = {
@@ -98,6 +102,7 @@ export const container25252525WithContent: Container25252525Props = {
     excludeTopMargin: '0',
   },
   children: {} as Element,
+  page: mockPage,
 };
 
 export const container25252525EmptyInEditMode: Container25252525Props = {
@@ -117,4 +122,5 @@ export const container25252525EmptyInEditMode: Container25252525Props = {
     excludeTopMargin: '0',
   },
   children: {} as Element,
+  page: mockPage,
 };

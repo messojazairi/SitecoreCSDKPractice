@@ -1,5 +1,6 @@
 import { ContainerFullBleedProps } from '../../components/container/container-full-bleed/container-full-bleed.props';
 import { BackgroundColor } from '../../enumerations/BackgroundColor.enum';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainerFullBleedProps: ContainerFullBleedProps = {
   rendering: {
@@ -15,6 +16,7 @@ export const defaultContainerFullBleedProps: ContainerFullBleedProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '1',
   },
+  page: mockPage,
 };
 
 export const containerFullBleedWithStyles: ContainerFullBleedProps = {
@@ -31,6 +33,7 @@ export const containerFullBleedWithStyles: ContainerFullBleedProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '2',
   },
+  page: mockPage,
 };
 
 export const containerFullBleedNoTopMargin: ContainerFullBleedProps = {
@@ -47,6 +50,7 @@ export const containerFullBleedNoTopMargin: ContainerFullBleedProps = {
     excludeTopMargin: '1',
     DynamicPlaceholderId: '3',
   },
+  page: mockPage,
 };
 
 export const containerFullBleedWithBackground: ContainerFullBleedProps = {
@@ -65,6 +69,7 @@ export const containerFullBleedWithBackground: ContainerFullBleedProps = {
     backgroundImagePath: '/images/background.jpg',
     backgroundColor: BackgroundColor.PRIMARY,
   },
+  page: mockPage,
 };
 
 export const containerFullBleedWithInset: ContainerFullBleedProps = {
@@ -83,6 +88,7 @@ export const containerFullBleedWithInset: ContainerFullBleedProps = {
     backgroundColor: BackgroundColor.SECONDARY,
     inset: '1',
   },
+  page: mockPage,
 };
 
 export const containerFullBleedTransparent: ContainerFullBleedProps = {
@@ -100,4 +106,5 @@ export const containerFullBleedTransparent: ContainerFullBleedProps = {
     DynamicPlaceholderId: '6',
     backgroundColor: BackgroundColor.TRANSPARENT,
   },
+  page: mockPage,
 };

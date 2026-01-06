@@ -25,4 +25,6 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     const linkText = field?.value?.text || children;
     return React.createElement('a', { href: field.value.href }, linkText);
   },
+  AppPlaceholder: ({ name }) => React.createElement('div', { 'data-testid': 'app-placeholder', 'data-name': name }),
+  withDatasourceCheck: () => (component) => component,
 }));
