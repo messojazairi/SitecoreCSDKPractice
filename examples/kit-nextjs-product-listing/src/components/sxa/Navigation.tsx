@@ -1,14 +1,13 @@
 import React, { type JSX } from 'react';
 import {
-  Link as ContentSdkLink,
   LinkField,
   Text,
   TextField,
 } from '@sitecore-content-sdk/nextjs';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { NavigationMenuToggle } from './NavigationMenuToggle.client';
 import { NavigationList } from './NavigationList.client';
+import { ButtonNavigationClient } from './ButtonNavigation.client';
 
 export interface Fields {
   Id: string;
@@ -121,8 +120,6 @@ export const Default = (props: NavigationProps): JSX.Element => {
 };
 
 export const ButtonNavigation = (props: NavigationProps): JSX.Element => {
-  const { page } = useSitecore();
-  const isPageEditing = page?.mode?.isEditing;
   const list = Object.values(props.fields).filter((element) => element);
 
   console.log(list);
@@ -133,27 +130,11 @@ export const ButtonNavigation = (props: NavigationProps): JSX.Element => {
         <h3 className="text-3xl font-bold text-brand-black mb-8 text-center">
           Component Categories
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((section) => (
-            <ContentSdkLink
-              key={section.Id}
-              field={getLinkField({ fields: section })}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-              prefetch={false}
-            >
-              <h4 className="text-xl font-semibold text-brand-sky mb-2">
-                {getNavigationText({ fields: section })}
-              </h4>
-              <p className="text-brand-black mb-4">
-                Explore {getNavigationText({ fields: section })} components
-              </p>
-              <div className="flex items-center text-brand-sky">
-                <span className="mr-2">View components</span>
-                <ArrowRight size={20} />
-              </div>
-            </ContentSdkLink>
-          ))}
-        </div>
+        <ButtonNavigationClient
+          list={list}
+          getLinkField={getLinkField}
+          getNavigationText={getNavigationText}
+        />
       </div>
     </section>
   );
