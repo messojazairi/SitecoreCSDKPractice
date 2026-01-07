@@ -121,6 +121,8 @@ export const Default = (props: NavigationProps): JSX.Element => {
 };
 
 export const ButtonNavigation = (props: NavigationProps): JSX.Element => {
+  const { page } = useSitecore();
+  const isPageEditing = page?.mode?.isEditing;
   const list = Object.values(props.fields).filter((element) => element);
 
   console.log(list);
