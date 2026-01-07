@@ -17,11 +17,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   })),
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: jest.fn(() => ({
-    t: (key: string) => key,
-  })),
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: jest.fn(() => (key: string) => key),
 }));
 
 // Mock dictionary

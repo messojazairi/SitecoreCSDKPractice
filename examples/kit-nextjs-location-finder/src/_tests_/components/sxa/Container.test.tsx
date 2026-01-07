@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Default as Container } from '@/components/sxa/Container';
 
-// Mock Placeholder component
+// Mock AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: { name: string }) => (
+  AppPlaceholder: ({ name }: { name: string }) => (
     <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
   ),
 }));
@@ -23,9 +23,19 @@ describe('SXA Container', () => {
     },
   };
 
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
+  const mockComponentMap = new Map();
+
   it('renders container with grid parameters and styles', () => {
     const { container } = render(
-      <Container rendering={mockRendering} params={mockRendering.params} />
+      <Container rendering={mockRendering} params={mockRendering.params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const containerDiv = container.querySelector('.component.container-default');
@@ -36,7 +46,7 @@ describe('SXA Container', () => {
 
   it('renders placeholder with correct key', () => {
     const { getByTestId } = render(
-      <Container rendering={mockRendering} params={mockRendering.params} />
+      <Container rendering={mockRendering} params={mockRendering.params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     expect(getByTestId('placeholder-container-main-content')).toBeInTheDocument();

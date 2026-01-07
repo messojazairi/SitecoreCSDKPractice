@@ -60,6 +60,14 @@ export const mockPageHeaderProps: PageHeaderProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 export const mockPageHeaderPropsWithoutLinks: PageHeaderProps = {
@@ -121,6 +129,14 @@ export const mockPageHeaderPropsWithoutLinks: PageHeaderProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 export const mockPageHeaderPropsWithStyles: PageHeaderProps = {
@@ -164,4 +180,12 @@ export const mockPageHeaderPropsWithStyles: PageHeaderProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

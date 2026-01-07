@@ -106,6 +106,14 @@ export const mockAccordionProps = {
     dataSource: 'accordion-datasource-id',
     uid: 'accordion-uid',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 

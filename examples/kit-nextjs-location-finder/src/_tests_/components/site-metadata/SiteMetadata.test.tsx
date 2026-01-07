@@ -3,56 +3,15 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Default as SiteMetadata } from '@/components/site-metadata/SiteMetadata';
 
-// Mock Next.js Head component to capture rendered elements
-jest.mock('next/head', () => {
-  const MockHead = ({ children }: { children: React.ReactNode }) => {
-    // Create a function that processes React elements into HTML-like structure
-    const processChildren = (child: React.ReactNode): string => {
-      if (typeof child === 'string') return child;
-      if (typeof child === 'number') return child.toString();
-      if (!child) return '';
-
-      if (React.isValidElement(child)) {
-        const { type, props } = child;
-        const tagName = typeof type === 'string' ? type : 'div';
-
-        // Handle self-closing tags
-        if (['meta', 'link'].includes(tagName)) {
-          const attrs = Object.entries(props as Record<string, unknown>)
-            .filter(([key]) => key !== 'children')
-            .map(([key, value]) => `${key}="${value}"`)
-            .join(' ');
-          return `<${tagName} ${attrs} />`;
-        }
-
-        // Handle regular tags with content
-        const content = (props as { children?: React.ReactNode }).children
-          ? processChildren((props as { children?: React.ReactNode }).children)
-          : '';
-        return `<${tagName}>${content}</${tagName}>`;
-      }
-
-      if (Array.isArray(child)) {
-        return child.map(processChildren).join('');
-      }
-
-      return '';
-    };
-
-    const htmlContent = Array.isArray(children)
-      ? children.map(processChildren).join('')
-      : processChildren(children);
-
-    return <div data-testid="head-mock" dangerouslySetInnerHTML={{ __html: htmlContent }} />;
-  };
-  MockHead.displayName = 'MockHead';
-  return MockHead;
-});
-
 // Test props use type assertions for edge case testing where invalid data is intentionally passed
 
 describe('SiteMetadata Component', () => {
   const mockRendering = { componentName: 'SiteMetadata' };
+
+  beforeEach(() => {
+    // Clear document.head before each test to avoid interference
+    document.head.querySelectorAll('title, meta, link').forEach((el) => el.remove());
+  });
 
   it('renders with complete metadata fields', () => {
     const props = {
@@ -66,17 +25,27 @@ describe('SiteMetadata Component', () => {
       rendering: mockRendering,
     };
 
-    const { container } = render(<SiteMetadata {...props} />);
-    const headMock = container.querySelector('[data-testid="head-mock"]');
-
-    expect(headMock).toBeInTheDocument();
-    // Check if title is rendered within the head mock
-    expect(headMock?.textContent).toContain('Meta Title');
-    // Verify meta tags are rendered within the head mock
-    expect(headMock?.innerHTML).toContain('name="keywords"');
-    expect(headMock?.innerHTML).toContain('name="description"');
-    expect(headMock?.innerHTML).toContain('name="viewport"');
-    expect(headMock?.innerHTML).toContain('rel="preconnect"');
+    render(<SiteMetadata {...props} />);
+    
+    // Check if title is rendered (may be in container or document.head)
+    const title = document.querySelector('title') || document.head.querySelector('title');
+    expect(title).toBeInTheDocument();
+    expect(title?.textContent).toBe('Meta Title');
+    
+    // Verify meta tags are rendered (check document.head as React 19 hoists them)
+    const keywordsMeta = document.head.querySelector('meta[name="keywords"]');
+    const descriptionMeta = document.head.querySelector('meta[name="description"]');
+    const viewportMeta = document.head.querySelector('meta[name="viewport"]');
+    const preconnectLink = document.head.querySelector('link[rel="preconnect"]');
+    
+    expect(keywordsMeta).toBeInTheDocument();
+    expect(keywordsMeta).toHaveAttribute('content', 'keyword1, keyword2, keyword3');
+    expect(descriptionMeta).toBeInTheDocument();
+    expect(descriptionMeta).toHaveAttribute('content', 'Page meta description for SEO');
+    expect(viewportMeta).toBeInTheDocument();
+    expect(viewportMeta).toHaveAttribute('content', 'width=device-width, initial-scale=1');
+    expect(preconnectLink).toBeInTheDocument();
+    expect(preconnectLink).toHaveAttribute('href', 'https://fonts.googleapis.com');
   });
 
   it('uses title when metadataTitle is not provided', () => {
@@ -90,11 +59,11 @@ describe('SiteMetadata Component', () => {
       rendering: mockRendering,
     };
 
-    const { container } = render(<SiteMetadata {...props} />);
-    const headMock = container.querySelector('[data-testid="head-mock"]');
-
-    expect(headMock).toBeInTheDocument();
-    expect(headMock?.textContent).toContain('Fallback Title');
+    render(<SiteMetadata {...props} />);
+    const title = document.head.querySelector('title');
+    
+    expect(title).toBeInTheDocument();
+    expect(title?.textContent).toBe('Fallback Title');
   });
 
   it('does not render meta tags when keywords and description are empty', () => {
@@ -109,10 +78,12 @@ describe('SiteMetadata Component', () => {
     };
 
     const { container } = render(<SiteMetadata {...props} />);
-    const headMock = container.querySelector('[data-testid="head-mock"]');
-
-    expect(headMock?.innerHTML).not.toContain('name="keywords"');
-    expect(headMock?.innerHTML).not.toContain('name="description"');
+    
+    const keywordsMeta = container.querySelector('meta[name="keywords"]');
+    const descriptionMeta = container.querySelector('meta[name="description"]');
+    
+    expect(keywordsMeta).not.toBeInTheDocument();
+    expect(descriptionMeta).not.toBeInTheDocument();
   });
 
   it('handles missing optional fields gracefully', () => {
@@ -124,11 +95,11 @@ describe('SiteMetadata Component', () => {
       rendering: mockRendering,
     };
 
-    const { container } = render(<SiteMetadata {...props} />);
-    const headMock = container.querySelector('[data-testid="head-mock"]');
-
-    expect(headMock).toBeInTheDocument();
-    expect(headMock?.textContent).toContain('Minimal Title');
+    render(<SiteMetadata {...props} />);
+    const title = document.head.querySelector('title');
+    
+    expect(title).toBeInTheDocument();
+    expect(title?.textContent).toBe('Minimal Title');
   });
 
   it('renders all required HTML meta tags with correct attributes', () => {
@@ -142,14 +113,21 @@ describe('SiteMetadata Component', () => {
       rendering: mockRendering,
     };
 
-    const { container } = render(<SiteMetadata {...props} />);
+    render(<SiteMetadata {...props} />);
 
-    const headMock = container.querySelector('[data-testid="head-mock"]');
+    const keywordsMeta = document.head.querySelector('meta[name="keywords"]');
+    const descriptionMeta = document.head.querySelector('meta[name="description"]');
+    const viewportMeta = document.head.querySelector('meta[name="viewport"]');
+    const preconnectLink = document.head.querySelector('link[rel="preconnect"]');
 
-    expect(headMock?.innerHTML).toContain('content="seo, react, testing"');
-    expect(headMock?.innerHTML).toContain('content="SEO optimized description"');
-    expect(headMock?.innerHTML).toContain('content="width=device-width, initial-scale=1"');
-    expect(headMock?.innerHTML).toContain('href="https://fonts.googleapis.com"');
+    expect(keywordsMeta).toBeInTheDocument();
+    expect(keywordsMeta).toHaveAttribute('content', 'seo, react, testing');
+    expect(descriptionMeta).toBeInTheDocument();
+    expect(descriptionMeta).toHaveAttribute('content', 'SEO optimized description');
+    expect(viewportMeta).toBeInTheDocument();
+    expect(viewportMeta).toHaveAttribute('content', 'width=device-width, initial-scale=1');
+    expect(preconnectLink).toBeInTheDocument();
+    expect(preconnectLink).toHaveAttribute('href', 'https://fonts.googleapis.com');
   });
 
   it('handles empty field values correctly', () => {

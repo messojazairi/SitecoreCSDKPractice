@@ -46,10 +46,8 @@ jest.mock('@/components/card-spotlight/card-spotlight.dev', () => ({
   ),
 }));
 
-jest.mock('next-localization', () => ({
-  useI18n: jest.fn(() => ({
-    t: (key: string) => key,
-  })),
+jest.mock('next-intl', () => ({
+  useTranslations: jest.fn(() => (key: string) => key),
 }));
 
 jest.mock('@/variables/dictionary', () => ({

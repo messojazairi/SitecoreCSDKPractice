@@ -36,11 +36,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   },
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: jest.fn(() => ({
-    t: (key: string) => key,
-  })),
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: jest.fn(() => (key: string) => key),
 }));
 
 // Mock dictionary keys
@@ -116,19 +114,20 @@ describe('GlobalFooter Component', () => {
     });
 
     it('passes isPageEditing prop correctly in editing mode', () => {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { useSitecore } = require('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-            isPreview: false,
-            isNormal: false,
-          },
-        },
-      });
-
-      render(<GlobalFooter {...mockGlobalFooterProps} />);
+      render(
+        <GlobalFooter
+          {...mockGlobalFooterProps}
+          page={{
+            mode: {
+              isEditing: true,
+              isPreview: false,
+              isNormal: false,
+            },
+            layout: {},
+            locale: 'en',
+          }}
+        />
+      );
       expect(screen.getByText(/Editing/)).toBeInTheDocument();
     });
 
@@ -159,19 +158,20 @@ describe('GlobalFooter Component', () => {
     });
 
     it('passes isPageEditing prop correctly', () => {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { useSitecore } = require('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-            isPreview: false,
-            isNormal: false,
-          },
-        },
-      });
-
-      render(<BlackCompactVariant {...mockGlobalFooterProps} />);
+      render(
+        <BlackCompactVariant
+          {...mockGlobalFooterProps}
+          page={{
+            mode: {
+              isEditing: true,
+              isPreview: false,
+              isNormal: false,
+            },
+            layout: {},
+            locale: 'en',
+          }}
+        />
+      );
       expect(screen.getByText(/Editing/)).toBeInTheDocument();
     });
   });
@@ -241,19 +241,20 @@ describe('GlobalFooter Component', () => {
     });
 
     it('passes isPageEditing prop correctly', () => {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { useSitecore } = require('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-            isPreview: false,
-            isNormal: false,
-          },
-        },
-      });
-
-      render(<BlueCompactVariant {...mockGlobalFooterProps} />);
+      render(
+        <BlueCompactVariant
+          {...mockGlobalFooterProps}
+          page={{
+            mode: {
+              isEditing: true,
+              isPreview: false,
+              isNormal: false,
+            },
+            layout: {},
+            locale: 'en',
+          }}
+        />
+      );
       expect(screen.getByText(/Editing/)).toBeInTheDocument();
     });
   });
@@ -261,9 +262,9 @@ describe('GlobalFooter Component', () => {
   describe('Dictionary Handling', () => {
     it('uses i18n translations for dictionary values', () => {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { useI18n } = require('next-localization');
+      const { useTranslations } = require('next-intl');
       const mockT = jest.fn((key) => `translated_${key}`);
-      useI18n.mockReturnValue({ t: mockT });
+      useTranslations.mockReturnValue(mockT);
 
       render(<GlobalFooter {...mockGlobalFooterProps} />);
 
@@ -277,10 +278,9 @@ describe('GlobalFooter Component', () => {
       jest.clearAllMocks();
 
       // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { useI18n } = require('next-localization');
-      useI18n.mockReturnValue({
-        t: (key: string) => `translated_${key}`,
-      });
+      const { useTranslations } = require('next-intl');
+      const mockT = jest.fn((key: string) => `translated_${key}`);
+      useTranslations.mockReturnValue(mockT);
 
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { GlobalFooterDefault } = require('@/components/global-footer/GlobalFooterDefault.dev');

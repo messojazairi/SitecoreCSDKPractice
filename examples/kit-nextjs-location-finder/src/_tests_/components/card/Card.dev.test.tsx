@@ -58,9 +58,11 @@ const mockProps = {
   description: { value: 'Card description goes here.' },
   image: { value: { src: '/image.jpg' } },
   link: { value: { href: '/details', text: 'Learn More' } },
-  icon: 'arrow-right',
-  className: 'custom-card',
-  editable: true,
+  params: {
+    icon: 'arrow-right',
+    className: 'custom-card',
+    editable: true,
+  },
 } as unknown as React.ComponentProps<typeof Card>;
 
 // ----------------------

@@ -34,6 +34,14 @@ jest.mock('lucide-react', () => ({
 }));
 
 describe('SXA Navigation', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
   const mockChildFields = [
     {
       Id: '2',
@@ -79,6 +87,7 @@ describe('SXA Navigation', () => {
         params={{ Styles: 'main-nav', RenderingIdentifier: 'nav-1' }}
         handleClick={jest.fn()}
         relativeLevel={0}
+        page={mockPage}
       />
     );
 
@@ -96,6 +105,7 @@ describe('SXA Navigation', () => {
         params={{ Styles: '', RenderingIdentifier: 'nav-mobile' }}
         handleClick={jest.fn()}
         relativeLevel={0}
+        page={mockPage}
       />
     );
 
@@ -112,6 +122,7 @@ describe('SXA Navigation', () => {
         params={{ Styles: '' }}
         handleClick={jest.fn()}
         relativeLevel={0}
+        page={mockPage}
       />
     );
 

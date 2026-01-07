@@ -78,24 +78,10 @@ jest.mock('@/components/ui/input', () => {
 // Console.log spy for form submission testing
 const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-// Test props interface
-interface SubscriptionBannerProps {
-  fields: {
-    titleRequired: { value: string };
-    descriptionOptional?: { value: string };
-    buttonLink: { value: { text: string; href?: string } };
-    emailPlaceholder?: { value: string };
-    emailErrorMessage?: { value: string };
-    thankYouMessage?: { value: string };
-  };
-  params: Record<string, unknown>;
-  rendering: { componentName: string };
-}
-
 describe('SubscriptionBanner Component', () => {
   const mockRendering = { componentName: 'SubscriptionBanner' };
 
-  const defaultProps: SubscriptionBannerProps = {
+  const defaultProps = {
     fields: {
       titleRequired: { value: 'Subscribe to Our Newsletter' },
       descriptionOptional: { value: 'Stay updated with our latest news and offers' },
@@ -106,7 +92,15 @@ describe('SubscriptionBanner Component', () => {
     },
     params: {},
     rendering: mockRendering,
-  };
+    page: {
+      mode: {
+        isEditing: false,
+      },
+      layout: {},
+      locale: 'en',
+    },
+    componentMap: new Map(),
+  } as React.ComponentProps<typeof SubscriptionBanner>;
 
   beforeEach(() => {
     consoleSpy.mockClear();

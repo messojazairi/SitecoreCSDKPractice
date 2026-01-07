@@ -12,6 +12,14 @@ export const mockContainer303030Props = {
     DynamicPlaceholderId: 'main',
     styles: 'custom-303030-styles',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props with exclude top margin
@@ -29,4 +37,12 @@ export const mockContainer303030PropsNoMargin = {
     excludeTopMargin: '1',
     styles: 'no-margin-303030',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

@@ -11,6 +11,14 @@ export const mockSubmissionFormProps: SubmissionFormProps = {
       value: 'Request a Vehicle Quote',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 

@@ -81,4 +81,12 @@ export const mockGlobalHeaderProps: GlobalHeaderProps = {
     dataSource: '',
     componentName: 'GlobalHeader',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

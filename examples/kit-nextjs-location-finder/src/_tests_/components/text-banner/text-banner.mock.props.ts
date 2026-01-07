@@ -17,6 +17,14 @@ export const mockTextBannerProps: TextBannerProps = {
         'Alaris manufactures cutting-edge ambulances, fire trucks, and mobile command centers designed to meet the critical needs of first responders nationwide.',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -31,6 +39,14 @@ export const mockTextBannerPropsWithoutDescription: TextBannerProps = {
       value: 'Reliable Fleet Solutions',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -51,6 +67,14 @@ export const mockTextBannerPropsEditing: TextBannerProps = {
         'Our Type I ambulances feature advanced life support systems, spacious patient compartments, and state-of-the-art medical equipment storage.',
     },
   },
+  page: {
+    mode: {
+      isEditing: true,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: true,
 };
 
@@ -69,5 +93,13 @@ export const mockTextBannerPropsBlueTheme: TextBannerProps = {
         'Built for the most demanding emergency scenarios with rugged construction and innovative safety features.',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };

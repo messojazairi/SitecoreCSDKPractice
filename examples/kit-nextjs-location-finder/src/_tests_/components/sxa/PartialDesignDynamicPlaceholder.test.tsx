@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PartialDesignDynamicPlaceholder from '@/components/sxa/PartialDesignDynamicPlaceholder';
 
-// Mock Placeholder component
+// Mock AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: { name: string; rendering: { uid: string } }) => (
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: { uid: string } }) => (
     <div data-testid={`placeholder-${name}`} data-rendering-id={rendering.uid}>
       Dynamic Placeholder: {name}
     </div>
@@ -13,6 +13,15 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 }));
 
 describe('SXA PartialDesignDynamicPlaceholder', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
+  const mockComponentMap = new Map();
   it('renders dynamic placeholder with signature', () => {
     const mockRendering = {
       componentName: 'PartialDesignDynamicPlaceholder',
@@ -24,7 +33,7 @@ describe('SXA PartialDesignDynamicPlaceholder', () => {
     };
 
     const { getByTestId } = render(
-      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} />
+      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const placeholder = getByTestId('placeholder-vehicle-showcase-{*}');
@@ -44,7 +53,7 @@ describe('SXA PartialDesignDynamicPlaceholder', () => {
     };
 
     const { getByTestId } = render(
-      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} />
+      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const placeholder = getByTestId('placeholder-');
@@ -62,7 +71,7 @@ describe('SXA PartialDesignDynamicPlaceholder', () => {
     };
 
     const { getByTestId } = render(
-      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} />
+      <PartialDesignDynamicPlaceholder rendering={mockRendering} params={{}} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const placeholder = getByTestId('placeholder-ambulance-variants-{*}');

@@ -30,6 +30,16 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 }));
 
 describe('SXA Image', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+      isPreview: false,
+      isNormal: true,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
   const mockFields = {
     Image: {
       value: {
@@ -48,7 +58,7 @@ describe('SXA Image', () => {
   };
 
   it('renders image with caption and link', () => {
-    render(<Image params={{ styles: '', RenderingIdentifier: 'img-1' }} fields={mockFields} />);
+    render(<Image params={{ styles: '', RenderingIdentifier: 'img-1' }} fields={mockFields} page={mockPage} />);
 
     expect(screen.getByTestId('sxa-image')).toHaveAttribute(
       'src',
@@ -70,7 +80,7 @@ describe('SXA Image', () => {
     };
 
     render(
-      <Image params={{ styles: '', RenderingIdentifier: 'img-2' }} fields={fieldsWithoutLink} />
+      <Image params={{ styles: '', RenderingIdentifier: 'img-2' }} fields={fieldsWithoutLink} page={mockPage} />
     );
 
     expect(screen.getByTestId('sxa-image')).toBeInTheDocument();
@@ -82,6 +92,7 @@ describe('SXA Image', () => {
       <Banner
         params={{ styles: 'hero-section', RenderingIdentifier: 'banner-1' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 

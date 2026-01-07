@@ -49,19 +49,19 @@ describe('GlobalHeader Component', () => {
   });
 
   it('passes isPageEditing prop correctly in editing mode', () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { useSitecore } = require('@sitecore-content-sdk/nextjs');
-    useSitecore.mockReturnValue({
-      page: {
-        mode: {
-          isEditing: true,
-          isPreview: false,
-          isNormal: false,
-        },
-      },
-    });
-
-    render(<GlobalHeader {...mockGlobalHeaderProps} />);
+    render(
+      <GlobalHeader
+        {...mockGlobalHeaderProps}
+        page={{
+          ...mockGlobalHeaderProps.page,
+          mode: {
+            isEditing: true,
+            isPreview: false,
+            isNormal: false,
+          },
+        }}
+      />
+    );
     expect(screen.getByText(/Editing/)).toBeInTheDocument();
   });
 

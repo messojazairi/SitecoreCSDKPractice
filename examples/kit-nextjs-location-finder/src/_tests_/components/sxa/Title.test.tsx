@@ -33,6 +33,25 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 }));
 
 describe('SXA Title', () => {
+  const mockPage = {
+    mode: {
+      isNormal: true,
+      isEditing: false,
+    },
+    layout: {
+      sitecore: {
+        route: {
+          fields: {
+            pageTitle: {
+              value: 'Alaris Emergency Vehicles',
+            },
+          },
+        },
+      },
+    },
+    locale: 'en',
+  };
+
   const mockFields = {
     data: {
       datasource: {
@@ -61,10 +80,11 @@ describe('SXA Title', () => {
   };
 
   it('renders title with link in normal mode', () => {
-    render(<Title params={{ styles: '', RenderingIdentifier: 'title-1' }} fields={mockFields} />);
+    render(<Title params={{ styles: '', RenderingIdentifier: 'title-1' }} fields={mockFields} page={mockPage} />);
 
     expect(screen.getByTestId('link-field')).toBeInTheDocument();
-    expect(screen.getByTestId('text-field')).toHaveTextContent('Alaris Emergency Vehicles');
+    // Component prioritizes datasource field over page title
+    expect(screen.getByTestId('text-field')).toHaveTextContent('Advanced Ambulance Fleet');
   });
 
   it('applies custom styles and rendering identifier', () => {
@@ -72,6 +92,7 @@ describe('SXA Title', () => {
       <Title
         params={{ styles: 'text-center font-bold', RenderingIdentifier: 'vehicle-title' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 
@@ -103,6 +124,7 @@ describe('SXA Title', () => {
         params={{ styles: '', RenderingIdentifier: 'title-2' }}
         // @ts-expect-error Testing fallback behavior with null datasource
         fields={fieldsWithContextItem}
+        page={mockPage}
       />
     );
 

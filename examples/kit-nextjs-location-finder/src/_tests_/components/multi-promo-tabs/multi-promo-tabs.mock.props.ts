@@ -172,4 +172,12 @@ export const mockMultiPromoTabsProps: MultiPromoTabsProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

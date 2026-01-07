@@ -134,11 +134,26 @@ export const mockGlobalFooterProps: GlobalFooterProps = {
       FOOTER_EmailSuccessMessage: 'Thank you for subscribing!',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
 export const mockGlobalFooterPropsEditing: GlobalFooterProps = {
   ...mockGlobalFooterProps,
+  page: {
+    mode: {
+      isEditing: true,
+    },
+    layout: {},
+    locale: 'en',
+  },
   isPageEditing: true,
 };
 
@@ -165,5 +180,13 @@ export const mockEmptyGlobalFooterProps: GlobalFooterProps = {
       FOOTER_EmailSuccessMessage: 'Thank you for subscribing!',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };

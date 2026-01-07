@@ -26,6 +26,13 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       'data-rendering': rendering ? JSON.stringify(rendering) : undefined,
     }, `Placeholder: ${name}`);
   },
+  AppPlaceholder: ({ name, rendering }) => {
+    return React.createElement('div', {
+      'data-testid': 'sitecore-placeholder',
+      'data-placeholder-name': name,
+      'data-rendering': rendering ? JSON.stringify(rendering) : undefined,
+    }, `Placeholder: ${name}`);
+  },
   useSitecore: () => ({
     page: {
       mode: {

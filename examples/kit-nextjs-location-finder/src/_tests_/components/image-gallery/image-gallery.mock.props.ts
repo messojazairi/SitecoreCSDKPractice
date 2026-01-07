@@ -48,5 +48,13 @@ export const mockImageGalleryProps: ImageGalleryProps = {
     dataSource: '',
     componentName: 'ImageGallery',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };

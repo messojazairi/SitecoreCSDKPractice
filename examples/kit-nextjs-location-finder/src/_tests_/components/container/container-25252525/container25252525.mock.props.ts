@@ -14,6 +14,14 @@ export const mockContainer25252525Props = {
     styles: 'custom-25252525-styles',
   },
   children: document.createElement('div') as unknown as Element,
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props with exclude top margin
@@ -33,4 +41,12 @@ export const mockContainer25252525PropsNoMargin = {
     styles: 'no-margin-25252525',
   },
   children: document.createElement('div') as unknown as Element,
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

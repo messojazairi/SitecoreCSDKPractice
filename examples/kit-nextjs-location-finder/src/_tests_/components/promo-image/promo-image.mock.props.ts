@@ -33,6 +33,14 @@ export const mockPromoImageProps: PromoImageProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -69,6 +77,14 @@ export const mockPromoImagePropsFireTruck: PromoImageProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -102,5 +118,13 @@ export const mockPromoImagePropsNoLink: PromoImageProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };

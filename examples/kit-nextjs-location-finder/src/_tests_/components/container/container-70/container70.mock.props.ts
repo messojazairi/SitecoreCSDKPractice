@@ -10,6 +10,14 @@ export const mockContainer70Props = {
     DynamicPlaceholderId: 'main',
     styles: 'custom-container-styles',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props with exclude top margin
@@ -25,6 +33,14 @@ export const mockContainer70PropsNoMargin = {
     excludeTopMargin: '1',
     styles: 'no-margin-container',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props for empty container
@@ -36,4 +52,12 @@ export const mockContainer70PropsEmpty = {
   params: {
     DynamicPlaceholderId: 'empty',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

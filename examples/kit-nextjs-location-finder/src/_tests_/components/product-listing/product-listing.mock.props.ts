@@ -159,10 +159,25 @@ export const mockProductListingProps: ProductListingProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
 export const mockProductListingPropsEditMode: ProductListingProps = {
   ...mockProductListingProps,
+  page: {
+    mode: {
+      isEditing: true,
+    },
+    layout: {},
+    locale: 'en',
+  },
   isPageEditing: true,
 };

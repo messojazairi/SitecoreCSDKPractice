@@ -26,7 +26,15 @@ describe('CtaBanner Component', () => {
       colorScheme: 'primary' as const,
     },
     rendering: { componentName: 'CtaBanner' },
-  };
+    page: {
+      mode: {
+        isEditing: false,
+      },
+      layout: {},
+      locale: 'en',
+    },
+    componentMap: new Map(),
+  } as React.ComponentProps<typeof CtaBanner>;
 
   it('renders title, description, and link correctly', () => {
     render(<CtaBanner {...mockProps} />);
@@ -41,6 +49,14 @@ describe('CtaBanner Component', () => {
       fields: undefined,
       params: {},
       rendering: { componentName: 'CtaBanner' },
+      page: {
+        mode: {
+          isEditing: false,
+        },
+        layout: {},
+        locale: 'en',
+      },
+      componentMap: new Map(),
     };
     render(<CtaBanner {...emptyProps} />);
     expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
@@ -50,8 +66,8 @@ describe('CtaBanner Component', () => {
     const propsWithoutLink = {
       ...mockProps,
       fields: {
-        titleRequired: mockProps.fields.titleRequired,
-        descriptionOptional: mockProps.fields.descriptionOptional,
+        titleRequired: mockProps.fields?.titleRequired,
+        descriptionOptional: mockProps.fields?.descriptionOptional,
         // linkOptional is intentionally omitted
       },
     };

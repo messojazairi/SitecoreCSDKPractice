@@ -81,17 +81,21 @@ describe('LocationSearch', () => {
   });
 
   it('passes isEditing prop from Sitecore context', () => {
-    mockUseSitecore.mockReturnValue({
-      page: {
-        mode: {
-          isEditing: true,
-        },
-      },
-    });
-
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { Default } = require('@/components/location-search/LocationSearch');
-    const { getByTestId } = render(<Default {...mockLocationSearchProps} />);
+    const { getByTestId } = render(
+      <Default
+        {...mockLocationSearchProps}
+        page={{
+          ...mockLocationSearchProps.page,
+          mode: {
+            isEditing: true,
+            isPreview: false,
+            isNormal: false,
+          },
+        }}
+      />
+    );
 
     expect(getByTestId('location-search-default')).toHaveAttribute('data-editing', 'true');
   });

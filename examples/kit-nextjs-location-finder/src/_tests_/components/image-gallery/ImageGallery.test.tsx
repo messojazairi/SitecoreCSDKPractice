@@ -62,19 +62,19 @@ describe('ImageGallery Component', () => {
   });
 
   it('passes isPageEditing prop correctly', () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { useSitecore } = require('@sitecore-content-sdk/nextjs');
-    useSitecore.mockReturnValue({
-      page: {
-        mode: {
-          isEditing: true,
-          isPreview: false,
-          isNormal: false,
-        },
-      },
-    });
-
-    render(<ImageGallery {...mockImageGalleryProps} />);
+    render(
+      <ImageGallery
+        {...mockImageGalleryProps}
+        page={{
+          ...mockImageGalleryProps.page,
+          mode: {
+            isEditing: true,
+            isPreview: false,
+            isNormal: false,
+          },
+        }}
+      />
+    );
     expect(screen.getByText(/Editing/)).toBeInTheDocument();
   });
 

@@ -46,6 +46,16 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 describe('SXA Promo', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+      isPreview: false,
+      isNormal: true,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
   const mockFields = {
     PromoIcon: {
       value: {
@@ -71,7 +81,7 @@ describe('SXA Promo', () => {
   };
 
   it('renders promo with vehicle image and content', () => {
-    render(<Promo params={{ styles: '', RenderingIdentifier: 'promo-1' }} fields={mockFields} />);
+    render(<Promo params={{ styles: '', RenderingIdentifier: 'promo-1' }} fields={mockFields} page={mockPage} />);
 
     expect(screen.getByTestId('promo-image')).toHaveAttribute(
       'src',
@@ -86,6 +96,7 @@ describe('SXA Promo', () => {
       <Promo
         params={{ styles: 'shadow-xl', RenderingIdentifier: 'vehicle-promo' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 
@@ -99,6 +110,7 @@ describe('SXA Promo', () => {
       <CenteredCard
         params={{ styles: 'text-center', RenderingIdentifier: 'promo-centered' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 

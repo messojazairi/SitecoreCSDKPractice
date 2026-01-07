@@ -65,6 +65,14 @@ export const mockVideoProps: VideoComponentProps = {
     ...mockVideoParams,
   },
   fields: mockVideoFields,
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 export const mockVideoPropsWithoutImage: VideoComponentProps = {
@@ -78,6 +86,14 @@ export const mockVideoPropsWithoutImage: VideoComponentProps = {
     ...mockVideoParamsWithDarkIcon,
   },
   fields: mockVideoFieldsWithoutImage,
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 export const mockVideoPropsWithoutVideo: VideoComponentProps = {
@@ -94,4 +110,12 @@ export const mockVideoPropsWithoutVideo: VideoComponentProps = {
       value: 'No video available',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

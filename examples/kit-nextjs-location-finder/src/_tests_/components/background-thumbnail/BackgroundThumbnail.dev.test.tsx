@@ -17,13 +17,8 @@ describe('BackgroundThumbnail Component', () => {
   });
 
   it('renders badge and children when in editing mode', () => {
-    // Mock editing mode
-    (useSitecore as jest.Mock).mockReturnValue({
-      page: { mode: { isEditing: true } },
-    });
-
     render(
-      <BackgroundThumbnail>
+      <BackgroundThumbnail page={{ mode: { isEditing: true } }}>
         <div data-testid="child">Child Content</div>
       </BackgroundThumbnail>
     );
@@ -35,12 +30,8 @@ describe('BackgroundThumbnail Component', () => {
   });
 
   it('renders nothing when not in editing mode', () => {
-    (useSitecore as jest.Mock).mockReturnValue({
-      page: { mode: { isEditing: false } },
-    });
-
     render(
-      <BackgroundThumbnail>
+      <BackgroundThumbnail page={{ mode: { isEditing: false } }}>
         <div data-testid="child">Child Content</div>
       </BackgroundThumbnail>
     );

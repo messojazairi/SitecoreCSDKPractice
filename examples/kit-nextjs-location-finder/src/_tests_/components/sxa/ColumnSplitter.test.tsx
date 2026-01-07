@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Default as ColumnSplitter } from '@/components/sxa/ColumnSplitter';
 
-// Mock Placeholder component
+// Mock AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: { name: string }) => (
+  AppPlaceholder: ({ name }: { name: string }) => (
     <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
   ),
 }));
@@ -16,6 +16,16 @@ describe('SXA ColumnSplitter', () => {
     dataSource: '',
     uid: '123',
   };
+
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
+  const mockComponentMap = new Map();
 
   it('renders columns with specified widths and styles', () => {
     const params = {
@@ -31,7 +41,7 @@ describe('SXA ColumnSplitter', () => {
     };
 
     const { container, getByTestId } = render(
-      <ColumnSplitter rendering={mockRendering} params={params} />
+      <ColumnSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const splitterDiv = container.querySelector('.column-splitter');
@@ -53,7 +63,7 @@ describe('SXA ColumnSplitter', () => {
     };
 
     const { getByTestId, queryByTestId } = render(
-      <ColumnSplitter rendering={mockRendering} params={params} />
+      <ColumnSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     expect(getByTestId('placeholder-column-1-{*}')).toBeInTheDocument();
@@ -72,7 +82,7 @@ describe('SXA ColumnSplitter', () => {
       styles: '',
     };
 
-    const { container } = render(<ColumnSplitter rendering={mockRendering} params={params} />);
+    const { container } = render(<ColumnSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />);
 
     const columns = container.querySelectorAll('.column-splitter > div');
     expect(columns[0]).toHaveClass('col-md-8', 'ambulance-details');

@@ -41,6 +41,14 @@ export const mockPromoAnimatedProps: PromoAnimatedProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -85,6 +93,14 @@ export const mockPromoAnimatedPropsFireTruck: PromoAnimatedProps = {
       },
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
 
@@ -110,5 +126,13 @@ export const mockPromoAnimatedPropsNoLinks: PromoAnimatedProps = {
       value: '<p>Strategic coordination vehicles for large-scale emergency operations.</p>',
     },
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };

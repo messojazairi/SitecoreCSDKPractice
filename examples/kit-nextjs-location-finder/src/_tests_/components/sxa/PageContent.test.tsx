@@ -48,6 +48,28 @@ jest.mock('next/link', () => ({
 }));
 
 describe('SXA PageContent', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {
+      sitecore: {
+        route: {
+          fields: {
+            Content: {
+              value:
+                '<p>Alaris manufactures advanced emergency vehicles including Type I and Type III ambulances.</p>',
+            },
+            Title: {
+              value: 'About Alaris Emergency Vehicles',
+            },
+          },
+        },
+      },
+    },
+    locale: 'en',
+  };
+
   it('renders page content with rich text', () => {
     const mockFields = {
       Title: { value: '' },
@@ -62,6 +84,7 @@ describe('SXA PageContent', () => {
       <PageContent
         params={{ RenderingIdentifier: 'content-1', styles: 'vehicle-content' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 
@@ -86,6 +109,7 @@ describe('SXA PageContent', () => {
       <TitleAndBody
         params={{ RenderingIdentifier: 'title-body', styles: '' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 

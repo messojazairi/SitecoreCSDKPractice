@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Default as RowSplitter } from '@/components/sxa/RowSplitter';
 
-// Mock Placeholder component
+// Mock AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: { name: string }) => (
+  AppPlaceholder: ({ name }: { name: string }) => (
     <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
   ),
 }));
@@ -16,6 +16,16 @@ describe('SXA RowSplitter', () => {
     dataSource: '',
     uid: '123',
   };
+
+  const mockPage = {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  };
+
+  const mockComponentMap = new Map();
 
   it('renders rows with specified styles', () => {
     const params = {
@@ -28,7 +38,7 @@ describe('SXA RowSplitter', () => {
     };
 
     const { container, getByTestId } = render(
-      <RowSplitter rendering={mockRendering} params={params} />
+      <RowSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     const splitterDiv = container.querySelector('.row-splitter');
@@ -50,7 +60,7 @@ describe('SXA RowSplitter', () => {
     };
 
     const { getByTestId, queryByTestId } = render(
-      <RowSplitter rendering={mockRendering} params={params} />
+      <RowSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />
     );
 
     expect(getByTestId('placeholder-row-1-{*}')).toBeInTheDocument();
@@ -67,7 +77,7 @@ describe('SXA RowSplitter', () => {
       styles: '',
     };
 
-    const { container } = render(<RowSplitter rendering={mockRendering} params={params} />);
+    const { container } = render(<RowSplitter rendering={mockRendering} params={params} page={mockPage} componentMap={mockComponentMap} />);
 
     const rowContainers = container.querySelectorAll('.container-fluid');
     expect(rowContainers).toHaveLength(2);

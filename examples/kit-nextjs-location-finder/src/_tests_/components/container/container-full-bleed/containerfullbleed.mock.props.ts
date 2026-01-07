@@ -10,6 +10,14 @@ export const mockContainerFullBleedProps = {
     DynamicPlaceholderId: 'main',
     styles: 'custom-fullbleed-styles',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props with exclude top margin
@@ -25,6 +33,14 @@ export const mockContainerFullBleedPropsNoMargin = {
     excludeTopMargin: '1',
     styles: 'no-margin-fullbleed',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };
 
 // Mock props for empty container
@@ -36,4 +52,12 @@ export const mockContainerFullBleedPropsEmpty = {
   params: {
     DynamicPlaceholderId: 'empty',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
 };

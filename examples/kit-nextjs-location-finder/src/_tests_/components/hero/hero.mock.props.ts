@@ -45,5 +45,13 @@ export const mockHeroProps: HeroProps = {
     dataSource: '',
     componentName: 'Hero',
   },
+  page: {
+    mode: {
+      isEditing: false,
+    },
+    layout: {},
+    locale: 'en',
+  },
+  componentMap: new Map(),
   isPageEditing: false,
 };
