@@ -47,7 +47,9 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
 
   // For priority images (LCP), use priority prop, otherwise use inView for lazy loading
   const shouldPrioritize = priority === true;
- const imagePriority: boolean = shouldPrioritize ? true : inView;
+  const imagePriority: boolean = shouldPrioritize ? true : inView;
+  // Set fetchPriority="high" for LCP images to reduce resource load delay
+  const imageFetchPriority: 'high' | 'low' | 'auto' = shouldPrioritize ? 'high' : 'auto';
 
   // Extract priority, loading, and fetchPriority from rest and image.value to avoid conflicts
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -69,6 +71,7 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
       {...(!image?.value?.width && isSvg ? { width: 16, height: 16 } : {})}
       {...restProps}
       priority={imagePriority}
+      fetchPriority={imageFetchPriority}
     />
   );
 }

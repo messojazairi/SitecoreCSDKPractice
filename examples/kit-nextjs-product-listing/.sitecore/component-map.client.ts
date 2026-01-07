@@ -16,6 +16,7 @@ import * as TestimonialCarousel from 'src/components/testimonial-carousel/Testim
 import * as NavigationMenuToggleclient from 'src/components/sxa/NavigationMenuToggle.client';
 import * as NavigationListclient from 'src/components/sxa/NavigationList.client';
 import * as LinkList from 'src/components/sxa/LinkList';
+import * as ButtonNavigationclient from 'src/components/sxa/ButtonNavigation.client';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
 import * as TextSlider from 'src/components/site-three/TextSlider';
@@ -115,6 +116,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
   ['NavigationList', { ...NavigationListclient }],
   ['LinkList', { ...LinkList }],
+  ['ButtonNavigation', { ...ButtonNavigationclient }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['TextSlider', { ...TextSlider }],
