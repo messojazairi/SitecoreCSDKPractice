@@ -30,7 +30,9 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
 
   const Wrapper = ({ children }: { children: JSX.Element }): JSX.Element => (
     <div className={`component promo ${styles}`} id={id}>
-      <div className="component-content">{children}</div>
+      <div className="component-content">
+        <aside role="complementary">{children}</aside>
+      </div>
     </div>
   );
 
@@ -42,11 +44,14 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
     );
   }
 
+  // Get alt text for promo icon with fallback
+  const promoIconAlt = fields.PromoText?.value?.toString() || 'Promo icon';
+
   return (
     <Wrapper>
       <>
         <div className="field-promoicon">
-          <ContentSdkImage field={fields.PromoIcon} />
+          <ContentSdkImage field={fields.PromoIcon} alt={promoIconAlt} />
         </div>
         <div className="promo-text">{renderText(fields)}</div>
       </>

@@ -11,6 +11,7 @@ import components from ".sitecore/component-map";
 import Providers from "src/Providers";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { generateWebPageSchema, renderJsonLdScript, getBaseUrl, getFullUrl } from "src/lib/seo";
 
 type PageProps = {
   params: Promise<{
@@ -54,9 +55,31 @@ export default async function Page({ params, searchParams }: PageProps) {
     components
   );
 
+  // Generate WebPage structured data
+  const routeFields = page.layout.sitecore.route?.fields as RouteFields;
+  const pageTitle = routeFields?.Title?.value?.toString() || "Page";
+  const pageDescription = (routeFields as { Description?: { value?: string } })?.Description?.value?.toString();
+  const pathSegments = path && path.length > 0 ? path.join('/') : '';
+  const urlPath = `/${site}/${locale}${pathSegments ? `/${pathSegments}` : ''}`;
+  const baseUrl = getBaseUrl();
+  const fullUrl = getFullUrl(urlPath, baseUrl);
+  
+  const webPageSchema = generateWebPageSchema(pageTitle, {
+    description: pageDescription,
+    url: fullUrl,
+    inLanguage: locale.replace('_', '-'),
+    siteName: site,
+    siteUrl: baseUrl,
+  });
+
   return (
     <NextIntlClientProvider>
       <Providers page={page} componentProps={componentProps}>
+        {/* WebPage structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: renderJsonLdScript(webPageSchema) }}
+        />
         <Layout page={page} />
       </Providers>
     </NextIntlClientProvider>
@@ -90,10 +113,59 @@ export const generateMetadata = async ({ params }: PageProps) => {
 
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
+  
+  if (!page) {
+    return {
+      title: "Page Not Found",
+    };
+  }
+
+  const routeFields = page.layout.sitecore.route?.fields as RouteFields;
+  const title = routeFields?.Title?.value?.toString() || "Page";
+  
+  // Extract description if available
+  const description = (routeFields as { Description?: { value?: string } })?.Description?.value?.toString();
+  
+  // Build URL path
+  const pathSegments = path && path.length > 0 ? path.join('/') : '';
+  const urlPath = `/${site}/${locale}${pathSegments ? `/${pathSegments}` : ''}`;
+  
+  // Get base URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                  (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://example.com');
+  const fullUrl = `${baseUrl}${urlPath}`;
+
+  // Generate alternate locales
+  const alternateLocales: Record<string, string> = {};
+  routing.locales
+    .filter((loc) => loc !== locale)
+    .forEach((loc) => {
+      alternateLocales[loc] = `${baseUrl}/${site}/${loc}${pathSegments ? `/${pathSegments}` : ''}`;
+    });
+
   return {
-    title:
-      (
-        page?.layout.sitecore.route?.fields as RouteFields
-      )?.Title?.value?.toString() || "Page",
+    title,
+    ...(description && { description }),
+    alternates: {
+      canonical: fullUrl,
+      ...(Object.keys(alternateLocales).length > 0 && { languages: alternateLocales }),
+    },
+    openGraph: {
+      title,
+      ...(description && { description }),
+      url: fullUrl,
+      siteName: site,
+      type: 'website',
+      locale: locale.replace('_', '-'),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      ...(description && { description }),
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 };

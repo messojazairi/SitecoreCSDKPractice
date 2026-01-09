@@ -16,11 +16,13 @@ export const Default = ({ params, fields }: RichTextProps): JSX.Element => {
   return (
     <div className={`component rich-text ${styles}`} id={RenderingIdentifier}>
       <div className="component-content">
-        {fields ? (
-          <ContentSdkRichText field={fields.Text} />
-        ) : (
-          <span className="is-empty-hint">Rich text</span>
-        )}
+        <section>
+          {fields ? (
+            <ContentSdkRichText field={fields.Text} />
+          ) : (
+            <span className="is-empty-hint">Rich text</span>
+          )}
+        </section>
       </div>
     </div>
   );

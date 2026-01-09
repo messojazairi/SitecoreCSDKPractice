@@ -13,12 +13,15 @@ type ContentBlockProps = ComponentProps & {
  * A simple Content Block component, with a heading and rich text block.
  * This is the most basic building block of a content site, and the most basic
  * Content SDK component that's useful.
+ * 
+ * Uses semantic <article> element for standalone content blocks.
  */
 const ContentBlock = ({ fields }: ContentBlockProps): JSX.Element => (
   <div className="contentBlock">
-    <Text tag="h2" className="contentTitle" field={fields.heading} />
-
-    <RichText className="contentDescription" field={fields.content} />
+    <article>
+      <Text tag="h2" className="contentTitle" field={fields.heading} />
+      <RichText className="contentDescription" field={fields.content} />
+    </article>
   </div>
 );
 

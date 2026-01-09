@@ -37,11 +37,18 @@ const ImageDefault: React.FC<ImageProps> = ({ params }) => (
 
 export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
   const { styles, RenderingIdentifier: id } = params;
+  
+  // Get alt text with fallback
+  const altText = fields.ImageCaption?.value?.toString() || 
+                  (fields.Image?.value?.alt ? String(fields.Image.value.alt) : undefined) || 
+                  'Hero banner image';
+  
   const imageField = fields.Image && {
     ...fields.Image,
     value: {
       ...fields.Image.value,
       style: { objectFit: "cover", width: "100%", height: "100%" },
+      alt: altText,
     },
   };
 
@@ -52,6 +59,7 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
           field={imageField}
           loading="eager"
           fetchPriority="high"
+          alt={altText}
         />
       </div>
     </div>
@@ -66,24 +74,32 @@ export const Default: React.FC<ImageProps> = (props) => {
     return <ImageDefault {...props} />;
   }
 
-  const Image = () => <ContentSdkImage field={fields.Image} />;
+  // Get alt text with fallback logic
+  const altText = fields.ImageCaption?.value?.toString() || 
+                  (fields.Image?.value?.alt ? String(fields.Image.value.alt) : undefined) || 
+                  (fields.Image?.value?.title ? String(fields.Image.value.title) : undefined) || 
+                  'Image';
+
+  const Image = () => <ContentSdkImage field={fields.Image} alt={altText} />;
   const shouldWrapWithLink =
     !page.mode.isEditing && fields.TargetUrl?.value?.href;
 
   return (
     <ImageWrapper className={`component image ${styles}`} id={id}>
       {shouldWrapWithLink ? (
-        <ContentSdkLink field={fields.TargetUrl}>
+        <ContentSdkLink field={fields.TargetUrl} aria-label={altText}>
           <Image />
         </ContentSdkLink>
       ) : (
         <Image />
       )}
-      <Text
-        tag="span"
-        className="image-caption field-imagecaption"
-        field={fields.ImageCaption}
-      />
+      {fields.ImageCaption?.value && (
+        <Text
+          tag="span"
+          className="image-caption field-imagecaption"
+          field={fields.ImageCaption}
+        />
+      )}
     </ImageWrapper>
   );
 };

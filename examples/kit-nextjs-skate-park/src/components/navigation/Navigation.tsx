@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, JSX } from 'react';
+import React, { useState, useEffect, JSX } from 'react';
 import { Link, LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 
@@ -18,6 +18,7 @@ interface NavigationListItemProps {
   fields: Fields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
+  currentPath?: string;
 }
 
 interface NavigationProps extends ComponentProps {
@@ -45,6 +46,7 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   fields,
   handleClick,
   relativeLevel,
+  currentPath,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const { page } = useSitecore();
@@ -54,6 +56,8 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   );
 
   const hasChildren = fields.Children?.length > 0;
+  const isCurrentPage = currentPath && fields.Href === currentPath;
+  
   const children = hasChildren
     ? fields.Children.map((fields, index) => (
         <NavigationListItem
@@ -61,17 +65,23 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
           fields={fields}
           handleClick={handleClick}
           relativeLevel={relativeLevel + 1}
+          currentPath={currentPath}
         />
       ))
     : null;
 
   return (
-    <li className={classNames} key={fields.Id} tabIndex={0}>
+    <li className={classNames} key={fields.Id}>
       <div
         className={`navigation-title ${hasChildren ? 'child' : ''}`}
         onClick={() => setIsActive(!isActive)}
       >
-        <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
+        <Link 
+          field={getLinkField(fields)} 
+          editable={page.mode.isEditing} 
+          onClick={handleClick}
+          {...(isCurrentPage && { 'aria-current': 'page' })}
+        >
           {getTextContent(fields)}
         </Link>
       </div>
@@ -82,8 +92,17 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
 
 export const Default = ({ params, fields }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState<string | undefined>(undefined);
   const { page } = useSitecore();
   const { styles, RenderingIdentifier: id } = params;
+  const menuId = `nav-menu-${id || 'main'}`;
+
+  // Get current path on client side only to avoid hydration mismatch
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
 
   if (!Object.values(fields).length) {
     return (
@@ -109,25 +128,34 @@ export const Default = ({ params, fields }: NavigationProps) => {
         fields={item}
         handleClick={(event) => handleToggleMenu(event, false)}
         relativeLevel={1}
+        currentPath={currentPath}
       />
     ));
 
   return (
     <div className={`component navigation ${styles}`} id={id}>
-      <label className="menu-mobile-navigate-wrapper">
+      <label 
+        className="menu-mobile-navigate-wrapper"
+        aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={isMenuOpen}
+        aria-controls={menuId}
+      >
         <input
           type="checkbox"
           className="menu-mobile-navigate"
           checked={isMenuOpen}
           onChange={() => handleToggleMenu()}
+          aria-hidden="true"
+          tabIndex={-1}
         />
-        <div className="menu-humburger" />
-        <div className="component-content">
-          <nav>
-            <ul className="clearfix">{navigationItems}</ul>
-          </nav>
-        </div>
+        <div className="menu-humburger" aria-hidden="true" />
       </label>
+      <div className="component-content">
+        <nav id={menuId} aria-label="Main navigation">
+          <ul className="clearfix">{navigationItems}</ul>
+        </nav>
+      </div>
     </div>
   );
 };
+
