@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, JSX } from 'react';
 import { Link, LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import NextLink from 'next/link';
 import { ComponentProps } from 'lib/component-props';
 
 interface Fields {
@@ -70,20 +71,35 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
       ))
     : null;
 
+  const linkField = getLinkField(fields);
+  const href = linkField.value.href || '#';
+  const querystring = linkField.value.querystring || '';
+  const fullHref = querystring ? `${href}${href.includes('?') ? '&' : '?'}${querystring}` : href;
+
   return (
     <li className={classNames} key={fields.Id}>
       <div
         className={`navigation-title ${hasChildren ? 'child' : ''}`}
         onClick={() => setIsActive(!isActive)}
       >
-        <Link 
-          field={getLinkField(fields)} 
-          editable={page.mode.isEditing} 
-          onClick={handleClick}
-          {...(isCurrentPage && { 'aria-current': 'page' })}
-        >
-          {getTextContent(fields)}
-        </Link>
+        {page.mode.isEditing ? (
+          <Link 
+            field={linkField} 
+            editable={true} 
+            onClick={handleClick}
+            {...(isCurrentPage && { 'aria-current': 'page' })}
+          >
+            {getTextContent(fields)}
+          </Link>
+        ) : (
+          <NextLink 
+            href={fullHref}
+            onClick={handleClick}
+            {...(isCurrentPage && { 'aria-current': 'page' })}
+          >
+            {getTextContent(fields)}
+          </NextLink>
+        )}
       </div>
       {hasChildren && <ul className="clearfix">{children}</ul>}
     </li>
