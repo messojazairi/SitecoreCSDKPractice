@@ -68,17 +68,15 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   },
 }));
 
-// Mock useI18n hook
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        'article-header.back-to-news': 'Back to News',
-        'article-header.author-label': 'Written by',
-      };
-      return translations[key] || key;
-    },
-  }),
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      'Demo1_ArticleHeader_BackToNewsLabel': 'Back to News',
+      'Demo1_ArticleHeader_AuthorLabel': 'Written by',
+    };
+    return translations[key] || key;
+  },
 }));
 
 // Mock UI components
