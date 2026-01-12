@@ -4,7 +4,10 @@
  * @param options - Additional Intl.DateTimeFormat options
  * @returns Formatted date string in UTC
  */
-export function formatDateInUTC(dateString: string, options: Intl.DateTimeFormatOptions = {}) {
+export function formatDateInUTC(
+  dateString: string,
+  options: Intl.DateTimeFormatOptions = {},
+) {
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', {
     month: 'long',
@@ -27,7 +30,7 @@ export function formatDate(
     format?: 'full' | 'long' | 'medium' | 'short';
     locale?: string;
     timeZone?: string;
-  } = {}
+  } = {},
 ) {
   const { format = 'full', locale = 'en-US', timeZone = 'UTC' } = options;
 

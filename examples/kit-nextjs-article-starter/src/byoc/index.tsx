@@ -3,7 +3,10 @@
 import React, { JSX } from 'react';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import * as Events from '@sitecore-cloudsdk/events/browser';
-import { LayoutServicePageState, SitecoreProviderReactContext } from '@sitecore-content-sdk/nextjs';
+import {
+  LayoutServicePageState,
+  SitecoreProviderReactContext,
+} from '@sitecore-content-sdk/nextjs';
 import '@sitecore/components/context';
 import dynamic from 'next/dynamic';
 import config from 'sitecore.config';

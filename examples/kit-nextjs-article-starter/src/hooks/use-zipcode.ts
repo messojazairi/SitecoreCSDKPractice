@@ -34,7 +34,8 @@ export function useZipcode(defaultZipcode: string) {
       setState((prev) => ({
         ...prev,
         loading: false,
-        error: 'Geolocation request timed out. Please enter your zipcode manually.',
+        error:
+          'Geolocation request timed out. Please enter your zipcode manually.',
         showModal: true,
       }));
     }
@@ -43,7 +44,12 @@ export function useZipcode(defaultZipcode: string) {
   // Function to fetch zipcode using geolocation
   const fetchZipcode = useCallback(async () => {
     console.log('Fetching zipcode using geolocation...');
-    setState((prev) => ({ ...prev, loading: true, error: null, showModal: false }));
+    setState((prev) => ({
+      ...prev,
+      loading: true,
+      error: null,
+      showModal: false,
+    }));
 
     // Reset the geolocation completed flag
     geolocationCompletedRef.current = false;
@@ -125,7 +131,7 @@ export function useZipcode(defaultZipcode: string) {
                 'User-Agent': 'LocationSearchApp', // Add user agent to avoid rate limiting
               },
               cache: 'no-cache', // Avoid caching issues
-            }
+            },
           );
 
           if (!response.ok) {
@@ -155,7 +161,9 @@ export function useZipcode(defaultZipcode: string) {
               };
             });
           } else {
-            console.log('No zipcode found in geocoding response, trying IP fallback');
+            console.log(
+              'No zipcode found in geocoding response, trying IP fallback',
+            );
             // If no zipcode found in geocoding response, try IP-based geolocation
             const ipGeoSuccess = await tryIpBasedGeolocation();
 
@@ -180,7 +188,10 @@ export function useZipcode(defaultZipcode: string) {
               ...prev,
               zipcode: null,
               loading: false,
-              error: error instanceof Error ? error.message : 'An unknown error occurred',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : 'An unknown error occurred',
               showModal: true,
             }));
           }
@@ -230,7 +241,7 @@ export function useZipcode(defaultZipcode: string) {
         enableHighAccuracy: false, // Set to false for faster response
         timeout: 10000, // 10 seconds timeout for the geolocation API itself
         maximumAge: 60000, // Accept cached positions up to 1 minute old for faster response
-      }
+      },
     );
   }, [showFallbackModal]);
 

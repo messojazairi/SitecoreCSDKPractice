@@ -347,4 +347,3 @@ export const editableImageButtonPropsWithoutSrc = {
   ...editableImageButtonProps,
   icon: mockIconImageWithoutSrc,
 };
-

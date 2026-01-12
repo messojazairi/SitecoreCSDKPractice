@@ -13,7 +13,10 @@ import {
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   AppPlaceholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering.componentName}>
+    <div
+      data-testid={`placeholder-${name}`}
+      data-rendering={rendering.componentName}
+    >
       Placeholder Content
     </div>
   ),
@@ -28,21 +31,35 @@ describe('Container Component', () => {
     it('should render container with default structure', () => {
       render(<Container {...defaultProps} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
-      expect(container).toHaveClass('component', 'container-default', 'col-12', 'custom-container-style');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
+      expect(container).toHaveClass(
+        'component',
+        'container-default',
+        'col-12',
+        'custom-container-style',
+      );
     });
 
     it('should render with correct placeholder', () => {
       render(<Container {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-main')).toBeInTheDocument();
-      expect(screen.getByTestId('placeholder-container-main')).toHaveAttribute('data-rendering', 'Container');
+      expect(
+        screen.getByTestId('placeholder-container-main'),
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('placeholder-container-main')).toHaveAttribute(
+        'data-rendering',
+        'Container',
+      );
     });
 
     it('should have correct rendering identifier', () => {
       render(<Container {...defaultProps} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).toHaveAttribute('id', 'container-rendering-id');
     });
   });
@@ -51,9 +68,11 @@ describe('Container Component', () => {
     it('should render with container wrapper when styles include "container"', () => {
       render(<Container {...propsWithContainer} />);
 
-      const wrapper = screen.getByTestId('placeholder-container-main').closest('.container-wrapper');
+      const wrapper = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.container-wrapper');
       expect(wrapper).toBeInTheDocument();
-      
+
       const container = wrapper?.querySelector('.component.container-default');
       expect(container).toBeInTheDocument();
     });
@@ -61,7 +80,9 @@ describe('Container Component', () => {
     it('should not render container wrapper when styles do not include "container"', () => {
       render(<Container {...defaultProps} />);
 
-      const wrapper = screen.getByTestId('placeholder-container-main').closest('.container-wrapper');
+      const wrapper = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.container-wrapper');
       expect(wrapper).not.toBeInTheDocument();
     });
   });
@@ -70,14 +91,20 @@ describe('Container Component', () => {
     it('should apply background image when BackgroundImage param contains mediaurl', () => {
       render(<Container {...propsWithBackgroundImage} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
-      expect(contentDiv).toHaveStyle('background-image: url(\'/test-image.jpg\')');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
+      expect(contentDiv).toHaveStyle(
+        "background-image: url('/test-image.jpg')",
+      );
     });
 
     it('should not apply background image when BackgroundImage param is empty', () => {
       render(<Container {...defaultProps} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
       expect(contentDiv).not.toHaveAttribute('style');
     });
 
@@ -86,7 +113,7 @@ describe('Container Component', () => {
         ...defaultProps.params,
         BackgroundImage: 'invalid-background-image',
       };
-      
+
       const propsWithInvalidBackground = {
         ...defaultProps,
         params: invalidBackgroundParams,
@@ -98,7 +125,9 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithInvalidBackground} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
       expect(contentDiv).not.toHaveAttribute('style');
     });
   });
@@ -107,14 +136,18 @@ describe('Container Component', () => {
     it('should combine GridParameters and Styles correctly', () => {
       render(<Container {...defaultProps} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).toHaveClass('col-12', 'custom-container-style');
     });
 
     it('should handle empty Styles parameter', () => {
       render(<Container {...propsWithoutStyles} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).toHaveClass('col-12');
       expect(container).not.toHaveClass('custom-container-style');
     });
@@ -122,7 +155,9 @@ describe('Container Component', () => {
     it('should handle empty GridParameters', () => {
       render(<Container {...propsWithoutGridParameters} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).toHaveClass('custom-container-style');
       expect(container).not.toHaveClass('col-12');
     });
@@ -130,7 +165,9 @@ describe('Container Component', () => {
     it('should handle empty RenderingIdentifier', () => {
       render(<Container {...propsWithoutId} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).not.toHaveAttribute('id');
     });
   });
@@ -139,16 +176,20 @@ describe('Container Component', () => {
     it('should render correct DOM structure', () => {
       render(<Container {...defaultProps} />);
 
-      const container = screen.getByTestId('placeholder-container-main').closest('.component.container-default');
+      const container = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component.container-default');
       expect(container).toHaveClass('component', 'container-default');
-      
+
       const contentDiv = container?.querySelector('.component-content');
       expect(contentDiv).toBeInTheDocument();
-      
+
       const rowDiv = contentDiv?.querySelector('.row');
       expect(rowDiv).toBeInTheDocument();
-      
-      const placeholder = rowDiv?.querySelector('[data-testid="placeholder-container-main"]');
+
+      const placeholder = rowDiv?.querySelector(
+        '[data-testid="placeholder-container-main"]',
+      );
       expect(placeholder).toBeInTheDocument();
     });
 
@@ -173,7 +214,9 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithoutParams} />);
 
-      const container = screen.getByTestId('placeholder-container-undefined').closest('div');
+      const container = screen
+        .getByTestId('placeholder-container-undefined')
+        .closest('div');
       expect(container).toBeInTheDocument();
     });
 
@@ -182,7 +225,7 @@ describe('Container Component', () => {
         ...defaultProps.params,
         DynamicPlaceholderId: undefined as any,
       };
-      
+
       const propsWithUndefinedPlaceholder = {
         ...defaultProps,
         params: undefinedPlaceholderParams,
@@ -194,7 +237,9 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithUndefinedPlaceholder} />);
 
-      const container = screen.getByTestId('placeholder-container-undefined').closest('div');
+      const container = screen
+        .getByTestId('placeholder-container-undefined')
+        .closest('div');
       expect(container).toBeInTheDocument();
     });
 
@@ -203,7 +248,7 @@ describe('Container Component', () => {
         ...defaultProps.params,
         BackgroundImage: 'mediaurl="https://example.com/path/to/image.jpg"',
       };
-      
+
       const propsWithComplexBackground = {
         ...defaultProps,
         params: complexBackgroundParams,
@@ -215,8 +260,12 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithComplexBackground} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
-      expect(contentDiv).toHaveStyle('background-image: url(\'https://example.com/path/to/image.jpg\')');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
+      expect(contentDiv).toHaveStyle(
+        "background-image: url('https://example.com/path/to/image.jpg')",
+      );
     });
   });
 
@@ -226,7 +275,7 @@ describe('Container Component', () => {
         ...defaultProps.params,
         BackgroundImage: 'MEDIAURL="/test-image.jpg"',
       };
-      
+
       const propsWithUppercaseMediaUrl = {
         ...defaultProps,
         params: uppercaseMediaUrlParams,
@@ -238,8 +287,12 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithUppercaseMediaUrl} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
-      expect(contentDiv).toHaveStyle('background-image: url(\'/test-image.jpg\')');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
+      expect(contentDiv).toHaveStyle(
+        "background-image: url('/test-image.jpg')",
+      );
     });
 
     it('should extract correct URL from complex mediaurl string', () => {
@@ -247,7 +300,7 @@ describe('Container Component', () => {
         ...defaultProps.params,
         BackgroundImage: 'some text mediaurl="/path/to/image.jpg" more text',
       };
-      
+
       const propsWithComplexMediaUrl = {
         ...defaultProps,
         params: complexMediaUrlParams,
@@ -259,8 +312,12 @@ describe('Container Component', () => {
 
       render(<Container {...propsWithComplexMediaUrl} />);
 
-      const contentDiv = screen.getByTestId('placeholder-container-main').closest('.component-content');
-      expect(contentDiv).toHaveStyle('background-image: url(\'/path/to/image.jpg\')');
+      const contentDiv = screen
+        .getByTestId('placeholder-container-main')
+        .closest('.component-content');
+      expect(contentDiv).toHaveStyle(
+        "background-image: url('/path/to/image.jpg')",
+      );
     });
   });
 });

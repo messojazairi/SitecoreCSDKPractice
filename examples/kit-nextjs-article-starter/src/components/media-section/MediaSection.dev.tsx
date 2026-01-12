@@ -38,7 +38,7 @@ export const Default = ({
 
       return src ? `${src.replace('http://cm/', '/')}` : '';
     },
-    [page]
+    [page],
   );
   useEffect(() => {
     if (!elementRef.current) return;
@@ -90,7 +90,7 @@ export const Default = ({
           ref={videoRef}
           className={cn(
             '@lg:rounded-default inset-0 block h-full w-full rounded-md object-cover',
-            className
+            className,
           )}
           playsInline
           muted
@@ -108,7 +108,7 @@ export const Default = ({
           image={image}
           className={cn(
             '@lg:rounded-default inset-0 block h-full w-full rounded-md object-cover',
-            className
+            className,
           )}
           alt=""
         />

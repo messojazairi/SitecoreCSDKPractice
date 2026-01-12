@@ -19,7 +19,7 @@ export type ContainerBreakpoint = keyof typeof containerBreakpoints;
 export function useContainerQuery(
   containerRef: RefObject<HTMLElement | null>,
   breakpoint: ContainerBreakpoint,
-  direction: 'min' | 'max' = 'min'
+  direction: 'min' | 'max' = 'min',
 ): boolean {
   const [matches, setMatches] = useState(false);
 

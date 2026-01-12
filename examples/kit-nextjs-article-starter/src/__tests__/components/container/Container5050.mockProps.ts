@@ -207,4 +207,3 @@ export const propsWithUndefinedParams = {
   } as ComponentRendering,
   page: mockSitecoreContext.page,
 };
-

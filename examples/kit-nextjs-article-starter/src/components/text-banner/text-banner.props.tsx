@@ -6,7 +6,9 @@ import { Theme } from '@/enumerations/Theme.enum';
 /**
  * Model used for Sitecore Component integration
  */
-export type TextBannerProps = ComponentProps & TextBannerFields & TextBannerParams;
+export type TextBannerProps = ComponentProps &
+  TextBannerFields &
+  TextBannerParams;
 
 export type TextBannerFields = {
   fields: {

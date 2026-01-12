@@ -32,9 +32,17 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     return (
       <nav>
         {isMobile ? (
-          <Accordion type="single" collapsible className="w-full" aria-labelledby={accordionId}>
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            aria-labelledby={accordionId}
+          >
             <AccordionItem value={`item-${header?.jsonValue?.value}`}>
-              <AccordionTrigger className="text-lg font-medium" id={accordionId}>
+              <AccordionTrigger
+                className="text-lg font-medium"
+                id={accordionId}
+              >
                 <Text field={header?.jsonValue} />
               </AccordionTrigger>
               <AccordionContent>

@@ -30,15 +30,20 @@ export const VideoBase: React.FC<VideoComponentFields> = (props) => {
   const videoUrl = video?.value?.href;
   const videoId = extractVideoId(videoUrl);
   const [canUseModal, setCanUseModal] = useState(useModal === '1');
-  const [fallbackImage, setFallbackImage] = useState<string | undefined>('/placeholder.svg');
+  const [fallbackImage, setFallbackImage] = useState<string | undefined>(
+    '/placeholder.svg',
+  );
 
   const componentRef = useRef<HTMLDivElement>(null);
 
-  const btnClasses = cn('absolute inset-0 z-20 flex cursor-pointer items-center justify-center', {
-    'text-black': darkPlayIcon === '1',
-    'text-white': darkPlayIcon !== '1',
-    [`${playButtonClassName}`]: playButtonClassName,
-  });
+  const btnClasses = cn(
+    'absolute inset-0 z-20 flex cursor-pointer items-center justify-center',
+    {
+      'text-black': darkPlayIcon === '1',
+      'text-white': darkPlayIcon !== '1',
+      [`${playButtonClassName}`]: playButtonClassName,
+    },
+  );
   const handlePlay = () => {
     if (canUseModal && !isPageEditing) {
       openModal();
@@ -147,7 +152,11 @@ export const VideoBase: React.FC<VideoComponentFields> = (props) => {
             />
           )}
           {!isPlaying && canUseModal && (
-            <button onClick={handlePlay} className={btnClasses} aria-label="Play video">
+            <button
+              onClick={handlePlay}
+              className={btnClasses}
+              aria-label="Play video"
+            >
               <Icon
                 iconName="play"
                 className={`h-[65px] w-[65px] transition-transform hover:scale-110`}

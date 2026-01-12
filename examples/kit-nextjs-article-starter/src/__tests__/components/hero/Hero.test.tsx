@@ -108,8 +108,10 @@ jest.mock('@/components/ui/button', () => ({
 
 // Mock lucide-react icons
 jest.mock('lucide-react', () => ({
-  Play: () => React.createElement('div', { 'data-testid': 'play-icon' }, 'Play'),
-  Pause: () => React.createElement('div', { 'data-testid': 'pause-icon' }, 'Pause'),
+  Play: () =>
+    React.createElement('div', { 'data-testid': 'play-icon' }, 'Play'),
+  Pause: () =>
+    React.createElement('div', { 'data-testid': 'pause-icon' }, 'Pause'),
 }));
 
 // Mock NoDataFallback
@@ -147,8 +149,8 @@ describe('Hero Component', () => {
       expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
       expect(
         screen.getByText(
-          'Discover amazing features and transform your experience with our innovative solutions.'
-        )
+          'Discover amazing features and transform your experience with our innovative solutions.',
+        ),
       ).toBeInTheDocument();
       expect(screen.getByTestId('hero-button')).toBeInTheDocument();
     });
@@ -237,7 +239,11 @@ describe('Hero Component', () => {
       render(<Hero {...propsWithPrimaryScheme} />);
 
       const button = screen.getByTestId('hero-button');
-      expect(button).toHaveClass('text-primary', 'bg-white', 'hover:bg-gray-100');
+      expect(button).toHaveClass(
+        'text-primary',
+        'bg-white',
+        'hover:bg-gray-100',
+      );
     });
   });
 
@@ -246,7 +252,9 @@ describe('Hero Component', () => {
       render(<Hero {...propsWithoutDescription} />);
 
       expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
-      expect(screen.queryByText(/Discover amazing features/)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Discover amazing features/),
+      ).not.toBeInTheDocument();
       expect(screen.getByTestId('hero-button')).toBeInTheDocument();
     });
 
@@ -262,7 +270,9 @@ describe('Hero Component', () => {
       render(<Hero {...propsWithOnlyTitle} />);
 
       expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
-      expect(screen.queryByText(/Discover amazing features/)).not.toBeInTheDocument();
+      expect(
+        screen.queryByText(/Discover amazing features/),
+      ).not.toBeInTheDocument();
       expect(screen.queryByTestId('hero-button')).not.toBeInTheDocument();
     });
   });
@@ -279,20 +289,44 @@ describe('Hero Component', () => {
       render(<Hero {...defaultProps} />);
 
       const mediaSections = screen.getAllByTestId('media-section');
-      expect(mediaSections[0]).toHaveAttribute('data-video', '/videos/hero-video-1.mp4');
-      expect(mediaSections[1]).toHaveAttribute('data-video', '/videos/hero-video-2.mp4');
-      expect(mediaSections[2]).toHaveAttribute('data-video', '/videos/hero-video-3.mp4');
-      expect(mediaSections[3]).toHaveAttribute('data-video', '/videos/hero-video-4.mp4');
+      expect(mediaSections[0]).toHaveAttribute(
+        'data-video',
+        '/videos/hero-video-1.mp4',
+      );
+      expect(mediaSections[1]).toHaveAttribute(
+        'data-video',
+        '/videos/hero-video-2.mp4',
+      );
+      expect(mediaSections[2]).toHaveAttribute(
+        'data-video',
+        '/videos/hero-video-3.mp4',
+      );
+      expect(mediaSections[3]).toHaveAttribute(
+        'data-video',
+        '/videos/hero-video-4.mp4',
+      );
     });
 
     it('should render media sections with images', () => {
       render(<Hero {...defaultProps} />);
 
       const mediaSections = screen.getAllByTestId('media-section');
-      expect(mediaSections[0]).toHaveAttribute('data-image', '/images/hero-image-1.jpg');
-      expect(mediaSections[1]).toHaveAttribute('data-image', '/images/hero-image-2.jpg');
-      expect(mediaSections[2]).toHaveAttribute('data-image', '/images/hero-image-3.jpg');
-      expect(mediaSections[3]).toHaveAttribute('data-image', '/images/hero-image-4.jpg');
+      expect(mediaSections[0]).toHaveAttribute(
+        'data-image',
+        '/images/hero-image-1.jpg',
+      );
+      expect(mediaSections[1]).toHaveAttribute(
+        'data-image',
+        '/images/hero-image-2.jpg',
+      );
+      expect(mediaSections[2]).toHaveAttribute(
+        'data-image',
+        '/images/hero-image-3.jpg',
+      );
+      expect(mediaSections[3]).toHaveAttribute(
+        'data-image',
+        '/images/hero-image-4.jpg',
+      );
     });
 
     it('should render media sections with correct aspect ratios', () => {
@@ -313,7 +347,9 @@ describe('Hero Component', () => {
       // When no videos, data-video attribute might be undefined or empty
       mediaSections.forEach((section) => {
         const videoAttr = section.getAttribute('data-video');
-        expect(videoAttr === null || videoAttr === '' || videoAttr === 'undefined').toBe(true);
+        expect(
+          videoAttr === null || videoAttr === '' || videoAttr === 'undefined',
+        ).toBe(true);
       });
     });
   });
@@ -336,13 +372,13 @@ describe('Hero Component', () => {
       render(<Hero {...defaultProps} />);
 
       const controlButton = screen.getByTestId('control-button');
-      
+
       // Initially showing pause icon (playing)
       expect(screen.getByTestId('pause-icon')).toBeInTheDocument();
-      
+
       // Click to pause
       fireEvent.click(controlButton);
-      
+
       // Should now show play icon
       expect(screen.getByTestId('play-icon')).toBeInTheDocument();
       expect(screen.queryByTestId('pause-icon')).not.toBeInTheDocument();
@@ -352,7 +388,10 @@ describe('Hero Component', () => {
       render(<Hero {...defaultProps} />);
 
       const controlButton = screen.getByTestId('control-button');
-      expect(controlButton).toHaveAttribute('aria-label', 'Pause Ambient Video');
+      expect(controlButton).toHaveAttribute(
+        'aria-label',
+        'Pause Ambient Video',
+      );
     });
 
     it('should have correct aria-label when paused', () => {
@@ -360,7 +399,7 @@ describe('Hero Component', () => {
 
       const controlButton = screen.getByTestId('control-button');
       fireEvent.click(controlButton);
-      
+
       expect(controlButton).toHaveAttribute('aria-label', 'Play Ambient');
     });
 
@@ -387,7 +426,10 @@ describe('Hero Component', () => {
       mockUseSitecore.mockReturnValue(mockPageDataEditing);
       render(<Hero {...propsEditing} />);
 
-      expect(screen.getByTestId('animated-section')).toHaveAttribute('data-editing', 'true');
+      expect(screen.getByTestId('animated-section')).toHaveAttribute(
+        'data-editing',
+        'true',
+      );
     });
 
     it('should pass editing state to EditableButton', () => {
@@ -422,7 +464,11 @@ describe('Hero Component', () => {
       render(<Hero {...defaultProps} />);
 
       const animatedSection = screen.getByTestId('animated-section');
-      expect(animatedSection).toHaveClass('@lg:flex-row', '@lg:items-center', '@lg:gap-10');
+      expect(animatedSection).toHaveClass(
+        '@lg:flex-row',
+        '@lg:items-center',
+        '@lg:gap-10',
+      );
     });
   });
 
@@ -489,7 +535,7 @@ describe('Hero Component', () => {
         '@lg:leading-[90px]',
         'text-5xl',
         'font-normal',
-        'leading-[60px]'
+        'leading-[60px]',
       );
     });
 
@@ -497,7 +543,12 @@ describe('Hero Component', () => {
       render(<Hero {...defaultProps} />);
 
       const description = screen.getByText(/Discover amazing features/);
-      expect(description).toHaveClass('font-body', 'text-medium', '@md:text-xl', 'text-lg');
+      expect(description).toHaveClass(
+        'font-body',
+        'text-medium',
+        '@md:text-xl',
+        'text-lg',
+      );
     });
 
     it('should apply responsive gap classes to content', () => {
@@ -505,7 +556,7 @@ describe('Hero Component', () => {
 
       // Check for the class by looking at the element's className
       const contentDiv = Array.from(container.querySelectorAll('div')).find(
-        (div) => div.className && div.className.includes('@lg:gap-10')
+        (div) => div.className && div.className.includes('@lg:gap-10'),
       );
       expect(contentDiv).toBeTruthy();
     });
@@ -515,7 +566,7 @@ describe('Hero Component', () => {
 
       // Check for the class by looking at the element's className
       const mediaContainer = Array.from(container.querySelectorAll('div')).find(
-        (div) => div.className && div.className.includes('@lg:min-w-[120%]')
+        (div) => div.className && div.className.includes('@lg:min-w-[120%]'),
       );
       expect(mediaContainer).toBeTruthy();
       if (mediaContainer) {
@@ -553,4 +604,3 @@ describe('Hero Component', () => {
     });
   });
 });
-

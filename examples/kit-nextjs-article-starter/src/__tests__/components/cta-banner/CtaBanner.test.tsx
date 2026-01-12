@@ -59,7 +59,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement(
       Tag,
       { 'data-testid': `text-${tag || 'span'}`, className },
-      field?.value || ''
+      field?.value || '',
     );
   },
   Link: ({ field, editable }: MockLinkProps) => (
@@ -83,7 +83,11 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ children, direction, isPageEditing }: MockAnimatedSectionProps) => (
+  Default: ({
+    children,
+    direction,
+    isPageEditing,
+  }: MockAnimatedSectionProps) => (
     <div
       data-testid="animated-section"
       data-direction={direction}
@@ -137,7 +141,9 @@ describe('CtaBanner Component', () => {
       render(<CtaBanner {...defaultProps} />);
 
       expect(
-        screen.getByText('Join thousands of satisfied customers and transform your business today.')
+        screen.getByText(
+          'Join thousands of satisfied customers and transform your business today.',
+        ),
       ).toBeInTheDocument();
     });
 
@@ -180,14 +186,18 @@ describe('CtaBanner Component', () => {
     });
 
     it('should render with primary color scheme', () => {
-      const { container } = render(<CtaBanner {...propsWithPrimaryColorScheme} />);
+      const { container } = render(
+        <CtaBanner {...propsWithPrimaryColorScheme} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('bg-primary', 'text-primary-foreground');
     });
 
     it('should render with secondary color scheme', () => {
-      const { container } = render(<CtaBanner {...propsWithSecondaryColorScheme} />);
+      const { container } = render(
+        <CtaBanner {...propsWithSecondaryColorScheme} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('bg-secondary', 'text-secondary-foreground');
@@ -399,4 +409,3 @@ describe('CtaBanner Component', () => {
     });
   });
 });
-

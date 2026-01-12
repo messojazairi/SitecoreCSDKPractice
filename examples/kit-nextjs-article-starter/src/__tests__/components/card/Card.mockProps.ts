@@ -7,7 +7,8 @@ export const mockHeadingField: Field<string> = {
 };
 
 export const mockDescriptionField: Field<string> = {
-  value: '<p>This is a card description with <strong>rich text</strong> content.</p>',
+  value:
+    '<p>This is a card description with <strong>rich text</strong> content.</p>',
 };
 
 export const mockEmptyHeadingField: Field<string> = {
@@ -166,4 +167,3 @@ export const propsWithoutClassName = {
   className: undefined,
   editable: false,
 };
-

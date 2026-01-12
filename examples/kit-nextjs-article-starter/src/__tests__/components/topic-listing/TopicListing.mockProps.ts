@@ -1,5 +1,8 @@
 import { Field, LinkField } from '@sitecore-content-sdk/nextjs';
-import { TopicListingProps, TopicItemProps } from '@/components/topic-listing/topic-listing.props';
+import {
+  TopicListingProps,
+  TopicItemProps,
+} from '@/components/topic-listing/topic-listing.props';
 
 // Mock topic items
 export const mockTopicItem1: TopicItemProps = {
@@ -70,7 +73,12 @@ export const defaultProps: TopicListingProps = {
           jsonValue: mockTitle,
         },
         children: {
-          results: [mockTopicItem1, mockTopicItem2, mockTopicItem3, mockTopicItem4],
+          results: [
+            mockTopicItem1,
+            mockTopicItem2,
+            mockTopicItem3,
+            mockTopicItem4,
+          ],
         },
       },
     },
@@ -235,4 +243,3 @@ export const propsWithMixedTopics: TopicListingProps = {
   },
   rendering: { componentName: 'TopicListing' } as any,
 };
-

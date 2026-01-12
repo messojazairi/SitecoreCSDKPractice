@@ -20,10 +20,18 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
   Link: ({ field, children, className }: any) => (
-    <a href={field?.value?.href} className={className} data-testid="article-link">
+    <a
+      href={field?.value?.href}
+      className={className}
+      data-testid="article-link"
+    >
       {children}
     </a>
   ),
@@ -48,7 +56,10 @@ const originalConsoleError = console.error;
 beforeAll(() => {
   console.error = (...args: unknown[]) => {
     const firstArg = args[0];
-    if (typeof firstArg === 'string' && firstArg.includes('Received `true` for a non-boolean attribute `fill`')) {
+    if (
+      typeof firstArg === 'string' &&
+      firstArg.includes('Received `true` for a non-boolean attribute `fill`')
+    ) {
       return;
     }
     originalConsoleError(...args);
@@ -76,14 +87,18 @@ describe('ArticleListing Component', () => {
       render(<ArticleListing {...defaultProps} />);
 
       expect(screen.getByText('Latest Articles')).toBeInTheDocument();
-      expect(screen.getByText('Discover our latest insights and tutorials')).toBeInTheDocument();
+      expect(
+        screen.getByText('Discover our latest insights and tutorials'),
+      ).toBeInTheDocument();
       expect(screen.getByText('View All Articles')).toBeInTheDocument();
     });
 
     it('should render component with data-component attribute', () => {
       const { container } = render(<ArticleListing {...defaultProps} />);
 
-      const component = container.querySelector('[data-component="ArticleListing"]');
+      const component = container.querySelector(
+        '[data-component="ArticleListing"]',
+      );
       expect(component).toBeInTheDocument();
     });
 
@@ -97,7 +112,9 @@ describe('ArticleListing Component', () => {
     it('should render with aria-label', () => {
       const { container } = render(<ArticleListing {...defaultProps} />);
 
-      const component = container.querySelector('[aria-label="Article listing section"]');
+      const component = container.querySelector(
+        '[aria-label="Article listing section"]',
+      );
       expect(component).toBeInTheDocument();
     });
   });
@@ -106,26 +123,34 @@ describe('ArticleListing Component', () => {
     it('should render first 2 articles in featured layout', () => {
       render(<ArticleListing {...defaultProps} />);
 
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
-      expect(screen.getByText('Advanced TypeScript Patterns')).toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Advanced TypeScript Patterns'),
+      ).toBeInTheDocument();
     });
 
     it('should render featured article images', () => {
       render(<ArticleListing {...defaultProps} />);
 
       // Images use article title as alt text
-      expect(screen.getByAltText('Introduction to React Hooks')).toBeInTheDocument();
-      expect(screen.getByAltText('Advanced TypeScript Patterns')).toBeInTheDocument();
+      expect(
+        screen.getByAltText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByAltText('Advanced TypeScript Patterns'),
+      ).toBeInTheDocument();
     });
 
     it('should render featured article summaries', () => {
       render(<ArticleListing {...defaultProps} />);
 
       expect(
-        screen.getByText(/Learn the fundamentals of React Hooks/)
+        screen.getByText(/Learn the fundamentals of React Hooks/),
       ).toBeInTheDocument();
       expect(
-        screen.getByText(/Explore advanced TypeScript patterns/)
+        screen.getByText(/Explore advanced TypeScript patterns/),
       ).toBeInTheDocument();
     });
 
@@ -209,7 +234,9 @@ describe('ArticleListing Component', () => {
       render(<ArticleListing {...propsWithoutTitle} />);
 
       expect(screen.queryByText('Latest Articles')).not.toBeInTheDocument();
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
     });
 
     it('should render without description', () => {
@@ -217,7 +244,7 @@ describe('ArticleListing Component', () => {
 
       expect(screen.getByText('Latest Articles')).toBeInTheDocument();
       expect(
-        screen.queryByText('Discover our latest insights and tutorials')
+        screen.queryByText('Discover our latest insights and tutorials'),
       ).not.toBeInTheDocument();
     });
 
@@ -230,23 +257,35 @@ describe('ArticleListing Component', () => {
     it('should render with only 2 articles (all featured)', () => {
       render(<ArticleListing {...propsTwoArticles} />);
 
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
-      expect(screen.getByText('Advanced TypeScript Patterns')).toBeInTheDocument();
-      expect(screen.queryByText('CSS Grid Layout Guide')).not.toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Advanced TypeScript Patterns'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('CSS Grid Layout Guide'),
+      ).not.toBeInTheDocument();
     });
 
     it('should render with only 1 article', () => {
       render(<ArticleListing {...propsOneArticle} />);
 
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
-      expect(screen.queryByText('Advanced TypeScript Patterns')).not.toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('Advanced TypeScript Patterns'),
+      ).not.toBeInTheDocument();
     });
 
     it('should render with no articles', () => {
       render(<ArticleListing {...propsNoArticles} />);
 
       expect(screen.getByText('Latest Articles')).toBeInTheDocument();
-      expect(screen.queryByText('Introduction to React Hooks')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('Introduction to React Hooks'),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -292,7 +331,9 @@ describe('ArticleListing Component', () => {
 
       // Images should render but not be clickable in editing mode
       // Images use article title as alt text
-      expect(screen.getByAltText('Introduction to React Hooks')).toBeInTheDocument();
+      expect(
+        screen.getByAltText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
     });
 
     it('should render titles without links in editing mode for featured articles', () => {
@@ -328,8 +369,12 @@ describe('ArticleListing Component', () => {
       render(<ArticleListing {...defaultProps} />);
 
       // Verify all 4 articles are rendered
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
-      expect(screen.getByText('Advanced TypeScript Patterns')).toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Advanced TypeScript Patterns'),
+      ).toBeInTheDocument();
       expect(screen.getByText('CSS Grid Layout Guide')).toBeInTheDocument();
       expect(screen.getByText('Next.js Performance Tips')).toBeInTheDocument();
     });
@@ -358,7 +403,9 @@ describe('ArticleListing Component', () => {
         },
       };
 
-      const { container } = render(<ArticleListing {...propsNoAuthor as any} />);
+      const { container } = render(
+        <ArticleListing {...(propsNoAuthor as any)} />,
+      );
       expect(container).toBeInTheDocument();
     });
   });
@@ -398,7 +445,9 @@ describe('ArticleListing Component', () => {
     it('should apply correct description classes', () => {
       render(<ArticleListing {...defaultProps} />);
 
-      const description = screen.getByText('Discover our latest insights and tutorials');
+      const description = screen.getByText(
+        'Discover our latest insights and tutorials',
+      );
       expect(description.tagName).toBe('P');
       expect(description).toHaveClass('text-muted-foreground', 'font-body');
     });
@@ -457,7 +506,9 @@ describe('ArticleListing Component', () => {
         page: defaultProps.page,
       };
 
-      const { container } = render(<ArticleListing {...propsUndefinedFields} />);
+      const { container } = render(
+        <ArticleListing {...propsUndefinedFields} />,
+      );
       expect(container).toBeInTheDocument();
     });
 
@@ -476,8 +527,9 @@ describe('ArticleListing Component', () => {
       };
 
       render(<ArticleListing {...propsNoUrl} />);
-      expect(screen.getByText('Introduction to React Hooks')).toBeInTheDocument();
+      expect(
+        screen.getByText('Introduction to React Hooks'),
+      ).toBeInTheDocument();
     });
   });
 });
-

@@ -24,7 +24,8 @@ export const mockTitleField: Field<string> = {
 };
 
 export const mockDescriptionField: Field<string> = {
-  value: 'Discover amazing features and transform your experience with our innovative solutions.',
+  value:
+    'Discover amazing features and transform your experience with our innovative solutions.',
 };
 
 // Mock link field
@@ -287,4 +288,3 @@ export const propsEditing: HeroProps = {
   page: mockPageDataEditing.page as any,
   isPageEditing: true,
 };
-

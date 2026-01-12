@@ -119,4 +119,3 @@ export const propsWithMultipleStyles: RichTextBlockProps = {
   rendering: mockRendering,
   params: mockParamsWithMultipleStyles,
 };
-

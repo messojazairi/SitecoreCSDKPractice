@@ -131,7 +131,9 @@ describe('PageHeader Component', () => {
 
       expect(screen.getByText('Custom Header Title')).toBeInTheDocument();
       expect(screen.getByTestId('video-component')).toBeInTheDocument();
-      expect(screen.getByText('Trusted by industry leaders')).toBeInTheDocument();
+      expect(
+        screen.getByText('Trusted by industry leaders'),
+      ).toBeInTheDocument();
     });
 
     it('should render as section element', () => {
@@ -153,7 +155,7 @@ describe('PageHeader Component', () => {
       const { container } = render(<PageHeader {...defaultProps} />);
 
       expect(container.textContent).toContain(
-        'Discover innovative solutions that transform your business'
+        'Discover innovative solutions that transform your business',
       );
     });
 
@@ -169,7 +171,7 @@ describe('PageHeader Component', () => {
 
       const images = container.querySelectorAll('img');
       const logos = Array.from(images).filter((img) =>
-        img.getAttribute('alt')?.includes('Partner Logo')
+        img.getAttribute('alt')?.includes('Partner Logo'),
       );
       expect(logos.length).toBe(3);
     });
@@ -214,7 +216,9 @@ describe('PageHeader Component', () => {
     });
 
     it('should apply secondary color scheme', () => {
-      const { container } = render(<PageHeader {...propsSecondaryColorScheme} />);
+      const { container } = render(
+        <PageHeader {...propsSecondaryColorScheme} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('bg-secondary', 'text-secondary-foreground');
@@ -267,7 +271,9 @@ describe('PageHeader Component', () => {
       render(<PageHeader {...propsWithoutLogos} />);
 
       expect(screen.getByText('Custom Header Title')).toBeInTheDocument();
-      expect(screen.queryByText('Trusted by industry leaders')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('Trusted by industry leaders'),
+      ).not.toBeInTheDocument();
     });
 
     it('should render without subtitle', () => {
@@ -275,7 +281,9 @@ describe('PageHeader Component', () => {
 
       expect(screen.getByText('Custom Header Title')).toBeInTheDocument();
       const { container } = render(<PageHeader {...propsWithoutSubtitle} />);
-      expect(container.textContent).not.toContain('Discover innovative solutions');
+      expect(container.textContent).not.toContain(
+        'Discover innovative solutions',
+      );
     });
   });
 
@@ -305,14 +313,16 @@ describe('PageHeader Component', () => {
     it('should render logo text', () => {
       render(<PageHeader {...defaultProps} />);
 
-      expect(screen.getByText('Trusted by industry leaders')).toBeInTheDocument();
+      expect(
+        screen.getByText('Trusted by industry leaders'),
+      ).toBeInTheDocument();
     });
 
     it('should render all partner logos', () => {
       const { container } = render(<PageHeader {...defaultProps} />);
 
-      const logoImages = Array.from(container.querySelectorAll('img')).filter((img) =>
-        img.getAttribute('alt')?.includes('Partner Logo')
+      const logoImages = Array.from(container.querySelectorAll('img')).filter(
+        (img) => img.getAttribute('alt')?.includes('Partner Logo'),
       );
 
       expect(logoImages).toHaveLength(3);
@@ -364,8 +374,9 @@ describe('PageHeader Component', () => {
 
       render(<PageHeader {...defaultProps} />);
 
-      expect(matchMediaMock).toHaveBeenCalledWith('(prefers-reduced-motion: reduce)');
+      expect(matchMediaMock).toHaveBeenCalledWith(
+        '(prefers-reduced-motion: reduce)',
+      );
     });
   });
 });
-

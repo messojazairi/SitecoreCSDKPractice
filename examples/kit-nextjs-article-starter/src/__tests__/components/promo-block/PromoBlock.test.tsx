@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Default as PromoBlock, ButtonLink, TextLink } from '@/components/promo-block/PromoBlock';
+import {
+  Default as PromoBlock,
+  ButtonLink,
+  TextLink,
+} from '@/components/promo-block/PromoBlock';
 import {
   defaultProps,
   propsImageRight,
@@ -42,7 +46,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     }),
   Link: ({ field }: any) => {
     if (!field?.value?.href) return null;
-    return React.createElement('a', { href: field.value.href }, field.value.text);
+    return React.createElement(
+      'a',
+      { href: field.value.href },
+      field.value.text,
+    );
   },
 }));
 
@@ -78,7 +86,11 @@ jest.mock('@/components/ui/button', () => ({
         ...props,
       } as any);
     }
-    return React.createElement('button', { 'data-testid': 'promo-button', className, ...props }, children);
+    return React.createElement(
+      'button',
+      { 'data-testid': 'promo-button', className, ...props },
+      children,
+    );
   },
 }));
 
@@ -120,7 +132,9 @@ describe('PromoBlock Component', () => {
     it('should render description as RichText', () => {
       const { container } = render(<PromoBlock {...defaultProps} />);
 
-      expect(container.textContent).toContain('Experience the finest craftsmanship');
+      expect(container.textContent).toContain(
+        'Experience the finest craftsmanship',
+      );
     });
 
     it('should render image', () => {
@@ -144,9 +158,11 @@ describe('PromoBlock Component', () => {
     it('should apply image-left orientation classes', () => {
       const { container } = render(<PromoBlock {...defaultProps} />);
 
-      const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClasses = imageContainer?.className.includes('col-start-1') &&
+      const imageContainer = container.querySelectorAll(
+        '[data-testid="image-wrapper"]',
+      )[0]?.parentElement;
+      const hasExpectedClasses =
+        imageContainer?.className.includes('col-start-1') &&
         imageContainer?.className.includes('sm:col-end-13');
       expect(hasExpectedClasses).toBe(true);
     });
@@ -156,7 +172,8 @@ describe('PromoBlock Component', () => {
 
       const flexComponents = screen.getAllByTestId('flex');
       const copyFlex = flexComponents[0];
-      const hasExpectedClasses = copyFlex.className.includes('px-4') &&
+      const hasExpectedClasses =
+        copyFlex.className.includes('px-4') &&
         copyFlex.className.includes('pb-6');
       expect(hasExpectedClasses).toBe(true);
     });
@@ -166,9 +183,11 @@ describe('PromoBlock Component', () => {
     it('should apply image-right orientation classes', () => {
       const { container } = render(<PromoBlock {...propsImageRight} />);
 
-      const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClass = imageContainer?.className.includes('col-start-1') &&
+      const imageContainer = container.querySelectorAll(
+        '[data-testid="image-wrapper"]',
+      )[0]?.parentElement;
+      const hasExpectedClass =
+        imageContainer?.className.includes('col-start-1') &&
         imageContainer?.className.includes('sm:col-end-13');
       expect(hasExpectedClass).toBe(true);
     });
@@ -178,7 +197,8 @@ describe('PromoBlock Component', () => {
 
       const flexComponents = screen.getAllByTestId('flex');
       const copyFlex = flexComponents[0];
-      const hasExpectedClass = copyFlex.className.includes('col-end-1') &&
+      const hasExpectedClass =
+        copyFlex.className.includes('col-end-1') &&
         copyFlex.className.includes('sm:col-end-13');
       expect(hasExpectedClass).toBe(true);
     });
@@ -189,7 +209,11 @@ describe('PromoBlock Component', () => {
       render(<PromoBlock {...defaultProps} />);
 
       const imageWrapper = screen.getByTestId('image-wrapper');
-      expect(imageWrapper).toHaveClass('aspect-video', 'object-cover', 'sm:aspect-[4/3]');
+      expect(imageWrapper).toHaveClass(
+        'aspect-video',
+        'object-cover',
+        'sm:aspect-[4/3]',
+      );
     });
 
     it('should apply default variation copy classes', () => {
@@ -224,7 +248,8 @@ describe('PromoBlock Component', () => {
 
       const flexComponents = screen.getAllByTestId('flex');
       const copyFlex = flexComponents[0];
-      const hasExpectedClasses = copyFlex.className.includes('text-right') &&
+      const hasExpectedClasses =
+        copyFlex.className.includes('text-right') &&
         copyFlex.className.includes('col-start-1') &&
         copyFlex.className.includes('col-end-1');
       expect(hasExpectedClasses).toBe(true);
@@ -259,9 +284,11 @@ describe('PromoBlock Component', () => {
     it('should default to image-left when orientation not specified', () => {
       const { container } = render(<PromoBlock {...propsWithoutParams} />);
 
-      const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClass = imageContainer?.className.includes('col-start-1') &&
+      const imageContainer = container.querySelectorAll(
+        '[data-testid="image-wrapper"]',
+      )[0]?.parentElement;
+      const hasExpectedClass =
+        imageContainer?.className.includes('col-start-1') &&
         imageContainer?.className.includes('sm:col-end-13');
       expect(hasExpectedClass).toBe(true);
     });
@@ -326,8 +353,12 @@ describe('PromoBlock Component', () => {
   describe('Component variants', () => {
     describe('ButtonLink variant', () => {
       it('should render same as Default', () => {
-        const { container: defaultContainer } = render(<PromoBlock {...defaultProps} />);
-        const { container: buttonLinkContainer } = render(<ButtonLink {...defaultProps} />);
+        const { container: defaultContainer } = render(
+          <PromoBlock {...defaultProps} />,
+        );
+        const { container: buttonLinkContainer } = render(
+          <ButtonLink {...defaultProps} />,
+        );
 
         expect(defaultContainer.innerHTML).toBe(buttonLinkContainer.innerHTML);
       });
@@ -399,4 +430,3 @@ describe('PromoBlock Component', () => {
     });
   });
 });
-

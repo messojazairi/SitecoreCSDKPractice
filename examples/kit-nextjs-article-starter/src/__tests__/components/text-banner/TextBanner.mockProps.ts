@@ -19,7 +19,8 @@ export const mockHeading: Field<string> = {
 };
 
 export const mockDescription: Field<string> = {
-  value: 'Discover amazing features and benefits that will transform your experience',
+  value:
+    'Discover amazing features and benefits that will transform your experience',
 };
 
 export const mockLink: LinkField = {
@@ -249,4 +250,3 @@ export const propsInEditingMode: TextBannerProps = {
   rendering: { componentName: 'TextBanner' } as any,
   page: mockPageEditing as any,
 };
-

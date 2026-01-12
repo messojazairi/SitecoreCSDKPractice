@@ -7,7 +7,10 @@ export function useMediaQuery(query: string): boolean {
 
   useEffect(() => {
     // Default to true if prefers-reduced-motion is the query and we're in SSR
-    if (typeof window === 'undefined' && query === '(prefers-reduced-motion: reduce)') {
+    if (
+      typeof window === 'undefined' &&
+      query === '(prefers-reduced-motion: reduce)'
+    ) {
       setMatches(true);
       return;
     }

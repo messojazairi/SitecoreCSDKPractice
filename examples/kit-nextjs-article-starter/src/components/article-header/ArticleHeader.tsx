@@ -138,7 +138,9 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
           transform: prefersReducedMotion
             ? 'none'
             : `translate(${mousePosition.x * -30}px, ${mousePosition.y * -30}px)`,
-          transition: prefersReducedMotion ? 'none' : 'transform 200ms ease-out',
+          transition: prefersReducedMotion
+            ? 'none'
+            : 'transform 200ms ease-out',
         }
       : {};
 
@@ -175,7 +177,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
               setCopySuccess(true);
 
               if (copyNotificationRef.current) {
-                copyNotificationRef.current.textContent = 'Link copied to clipboard';
+                copyNotificationRef.current.textContent =
+                  'Link copied to clipboard';
               }
             })
             .catch((err) => {
@@ -196,7 +199,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       {
         title: 'Share on Facebook',
         icon: (
-          <Facebook className="h-full w-full text-white dark:text-neutral-300" aria-hidden="true" />
+          <Facebook
+            className="h-full w-full text-white dark:text-neutral-300"
+            aria-hidden="true"
+          />
         ),
         href: '#',
         onClick: () => handleShare('facebook'),
@@ -205,7 +211,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       {
         title: 'Share on Twitter',
         icon: (
-          <Twitter className="h-full w-full text-white dark:text-neutral-300" aria-hidden="true" />
+          <Twitter
+            className="h-full w-full text-white dark:text-neutral-300"
+            aria-hidden="true"
+          />
         ),
         href: '#',
         onClick: () => handleShare('twitter'),
@@ -214,7 +223,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       {
         title: 'Share on LinkedIn',
         icon: (
-          <Linkedin className="h-full w-full text-white dark:text-neutral-300" aria-hidden="true" />
+          <Linkedin
+            className="h-full w-full text-white dark:text-neutral-300"
+            aria-hidden="true"
+          />
         ),
         href: '#',
         onClick: () => handleShare('linkedin'),
@@ -223,7 +235,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       {
         title: 'Share via Email',
         icon: (
-          <Mail className="h-full w-full text-white dark:text-neutral-300" aria-hidden="true" />
+          <Mail
+            className="h-full w-full text-white dark:text-neutral-300"
+            aria-hidden="true"
+          />
         ),
         href: '#',
         onClick: () => handleShare('email'),
@@ -232,9 +247,15 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       {
         title: 'Copy Link',
         icon: copySuccess ? (
-          <Check className="h-full w-full text-green-500 dark:text-green-400" aria-hidden="true" />
+          <Check
+            className="h-full w-full text-green-500 dark:text-green-400"
+            aria-hidden="true"
+          />
         ) : (
-          <Link className="h-full w-full text-white dark:text-neutral-300" aria-hidden="true" />
+          <Link
+            className="h-full w-full text-white dark:text-neutral-300"
+            aria-hidden="true"
+          />
         ),
         href: '#',
         onClick: () => handleShare('copy'),
@@ -245,7 +266,9 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
     return (
       <>
         <header
-          className={cn('@container article-header relative mb-[86px] overflow-hidden')}
+          className={cn(
+            '@container article-header relative mb-[86px] overflow-hidden',
+          )}
           ref={headerRef}
         >
           <div className="relative z-0 h-[auto] overflow-hidden bg-black">
@@ -292,7 +315,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                       role="alert"
                     >
                       <span className="block sm:inline">
-                        Dictionary Entry is Missing for {dictionaryKeys.ARTICLE_HEADER_BACKTONEWS}
+                        Dictionary Entry is Missing for{' '}
+                        {dictionaryKeys.ARTICLE_HEADER_BACKTONEWS}
                       </span>
                     </div>
                   ) : (
@@ -323,9 +347,12 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                         className="@md:inline-block block text-pretty"
                       />
                     )}
-                    {((pageReadTime?.jsonValue?.value && pageDisplayDate?.jsonValue?.value) ||
+                    {((pageReadTime?.jsonValue?.value &&
+                      pageDisplayDate?.jsonValue?.value) ||
                       isPageEditing) && (
-                      <span className="@md:inline-block hidden text-pretty">•</span>
+                      <span className="@md:inline-block hidden text-pretty">
+                        •
+                      </span>
                     )}
                     {pageDisplayDate?.jsonValue?.value && (
                       <DateField
@@ -347,20 +374,28 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                       </p>
                       <Avatar>
                         <AvatarImage
-                          src={pageAuthor?.jsonValue?.fields?.personProfileImage?.value?.src}
+                          src={
+                            pageAuthor?.jsonValue?.fields?.personProfileImage
+                              ?.value?.src
+                          }
                           alt={`${pageAuthor?.jsonValue?.fields?.personFirstName?.value} ${pageAuthor?.jsonValue?.fields?.personLastName?.value}`}
                         />
                         <AvatarFallback>{`${pageAuthor?.jsonValue?.fields?.personFirstName?.value} ${pageAuthor?.jsonValue?.fields?.personLastName?.value}`}</AvatarFallback>
                       </Avatar>
                       <div className="relative">
                         <p className="text-pretty font-medium text-white">
-                          {pageAuthor?.jsonValue?.fields?.personFirstName?.value}{' '}
+                          {
+                            pageAuthor?.jsonValue?.fields?.personFirstName
+                              ?.value
+                          }{' '}
                           {pageAuthor?.jsonValue?.fields?.personLastName?.value}
                         </p>
                         {pageAuthor?.jsonValue?.fields?.personJobTitle && (
                           <Text
                             tag={'p'}
-                            field={pageAuthor?.jsonValue?.fields?.personJobTitle}
+                            field={
+                              pageAuthor?.jsonValue?.fields?.personJobTitle
+                            }
                             className="text-pretty text-sm text-white"
                           />
                         )}
@@ -401,7 +436,11 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
             </div>
           </div>
           {/* Screen reader notification */}
-          <div ref={copyNotificationRef} className="sr-only" aria-live="polite"></div>
+          <div
+            ref={copyNotificationRef}
+            className="sr-only"
+            aria-live="polite"
+          ></div>
         </header>
         <Toaster />
       </>

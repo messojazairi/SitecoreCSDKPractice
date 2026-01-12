@@ -60,11 +60,13 @@ export const Default: React.FC<ArticleListingProps> = ({
   isPageEditing: propIsEditing,
   page,
 }) => {
-  const { titleOptional, descriptionOptional, linkOptional, featuredContent } = fields || {};
+  const { titleOptional, descriptionOptional, linkOptional, featuredContent } =
+    fields || {};
   const contextIsEditing = page.mode.isEditing;
 
   // Use the prop value if provided, otherwise fall back to the context value
-  const isPageEditing = propIsEditing !== undefined ? propIsEditing : contextIsEditing;
+  const isPageEditing =
+    propIsEditing !== undefined ? propIsEditing : contextIsEditing;
 
   // Transform the featuredContent array into the format needed for rendering
   const articles: TransformedArticle[] = React.useMemo(() => {
@@ -75,10 +77,12 @@ export const Default: React.FC<ArticleListingProps> = ({
       image: article.fields.pageThumbnail?.value?.src || '',
       title: article.fields.pageTitle?.value || '',
       summary: article.fields.pageSummary?.value || '',
-      author: `${article.fields.taxAuthor?.fields?.personFirstName?.value || ''} ${
-        article.fields.taxAuthor?.fields?.personLastName?.value || ''
-      }`.trim(),
-      authorImage: article.fields.taxAuthor?.fields?.personProfileImage?.value?.src || '',
+      author:
+        `${article.fields.taxAuthor?.fields?.personFirstName?.value || ''} ${
+          article.fields.taxAuthor?.fields?.personLastName?.value || ''
+        }`.trim(),
+      authorImage:
+        article.fields.taxAuthor?.fields?.personProfileImage?.value?.src || '',
       readTime: article.fields.pageReadTime?.value || '',
     }));
   }, [featuredContent]);
@@ -157,7 +161,9 @@ export const Default: React.FC<ArticleListingProps> = ({
                     onClick={() => (window.location.href = article.link)}
                     role="button"
                     tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && (window.location.href = article.link)}
+                    onKeyDown={(e) =>
+                      e.key === 'Enter' && (window.location.href = article.link)
+                    }
                   >
                     <Image
                       src={article.image}
@@ -173,7 +179,10 @@ export const Default: React.FC<ArticleListingProps> = ({
                       {article.title}
                     </h3>
                   ) : (
-                    <Link field={{ value: { href: article.link } }} className="block">
+                    <Link
+                      field={{ value: { href: article.link } }}
+                      className="block"
+                    >
                       <h3 className="font-heading text-card-foreground text-3xl font-medium leading-[1.30] -tracking-[0.9px] decoration-1 underline-offset-4 group-hover/article:underline group-focus/article:underline">
                         {article.title}
                       </h3>
@@ -211,7 +220,9 @@ export const Default: React.FC<ArticleListingProps> = ({
                       {article.author && article.readTime && (
                         <span className="text-accent text-sm">•</span>
                       )}
-                      <p className="text-accent-foreground text-sm">{article.readTime}</p>
+                      <p className="text-accent-foreground text-sm">
+                        {article.readTime}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -232,7 +243,10 @@ export const Default: React.FC<ArticleListingProps> = ({
                       {article.title}
                     </h3>
                   ) : (
-                    <Link field={{ value: { href: article.link } }} className="block">
+                    <Link
+                      field={{ value: { href: article.link } }}
+                      className="block"
+                    >
                       <h3 className="font-heading text-card-foreground text-2xl font-medium leading-normal tracking-tighter decoration-1 underline-offset-4 group-hover/article:underline group-focus/article:underline">
                         {article.title}
                       </h3>
@@ -268,7 +282,9 @@ export const Default: React.FC<ArticleListingProps> = ({
                     {article.author && article.readTime && (
                       <span className="text-accent text-sm">•</span>
                     )}
-                    <p className="text-accent-foreground text-sm">{article.readTime}</p>
+                    <p className="text-accent-foreground text-sm">
+                      {article.readTime}
+                    </p>
                   </div>
                 </div>
               </div>

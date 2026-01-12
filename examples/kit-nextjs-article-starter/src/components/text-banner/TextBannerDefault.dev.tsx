@@ -10,7 +10,9 @@ export const Default: React.FC<TextBannerProps> = (props) => {
 
   const { heading, description, link, image } = fields ?? {};
   const { excludeTopMargin } = params ?? {};
-  const inline = image?.value?.src ? { '--bg-img': `url(${image?.value.src})` } : {};
+  const inline = image?.value?.src
+    ? { '--bg-img': `url(${image?.value.src})` }
+    : {};
   if (fields) {
     return (
       <section
@@ -24,7 +26,7 @@ export const Default: React.FC<TextBannerProps> = (props) => {
           {
             'mt-0': excludeTopMargin,
             [props?.params?.styles]: props?.params?.styles,
-          }
+          },
         )}
         style={inline as React.CSSProperties}
       >

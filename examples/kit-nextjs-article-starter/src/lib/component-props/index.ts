@@ -1,4 +1,8 @@
-import { ComponentParams, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
+import {
+  ComponentParams,
+  ComponentRendering,
+  Page,
+} from '@sitecore-content-sdk/nextjs';
 
 /**
  * Shared component props

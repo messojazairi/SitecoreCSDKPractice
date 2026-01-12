@@ -1,5 +1,9 @@
 import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
-import { LogoTabsProps, LogoItemProps, LogoTabContent } from '@/components/logo-tabs/logo-tabs.props';
+import {
+  LogoTabsProps,
+  LogoItemProps,
+  LogoTabContent,
+} from '@/components/logo-tabs/logo-tabs.props';
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
@@ -197,7 +201,12 @@ export const mockFields = {
         results: [mockLogoItem1, mockLogoItem2, mockLogoItem3, mockLogoItem4],
       },
       logoTabContent: {
-        results: [mockTabContent1, mockTabContent2, mockTabContent3, mockTabContent4],
+        results: [
+          mockTabContent1,
+          mockTabContent2,
+          mockTabContent3,
+          mockTabContent4,
+        ],
       },
     },
   },
@@ -366,4 +375,3 @@ export const propsWithoutFields: LogoTabsProps = {
   isPageEditing: false,
   page: mockPageData.page as any,
 };
-

@@ -29,6 +29,10 @@ export const TopicItem: React.FC<TopicItemProps> = ({ link }) => {
   }
 
   return (
-    <ButtonBase buttonLink={link.jsonValue} variant={ButtonVariants.TOPIC} isPageEditing={false} />
+    <ButtonBase
+      buttonLink={link.jsonValue}
+      variant={ButtonVariants.TOPIC}
+      isPageEditing={false}
+    />
   );
 };

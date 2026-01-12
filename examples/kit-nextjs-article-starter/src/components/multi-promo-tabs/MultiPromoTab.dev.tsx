@@ -24,7 +24,7 @@ const Default = (props: MultiPromoTabsFields) => {
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     url: string,
-    external = false
+    external = false,
   ) => {
     // Only prevent default and handle navigation when not in edit mode and URL exists
     if (!isEditMode && url !== '') {
@@ -89,7 +89,7 @@ const Default = (props: MultiPromoTabsFields) => {
           handleClick(
             e,
             link1?.jsonValue?.value?.href || '',
-            link1?.jsonValue?.value?.target == '_blank'
+            link1?.jsonValue?.value?.target == '_blank',
           )
         }
       >
@@ -118,7 +118,7 @@ const Default = (props: MultiPromoTabsFields) => {
           handleClick(
             e,
             link2?.jsonValue?.value?.href || '',
-            link2?.jsonValue?.value?.target == '_blank'
+            link2?.jsonValue?.value?.target == '_blank',
           )
         }
       >

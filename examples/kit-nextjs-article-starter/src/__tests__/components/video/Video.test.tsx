@@ -73,9 +73,23 @@ jest.mock('@/components/image/ImageWrapper.dev', () => ({
 
 // Mock VideoPlayer
 jest.mock('@/components/video/VideoPlayer.dev', () => ({
-  VideoPlayer: ({ videoUrl, isPlaying, onPlay, fullScreen, btnClasses }: any) => (
-    <div data-testid="video-player" data-is-playing={isPlaying} data-full-screen={fullScreen}>
-      <button onClick={onPlay} className={btnClasses} data-testid="video-play-button">
+  VideoPlayer: ({
+    videoUrl,
+    isPlaying,
+    onPlay,
+    fullScreen,
+    btnClasses,
+  }: any) => (
+    <div
+      data-testid="video-player"
+      data-is-playing={isPlaying}
+      data-full-screen={fullScreen}
+    >
+      <button
+        onClick={onPlay}
+        className={btnClasses}
+        data-testid="video-play-button"
+      >
         Play Video
       </button>
       <div data-testid="video-url">{videoUrl}</div>
@@ -98,7 +112,14 @@ jest.mock('@/components/video/VideoModal.dev', () => ({
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, className, whileHover, initial, variants, ...props }: any) => (
+    div: ({
+      children,
+      className,
+      whileHover,
+      initial,
+      variants,
+      ...props
+    }: any) => (
       <div className={className} data-testid="motion-div" {...props}>
         {children}
       </div>
@@ -140,7 +161,9 @@ jest.mock('@/lib/utils', () => ({
       .join(' ')
       .trim();
   },
-  getYouTubeThumbnail: jest.fn(() => 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg'),
+  getYouTubeThumbnail: jest.fn(
+    () => 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+  ),
 }));
 
 // Mock NoDataFallback
@@ -201,7 +224,12 @@ describe('Video Component', () => {
 
       const mainContainer = container.querySelector('.max-w-screens-2xl');
       expect(mainContainer).toBeInTheDocument();
-      expect(mainContainer).toHaveClass('relative', 'z-10', 'mx-auto', 'overflow-hidden');
+      expect(mainContainer).toHaveClass(
+        'relative',
+        'z-10',
+        'mx-auto',
+        'overflow-hidden',
+      );
     });
 
     it('should render aspect video container', () => {
@@ -243,7 +271,13 @@ describe('Video Component', () => {
 
       const playButton = screen.getByTestId('icon-play');
       const buttonContainer = playButton.closest('button');
-      expect(buttonContainer).toHaveClass('absolute', 'inset-0', 'z-20', 'flex', 'cursor-pointer');
+      expect(buttonContainer).toHaveClass(
+        'absolute',
+        'inset-0',
+        'z-20',
+        'flex',
+        'cursor-pointer',
+      );
     });
   });
 
@@ -263,7 +297,9 @@ describe('Video Component', () => {
     it('should open modal when play button is clicked with modal enabled', () => {
       render(<Video {...defaultProps} />);
 
-      const playButton = screen.getByTestId('icon-play').closest('button') as HTMLElement;
+      const playButton = screen
+        .getByTestId('icon-play')
+        .closest('button') as HTMLElement;
       fireEvent.click(playButton);
 
       expect(mockOpenModal).toHaveBeenCalled();
@@ -287,7 +323,9 @@ describe('Video Component', () => {
       render(<Video {...propsWithoutModal} />);
 
       const videoUrl = screen.getByTestId('video-url');
-      expect(videoUrl).toHaveTextContent('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+      expect(videoUrl).toHaveTextContent(
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      );
     });
   });
 
@@ -432,7 +470,11 @@ describe('Video Component', () => {
       const { container } = render(<Video {...propsWithoutVideoUrl} />);
 
       const errorMessage = screen.getByText('Please add video');
-      expect(errorMessage.parentElement).toHaveClass('bg-secondary', 'flex', 'aspect-video');
+      expect(errorMessage.parentElement).toHaveClass(
+        'bg-secondary',
+        'flex',
+        'aspect-video',
+      );
     });
   });
 
@@ -452,4 +494,3 @@ describe('Video Component', () => {
     });
   });
 });
-

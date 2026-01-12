@@ -39,9 +39,11 @@ type TitleProps = {
 
 export const Default = (props: TitleProps): JSX.Element => {
   const { page } = useSitecore();
-  const datasource = props.fields?.data?.datasource || props.fields?.data?.contextItem;
+  const datasource =
+    props.fields?.data?.datasource || props.fields?.data?.contextItem;
   const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
-  const contextField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
+  const contextField: TextField = page.layout.sitecore.route?.fields
+    ?.pageTitle as TextField;
   const titleField: TextField = datasourceField || contextField;
 
   const isPageEditing = Boolean(page.mode.isEditing);
@@ -69,7 +71,10 @@ export const Default = (props: TitleProps): JSX.Element => {
   }
 
   return (
-    <div className={`component title ${props.params.styles}`} id={props.params.RenderingIdentifier}>
+    <div
+      className={`component title ${props.params.styles}`}
+      id={props.params.RenderingIdentifier}
+    >
       <div className="component-content">
         {page.mode.isEditing ? (
           <Text
@@ -79,7 +84,11 @@ export const Default = (props: TitleProps): JSX.Element => {
             className="field-title"
           />
         ) : (
-          <Text tag={props.params.tag} field={titleField} className="field-title" />
+          <Text
+            tag={props.params.tag}
+            field={titleField}
+            className="field-title"
+          />
         )}
       </div>
     </div>

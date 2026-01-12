@@ -113,4 +113,3 @@ export const mockIconWithCustomAttributes: IconProps = {
   altText: 'Email us',
   'data-custom': 'custom-value',
 } as any;
-

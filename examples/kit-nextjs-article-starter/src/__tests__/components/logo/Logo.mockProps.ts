@@ -95,4 +95,3 @@ export const propsWithEmptyClassName: LogoProps = {
   logo: mockLogoField,
   className: '',
 };
-

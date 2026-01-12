@@ -208,7 +208,7 @@ export const defaultProps: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: mockFields as GlobalHeaderProps['fields'],
-  rendering: { 
+  rendering: {
     componentName: 'GlobalHeader',
     uid: 'header-uid',
   } as GlobalHeaderProps['rendering'],
@@ -220,7 +220,9 @@ export const propsWithoutLogo: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: mockFieldsWithoutLogo as GlobalHeaderProps['fields'],
-  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  rendering: {
+    componentName: 'GlobalHeader',
+  } as GlobalHeaderProps['rendering'],
   page: mockPageBase,
 };
 
@@ -229,7 +231,9 @@ export const propsWithoutLinks: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: mockFieldsWithoutLinks as GlobalHeaderProps['fields'],
-  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  rendering: {
+    componentName: 'GlobalHeader',
+  } as GlobalHeaderProps['rendering'],
   page: mockPageBase,
 };
 
@@ -238,7 +242,9 @@ export const propsWithoutContact: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: mockFieldsWithoutContact as GlobalHeaderProps['fields'],
-  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  rendering: {
+    componentName: 'GlobalHeader',
+  } as GlobalHeaderProps['rendering'],
   page: mockPageBase,
 };
 
@@ -247,7 +253,9 @@ export const propsWithEmptyItem: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: mockFieldsWithEmptyItem as GlobalHeaderProps['fields'],
-  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  rendering: {
+    componentName: 'GlobalHeader',
+  } as GlobalHeaderProps['rendering'],
   page: mockPageBase,
 };
 
@@ -256,7 +264,9 @@ export const propsWithoutFields: GlobalHeaderProps = {
     RenderingIdentifier: 'header-rendering-id',
   },
   fields: undefined as GlobalHeaderProps['fields'],
-  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  rendering: {
+    componentName: 'GlobalHeader',
+  } as GlobalHeaderProps['rendering'],
   page: mockPageBase,
 };
 
@@ -264,4 +274,3 @@ export const propsEditing: GlobalHeaderProps = {
   ...defaultProps,
   page: mockPageEditing,
 };
-

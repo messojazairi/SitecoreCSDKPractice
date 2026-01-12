@@ -15,7 +15,10 @@ import {
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   AppPlaceholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name || 'empty'}`} data-rendering={rendering?.componentName || 'unknown'}>
+    <div
+      data-testid={`placeholder-${name || 'empty'}`}
+      data-rendering={rendering?.componentName || 'unknown'}
+    >
       Dynamic Placeholder Content: {name || 'empty'}
     </div>
   ),
@@ -30,7 +33,9 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should render dynamic placeholder with sig parameter', () => {
       render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
       expect(placeholder).toBeInTheDocument();
       expect(placeholder).toHaveTextContent('main-content-dynamic');
     });
@@ -38,8 +43,13 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should pass rendering to Placeholder component', () => {
       render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
-      expect(placeholder).toHaveAttribute('data-rendering', 'PartialDesignDynamicPlaceholder');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
+      expect(placeholder).toHaveAttribute(
+        'data-rendering',
+        'PartialDesignDynamicPlaceholder',
+      );
     });
 
     it('should render with custom sig', () => {
@@ -53,7 +63,9 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should render with complex sig pattern', () => {
       render(<PartialDesignDynamicPlaceholder {...propsWithComplexSig} />);
 
-      const placeholder = screen.getByTestId('placeholder-dynamic-placeholder-{GUID}-{*}');
+      const placeholder = screen.getByTestId(
+        'placeholder-dynamic-placeholder-{GUID}-{*}',
+      );
       expect(placeholder).toBeInTheDocument();
       expect(placeholder).toHaveTextContent('dynamic-placeholder-{GUID}-{*}');
     });
@@ -102,7 +114,9 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
         rendering: undefined as any,
       };
 
-      render(<PartialDesignDynamicPlaceholder {...propsWithUndefinedRendering} />);
+      render(
+        <PartialDesignDynamicPlaceholder {...propsWithUndefinedRendering} />,
+      );
 
       const placeholder = screen.getByTestId('placeholder-empty');
       expect(placeholder).toBeInTheDocument();
@@ -121,7 +135,9 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
 
       render(<PartialDesignDynamicPlaceholder {...propsWithSpecialChars} />);
 
-      const placeholder = screen.getByTestId('placeholder-placeholder-with-dashes_and_underscores');
+      const placeholder = screen.getByTestId(
+        'placeholder-placeholder-with-dashes_and_underscores',
+      );
       expect(placeholder).toBeInTheDocument();
     });
   });
@@ -130,33 +146,48 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should pass name prop to Placeholder', () => {
       render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
       expect(placeholder).toHaveTextContent('main-content-dynamic');
     });
 
     it('should pass rendering prop to Placeholder', () => {
       render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
-      expect(placeholder).toHaveAttribute('data-rendering', 'PartialDesignDynamicPlaceholder');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
+      expect(placeholder).toHaveAttribute(
+        'data-rendering',
+        'PartialDesignDynamicPlaceholder',
+      );
     });
 
     it('should render single Placeholder component', () => {
-      const { container } = render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
+      const { container } = render(
+        <PartialDesignDynamicPlaceholder {...defaultProps} />,
+      );
 
-      const placeholders = container.querySelectorAll('[data-testid^="placeholder-"]');
+      const placeholders = container.querySelectorAll(
+        '[data-testid^="placeholder-"]',
+      );
       expect(placeholders.length).toBe(1);
     });
   });
 
   describe('Component simplicity', () => {
     it('should not have wrapper elements', () => {
-      const { container } = render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
+      const { container } = render(
+        <PartialDesignDynamicPlaceholder {...defaultProps} />,
+      );
 
       // Should directly render the Placeholder without wrappers
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
       expect(placeholder).toBeInTheDocument();
-      
+
       // Check that placeholder is the direct child of container
       expect(container.firstChild).toBe(placeholder);
     });
@@ -164,9 +195,11 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should be a simple passthrough component', () => {
       render(<PartialDesignDynamicPlaceholder {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-main-content-dynamic');
+      const placeholder = screen.getByTestId(
+        'placeholder-main-content-dynamic',
+      );
       expect(placeholder).toBeInTheDocument();
-      
+
       // Verify no additional processing or transformation
       expect(placeholder).toHaveTextContent('main-content-dynamic');
     });
@@ -203,7 +236,9 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
 
       render(<PartialDesignDynamicPlaceholder {...propsWithGuid} />);
 
-      const placeholder = screen.getByTestId('placeholder-placeholder-{12345678-1234-1234-1234-123456789abc}');
+      const placeholder = screen.getByTestId(
+        'placeholder-placeholder-{12345678-1234-1234-1234-123456789abc}',
+      );
       expect(placeholder).toBeInTheDocument();
     });
 
@@ -220,9 +255,10 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
 
       render(<PartialDesignDynamicPlaceholder {...propsWithPath} />);
 
-      const placeholder = screen.getByTestId('placeholder-section/subsection/placeholder');
+      const placeholder = screen.getByTestId(
+        'placeholder-section/subsection/placeholder',
+      );
       expect(placeholder).toBeInTheDocument();
     });
   });
 });
-

@@ -21,9 +21,15 @@ export const Default = (props: PageContentProps): JSX.Element => {
   const sxaStyles = props.params?.Styles ?? '';
   const id = props.params?.RenderingIdentifier ?? null;
 
-  if (!(props.fields && props.fields.Content) && !page?.layout.sitecore.route?.fields?.Content) {
+  if (
+    !(props.fields && props.fields.Content) &&
+    !page?.layout.sitecore.route?.fields?.Content
+  ) {
     return (
-      <div className={`component page-content ${sxaStyles}`} id={id ? id : undefined}>
+      <div
+        className={`component page-content ${sxaStyles}`}
+        id={id ? id : undefined}
+      >
         <div className="component-content">
           <div className="field-content">[Page Content]</div>
         </div>
@@ -32,7 +38,10 @@ export const Default = (props: PageContentProps): JSX.Element => {
   }
 
   return (
-    <div className={`component page-content ${sxaStyles}`} id={id ? id : undefined}>
+    <div
+      className={`component page-content ${sxaStyles}`}
+      id={id ? id : undefined}
+    >
       <div className="component-content">
         <ContentSdkRichText
           field={

@@ -19,7 +19,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag, className, editable }: any) => {
     const Tag = tag || 'h2';
-    return React.createElement(Tag, { className, 'data-editable': editable }, field?.value || 'Add Title');
+    return React.createElement(
+      Tag,
+      { className, 'data-editable': editable },
+      field?.value || 'Add Title',
+    );
   },
 }));
 
@@ -65,14 +69,18 @@ describe('Title Component', () => {
     it('should apply custom styles', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Datasource Title').closest('.component.title');
+      const container = screen
+        .getByText('Datasource Title')
+        .closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Title {...propsWithoutStyles} />);
 
-      const container = screen.getByText('Datasource Title').closest('.component.title');
+      const container = screen
+        .getByText('Datasource Title')
+        .closest('.component.title');
       expect(container).toHaveClass('component', 'title');
       expect(container).not.toHaveClass('custom-title-style');
     });
@@ -92,7 +100,9 @@ describe('Title Component', () => {
     it('should have correct rendering identifier', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Datasource Title').closest('.component.title');
+      const container = screen
+        .getByText('Datasource Title')
+        .closest('.component.title');
       expect(container).toHaveAttribute('id', 'title-rendering-id');
     });
   });
@@ -120,7 +130,7 @@ describe('Title Component', () => {
         },
       };
       mockUseSitecore.mockReturnValue(editingModeData);
-      
+
       render(<Title {...defaultProps} />);
 
       const textElement = screen.getByText('Datasource Title');
@@ -132,12 +142,14 @@ describe('Title Component', () => {
     it('should render correct DOM structure', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Datasource Title').closest('.component.title');
+      const container = screen
+        .getByText('Datasource Title')
+        .closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
-      
+
       const contentDiv = container?.querySelector('.component-content');
       expect(contentDiv).toBeInTheDocument();
-      
+
       const titleElement = contentDiv?.querySelector('.field-title');
       expect(titleElement).toBeInTheDocument();
     });
@@ -164,7 +176,7 @@ describe('Title Component', () => {
         params: {},
         fields: defaultProps.fields,
       };
-      
+
       render(<Title {...propsWithoutParams} />);
 
       expect(screen.getByText('Datasource Title')).toBeInTheDocument();
@@ -175,7 +187,7 @@ describe('Title Component', () => {
         params: defaultProps.params,
         fields: null as any,
       };
-      
+
       mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
       render(<Title {...propsWithoutFields} />);
 

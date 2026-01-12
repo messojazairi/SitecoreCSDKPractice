@@ -42,14 +42,14 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
         setShowNext(mouseX > width - threshold);
       }
     }),
-    []
+    [],
   );
 
   const handleMouseMove = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
       debouncedMouseMove(event);
     },
-    [debouncedMouseMove]
+    [debouncedMouseMove],
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -70,21 +70,27 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
     });
 
     // Add mousewheel event listener and keyboard event listener
-    const debouncedHandleWheel = debounce({ delay: 100 }, (event: WheelEvent) => {
-      if (event.deltaX > 0) {
-        api.scrollNext();
-      } else if (event.deltaX < 0) {
-        api.scrollPrev();
-      }
-    });
+    const debouncedHandleWheel = debounce(
+      { delay: 100 },
+      (event: WheelEvent) => {
+        if (event.deltaX > 0) {
+          api.scrollNext();
+        } else if (event.deltaX < 0) {
+          api.scrollPrev();
+        }
+      },
+    );
 
-    const debouncedHandleKeyDown = debounce({ delay: 100 }, (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') {
-        api?.scrollPrev();
-      } else if (event.key === 'ArrowRight') {
-        api?.scrollNext();
-      }
-    });
+    const debouncedHandleKeyDown = debounce(
+      { delay: 100 },
+      (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          api?.scrollPrev();
+        } else if (event.key === 'ArrowRight') {
+          api?.scrollNext();
+        }
+      },
+    );
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault(); // Prevent default scrolling behavior
@@ -108,7 +114,7 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
       <div
         className={cn(
           '@container component testimonial-carousel text-secondary-foreground @md:px-6 @lg:px-0 overflow-hidden rounded-[24px]',
-          { [`${props?.params?.styles}`]: props?.params?.styles }
+          { [`${props?.params?.styles}`]: props?.params?.styles },
         )}
         ref={carouselRef}
         onMouseMove={handleMouseMove}
@@ -126,25 +132,29 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
           className="w-full"
         >
           <CarouselContent className="@md:-ml-4 -ml-2">
-            {children?.results?.map((item: TestimonialCarouselItemProps, index: number) => (
-              <CarouselItem
-                key={index}
-                className={cn(
-                  '@lg:basis-3/4 @md:basis-4/5 @md:pl-4 py-[70px] transition-opacity duration-300'
-                )}
-              >
-                <TestimonialCarouselItem key={index} {...item} />
-              </CarouselItem>
-            ))}
+            {children?.results?.map(
+              (item: TestimonialCarouselItemProps, index: number) => (
+                <CarouselItem
+                  key={index}
+                  className={cn(
+                    '@lg:basis-3/4 @md:basis-4/5 @md:pl-4 py-[70px] transition-opacity duration-300',
+                  )}
+                >
+                  <TestimonialCarouselItem key={index} {...item} />
+                </CarouselItem>
+              ),
+            )}
           </CarouselContent>
           <CarouselPrevious
             variant={'default'}
             className={cn(
               '@md:h-[58px] @md:w-[58px] @md:[&_svg]:size-10 @lg:h-[116px] @lg:w-[116px] absolute top-1/2 h-[40px] w-[40px] -translate-y-1/2 rounded-full transition-all duration-300 [&_svg]:size-4',
-              showPrevious ? '@md:left-[70px] @lg:left-[140px] left-[35px]' : '-left-[116px]',
+              showPrevious
+                ? '@md:left-[70px] @lg:left-[140px] left-[35px]'
+                : '-left-[116px]',
               canScrollPrev
                 ? 'opacity-100'
-                : ' disabled:bg-primary/30 cursor-not-allowed opacity-50'
+                : ' disabled:bg-primary/30 cursor-not-allowed opacity-50',
             )}
             onFocus={() => setShowPrevious(true)}
             onBlur={() => setShowPrevious(false)}
@@ -155,10 +165,12 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
             variant={'default'}
             className={cn(
               '@md:h-[58px] @md:w-[58px] @md:[&_svg]:size-10 @lg:h-[116px] @lg:w-[116px] absolute top-1/2 h-[40px] w-[40px] -translate-y-1/2 rounded-full transition-all duration-300 [&_svg]:size-4',
-              showNext ? '@md:right-[70px] @lg:right-[140px] right-[35px]' : '-right-[116px]',
+              showNext
+                ? '@md:right-[70px] @lg:right-[140px] right-[35px]'
+                : '-right-[116px]',
               canScrollNext
                 ? 'opacity-100'
-                : ' disabled:bg-primary/30 cursor-not-allowed opacity-50'
+                : ' disabled:bg-primary/30 cursor-not-allowed opacity-50',
             )}
             onFocus={() => setShowNext(true)}
             onBlur={() => setShowNext(false)}

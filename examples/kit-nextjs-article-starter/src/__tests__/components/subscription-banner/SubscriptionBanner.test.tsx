@@ -14,10 +14,11 @@ import {
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => {
     const translations: Record<string, string> = {
-      'Demo1_SubscriptionBanner_ButtonLabel': 'Subscribe',
-      'Demo1_SubscriptionBanner_EmailFieldPlaceholder': 'Enter your email address',
-      'Demo1_SubscriptionBanner_FormSuccess': 'Thank you for subscribing!',
-      'Demo1_SubscriptionBanner_EmailFormatError': 'Invalid email format',
+      Demo1_SubscriptionBanner_ButtonLabel: 'Subscribe',
+      Demo1_SubscriptionBanner_EmailFieldPlaceholder:
+        'Enter your email address',
+      Demo1_SubscriptionBanner_FormSuccess: 'Thank you for subscribing!',
+      Demo1_SubscriptionBanner_EmailFormatError: 'Invalid email format',
     };
     return translations[key] || key;
   },
@@ -27,7 +28,11 @@ jest.mock('next-intl', () => ({
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
 }));
 
@@ -62,7 +67,9 @@ jest.mock('@/components/ui/form', () => ({
       {children}
     </div>
   ),
-  FormControl: ({ children }: any) => <div data-testid="form-control">{children}</div>,
+  FormControl: ({ children }: any) => (
+    <div data-testid="form-control">{children}</div>
+  ),
   FormMessage: ({ children, className }: any) => (
     <div className={className} data-testid="form-message">
       {children}
@@ -105,9 +112,13 @@ describe('SubscriptionBanner Component', () => {
     it('should render subscription banner with all fields', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
-      expect(screen.getByText('Subscribe to Our Newsletter')).toBeInTheDocument();
       expect(
-        screen.getByText('Get the latest updates delivered directly to your inbox')
+        screen.getByText('Subscribe to Our Newsletter'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Get the latest updates delivered directly to your inbox',
+        ),
       ).toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
       expect(screen.getByTestId('submit-button')).toBeInTheDocument();
@@ -124,7 +135,7 @@ describe('SubscriptionBanner Component', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
       const description = screen.getByText(
-        'Get the latest updates delivered directly to your inbox'
+        'Get the latest updates delivered directly to your inbox',
       );
       expect(description.tagName).toBe('P');
     });
@@ -134,7 +145,10 @@ describe('SubscriptionBanner Component', () => {
 
       const emailInput = screen.getByTestId('email-input');
       expect(emailInput).toHaveAttribute('type', 'email');
-      expect(emailInput).toHaveAttribute('placeholder', 'Enter your email address');
+      expect(emailInput).toHaveAttribute(
+        'placeholder',
+        'Enter your email address',
+      );
     });
 
     it('should render submit button with correct text', () => {
@@ -149,9 +163,13 @@ describe('SubscriptionBanner Component', () => {
     it('should render without description field', () => {
       render(<SubscriptionBanner {...propsWithoutDescription} />);
 
-      expect(screen.getByText('Subscribe to Our Newsletter')).toBeInTheDocument();
       expect(
-        screen.queryByText('Get the latest updates delivered directly to your inbox')
+        screen.getByText('Subscribe to Our Newsletter'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText(
+          'Get the latest updates delivered directly to your inbox',
+        ),
       ).not.toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
     });
@@ -159,7 +177,9 @@ describe('SubscriptionBanner Component', () => {
     it('should render with only required fields', () => {
       render(<SubscriptionBanner {...propsMinimal} />);
 
-      expect(screen.getByText('Subscribe to Our Newsletter')).toBeInTheDocument();
+      expect(
+        screen.getByText('Subscribe to Our Newsletter'),
+      ).toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
       expect(screen.getByTestId('submit-button')).toBeInTheDocument();
     });
@@ -179,7 +199,13 @@ describe('SubscriptionBanner Component', () => {
 
       const section = container.querySelector('section');
       expect(section).toBeInTheDocument();
-      expect(section).toHaveClass('mx-auto', 'w-full', 'px-4', 'py-16', 'text-center');
+      expect(section).toHaveClass(
+        'mx-auto',
+        'w-full',
+        'px-4',
+        'py-16',
+        'text-center',
+      );
     });
 
     it('should apply correct title classes', () => {
@@ -192,7 +218,7 @@ describe('SubscriptionBanner Component', () => {
         'mb-6',
         'font-normal',
         'leading-tight',
-        'tracking-tight'
+        'tracking-tight',
       );
     });
 
@@ -200,9 +226,14 @@ describe('SubscriptionBanner Component', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
       const description = screen.getByText(
-        'Get the latest updates delivered directly to your inbox'
+        'Get the latest updates delivered directly to your inbox',
       );
-      expect(description).toHaveClass('font-body', 'text-secondary-foreground', 'mb-12', 'text-lg');
+      expect(description).toHaveClass(
+        'font-body',
+        'text-secondary-foreground',
+        'mb-12',
+        'text-lg',
+      );
     });
 
     it('should apply correct form container classes', () => {
@@ -216,7 +247,7 @@ describe('SubscriptionBanner Component', () => {
         'flex-col',
         'items-center',
         'justify-center',
-        'gap-6'
+        'gap-6',
       );
     });
 
@@ -224,7 +255,14 @@ describe('SubscriptionBanner Component', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
       const input = screen.getByTestId('email-input');
-      expect(input).toHaveClass('border-input', 'w-full', 'flex-1', 'rounded-full', 'px-6', 'py-3');
+      expect(input).toHaveClass(
+        'border-input',
+        'w-full',
+        'flex-1',
+        'rounded-full',
+        'px-6',
+        'py-3',
+      );
     });
 
     it('should apply correct button classes', () => {
@@ -319,4 +357,3 @@ describe('SubscriptionBanner Component', () => {
     });
   });
 });
-

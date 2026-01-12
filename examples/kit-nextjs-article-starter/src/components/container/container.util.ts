@@ -1,4 +1,7 @@
-import { ComponentParams, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import {
+  ComponentParams,
+  ComponentRendering,
+} from '@sitecore-content-sdk/nextjs';
 import type { JSX } from 'react';
 
 type ContainerPlaceHolderProps = {
@@ -9,7 +12,7 @@ type ContainerPlaceHolderProps = {
 
 export const getContainerPlaceholderProps = (
   fragment: string,
-  params: ComponentParams
+  params: ComponentParams,
 ): ContainerPlaceHolderProps => {
   const model: ContainerPlaceHolderProps = {
     dynamicKey: `${fragment}-${params.DynamicPlaceholderId}`,
@@ -22,7 +25,7 @@ export const getContainerPlaceholderProps = (
 export const isContainerPlaceholderEmpty = (
   rendering: ComponentRendering,
   placeholderProps: ContainerPlaceHolderProps,
-  children: JSX.Element | undefined
+  children: JSX.Element | undefined,
 ): boolean => {
   return (
     !(

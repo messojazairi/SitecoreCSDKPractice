@@ -39,7 +39,11 @@ jest.mock('@/lib/utils', () => ({
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
 }));
 
@@ -112,7 +116,9 @@ describe('AlertBanner Component', () => {
 
       expect(screen.getByTestId('alert')).toBeInTheDocument();
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
-      expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please read this important message carefully'),
+      ).toBeInTheDocument();
       expect(screen.getByTestId('alert-button')).toBeInTheDocument();
       expect(screen.getByTestId('close-button')).toBeInTheDocument();
     });
@@ -121,7 +127,9 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...defaultProps} />);
 
       const alertTitle = screen.getByTestId('alert-title');
-      expect(alertTitle).toContainElement(screen.getByText('Important Announcement'));
+      expect(alertTitle).toContainElement(
+        screen.getByText('Important Announcement'),
+      );
     });
 
     it('should render description in AlertDescription component', () => {
@@ -129,7 +137,7 @@ describe('AlertBanner Component', () => {
 
       const alertDescription = screen.getByTestId('alert-description');
       expect(alertDescription).toContainElement(
-        screen.getByText('Please read this important message carefully')
+        screen.getByText('Please read this important message carefully'),
       );
     });
 
@@ -154,7 +162,9 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...propsWithoutLink} />);
 
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
-      expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please read this important message carefully'),
+      ).toBeInTheDocument();
       expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
       expect(screen.getByTestId('close-button')).toBeInTheDocument();
     });
@@ -176,7 +186,9 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...propsMinimal} />);
 
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
-      expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please read this important message carefully'),
+      ).toBeInTheDocument();
       expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
       expect(screen.getByTestId('close-button')).toBeInTheDocument();
     });
@@ -238,7 +250,12 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...defaultProps} />);
 
       const alertTitle = screen.getByTestId('alert-title');
-      expect(alertTitle).toHaveClass('text-base', 'font-semibold', 'leading-none', 'tracking-tight');
+      expect(alertTitle).toHaveClass(
+        'text-base',
+        'font-semibold',
+        'leading-none',
+        'tracking-tight',
+      );
     });
 
     it('should apply correct description classes', () => {
@@ -258,7 +275,9 @@ describe('AlertBanner Component', () => {
     it('should render description as p tag', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const descriptionText = screen.getByText('Please read this important message carefully');
+      const descriptionText = screen.getByText(
+        'Please read this important message carefully',
+      );
       expect(descriptionText.tagName).toBe('P');
     });
 
@@ -346,16 +365,26 @@ describe('AlertBanner Component', () => {
       const { container } = render(<AlertBanner {...defaultProps} />);
 
       const mainContainer = container.querySelector('.mx-auto.flex');
-      expect(mainContainer).toHaveClass('items-center', 'justify-between', 'gap-4');
+      expect(mainContainer).toHaveClass(
+        'items-center',
+        'justify-between',
+        'gap-4',
+      );
     });
 
     it('should render buttons container with correct classes', () => {
       const { container } = render(<AlertBanner {...defaultProps} />);
 
-      const buttonsContainer = container.querySelector('.flex.items-center.gap-2');
+      const buttonsContainer = container.querySelector(
+        '.flex.items-center.gap-2',
+      );
       expect(buttonsContainer).toBeInTheDocument();
-      expect(buttonsContainer).toContainElement(screen.getByTestId('alert-button'));
-      expect(buttonsContainer).toContainElement(screen.getByTestId('close-button'));
+      expect(buttonsContainer).toContainElement(
+        screen.getByTestId('alert-button'),
+      );
+      expect(buttonsContainer).toContainElement(
+        screen.getByTestId('close-button'),
+      );
     });
 
     it('should apply spacing classes to content container', () => {
@@ -411,4 +440,3 @@ describe('AlertBanner Component', () => {
     });
   });
 });
-

@@ -8,9 +8,14 @@ import { LogoItem } from './LogoItem';
 import { EditableButton as Button } from '@/components/button-component/ButtonComponent';
 import { cn } from '@/lib/utils';
 
-export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: propIsPageEditing }) => {
+export const Default: React.FC<LogoTabsProps> = ({
+  fields,
+  page,
+  isPageEditing: propIsPageEditing,
+}) => {
   const isPageEditing = propIsPageEditing || page.mode.isEditing;
-  const { title, backgroundImage, logos, logoTabContent } = fields?.data?.datasource ?? {};
+  const { title, backgroundImage, logos, logoTabContent } =
+    fields?.data?.datasource ?? {};
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -77,10 +82,15 @@ export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: 
 
   if (fields) {
     const hasLogos = logos?.results && logos.results.length > 0;
-    const hasContent = logoTabContent?.results && logoTabContent.results.length > 0;
+    const hasContent =
+      logoTabContent?.results && logoTabContent.results.length > 0;
     // Only use placeholders when not in editing mode
     const logosData =
-      hasLogos && logos?.results ? logos.results : !isPageEditing ? placeholderLogos : [];
+      hasLogos && logos?.results
+        ? logos.results
+        : !isPageEditing
+          ? placeholderLogos
+          : [];
     const contentData =
       hasContent && logoTabContent?.results
         ? logoTabContent.results
@@ -90,11 +100,18 @@ export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: 
     const hasBackgroundImage = !!backgroundImage?.jsonValue?.value?.src;
 
     return (
-      <div className={cn('text-primary-foreground relative min-h-[800px] w-full overflow-hidden')}>
+      <div
+        className={cn(
+          'text-primary-foreground relative min-h-[800px] w-full overflow-hidden',
+        )}
+      >
         {/* Background Image */}
         {hasBackgroundImage ? (
           <div className="absolute inset-0">
-            <Image field={backgroundImage?.jsonValue} className="h-full w-full object-cover" />
+            <Image
+              field={backgroundImage?.jsonValue}
+              className="h-full w-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black/80" />
           </div>
         ) : (
@@ -129,10 +146,16 @@ export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: 
               {isPageEditing && hasLogos ? (
                 <div className="space-y-10">
                   {logosData.map((logo, index) => (
-                    <div key={index} className="border-b border-white/20 pb-10 last:border-0">
+                    <div
+                      key={index}
+                      className="border-b border-white/20 pb-10 last:border-0"
+                    >
                       <div className="mb-6 flex items-center">
                         <div className="rounded-[20px] bg-white px-6 py-3 shadow-lg">
-                          <Image field={logo?.logo?.jsonValue} className="h-6 w-auto" />
+                          <Image
+                            field={logo?.logo?.jsonValue}
+                            className="h-6 w-auto"
+                          />
                         </div>
                         <div className="ml-4 text-lg text-white opacity-70">
                           <Text field={logo?.title?.jsonValue} />
@@ -162,7 +185,8 @@ export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: 
               ) : (
                 <>
                   {/* Logo Navigation Container */}
-                  {(!isPageEditing || (isPageEditing && logosData.length > 0)) && (
+                  {(!isPageEditing ||
+                    (isPageEditing && logosData.length > 0)) && (
                     <>
                       <div className="@container mb-28">
                         {/* Logo Navigation */}
@@ -197,14 +221,16 @@ export const Default: React.FC<LogoTabsProps> = ({ fields, page, isPageEditing: 
                               'max-w-lg transition-[visibility,opacity] duration-300',
                               activeTabIndex === index
                                 ? 'visible opacity-100'
-                                : 'invisible absolute opacity-0'
+                                : 'invisible absolute opacity-0',
                             )}
                             hidden={activeTabIndex !== index}
                           >
                             <Text
                               tag="h3"
                               field={
-                                content.heading?.jsonValue || { value: 'Click to edit content' }
+                                content.heading?.jsonValue || {
+                                  value: 'Click to edit content',
+                                }
                               }
                               className="font-heading text-primary-foreground mb-4 text-2xl font-medium leading-tight md:text-3xl"
                             />

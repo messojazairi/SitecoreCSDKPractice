@@ -82,21 +82,26 @@ export const defaultProps: ComponentProps & { fields: typeof mockFields } = {
   fields: mockFields,
 };
 
-export const propsWithEmptyHeading: ComponentProps & { fields: typeof mockFieldsWithEmptyHeading } = {
+export const propsWithEmptyHeading: ComponentProps & {
+  fields: typeof mockFieldsWithEmptyHeading;
+} = {
   rendering: mockRendering,
   params: mockParams,
   fields: mockFieldsWithEmptyHeading,
 };
 
-export const propsWithEmptyContent: ComponentProps & { fields: typeof mockFieldsWithEmptyContent } = {
+export const propsWithEmptyContent: ComponentProps & {
+  fields: typeof mockFieldsWithEmptyContent;
+} = {
   rendering: mockRendering,
   params: mockParams,
   fields: mockFieldsWithEmptyContent,
 };
 
-export const propsWithComplexContent: ComponentProps & { fields: typeof mockFieldsWithComplexContent } = {
+export const propsWithComplexContent: ComponentProps & {
+  fields: typeof mockFieldsWithComplexContent;
+} = {
   rendering: mockRendering,
   params: mockParams,
   fields: mockFieldsWithComplexContent,
 };
-

@@ -90,12 +90,14 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
           <button
             className={cn(
               'border-accent-6 flex w-full items-center justify-between rounded-md border bg-[color:var(--color-background)] p-2 px-4',
-              { ['rounded-bl-none rounded-br-none']: isOpen }
+              { ['rounded-bl-none rounded-br-none']: isOpen },
             )}
             onClick={() => setIsOpen(!isOpen)}
           >
             {/* <RxText></RxText> */}
-            <ChevronDownIcon className={cn('transition-all', { ['rotate-180']: isOpen })} />
+            <ChevronDownIcon
+              className={cn('transition-all', { ['rotate-180']: isOpen })}
+            />
           </button>
           {isOpen && (
             <div className="border-accent-6 absolute top-full flex w-full flex-col rounded-bl-md rounded-br-md border border-t-0 bg-[color:var(--color-background)]">

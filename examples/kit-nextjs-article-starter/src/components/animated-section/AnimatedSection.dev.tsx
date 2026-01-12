@@ -46,13 +46,16 @@ export const Default: React.FC<AnimatedSectionProps> = React.memo(
         left: { '--translate-x': '2rem', '--translate-y': '0' },
         right: { '--translate-x': '-2rem', '--translate-y': '0' },
       }),
-      []
+      [],
     );
 
     const styles: StyleObject = useMemo<StyleObject>(() => {
       if (animationType === 'rotate') {
         return {
-          transform: isVisible || isPageEditing ? `rotate(${endRotation}deg)` : `rotate(0deg)`,
+          transform:
+            isVisible || isPageEditing
+              ? `rotate(${endRotation}deg)`
+              : `rotate(0deg)`,
           transition:
             reducedMotion || isPageEditing
               ? 'none'
@@ -80,7 +83,7 @@ export const Default: React.FC<AnimatedSectionProps> = React.memo(
         {children}
       </div>
     );
-  }
+  },
 );
 
 Default.displayName = 'AnimatedSection';

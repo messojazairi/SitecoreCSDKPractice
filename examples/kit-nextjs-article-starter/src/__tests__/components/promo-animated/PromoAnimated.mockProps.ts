@@ -1,4 +1,10 @@
-import { Field, ImageField, LinkField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
+import {
+  Field,
+  ImageField,
+  LinkField,
+  Page,
+  PageModeName,
+} from '@sitecore-content-sdk/nextjs';
 import { PromoAnimatedProps } from '@/components/promo-animated/promo-animated.props';
 
 // Mock page objects
@@ -55,7 +61,8 @@ export const mockTitleField: Field<string> = {
 
 // Mock description field
 export const mockDescriptionField: Field<string> = {
-  value: '<p>Experience the finest quality with our exclusive collection of premium products designed for excellence.</p>',
+  value:
+    '<p>Experience the finest quality with our exclusive collection of premium products designed for excellence.</p>',
 };
 
 // Mock primary link field
@@ -235,5 +242,3 @@ export const propsWithoutFields: PromoAnimatedProps = {
   isPageEditing: false,
   page: mockPageBase,
 };
-
-

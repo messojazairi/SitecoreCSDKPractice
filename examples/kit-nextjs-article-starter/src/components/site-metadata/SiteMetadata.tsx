@@ -15,9 +15,14 @@ export const Default: React.FC<SiteMetadataProps> = (props) => {
           <title>{title}</title>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          {keywords.length && <meta name="keywords" content={fields.metadataKeywords?.value} />}
+          {keywords.length && (
+            <meta name="keywords" content={fields.metadataKeywords?.value} />
+          )}
           {description.length && (
-            <meta name="description" content={fields.metadataDescription?.value} />
+            <meta
+              name="description"
+              content={fields.metadataDescription?.value}
+            />
           )}
         </Head>
       </>

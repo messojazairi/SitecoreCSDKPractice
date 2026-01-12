@@ -92,7 +92,13 @@ jest.mock('@/components/ui/carousel', () => ({
       Next
     </button>
   ),
-  CarouselPrevious: ({ variant, className, disabled, onFocus, onBlur }: any) => (
+  CarouselPrevious: ({
+    variant,
+    className,
+    disabled,
+    onFocus,
+    onBlur,
+  }: any) => (
     <button
       className={className}
       disabled={disabled}
@@ -110,9 +116,13 @@ jest.mock('@/components/ui/carousel', () => ({
 jest.mock('@/components/testimonial-carousel/TestimonialCarouselItem', () => ({
   Default: ({ testimonialQuote, testimonialAttribution }: any) => (
     <div data-testid="testimonial-item">
-      <p data-testid="testimonial-quote">{testimonialQuote?.jsonValue?.value}</p>
+      <p data-testid="testimonial-quote">
+        {testimonialQuote?.jsonValue?.value}
+      </p>
       {testimonialAttribution && (
-        <p data-testid="testimonial-attribution">{testimonialAttribution?.jsonValue?.value}</p>
+        <p data-testid="testimonial-attribution">
+          {testimonialAttribution?.jsonValue?.value}
+        </p>
       )}
     </div>
   ),
@@ -144,13 +154,19 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarousel {...defaultProps} />);
 
       expect(
-        screen.getByText('This product has completely transformed the way we work. Highly recommended!')
+        screen.getByText(
+          'This product has completely transformed the way we work. Highly recommended!',
+        ),
       ).toBeInTheDocument();
       expect(
-        screen.getByText('Outstanding service and support. The team went above and beyond our expectations.')
+        screen.getByText(
+          'Outstanding service and support. The team went above and beyond our expectations.',
+        ),
       ).toBeInTheDocument();
       expect(
-        screen.getByText('A game-changer for our business. We saw immediate results and increased productivity.')
+        screen.getByText(
+          'A game-changer for our business. We saw immediate results and increased productivity.',
+        ),
       ).toBeInTheDocument();
     });
 
@@ -158,7 +174,9 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarousel {...defaultProps} />);
 
       expect(screen.getByText('John Doe, CEO at TechCorp')).toBeInTheDocument();
-      expect(screen.getByText('Jane Smith, Marketing Director')).toBeInTheDocument();
+      expect(
+        screen.getByText('Jane Smith, Marketing Director'),
+      ).toBeInTheDocument();
       expect(screen.getByText('Mike Johnson, CTO')).toBeInTheDocument();
     });
 
@@ -195,7 +213,7 @@ describe('TestimonialCarousel Component', () => {
         '@container',
         'component',
         'testimonial-carousel',
-        'text-secondary-foreground'
+        'text-secondary-foreground',
       );
     });
 
@@ -217,7 +235,7 @@ describe('TestimonialCarousel Component', () => {
           '@md:pl-4',
           'py-[70px]',
           'transition-opacity',
-          'duration-300'
+          'duration-300',
         );
       });
     });
@@ -248,7 +266,7 @@ describe('TestimonialCarousel Component', () => {
         '@lg:h-[116px]',
         '@lg:w-[116px]',
         'absolute',
-        'top-1/2'
+        'top-1/2',
       );
     });
 
@@ -262,7 +280,7 @@ describe('TestimonialCarousel Component', () => {
         '@lg:h-[116px]',
         '@lg:w-[116px]',
         'absolute',
-        'top-1/2'
+        'top-1/2',
       );
     });
   });
@@ -301,10 +319,14 @@ describe('TestimonialCarousel Component', () => {
     });
 
     it('should render testimonial without attribution', () => {
-      render(<TestimonialCarousel {...propsWithTestimonialWithoutAttribution} />);
+      render(
+        <TestimonialCarousel {...propsWithTestimonialWithoutAttribution} />,
+      );
 
       expect(screen.getByText('Great experience overall!')).toBeInTheDocument();
-      expect(screen.queryByTestId('testimonial-attribution')).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId('testimonial-attribution'),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -342,7 +364,7 @@ describe('TestimonialCarousel Component', () => {
       const { container } = render(<TestimonialCarousel {...defaultProps} />);
 
       const carouselContainer = container.firstChild as HTMLElement;
-      
+
       // Should not throw errors when firing mouse events
       expect(() => {
         fireEvent.mouseMove(carouselContainer, { clientX: 100 });
@@ -354,7 +376,7 @@ describe('TestimonialCarousel Component', () => {
       const { container } = render(<TestimonialCarousel {...defaultProps} />);
 
       const carouselContainer = container.firstChild as HTMLElement;
-      
+
       // Should not throw errors when firing focus events
       expect(() => {
         fireEvent.focus(carouselContainer);
@@ -400,4 +422,3 @@ describe('TestimonialCarousel Component', () => {
     });
   });
 });
-

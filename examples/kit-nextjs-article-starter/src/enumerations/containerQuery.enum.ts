@@ -11,7 +11,9 @@ const TwScreens = {
   },
 };
 
-const containerParse = (container: keyof typeof TwScreens.containers): number => {
+const containerParse = (
+  container: keyof typeof TwScreens.containers,
+): number => {
   const value = TwScreens.containers[container] as string;
   if (typeof value === 'string') {
     if (value.includes('rem')) {
@@ -24,10 +26,12 @@ const containerParse = (container: keyof typeof TwScreens.containers): number =>
 
 export const breakpoints = Object.keys(TwScreens.containers).reduce(
   (acc: { [key: string]: number }, container) => {
-    acc[container] = containerParse(container as keyof typeof TwScreens.containers);
+    acc[container] = containerParse(
+      container as keyof typeof TwScreens.containers,
+    );
     return acc;
   },
-  {}
+  {},
 );
 
 export type Breakpoint = keyof typeof breakpoints;

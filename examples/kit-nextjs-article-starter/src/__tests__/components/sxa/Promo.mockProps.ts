@@ -125,4 +125,3 @@ export const propsEmpty = {
   params: mockParams,
   fields: mockFieldsEmpty,
 };
-

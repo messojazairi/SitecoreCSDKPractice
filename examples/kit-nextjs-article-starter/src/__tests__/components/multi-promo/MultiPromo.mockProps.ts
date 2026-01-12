@@ -1,5 +1,14 @@
-import { Field, ImageField, LinkField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
-import { MultiPromoProps, MultiPromoItemProps } from '@/components/multi-promo/multi-promo.props';
+import {
+  Field,
+  ImageField,
+  LinkField,
+  Page,
+  PageModeName,
+} from '@sitecore-content-sdk/nextjs';
+import {
+  MultiPromoProps,
+  MultiPromoItemProps,
+} from '@/components/multi-promo/multi-promo.props';
 
 // Mock page objects
 const mockPageBase: Page = {
@@ -53,7 +62,8 @@ export const mockTitleField: Field<string> = {
 };
 
 export const mockDescriptionField: Field<string> = {
-  value: '<p>Explore our curated selection of premium products designed for your lifestyle.</p>',
+  value:
+    '<p>Explore our curated selection of premium products designed for your lifestyle.</p>',
 };
 
 // Mock promo items
@@ -202,7 +212,12 @@ export const mockFields = {
         jsonValue: mockDescriptionField,
       },
       children: {
-        results: [mockPromoItem1, mockPromoItem2, mockPromoItem3, mockPromoItem4],
+        results: [
+          mockPromoItem1,
+          mockPromoItem2,
+          mockPromoItem3,
+          mockPromoItem4,
+        ],
       },
     },
   },
@@ -380,4 +395,3 @@ export const propsEditing: MultiPromoProps = {
   promos: [],
   page: mockPageEditing,
 };
-

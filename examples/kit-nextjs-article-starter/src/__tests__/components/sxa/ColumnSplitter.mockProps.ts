@@ -169,4 +169,3 @@ export const propsWithMaxColumns = {
     },
   } as ComponentRendering,
 };
-

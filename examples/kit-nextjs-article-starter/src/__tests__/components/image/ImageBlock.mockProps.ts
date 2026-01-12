@@ -115,4 +115,3 @@ export const propsWithoutFields: ImageProps = {
   fields: undefined as any,
   rendering: { componentName: 'Image' } as any,
 };
-

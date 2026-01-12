@@ -1,11 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { AccordionBlockItem } from '@/components/accordion-block/AccordionBlockItem.dev';
-import { mockAccordionItem1, mockAccordionItem2 } from './AccordionBlock.mockProps';
+import {
+  mockAccordionItem1,
+  mockAccordionItem2,
+} from './AccordionBlock.mockProps';
 
 // Mock the Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field }: any) => <span data-testid="accordion-item-heading">{field?.value || ''}</span>,
+  Text: ({ field }: any) => (
+    <span data-testid="accordion-item-heading">{field?.value || ''}</span>
+  ),
   RichText: ({ field, tag }: any) => {
     const Tag = tag || 'div';
     return React.createElement(Tag, {
@@ -44,29 +49,39 @@ describe('AccordionBlockItem Component', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       expect(screen.getByText('What is this product?')).toBeInTheDocument();
-      expect(screen.getByTestId('accordion-item-description')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('accordion-item-description'),
+      ).toBeInTheDocument();
     });
 
     it('should render heading in trigger', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const trigger = screen.getByTestId('accordion-trigger');
-      expect(trigger).toContainElement(screen.getByTestId('accordion-item-heading'));
+      expect(trigger).toContainElement(
+        screen.getByTestId('accordion-item-heading'),
+      );
     });
 
     it('should render description in content', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const content = screen.getByTestId('accordion-content');
-      expect(content).toContainElement(screen.getByTestId('accordion-item-description'));
+      expect(content).toContainElement(
+        screen.getByTestId('accordion-item-description'),
+      );
     });
 
     it('should render description as HTML', () => {
-      const { container } = render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
+      const { container } = render(
+        <AccordionBlockItem index={0} child={mockAccordionItem1} />,
+      );
 
-      const description = container.querySelector('[data-testid="accordion-item-description"]');
+      const description = container.querySelector(
+        '[data-testid="accordion-item-description"]',
+      );
       expect(description?.innerHTML).toContain(
-        '<p>This is a detailed description of the product.</p>'
+        '<p>This is a detailed description of the product.</p>',
       );
     });
   });
@@ -76,7 +91,10 @@ describe('AccordionBlockItem Component', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const accordionItem = screen.getByTestId('accordion-item');
-      expect(accordionItem).toHaveAttribute('data-value', 'accordion-block-item-1');
+      expect(accordionItem).toHaveAttribute(
+        'data-value',
+        'accordion-block-item-1',
+      );
     });
 
     it('should generate correct value with custom prefix', () => {
@@ -85,7 +103,7 @@ describe('AccordionBlockItem Component', () => {
           index={2}
           child={mockAccordionItem1}
           valuePrefix="custom-accordion"
-        />
+        />,
       );
 
       const accordionItem = screen.getByTestId('accordion-item');
@@ -93,14 +111,22 @@ describe('AccordionBlockItem Component', () => {
     });
 
     it('should generate correct value based on index', () => {
-      const { rerender } = render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
+      const { rerender } = render(
+        <AccordionBlockItem index={0} child={mockAccordionItem1} />,
+      );
 
       let accordionItem = screen.getByTestId('accordion-item');
-      expect(accordionItem).toHaveAttribute('data-value', 'accordion-block-item-1');
+      expect(accordionItem).toHaveAttribute(
+        'data-value',
+        'accordion-block-item-1',
+      );
 
       rerender(<AccordionBlockItem index={5} child={mockAccordionItem1} />);
       accordionItem = screen.getByTestId('accordion-item');
-      expect(accordionItem).toHaveAttribute('data-value', 'accordion-block-item-6');
+      expect(accordionItem).toHaveAttribute(
+        'data-value',
+        'accordion-block-item-6',
+      );
     });
   });
 
@@ -122,20 +148,33 @@ describe('AccordionBlockItem Component', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const trigger = screen.getByTestId('accordion-trigger');
-      expect(trigger).toHaveClass('font-heading', 'flex', 'items-center', 'justify-between');
+      expect(trigger).toHaveClass(
+        'font-heading',
+        'flex',
+        'items-center',
+        'justify-between',
+      );
     });
 
     it('should apply correct content classes', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const content = screen.getByTestId('accordion-content');
-      expect(content).toHaveClass('overflow-hidden', 'text-sm', 'transition-all');
+      expect(content).toHaveClass(
+        'overflow-hidden',
+        'text-sm',
+        'transition-all',
+      );
     });
 
     it('should wrap description in grid container', () => {
-      const { container } = render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
+      const { container } = render(
+        <AccordionBlockItem index={0} child={mockAccordionItem1} />,
+      );
 
-      const gridContainer = container.querySelector('.font-heading.grid.gap-4.text-sm');
+      const gridContainer = container.querySelector(
+        '.font-heading.grid.gap-4.text-sm',
+      );
       expect(gridContainer).toBeInTheDocument();
     });
   });
@@ -146,13 +185,15 @@ describe('AccordionBlockItem Component', () => {
         <>
           <AccordionBlockItem index={0} child={mockAccordionItem1} />
           <AccordionBlockItem index={1} child={mockAccordionItem2} />
-        </>
+        </>,
       );
 
       expect(screen.getByText('What is this product?')).toBeInTheDocument();
       expect(screen.getByText('How do I use it?')).toBeInTheDocument();
-      
-      const items = container.querySelectorAll('[data-testid="accordion-item"]');
+
+      const items = container.querySelectorAll(
+        '[data-testid="accordion-item"]',
+      );
       expect(items).toHaveLength(2);
     });
 
@@ -161,10 +202,12 @@ describe('AccordionBlockItem Component', () => {
         <>
           <AccordionBlockItem index={0} child={mockAccordionItem1} />
           <AccordionBlockItem index={1} child={mockAccordionItem2} />
-        </>
+        </>,
       );
 
-      const items = container.querySelectorAll('[data-testid="accordion-item"]');
+      const items = container.querySelectorAll(
+        '[data-testid="accordion-item"]',
+      );
       expect(items[0]).toHaveAttribute('data-value', 'accordion-block-item-1');
       expect(items[1]).toHaveAttribute('data-value', 'accordion-block-item-2');
     });
@@ -210,7 +253,9 @@ describe('AccordionBlockItem Component', () => {
 
       render(<AccordionBlockItem index={0} child={itemWithEmptyHeading} />);
 
-      expect(screen.getByTestId('accordion-item-heading')).toHaveTextContent('');
+      expect(screen.getByTestId('accordion-item-heading')).toHaveTextContent(
+        '',
+      );
     });
 
     it('should handle empty description value', () => {
@@ -224,9 +269,13 @@ describe('AccordionBlockItem Component', () => {
         },
       };
 
-      const { container } = render(<AccordionBlockItem index={0} child={itemWithEmptyDescription} />);
+      const { container } = render(
+        <AccordionBlockItem index={0} child={itemWithEmptyDescription} />,
+      );
 
-      const description = container.querySelector('[data-testid="accordion-item-description"]');
+      const description = container.querySelector(
+        '[data-testid="accordion-item-description"]',
+      );
       expect(description?.innerHTML).toBe('');
     });
   });
@@ -236,16 +285,20 @@ describe('AccordionBlockItem Component', () => {
       render(<AccordionBlockItem index={0} child={mockAccordionItem1} />);
 
       const accordionItem = screen.getByTestId('accordion-item');
-      expect(accordionItem).toHaveAttribute('data-value', 'accordion-block-item-1');
+      expect(accordionItem).toHaveAttribute(
+        'data-value',
+        'accordion-block-item-1',
+      );
     });
 
     it('should handle large index numbers correctly', () => {
       render(<AccordionBlockItem index={99} child={mockAccordionItem1} />);
 
       const accordionItem = screen.getByTestId('accordion-item');
-      expect(accordionItem).toHaveAttribute('data-value', 'accordion-block-item-100');
+      expect(accordionItem).toHaveAttribute(
+        'data-value',
+        'accordion-block-item-100',
+      );
     });
   });
 });
-
-

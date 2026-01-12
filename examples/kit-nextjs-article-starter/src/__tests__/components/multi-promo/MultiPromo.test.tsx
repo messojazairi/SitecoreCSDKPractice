@@ -75,37 +75,52 @@ const mockApi = {
 };
 
 jest.mock('@/components/ui/carousel', () => ({
-  Carousel: React.forwardRef(({ children, setApi, opts, className }: any, ref: any) => {
-    React.useEffect(() => {
-      if (setApi) {
-        setApi(mockApi);
-      }
-    }, [setApi]);
+  Carousel: React.forwardRef(
+    ({ children, setApi, opts, className }: any, ref: any) => {
+      React.useEffect(() => {
+        if (setApi) {
+          setApi(mockApi);
+        }
+      }, [setApi]);
 
-    return React.createElement(
-      'div',
-      {
-        ref,
-        'data-testid': 'carousel',
-        'data-opts': JSON.stringify(opts),
-        className,
-      },
-      children
-    );
-  }),
+      return React.createElement(
+        'div',
+        {
+          ref,
+          'data-testid': 'carousel',
+          'data-opts': JSON.stringify(opts),
+          className,
+        },
+        children,
+      );
+    },
+  ),
   CarouselContent: ({ children, className }: any) =>
-    React.createElement('div', { 'data-testid': 'carousel-content', className }, children),
+    React.createElement(
+      'div',
+      { 'data-testid': 'carousel-content', className },
+      children,
+    ),
   CarouselItem: ({ children, className }: any) =>
-    React.createElement('div', { 'data-testid': 'carousel-item', className }, children),
+    React.createElement(
+      'div',
+      { 'data-testid': 'carousel-item', className },
+      children,
+    ),
 }));
 
 // Mock MultiPromoItem component
 jest.mock('@/components/multi-promo/MultiPromoItem.dev', () => ({
   Default: ({ heading, image, link, isPageEditing }: any) => (
     <div data-testid="multi-promo-item" data-editing={isPageEditing}>
-      <img src={image?.jsonValue?.value?.src} alt={image?.jsonValue?.value?.alt} />
+      <img
+        src={image?.jsonValue?.value?.src}
+        alt={image?.jsonValue?.value?.alt}
+      />
       <h3>{heading?.jsonValue?.value}</h3>
-      {link?.jsonValue?.value?.href && <a href={link.jsonValue.value.href}>{link.jsonValue.value.text}</a>}
+      {link?.jsonValue?.value?.href && (
+        <a href={link.jsonValue.value.href}>{link.jsonValue.value.text}</a>
+      )}
     </div>
   ),
 }));
@@ -134,8 +149,8 @@ describe('MultiPromo Component', () => {
       expect(screen.getByText('Featured Products')).toBeInTheDocument();
       expect(
         screen.getByText(
-          'Explore our curated selection of premium products designed for your lifestyle.'
-        )
+          'Explore our curated selection of premium products designed for your lifestyle.',
+        ),
       ).toBeInTheDocument();
       expect(screen.getByTestId('carousel')).toBeInTheDocument();
     });
@@ -143,7 +158,9 @@ describe('MultiPromo Component', () => {
     it('should render with data-component attribute', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
-      const component = container.querySelector('[data-component="MultiPromoCarousel"]');
+      const component = container.querySelector(
+        '[data-component="MultiPromoCarousel"]',
+      );
       expect(component).toBeInTheDocument();
     });
 
@@ -160,7 +177,7 @@ describe('MultiPromo Component', () => {
       const description = container.querySelector('.prose');
       expect(description).toBeInTheDocument();
       expect(description?.innerHTML).toContain(
-        'Explore our curated selection of premium products'
+        'Explore our curated selection of premium products',
       );
     });
   });
@@ -268,7 +285,7 @@ describe('MultiPromo Component', () => {
 
       expect(screen.getByText('Featured Products')).toBeInTheDocument();
       expect(
-        screen.queryByText('Explore our curated selection of premium products')
+        screen.queryByText('Explore our curated selection of premium products'),
       ).not.toBeInTheDocument();
       expect(screen.getByTestId('carousel')).toBeInTheDocument();
     });
@@ -292,21 +309,27 @@ describe('MultiPromo Component', () => {
     it('should apply custom styles from params', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
-      const component = container.querySelector('[data-component="MultiPromoCarousel"]');
+      const component = container.querySelector(
+        '[data-component="MultiPromoCarousel"]',
+      );
       expect(component).toHaveClass('custom-multi-promo-style');
     });
 
     it('should apply position-left by default when no position styles', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
-      const component = container.querySelector('[data-component="MultiPromoCarousel"]');
+      const component = container.querySelector(
+        '[data-component="MultiPromoCarousel"]',
+      );
       expect(component).toHaveClass('position-left');
     });
 
     it('should not apply position-left when position styles exist', () => {
       const { container } = render(<MultiPromo {...propsWithPositionStyles} />);
 
-      const component = container.querySelector('[data-component="MultiPromoCarousel"]');
+      const component = container.querySelector(
+        '[data-component="MultiPromoCarousel"]',
+      );
       expect(component).not.toHaveClass('position-left');
       expect(component).toHaveClass('position-right');
     });
@@ -319,7 +342,7 @@ describe('MultiPromo Component', () => {
       await waitFor(() => {
         const rootNode = mockApi.rootNode();
         const keydownListener = rootNode.addEventListener.mock.calls.find(
-          (call: any) => call[0] === 'keydown'
+          (call: any) => call[0] === 'keydown',
         )?.[1];
 
         if (keydownListener) {
@@ -340,7 +363,7 @@ describe('MultiPromo Component', () => {
       await waitFor(() => {
         const rootNode = mockApi.rootNode();
         const keydownListener = rootNode.addEventListener.mock.calls.find(
-          (call: any) => call[0] === 'keydown'
+          (call: any) => call[0] === 'keydown',
         )?.[1];
 
         if (keydownListener) {
@@ -361,7 +384,7 @@ describe('MultiPromo Component', () => {
       await waitFor(() => {
         const rootNode = mockApi.rootNode();
         const keydownListener = rootNode.addEventListener.mock.calls.find(
-          (call: any) => call[0] === 'keydown'
+          (call: any) => call[0] === 'keydown',
         )?.[1];
 
         if (keydownListener) {
@@ -385,7 +408,7 @@ describe('MultiPromo Component', () => {
       await waitFor(() => {
         const rootNode = mockApi.rootNode();
         const wheelListener = rootNode.addEventListener.mock.calls.find(
-          (call: any) => call[0] === 'wheel'
+          (call: any) => call[0] === 'wheel',
         )?.[1];
 
         if (wheelListener) {
@@ -403,7 +426,7 @@ describe('MultiPromo Component', () => {
       await waitFor(() => {
         const rootNode = mockApi.rootNode();
         const wheelListener = rootNode.addEventListener.mock.calls.find(
-          (call: any) => call[0] === 'wheel'
+          (call: any) => call[0] === 'wheel',
         )?.[1];
 
         if (wheelListener) {
@@ -420,7 +443,9 @@ describe('MultiPromo Component', () => {
     it('should have sr-only live region for announcements', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
-      const liveRegion = container.querySelector('.sr-only[aria-live="polite"]');
+      const liveRegion = container.querySelector(
+        '.sr-only[aria-live="polite"]',
+      );
       expect(liveRegion).toBeInTheDocument();
       expect(liveRegion).toHaveAttribute('aria-atomic', 'true');
     });
@@ -430,14 +455,16 @@ describe('MultiPromo Component', () => {
 
       await waitFor(() => {
         const selectCallback = mockApi.on.mock.calls.find(
-          (call: any[]) => call[0] === 'select'
+          (call: any[]) => call[0] === 'select',
         )?.[1];
 
         if (selectCallback) {
           mockApi.selectedScrollSnap.mockReturnValue(1);
           selectCallback();
 
-          const liveRegion = container.querySelector('.sr-only[aria-live="polite"]');
+          const liveRegion = container.querySelector(
+            '.sr-only[aria-live="polite"]',
+          );
           expect(liveRegion).toHaveTextContent('Slide 2 of 4');
         }
       });
@@ -448,15 +475,26 @@ describe('MultiPromo Component', () => {
     it('should apply responsive margin classes', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
-      const component = container.querySelector('[data-component="MultiPromoCarousel"]');
-      expect(component).toHaveClass('mx-auto', 'my-8', 'md:my-16', 'max-w-screen-xl');
+      const component = container.querySelector(
+        '[data-component="MultiPromoCarousel"]',
+      );
+      expect(component).toHaveClass(
+        'mx-auto',
+        'my-8',
+        'md:my-16',
+        'max-w-screen-xl',
+      );
     });
 
     it('should apply flex layout to header section', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
       const headerSection = container.querySelector('.flex.flex-col');
-      expect(headerSection).toHaveClass('xl:flex-row', 'xl:items-end', 'xl:justify-between');
+      expect(headerSection).toHaveClass(
+        'xl:flex-row',
+        'xl:items-end',
+        'xl:justify-between',
+      );
     });
 
     it('should apply carousel overflow classes', () => {
@@ -527,7 +565,7 @@ describe('MultiPromo Component', () => {
         'text-4xl',
         'sm:text-5xl',
         'lg:text-6xl',
-        'tracking-tighter'
+        'tracking-tighter',
       );
     });
 
@@ -535,7 +573,11 @@ describe('MultiPromo Component', () => {
       const { container } = render(<MultiPromo {...defaultProps} />);
 
       const description = container.querySelector('.prose');
-      expect(description).toHaveClass('text-lg', 'leading-[1.444]', 'tracking-tight');
+      expect(description).toHaveClass(
+        'text-lg',
+        'leading-[1.444]',
+        'tracking-tight',
+      );
     });
 
     it('should apply carousel content margin classes', () => {
@@ -550,7 +592,12 @@ describe('MultiPromo Component', () => {
 
       const carouselItems = screen.getAllByTestId('carousel-item');
       carouselItems.forEach((item) => {
-        expect(item).toHaveClass('min-w-[238px]', 'max-w-[416px]', 'pl-4', 'sm:pl-8');
+        expect(item).toHaveClass(
+          'min-w-[238px]',
+          'max-w-[416px]',
+          'pl-4',
+          'sm:pl-8',
+        );
       });
     });
   });
@@ -559,7 +606,7 @@ describe('MultiPromo Component', () => {
     it('should setup event listeners with cleanup', async () => {
       const removeEventListenerMock = jest.fn();
       const addEventListenerMock = jest.fn();
-      
+
       mockApi.rootNode.mockReturnValue({
         addEventListener: addEventListenerMock,
         removeEventListener: removeEventListenerMock,
@@ -568,8 +615,14 @@ describe('MultiPromo Component', () => {
       const { unmount } = render(<MultiPromo {...defaultProps} />);
 
       await waitFor(() => {
-        expect(addEventListenerMock).toHaveBeenCalledWith('keydown', expect.any(Function));
-        expect(addEventListenerMock).toHaveBeenCalledWith('wheel', expect.any(Function));
+        expect(addEventListenerMock).toHaveBeenCalledWith(
+          'keydown',
+          expect.any(Function),
+        );
+        expect(addEventListenerMock).toHaveBeenCalledWith(
+          'wheel',
+          expect.any(Function),
+        );
       });
 
       unmount();
@@ -581,4 +634,3 @@ describe('MultiPromo Component', () => {
     });
   });
 });
-

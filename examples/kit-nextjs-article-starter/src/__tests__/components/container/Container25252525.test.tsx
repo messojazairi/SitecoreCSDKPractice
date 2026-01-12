@@ -14,8 +14,12 @@ interface MockPlaceholderProps {
 }
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
   useSitecore: jest.fn(),
   withDatasourceCheck:
     () =>
@@ -55,10 +59,18 @@ describe('Container25252525 Component', () => {
     it('should render container with all four placeholders', () => {
       render(<Container25252525 {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-25-one-main-25')).toBeInTheDocument();
-      expect(screen.getByTestId('placeholder-container-25-two-main-25')).toBeInTheDocument();
-      expect(screen.getByTestId('placeholder-container-25-three-main-25')).toBeInTheDocument();
-      expect(screen.getByTestId('placeholder-container-25-four-main-25')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-25-one-main-25'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-25-two-main-25'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-25-three-main-25'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-25-four-main-25'),
+      ).toBeInTheDocument();
     });
 
     it('should apply container--25252525 class', () => {
@@ -80,7 +92,9 @@ describe('Container25252525 Component', () => {
     it('should render four column layout', () => {
       const { container } = render(<Container25252525 {...defaultProps} />);
 
-      const flexWrapper = container.querySelector('.w-full.mx-auto.max-w-\\[1760px\\]');
+      const flexWrapper = container.querySelector(
+        '.w-full.mx-auto.max-w-\\[1760px\\]',
+      );
       expect(flexWrapper).toBeInTheDocument();
       expect(flexWrapper).toHaveClass('flex', 'flex-wrap', 'items-stretch');
     });
@@ -111,7 +125,9 @@ describe('Container25252525 Component', () => {
     });
 
     it('should exclude top margin when excludeTopMargin is 1', () => {
-      const { container } = render(<Container25252525 {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <Container25252525 {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0');
@@ -121,13 +137,17 @@ describe('Container25252525 Component', () => {
   describe('Empty placeholder handling', () => {
     it('should not render when placeholders are empty and not editing', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container25252525 {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <Container25252525 {...propsWithEmptyPlaceholders} />,
+      );
 
       expect(container.firstChild).toBeNull();
     });
 
     it('should render when placeholders are empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      mockUseSitecore.mockReturnValue(
+        mockSitecoreContextEditing as ReturnType<typeof useSitecore>,
+      );
       const propsEditing = {
         ...propsWithEmptyPlaceholders,
         page: mockSitecoreContextEditing.page,
@@ -138,4 +158,3 @@ describe('Container25252525 Component', () => {
     });
   });
 });
-

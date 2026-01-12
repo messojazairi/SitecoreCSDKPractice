@@ -35,7 +35,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   }),
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
   Link: ({ field, editable, className }: any) => (
     <a
@@ -100,7 +104,7 @@ jest.mock('@/components/flex/Flex.dev', () => ({
         'data-justify': justify,
         'data-gap': gap,
       },
-      children
+      children,
     );
   },
   FlexItem: ({ children, basis, grow, className }: any) => (
@@ -147,7 +151,9 @@ describe('TextBanner Component', () => {
 
         expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
         expect(
-          screen.getByText('Discover amazing features and benefits that will transform your experience')
+          screen.getByText(
+            'Discover amazing features and benefits that will transform your experience',
+          ),
         ).toBeInTheDocument();
         expect(screen.getByText('Learn More')).toBeInTheDocument();
       });
@@ -204,7 +210,9 @@ describe('TextBanner Component', () => {
         const { container } = render(<TextBanner {...defaultProps} />);
 
         const section = container.querySelector('section');
-        expect(section).toHaveStyle({ '--bg-img': 'url(/images/banner-background.jpg)' });
+        expect(section).toHaveStyle({
+          '--bg-img': 'url(/images/banner-background.jpg)',
+        });
       });
 
       it('should not apply background image style when image is not provided', () => {
@@ -287,7 +295,9 @@ describe('TextBanner Component', () => {
 
       expect(screen.getByText('Welcome to Our Platform')).toBeInTheDocument();
       expect(
-        screen.queryByText('Discover amazing features and benefits that will transform your experience')
+        screen.queryByText(
+          'Discover amazing features and benefits that will transform your experience',
+        ),
       ).not.toBeInTheDocument();
     });
 
@@ -302,7 +312,9 @@ describe('TextBanner Component', () => {
 
   describe('Params handling', () => {
     it('should exclude top margin when param is set', () => {
-      const { container } = render(<TextBanner {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <TextBanner {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0');
@@ -432,4 +444,3 @@ describe('TextBanner Component', () => {
     });
   });
 });
-

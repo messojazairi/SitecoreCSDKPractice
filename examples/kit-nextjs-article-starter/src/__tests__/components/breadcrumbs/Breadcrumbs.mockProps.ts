@@ -101,7 +101,11 @@ export const mockAncestorWithoutUrl = {
 export const mockFieldsDefault = {
   data: {
     datasource: {
-      ancestors: [mockAncestorHome, mockAncestorArticles, mockAncestorTechnology],
+      ancestors: [
+        mockAncestorHome,
+        mockAncestorArticles,
+        mockAncestorTechnology,
+      ],
       name: 'Current Page Title',
     },
   },
@@ -198,4 +202,3 @@ export const propsWithoutFields = {
   fields: null as any,
   rendering: { componentName: 'Breadcrumbs' } as any,
 };
-

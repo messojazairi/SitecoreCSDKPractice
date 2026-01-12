@@ -2,7 +2,11 @@
 
 import { useContext, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ImageField, Image as ContentSdkImage, useSitecore } from '@sitecore-content-sdk/nextjs';
+import {
+  ImageField,
+  Image as ContentSdkImage,
+  useSitecore,
+} from '@sitecore-content-sdk/nextjs';
 import { ImageOptimizationContext } from '@/components/image/image-optimization.context';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
@@ -45,7 +49,7 @@ export const Default: React.FC<ImageWrapperProps> = (props) => {
 
   const imageSrc = image?.value?.src ? image?.value?.src : '';
   const isSvg = imageSrc.includes('.svg');
-  
+
   // if  unoptimized || svg || external
   // Check if image is from external domain (not current hostname)
   // Only check window.location after hydration is complete to avoid hydration mismatch

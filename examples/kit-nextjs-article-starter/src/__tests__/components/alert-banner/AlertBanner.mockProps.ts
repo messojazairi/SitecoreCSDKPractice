@@ -166,5 +166,3 @@ export const propsWithEmptyParams = {
   externalFields: mockExternalFields,
   rendering: mockRendering,
 };
-
-

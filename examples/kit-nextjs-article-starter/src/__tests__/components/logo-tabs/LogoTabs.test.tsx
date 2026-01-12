@@ -84,7 +84,10 @@ jest.mock('@/components/logo-tabs/LogoItem', () => ({
       role="tab"
       aria-selected={isActive}
     >
-      <img src={logo?.jsonValue?.value?.src} alt={logo?.jsonValue?.value?.alt} />
+      <img
+        src={logo?.jsonValue?.value?.src}
+        alt={logo?.jsonValue?.value?.alt}
+      />
       <span>{title?.jsonValue?.value}</span>
     </button>
   ),
@@ -122,21 +125,27 @@ describe('LogoTabs Component', () => {
       render(<LogoTabs {...defaultProps} />);
 
       const images = screen.getAllByTestId('logo-tabs-image');
-      const backgroundImage = images.find((img) => img.getAttribute('src') === '/images/background.jpg');
+      const backgroundImage = images.find(
+        (img) => img.getAttribute('src') === '/images/background.jpg',
+      );
       expect(backgroundImage).toBeInTheDocument();
     });
 
     it('should render fallback background when no image provided', () => {
       const { container } = render(<LogoTabs {...propsWithoutBackground} />);
 
-      const fallbackBackground = container.querySelector('.bg-gradient-to-b.from-gray-800.to-gray-900');
+      const fallbackBackground = container.querySelector(
+        '.bg-gradient-to-b.from-gray-800.to-gray-900',
+      );
       expect(fallbackBackground).toBeInTheDocument();
     });
 
     it('should render gradient overlay on background image', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
-      const gradientOverlay = container.querySelector('.bg-gradient-to-b.from-black\\/30');
+      const gradientOverlay = container.querySelector(
+        '.bg-gradient-to-b.from-black\\/30',
+      );
       expect(gradientOverlay).toBeInTheDocument();
     });
   });
@@ -188,7 +197,9 @@ describe('LogoTabs Component', () => {
     it('should render active tab content', () => {
       render(<LogoTabs {...defaultProps} />);
 
-      expect(screen.getByText('Experience Brand A Excellence')).toBeInTheDocument();
+      expect(
+        screen.getByText('Experience Brand A Excellence'),
+      ).toBeInTheDocument();
     });
 
     it('should render CTA button for active tab', () => {
@@ -203,8 +214,12 @@ describe('LogoTabs Component', () => {
       render(<LogoTabs {...defaultProps} />);
 
       // Initially, only first tab content should be visible
-      expect(screen.getByText('Experience Brand A Excellence')).toBeInTheDocument();
-      expect(screen.queryByText('Discover Brand B Innovation')).toBeInTheDocument();
+      expect(
+        screen.getByText('Experience Brand A Excellence'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('Discover Brand B Innovation'),
+      ).toBeInTheDocument();
     });
 
     it('should render tab panels with tabpanel role', () => {
@@ -227,7 +242,7 @@ describe('LogoTabs Component', () => {
       render(<LogoTabs {...defaultProps} />);
 
       const logoItems = screen.getAllByTestId('logo-item');
-      
+
       // Click second logo item
       fireEvent.click(logoItems[1]);
 
@@ -239,15 +254,19 @@ describe('LogoTabs Component', () => {
       render(<LogoTabs {...defaultProps} />);
 
       const logoItems = screen.getAllByTestId('logo-item');
-      
+
       // Initially showing first tab content
-      expect(screen.getByText('Experience Brand A Excellence')).toBeInTheDocument();
-      
+      expect(
+        screen.getByText('Experience Brand A Excellence'),
+      ).toBeInTheDocument();
+
       // Click second logo item
       fireEvent.click(logoItems[1]);
 
       // Should show second tab content
-      expect(screen.getByText('Discover Brand B Innovation')).toBeInTheDocument();
+      expect(
+        screen.getByText('Discover Brand B Innovation'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -256,7 +275,7 @@ describe('LogoTabs Component', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'ArrowRight' });
 
       const logoItems = screen.getAllByTestId('logo-item');
@@ -267,18 +286,21 @@ describe('LogoTabs Component', () => {
       render(<LogoTabs {...defaultProps} />);
 
       const logoItems = screen.getAllByTestId('logo-item');
-      
+
       // First go to second tab
       fireEvent.click(logoItems[1]);
-      
+
       const { container } = render(<LogoTabs {...defaultProps} />);
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'ArrowLeft' });
 
       // Should wrap to last tab
       const updatedLogoItems = screen.getAllByTestId('logo-item');
-      expect(updatedLogoItems[updatedLogoItems.length - 1]).toHaveAttribute('data-active', 'true');
+      expect(updatedLogoItems[updatedLogoItems.length - 1]).toHaveAttribute(
+        'data-active',
+        'true',
+      );
     });
 
     it('should navigate to first tab with Home key', () => {
@@ -288,7 +310,7 @@ describe('LogoTabs Component', () => {
       fireEvent.click(logoItems[2]); // Go to third tab
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'Home' });
 
       const updatedLogoItems = screen.getAllByTestId('logo-item');
@@ -299,18 +321,21 @@ describe('LogoTabs Component', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'End' });
 
       const logoItems = screen.getAllByTestId('logo-item');
-      expect(logoItems[logoItems.length - 1]).toHaveAttribute('data-active', 'true');
+      expect(logoItems[logoItems.length - 1]).toHaveAttribute(
+        'data-active',
+        'true',
+      );
     });
 
     it('should support ArrowDown for next tab', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'ArrowDown' });
 
       const logoItems = screen.getAllByTestId('logo-item');
@@ -321,19 +346,22 @@ describe('LogoTabs Component', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       fireEvent.keyDown(tablist!, { key: 'ArrowUp' });
 
       // Should wrap to last tab
       const logoItems = screen.getAllByTestId('logo-item');
-      expect(logoItems[logoItems.length - 1]).toHaveAttribute('data-active', 'true');
+      expect(logoItems[logoItems.length - 1]).toHaveAttribute(
+        'data-active',
+        'true',
+      );
     });
 
     it('should prevent default behavior for navigation keys', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 
       const tablist = container.querySelector('[role="tablist"]');
-      
+
       // fireEvent.keyDown automatically prevents default for these keys
       fireEvent.keyDown(tablist!, { key: 'ArrowRight' });
 
@@ -355,7 +383,9 @@ describe('LogoTabs Component', () => {
       mockUseSitecore.mockReturnValue(mockPageDataEditing);
       render(<LogoTabs {...propsEditingWithoutLogos} />);
 
-      expect(screen.getByText('Add a logo tab item to edit.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Add a logo tab item to edit.'),
+      ).toBeInTheDocument();
     });
 
     it('should not show tab interface in editing mode', () => {
@@ -429,7 +459,7 @@ describe('LogoTabs Component', () => {
 
       // Check for the class by looking at the element's className
       const contentDiv = Array.from(container.querySelectorAll('div')).find(
-        (div) => div.className && div.className.includes('@container')
+        (div) => div.className && div.className.includes('@container'),
       );
       expect(contentDiv).toBeTruthy();
     });
@@ -548,4 +578,3 @@ describe('LogoTabs Component', () => {
     });
   });
 });
-

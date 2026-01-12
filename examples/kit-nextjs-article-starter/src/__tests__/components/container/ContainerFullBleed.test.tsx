@@ -29,8 +29,12 @@ interface MockFlexItemProps {
 }
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
   withDatasourceCheck:
     () =>
     <T extends object>(Component: React.ComponentType<T>) =>
@@ -59,7 +63,9 @@ describe('ContainerFullBleed Component', () => {
     it('should render container with placeholder', () => {
       render(<ContainerFullBleed {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-fullbleed-main-fullbleed')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fullbleed-main-fullbleed'),
+      ).toBeInTheDocument();
     });
 
     it('should render with container--full-bleed class', () => {
@@ -79,28 +85,48 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Background color variants', () => {
     it('should apply primary background classes', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithPrimaryBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithPrimaryBackground} />,
+      );
 
       const section = container.querySelector('section');
-      expect(section).toHaveClass('has-bg', 'bg-primary', 'text-primary-foreground');
+      expect(section).toHaveClass(
+        'has-bg',
+        'bg-primary',
+        'text-primary-foreground',
+      );
     });
 
     it('should apply secondary background classes', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithSecondaryBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithSecondaryBackground} />,
+      );
 
       const section = container.querySelector('section');
-      expect(section).toHaveClass('has-bg', 'bg-secondary', 'text-secondary-foreground');
+      expect(section).toHaveClass(
+        'has-bg',
+        'bg-secondary',
+        'text-secondary-foreground',
+      );
     });
 
     it('should apply tertiary background classes', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithTertiaryBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithTertiaryBackground} />,
+      );
 
       const section = container.querySelector('section');
-      expect(section).toHaveClass('has-bg', 'bg-tertiary', 'text-tertiary-foreground');
+      expect(section).toHaveClass(
+        'has-bg',
+        'bg-tertiary',
+        'text-tertiary-foreground',
+      );
     });
 
     it('should apply transparent background class', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithTransparentBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithTransparentBackground} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('bg-transparent');
@@ -119,7 +145,9 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should not apply inset when backgroundColor is transparent', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithInsetAndTransparent} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithInsetAndTransparent} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).not.toHaveClass('is-inset');
@@ -128,7 +156,9 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Background image', () => {
     it('should apply background image styles when provided', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithBackgroundImage} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithBackgroundImage} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveStyle({
@@ -157,7 +187,9 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should exclude margin when excludeTopMargin is 1', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0', 'mb-0');
@@ -166,7 +198,9 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Padding variants', () => {
     it('should apply background padding when backgroundColor is set and not transparent', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithPrimaryBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithPrimaryBackground} />,
+      );
 
       const section = container.querySelector('section');
       // Should have padding classes
@@ -174,7 +208,9 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should apply no padding when backgroundColor is transparent', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithTransparentBackground} />);
+      const { container } = render(
+        <ContainerFullBleed {...propsWithTransparentBackground} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('py-0');
@@ -235,7 +271,9 @@ describe('ContainerFullBleed Component', () => {
       const section = container.querySelector('section');
       const flex = section?.querySelector('[data-testid="flex"]');
       const flexItem = flex?.querySelector('[data-testid="flex-item"]');
-      const placeholder = flexItem?.querySelector('[data-testid^="placeholder-"]');
+      const placeholder = flexItem?.querySelector(
+        '[data-testid^="placeholder-"]',
+      );
 
       expect(section).toBeInTheDocument();
       expect(flex).toBeInTheDocument();
@@ -244,4 +282,3 @@ describe('ContainerFullBleed Component', () => {
     });
   });
 });
-

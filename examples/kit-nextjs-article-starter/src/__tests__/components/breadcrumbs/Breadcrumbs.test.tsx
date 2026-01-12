@@ -13,15 +13,23 @@ import {
 
 // Mock UI components
 jest.mock('@/components/ui/breadcrumb', () => ({
-  Breadcrumb: ({ children }: any) => <nav data-testid="breadcrumb">{children}</nav>,
-  BreadcrumbList: ({ children }: any) => <ol data-testid="breadcrumb-list">{children}</ol>,
-  BreadcrumbItem: ({ children }: any) => <li data-testid="breadcrumb-item">{children}</li>,
+  Breadcrumb: ({ children }: any) => (
+    <nav data-testid="breadcrumb">{children}</nav>
+  ),
+  BreadcrumbList: ({ children }: any) => (
+    <ol data-testid="breadcrumb-list">{children}</ol>
+  ),
+  BreadcrumbItem: ({ children }: any) => (
+    <li data-testid="breadcrumb-item">{children}</li>
+  ),
   BreadcrumbLink: ({ children, href }: any) => (
     <a href={href} data-testid="breadcrumb-link">
       {children}
     </a>
   ),
-  BreadcrumbPage: ({ children }: any) => <span data-testid="breadcrumb-page">{children}</span>,
+  BreadcrumbPage: ({ children }: any) => (
+    <span data-testid="breadcrumb-page">{children}</span>
+  ),
   BreadcrumbSeparator: () => <span data-testid="breadcrumb-separator">/</span>,
 }));
 
@@ -48,10 +56,10 @@ describe('Breadcrumbs Component', () => {
 
       expect(links[0]).toHaveTextContent('Home');
       expect(links[0]).toHaveAttribute('href', '/');
-      
+
       expect(links[1]).toHaveTextContent('Articles');
       expect(links[1]).toHaveAttribute('href', '/articles');
-      
+
       expect(links[2]).toHaveTextContent('Tech');
       expect(links[2]).toHaveAttribute('href', '/articles/technology');
     });
@@ -162,7 +170,7 @@ describe('Breadcrumbs Component', () => {
         },
       };
 
-      render(<Breadcrumbs {...propsWithoutDatasource as any} />);
+      render(<Breadcrumbs {...(propsWithoutDatasource as any)} />);
 
       // Should render home link fallback
       expect(screen.getByTestId('breadcrumb')).toBeInTheDocument();
@@ -196,7 +204,9 @@ describe('Breadcrumbs Component', () => {
       render(<Breadcrumbs {...defaultProps} />);
 
       expect(screen.getByTestId('breadcrumb-list')).toBeInTheDocument();
-      expect(screen.getAllByTestId('breadcrumb-item').length).toBeGreaterThan(0);
+      expect(screen.getAllByTestId('breadcrumb-item').length).toBeGreaterThan(
+        0,
+      );
     });
 
     it('should render current page without link', () => {
@@ -207,4 +217,3 @@ describe('Breadcrumbs Component', () => {
     });
   });
 });
-

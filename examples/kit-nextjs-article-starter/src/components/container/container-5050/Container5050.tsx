@@ -25,8 +25,14 @@ export const Default: React.FC<Container5050Props> = (props) => {
 
   const isPageEditing = page.mode.isEditing;
 
-  const leftPlaceholders = getContainerPlaceholderProps('container-fifty-left', props.params);
-  const rightPlaceholders = getContainerPlaceholderProps('container-fifty-right', props.params);
+  const leftPlaceholders = getContainerPlaceholderProps(
+    'container-fifty-left',
+    props.params,
+  );
+  const rightPlaceholders = getContainerPlaceholderProps(
+    'container-fifty-right',
+    props.params,
+  );
 
   const isEmptyPlaceholder =
     isContainerPlaceholderEmpty(rendering, leftPlaceholders, left) &&
@@ -36,7 +42,8 @@ export const Default: React.FC<Container5050Props> = (props) => {
     return null;
   }
 
-  const excludeTopMargin = props?.params?.excludeTopMargin === '1' ? true : false;
+  const excludeTopMargin =
+    props?.params?.excludeTopMargin === '1' ? true : false;
 
   return (
     <section
@@ -47,12 +54,20 @@ export const Default: React.FC<Container5050Props> = (props) => {
     >
       <Flex wrap="nowrap">
         <FlexItem as="div" basis="1/2">
-          <AppPlaceholder name={leftPlaceholders.dynamicKey} rendering={rendering} page={page}
-            componentMap={componentMap}/>
+          <AppPlaceholder
+            name={leftPlaceholders.dynamicKey}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
         <FlexItem as="div" basis="1/2">
-          <AppPlaceholder name={rightPlaceholders.dynamicKey} rendering={rendering} page={page}
-            componentMap={componentMap}/>
+          <AppPlaceholder
+            name={rightPlaceholders.dynamicKey}
+            rendering={rendering}
+            page={page}
+            componentMap={componentMap}
+          />
         </FlexItem>
       </Flex>
     </section>

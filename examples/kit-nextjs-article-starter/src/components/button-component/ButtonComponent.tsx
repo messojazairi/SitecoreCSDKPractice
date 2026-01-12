@@ -2,7 +2,12 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { ComponentRendering, ImageField, Link, LinkField } from '@sitecore-content-sdk/nextjs';
+import {
+  ComponentRendering,
+  ImageField,
+  Link,
+  LinkField,
+} from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -52,7 +57,7 @@ const ButtonBase = (
   props: ButtonFields['params'] &
     ButtonFields['fields'] & { variant?: EnumValues<typeof ButtonVariants> } & {
       className?: string;
-    }
+    },
 ): JSX.Element | null => {
   const {
     buttonLink,
@@ -137,7 +142,11 @@ const EditableButton = (props: {
               isAriaHidden={ariaHidden}
             />
           ) : null}
-          <Link className={className} field={buttonLink} editable={isPageEditing} />
+          <Link
+            className={className}
+            field={buttonLink}
+            editable={isPageEditing}
+          />
           {iconPosition !== IconPosition.LEADING && icon ? (
             <Icon
               iconName={iconName ? iconName : IconName.ARROW_LEFT}
@@ -210,11 +219,19 @@ const EditableImageButton = (props: {
       {isPageEditing ? (
         <span className="flex">
           {iconPosition === IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+            />
           ) : null}
           <Link field={buttonLink} editable={isPageEditing} />
           {iconPosition !== IconPosition.LEADING ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+            />
           ) : null}
         </span>
       ) : (
@@ -225,11 +242,19 @@ const EditableImageButton = (props: {
           aria-label={asIconLink ? buttonLink?.value?.text : undefined}
         >
           {iconPosition === IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+            />
           ) : null}
           {!asIconLink && buttonLink?.value?.text}
           {iconPosition !== IconPosition.LEADING && icon?.value?.src ? (
-            <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
+            <ImageWrapper
+              className={iconClassName}
+              image={icon}
+              aria-hidden={ariaHidden}
+            />
           ) : null}
         </Link>
       )}
@@ -239,7 +264,12 @@ const EditableImageButton = (props: {
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { fields, params } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
+  const {
+    size,
+    iconPosition = 'trailing',
+    iconClassName,
+    isPageEditing,
+  } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
@@ -248,7 +278,9 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
     iconName ||
-    (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
+    (iconPosition === IconPosition.LEADING
+      ? IconName.ARROW_LEFT
+      : IconName.ARROW_RIGHT);
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
@@ -257,11 +289,19 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
         ) : (
           <Link editable={isPageEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+              <Icon
+                iconName={buttonIcon}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
             )}
             {buttonLink?.value?.text}
             {iconPosition !== IconPosition.LEADING && (
-              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+              <Icon
+                iconName={buttonIcon}
+                className={iconClassName}
+                isAriaHidden={ariaHidden}
+              />
             )}
           </Link>
         )}

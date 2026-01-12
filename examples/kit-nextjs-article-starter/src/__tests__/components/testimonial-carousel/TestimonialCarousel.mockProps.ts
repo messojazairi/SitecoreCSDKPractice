@@ -8,7 +8,8 @@ import {
 export const mockTestimonialItem1: TestimonialCarouselItemProps = {
   testimonialQuote: {
     jsonValue: {
-      value: 'This product has completely transformed the way we work. Highly recommended!',
+      value:
+        'This product has completely transformed the way we work. Highly recommended!',
     } as Field<string>,
   },
   testimonialAttribution: {
@@ -21,7 +22,8 @@ export const mockTestimonialItem1: TestimonialCarouselItemProps = {
 export const mockTestimonialItem2: TestimonialCarouselItemProps = {
   testimonialQuote: {
     jsonValue: {
-      value: 'Outstanding service and support. The team went above and beyond our expectations.',
+      value:
+        'Outstanding service and support. The team went above and beyond our expectations.',
     } as Field<string>,
   },
   testimonialAttribution: {
@@ -34,7 +36,8 @@ export const mockTestimonialItem2: TestimonialCarouselItemProps = {
 export const mockTestimonialItem3: TestimonialCarouselItemProps = {
   testimonialQuote: {
     jsonValue: {
-      value: 'A game-changer for our business. We saw immediate results and increased productivity.',
+      value:
+        'A game-changer for our business. We saw immediate results and increased productivity.',
     } as Field<string>,
   },
   testimonialAttribution: {
@@ -44,13 +47,14 @@ export const mockTestimonialItem3: TestimonialCarouselItemProps = {
   },
 };
 
-export const mockTestimonialItemWithoutAttribution: TestimonialCarouselItemProps = {
-  testimonialQuote: {
-    jsonValue: {
-      value: 'Great experience overall!',
-    } as Field<string>,
-  },
-};
+export const mockTestimonialItemWithoutAttribution: TestimonialCarouselItemProps =
+  {
+    testimonialQuote: {
+      jsonValue: {
+        value: 'Great experience overall!',
+      } as Field<string>,
+    },
+  };
 
 // Default props with multiple testimonials
 export const defaultProps: TestimonialCarouselProps = {
@@ -58,7 +62,11 @@ export const defaultProps: TestimonialCarouselProps = {
     data: {
       datasource: {
         children: {
-          results: [mockTestimonialItem1, mockTestimonialItem2, mockTestimonialItem3],
+          results: [
+            mockTestimonialItem1,
+            mockTestimonialItem2,
+            mockTestimonialItem3,
+          ],
         },
       },
     },
@@ -109,22 +117,23 @@ export const propsWithTwoTestimonials: TestimonialCarouselProps = {
 };
 
 // Props with testimonial without attribution
-export const propsWithTestimonialWithoutAttribution: TestimonialCarouselProps = {
-  fields: {
-    data: {
-      datasource: {
-        children: {
-          results: [mockTestimonialItemWithoutAttribution],
+export const propsWithTestimonialWithoutAttribution: TestimonialCarouselProps =
+  {
+    fields: {
+      data: {
+        datasource: {
+          children: {
+            results: [mockTestimonialItemWithoutAttribution],
+          },
         },
       },
     },
-  },
-  params: {},
-  rendering: { componentName: 'TestimonialCarousel' } as any,
-  name: 'TestimonialCarousel',
-  sitecoreProvider: {},
-  Testimonials: [],
-};
+    params: {},
+    rendering: { componentName: 'TestimonialCarousel' } as any,
+    name: 'TestimonialCarousel',
+    sitecoreProvider: {},
+    Testimonials: [],
+  };
 
 // Props with empty testimonials array
 export const propsWithEmptyTestimonials: TestimonialCarouselProps = {
@@ -177,4 +186,3 @@ export const propsWithUndefinedFields: TestimonialCarouselProps = {
   sitecoreProvider: {},
   Testimonials: [],
 };
-

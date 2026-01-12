@@ -13,7 +13,13 @@ const Play = (props: SvgProps): JSX.Element => {
       {...sharedAttributes(props)}
       className={cn('icon--play', className)}
     >
-      <mask id="a" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="0">
+      <mask
+        id="a"
+        style={{ maskType: 'alpha' }}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+      >
         <path fill="currentColor" d="M0 0h85v85H0z" />
       </mask>
       <g mask="url(#a)">

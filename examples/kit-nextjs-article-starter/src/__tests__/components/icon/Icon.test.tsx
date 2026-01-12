@@ -354,7 +354,7 @@ describe('Icon Component', () => {
   describe('Dynamic icon loading', () => {
     it('should return null initially before icon loads', () => {
       const { container } = render(<Icon {...mockFacebookIconProps} />);
-      
+
       // Component returns null before the icon is loaded
       expect(container.firstChild).toBeNull();
     });
@@ -446,4 +446,3 @@ describe('Icon Component', () => {
     });
   });
 });
-

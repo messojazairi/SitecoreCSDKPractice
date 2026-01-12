@@ -6,7 +6,9 @@ import { GqlField } from '@/types/gql.props';
 /**
  * Model used for Sitecore Component integration
  */
-export type GlobalHeaderProps = ComponentProps & PlaceholderProps & GlobalHeaderFields;
+export type GlobalHeaderProps = ComponentProps &
+  PlaceholderProps &
+  GlobalHeaderFields;
 
 export type GlobalHeaderFields = {
   fields: {

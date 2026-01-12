@@ -103,7 +103,7 @@ describe('Container5050 Component', () => {
       render(<Container5050 {...defaultProps} />);
 
       const leftPlaceholder = screen.getByTestId(
-        'placeholder-container-fifty-left-main-5050'
+        'placeholder-container-fifty-left-main-5050',
       );
       expect(leftPlaceholder).toBeInTheDocument();
     });
@@ -112,7 +112,7 @@ describe('Container5050 Component', () => {
       render(<Container5050 {...defaultProps} />);
 
       const rightPlaceholder = screen.getByTestId(
-        'placeholder-container-fifty-right-main-5050'
+        'placeholder-container-fifty-right-main-5050',
       );
       expect(rightPlaceholder).toBeInTheDocument();
     });
@@ -163,7 +163,9 @@ describe('Container5050 Component', () => {
     });
 
     it('should exclude top margin when excludeTopMargin is 1', () => {
-      const { container } = render(<Container5050 {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <Container5050 {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       // Component includes both mt-4 (base) and mt-0 (conditional), relying on CSS specificity
@@ -180,7 +182,9 @@ describe('Container5050 Component', () => {
         },
       } as any;
 
-      const { container } = render(<Container5050 {...propsWithoutMarginParam} />);
+      const { container } = render(
+        <Container5050 {...propsWithoutMarginParam} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).toHaveClass('mt-4');
@@ -212,7 +216,9 @@ describe('Container5050 Component', () => {
         },
       } as any;
 
-      const { container } = render(<Container5050 {...propsWithUndefinedStyles} />);
+      const { container } = render(
+        <Container5050 {...propsWithUndefinedStyles} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).toBeInTheDocument();
@@ -222,14 +228,18 @@ describe('Container5050 Component', () => {
   describe('Empty placeholder handling', () => {
     it('should not render when placeholders are empty and not in editing mode', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container5050 {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <Container5050 {...propsWithEmptyPlaceholders} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).not.toBeInTheDocument();
     });
 
     it('should render when placeholders are empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      mockUseSitecore.mockReturnValue(
+        mockSitecoreContextEditing as ReturnType<typeof useSitecore>,
+      );
       const propsEditing = {
         ...propsWithEmptyPlaceholders,
         page: mockSitecoreContextEditing.page,
@@ -242,7 +252,9 @@ describe('Container5050 Component', () => {
 
     it('should render when left placeholder is populated', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container5050 {...propsWithOnlyLeftPlaceholder} />);
+      const { container } = render(
+        <Container5050 {...propsWithOnlyLeftPlaceholder} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).toBeInTheDocument();
@@ -250,7 +262,9 @@ describe('Container5050 Component', () => {
 
     it('should render when right placeholder is populated', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container5050 {...propsWithOnlyRightPlaceholder} />);
+      const { container } = render(
+        <Container5050 {...propsWithOnlyRightPlaceholder} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).toBeInTheDocument();
@@ -262,11 +276,11 @@ describe('Container5050 Component', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndLeftChild = {
         ...propsWithEmptyPlaceholders,
-        left: <div>Left child</div> as any,
+        left: (<div>Left child</div>) as any,
       };
 
       const { container } = render(
-        <Container5050 {...propsWithEmptyPlaceholdersAndLeftChild} />
+        <Container5050 {...propsWithEmptyPlaceholdersAndLeftChild} />,
       );
 
       const section = container.querySelector('section.container--5050');
@@ -277,11 +291,11 @@ describe('Container5050 Component', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndRightChild = {
         ...propsWithEmptyPlaceholders,
-        right: <div>Right child</div> as any,
+        right: (<div>Right child</div>) as any,
       };
 
       const { container } = render(
-        <Container5050 {...propsWithEmptyPlaceholdersAndRightChild} />
+        <Container5050 {...propsWithEmptyPlaceholdersAndRightChild} />,
       );
 
       const section = container.querySelector('section.container--5050');
@@ -292,12 +306,12 @@ describe('Container5050 Component', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndBothChildren = {
         ...propsWithEmptyPlaceholders,
-        left: <div>Left child</div> as any,
-        right: <div>Right child</div> as any,
+        left: (<div>Left child</div>) as any,
+        right: (<div>Right child</div>) as any,
       };
 
       const { container } = render(
-        <Container5050 {...propsWithEmptyPlaceholdersAndBothChildren} />
+        <Container5050 {...propsWithEmptyPlaceholdersAndBothChildren} />,
       );
 
       const section = container.querySelector('section.container--5050');
@@ -310,18 +324,22 @@ describe('Container5050 Component', () => {
       render(<Container5050 {...defaultProps} />);
 
       expect(
-        screen.getByTestId('placeholder-container-fifty-left-main-5050')
+        screen.getByTestId('placeholder-container-fifty-left-main-5050'),
       ).toBeInTheDocument();
       expect(
-        screen.getByTestId('placeholder-container-fifty-right-main-5050')
+        screen.getByTestId('placeholder-container-fifty-right-main-5050'),
       ).toBeInTheDocument();
     });
 
     it('should generate placeholder keys without DynamicPlaceholderId', () => {
       render(<Container5050 {...propsWithoutDynamicId} />);
 
-      expect(screen.getByTestId('placeholder-container-fifty-left-')).toBeInTheDocument();
-      expect(screen.getByTestId('placeholder-container-fifty-right-')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fifty-left-'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fifty-right-'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -341,7 +359,9 @@ describe('Container5050 Component', () => {
         },
       };
 
-      const { container } = render(<Container5050 {...propsWithMissingParams} />);
+      const { container } = render(
+        <Container5050 {...propsWithMissingParams} />,
+      );
 
       const section = container.querySelector('section.container--5050');
       expect(section).toBeInTheDocument();
@@ -354,7 +374,9 @@ describe('Container5050 Component', () => {
       };
 
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container5050 {...propsWithUndefinedRendering} />);
+      const { container } = render(
+        <Container5050 {...propsWithUndefinedRendering} />,
+      );
 
       // Should not render when rendering is undefined and not in editing mode
       const section = container.querySelector('section.container--5050');
@@ -363,7 +385,9 @@ describe('Container5050 Component', () => {
 
     it('should render null when empty and not in editing mode', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container5050 {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <Container5050 {...propsWithEmptyPlaceholders} />,
+      );
 
       expect(container.firstChild).toBeNull();
     });
@@ -395,17 +419,16 @@ describe('Container5050 Component', () => {
       render(<Container5050 {...defaultProps} />);
 
       const flexItems = screen.getAllByTestId('flex-item');
-      
+
       const leftPlaceholder = flexItems[0].querySelector(
-        '[data-testid="placeholder-container-fifty-left-main-5050"]'
+        '[data-testid="placeholder-container-fifty-left-main-5050"]',
       );
       expect(leftPlaceholder).toBeInTheDocument();
 
       const rightPlaceholder = flexItems[1].querySelector(
-        '[data-testid="placeholder-container-fifty-right-main-5050"]'
+        '[data-testid="placeholder-container-fifty-right-main-5050"]',
       );
       expect(rightPlaceholder).toBeInTheDocument();
     });
   });
 });
-

@@ -1,4 +1,7 @@
-import { ComponentRendering, ComponentParams } from '@sitecore-content-sdk/nextjs';
+import {
+  ComponentRendering,
+  ComponentParams,
+} from '@sitecore-content-sdk/nextjs';
 
 // Mock params data
 export const mockParams: ComponentParams = {
@@ -59,7 +62,9 @@ export const mockParamsWithoutId: ComponentParams = {
 };
 
 // Create rendering objects with params
-const mockRenderingWithContainer: ComponentRendering & { params: ComponentParams } = {
+const mockRenderingWithContainer: ComponentRendering & {
+  params: ComponentParams;
+} = {
   componentName: 'Container',
   dataSource: 'test-datasource',
   placeholders: {},
@@ -67,7 +72,9 @@ const mockRenderingWithContainer: ComponentRendering & { params: ComponentParams
   params: mockParamsWithContainer,
 };
 
-const mockRenderingWithBackgroundImage: ComponentRendering & { params: ComponentParams } = {
+const mockRenderingWithBackgroundImage: ComponentRendering & {
+  params: ComponentParams;
+} = {
   componentName: 'Container',
   dataSource: 'test-datasource',
   placeholders: {},
@@ -75,7 +82,9 @@ const mockRenderingWithBackgroundImage: ComponentRendering & { params: Component
   params: mockParamsWithBackgroundImage,
 };
 
-const mockRenderingWithoutStyles: ComponentRendering & { params: ComponentParams } = {
+const mockRenderingWithoutStyles: ComponentRendering & {
+  params: ComponentParams;
+} = {
   componentName: 'Container',
   dataSource: 'test-datasource',
   placeholders: {},
@@ -83,7 +92,9 @@ const mockRenderingWithoutStyles: ComponentRendering & { params: ComponentParams
   params: mockParamsWithoutStyles,
 };
 
-const mockRenderingWithoutGridParameters: ComponentRendering & { params: ComponentParams } = {
+const mockRenderingWithoutGridParameters: ComponentRendering & {
+  params: ComponentParams;
+} = {
   componentName: 'Container',
   dataSource: 'test-datasource',
   placeholders: {},
@@ -91,13 +102,14 @@ const mockRenderingWithoutGridParameters: ComponentRendering & { params: Compone
   params: mockParamsWithoutGridParameters,
 };
 
-const mockRenderingWithoutId: ComponentRendering & { params: ComponentParams } = {
-  componentName: 'Container',
-  dataSource: 'test-datasource',
-  placeholders: {},
-  uid: 'test-uid',
-  params: mockParamsWithoutId,
-};
+const mockRenderingWithoutId: ComponentRendering & { params: ComponentParams } =
+  {
+    componentName: 'Container',
+    dataSource: 'test-datasource',
+    placeholders: {},
+    uid: 'test-uid',
+    params: mockParamsWithoutId,
+  };
 
 // Complete props combinations
 export const defaultProps = {
@@ -129,4 +141,3 @@ export const propsWithoutId = {
   rendering: mockRenderingWithoutId,
   params: mockParamsWithoutId,
 };
-

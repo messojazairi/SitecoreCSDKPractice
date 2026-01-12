@@ -29,7 +29,8 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
     const { image, title, description, primaryLink, secondaryLink } = fields;
 
     const colorScheme = params.colorScheme as EnumValues<typeof ColorScheme>;
-    const hasLinks = isPageEditing || primaryLink?.value?.href || secondaryLink?.value?.href;
+    const hasLinks =
+      isPageEditing || primaryLink?.value?.href || secondaryLink?.value?.href;
 
     return (
       <section data-component="PromoAnimated" className="@container">
@@ -37,7 +38,7 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
           data-class-change
           className={cn(
             'promo-animated__content-wrapper @md:grid-cols-2 @md:items-center @md:gap-10 @xl:gap-[135px] group grid grid-cols-1',
-            { [props?.params?.styles]: props?.params?.styles }
+            { [props?.params?.styles]: props?.params?.styles },
           )}
         >
           <div className="promo-animated__image @md:flex @md:justify-end w-full">
@@ -46,7 +47,12 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
                 className="@md:max-w-[452px] @xs:mx-0 relative mx-auto aspect-square h-full w-full max-w-[350px] rounded-r-full group-[.position-center]:mx-auto group-[.position-right]:ml-auto"
                 ref={imageRef}
               >
-                <div className={imageBgOptions({ colorScheme, className: 'right-1/2' })} />
+                <div
+                  className={imageBgOptions({
+                    colorScheme,
+                    className: 'right-1/2',
+                  })}
+                />
                 <ImageWrapper
                   image={image}
                   className="@md:max-w-[452px] aspect-square w-full rounded-full object-cover"
@@ -63,7 +69,9 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
                 >
                   <div
                     className={spriteOptions({ colorScheme })}
-                    style={{ clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)' }}
+                    style={{
+                      clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
+                    }}
                   />
                 </AnimatedSection>
               </div>
@@ -72,7 +80,10 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
 
           <div className="promo-animated__content @md:flex @md:flex-col @md:justify-center @md:items-start min-w-0">
             {title && (
-              <AnimatedSection reducedMotion={prefersReducedMotion} isPageEditing={isPageEditing}>
+              <AnimatedSection
+                reducedMotion={prefersReducedMotion}
+                isPageEditing={isPageEditing}
+              >
                 <Text
                   tag="h2"
                   className="font-heading @sm:text-5xl @lg:text-6xl -ml-1 mt-6 max-w-[15.5ch] text-4xl font-normal leading-[1.1333] tracking-tighter group-[.position-center]:mx-auto group-[.position-right]:ml-auto"
@@ -102,7 +113,10 @@ export const PromoAnimatedDefault: React.FC<PromoAnimatedProps> = (props) => {
                 isPageEditing={isPageEditing}
               >
                 {primaryLink && (
-                  <Button buttonLink={primaryLink} isPageEditing={isPageEditing}></Button>
+                  <Button
+                    buttonLink={primaryLink}
+                    isPageEditing={isPageEditing}
+                  ></Button>
                 )}
                 {secondaryLink && (
                   <Button

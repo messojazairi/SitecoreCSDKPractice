@@ -95,4 +95,3 @@ export const propsWithOnlyRightPlaceholder = {
   } as ComponentRendering,
   page: mockSitecoreContext.page,
 };
-

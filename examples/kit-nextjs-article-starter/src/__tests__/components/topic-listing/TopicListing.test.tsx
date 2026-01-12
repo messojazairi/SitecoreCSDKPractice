@@ -18,13 +18,25 @@ import {
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
 }));
 
 // Mock Meteors component
 jest.mock('@/components/magicui/meteors', () => ({
-  Meteors: ({ number, minDelay, maxDelay, minDuration, maxDuration, angle, size }: any) => (
+  Meteors: ({
+    number,
+    minDelay,
+    maxDelay,
+    minDuration,
+    maxDuration,
+    angle,
+    size,
+  }: any) => (
     <div
       data-testid="meteors"
       data-number={number}
@@ -90,7 +102,11 @@ describe('TopicListing Component', () => {
       const { container } = render(<TopicListing {...defaultProps} />);
 
       const mainContainer = container.firstChild;
-      expect(mainContainer).toHaveClass('@container', 'bg-primary', 'text-primary-foreground');
+      expect(mainContainer).toHaveClass(
+        '@container',
+        'bg-primary',
+        'text-primary-foreground',
+      );
     });
   });
 
@@ -105,7 +121,7 @@ describe('TopicListing Component', () => {
         'text-primary-foreground',
         'relative',
         'overflow-hidden',
-        'py-24'
+        'py-24',
       );
     });
 
@@ -133,7 +149,7 @@ describe('TopicListing Component', () => {
         '@md:text-6xl',
         '@lg:text-7xl',
         'text-4xl',
-        'font-semibold'
+        'font-semibold',
       );
     });
   });
@@ -167,7 +183,9 @@ describe('TopicListing Component', () => {
     it('should apply CSS variables for meteor color and opacity', () => {
       const { container } = render(<TopicListing {...propsWithShootingStar} />);
 
-      const meteorsContainer = container.querySelector('.absolute.inset-0.z-10');
+      const meteorsContainer = container.querySelector(
+        '.absolute.inset-0.z-10',
+      );
       expect(meteorsContainer).toHaveStyle({
         '--meteor-color': '255, 255, 255',
         '--meteor-opacity': '0.6',
@@ -187,7 +205,9 @@ describe('TopicListing Component', () => {
     it('should render topics in flex container', () => {
       const { container } = render(<TopicListing {...defaultProps} />);
 
-      const topicsContainer = container.querySelector('.flex.flex-wrap.items-center.justify-center');
+      const topicsContainer = container.querySelector(
+        '.flex.flex-wrap.items-center.justify-center',
+      );
       expect(topicsContainer).toBeInTheDocument();
     });
 
@@ -252,7 +272,12 @@ describe('TopicListing Component', () => {
 
       const innerContainer = container.querySelector('.max-w-7xl');
       expect(innerContainer).toBeInTheDocument();
-      expect(innerContainer).toHaveClass('mx-auto', 'px-4', 'sm:px-6', 'lg:px-8');
+      expect(innerContainer).toHaveClass(
+        'mx-auto',
+        'px-4',
+        'sm:px-6',
+        'lg:px-8',
+      );
     });
 
     it('should apply relative z-index to content', () => {
@@ -265,7 +290,9 @@ describe('TopicListing Component', () => {
     it('should apply absolute z-index to meteors container', () => {
       const { container } = render(<TopicListing {...propsWithShootingStar} />);
 
-      const meteorsContainer = container.querySelector('.absolute.inset-0.z-10');
+      const meteorsContainer = container.querySelector(
+        '.absolute.inset-0.z-10',
+      );
       expect(meteorsContainer).toBeInTheDocument();
     });
   });
@@ -274,14 +301,18 @@ describe('TopicListing Component', () => {
     it('should center content horizontally', () => {
       const { container } = render(<TopicListing {...defaultProps} />);
 
-      const flexContainer = container.querySelector('.flex.flex-col.items-center');
+      const flexContainer = container.querySelector(
+        '.flex.flex-col.items-center',
+      );
       expect(flexContainer).toBeInTheDocument();
     });
 
     it('should apply correct gaps between sections', () => {
       const { container } = render(<TopicListing {...defaultProps} />);
 
-      const flexContainer = container.querySelector('.flex.flex-col.items-center');
+      const flexContainer = container.querySelector(
+        '.flex.flex-col.items-center',
+      );
       expect(flexContainer).toHaveClass('gap-16', 'md:gap-24');
     });
 
@@ -314,7 +345,10 @@ describe('TopicListing Component', () => {
       const { container } = render(<TopicListing {...defaultProps} />);
 
       const mainContainer = container.firstChild as HTMLElement;
-      expect(mainContainer).toHaveClass('bg-primary', 'text-primary-foreground');
+      expect(mainContainer).toHaveClass(
+        'bg-primary',
+        'text-primary-foreground',
+      );
     });
 
     it('should have overflow hidden for background effects', () => {
@@ -332,4 +366,3 @@ describe('TopicListing Component', () => {
     });
   });
 });
-

@@ -368,4 +368,3 @@ export const propsWithUndefinedFields: VerticalImageAccordionProps = {
   rendering: { componentName: 'VerticalImageAccordion' } as any,
   page: mockPage as any,
 };
-

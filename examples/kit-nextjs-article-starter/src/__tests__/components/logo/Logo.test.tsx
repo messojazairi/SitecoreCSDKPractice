@@ -36,7 +36,12 @@ jest.mock('@/lib/utils', () => ({
 // Mock ImageWrapper component
 jest.mock('@/components/image/ImageWrapper.dev', () => ({
   Default: ({ image, className, sizes, alt }: any) => (
-    <div data-testid="image-wrapper" className={className} data-sizes={sizes} data-alt={alt}>
+    <div
+      data-testid="image-wrapper"
+      className={className}
+      data-sizes={sizes}
+      data-alt={alt}
+    >
       <img src={image?.value?.src} alt={alt || image?.value?.alt} />
     </div>
   ),
@@ -110,7 +115,11 @@ describe('Logo Component', () => {
       render(<Logo {...propsWithLargeLogo} />);
 
       const wrapper = screen.getByTestId('image-wrapper');
-      expect(wrapper).toHaveClass('large-logo-class', 'w-full', 'object-contain');
+      expect(wrapper).toHaveClass(
+        'large-logo-class',
+        'w-full',
+        'object-contain',
+      );
     });
   });
 
@@ -151,7 +160,7 @@ describe('Logo Component', () => {
       const wrapper = screen.getByTestId('image-wrapper');
       expect(wrapper).toHaveAttribute(
         'data-sizes',
-        '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+        '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
       );
     });
 
@@ -231,7 +240,11 @@ describe('Logo Component', () => {
       render(<Logo {...defaultProps} />);
 
       const wrapper = screen.getByTestId('image-wrapper');
-      expect(wrapper).toHaveClass('w-full', 'object-contain', 'custom-logo-class');
+      expect(wrapper).toHaveClass(
+        'w-full',
+        'object-contain',
+        'custom-logo-class',
+      );
     });
   });
 
@@ -241,8 +254,10 @@ describe('Logo Component', () => {
 
       const wrapper = screen.getByTestId('image-wrapper');
       const sizes = wrapper.getAttribute('data-sizes');
-      
-      expect(sizes).toBe('(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw');
+
+      expect(sizes).toBe(
+        '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+      );
     });
   });
 
@@ -269,4 +284,3 @@ describe('Logo Component', () => {
     });
   });
 });
-

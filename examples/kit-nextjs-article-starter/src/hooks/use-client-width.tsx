@@ -14,7 +14,7 @@ type WidthTransformFn = (width: number) => number;
  */
 export function useClientWidth<T extends HTMLElement>(
   ref: RefObject<T | null>,
-  transformWidth?: WidthTransformFn
+  transformWidth?: WidthTransformFn,
 ): number {
   const [width, setWidth] = useState<number>(0);
 

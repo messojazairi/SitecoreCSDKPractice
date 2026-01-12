@@ -1,11 +1,15 @@
 import { useState, useEffect, RefObject } from 'react';
 
-export const useOnLoadImages = (ref: RefObject<HTMLDivElement | null> | null) => {
+export const useOnLoadImages = (
+  ref: RefObject<HTMLDivElement | null> | null,
+) => {
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
     const updateStatus = (images: HTMLImageElement[]) => {
-      setStatus(images.map((image) => image.complete).every((item) => item === true));
+      setStatus(
+        images.map((image) => image.complete).every((item) => item === true),
+      );
     };
 
     if (!ref?.current) return;

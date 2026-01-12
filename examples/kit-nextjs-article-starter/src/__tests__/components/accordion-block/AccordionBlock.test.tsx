@@ -108,8 +108,12 @@ describe('AccordionBlock Component', () => {
     it('should render accordion block with all fields in normal mode', () => {
       render(<AccordionBlock {...defaultProps} />);
 
-      expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
-      expect(screen.getByText('Find answers to common questions')).toBeInTheDocument();
+      expect(
+        screen.getByText('Frequently Asked Questions'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Find answers to common questions'),
+      ).toBeInTheDocument();
       expect(screen.getByTestId('accordion-button')).toBeInTheDocument();
       expect(screen.getByText('What is this product?')).toBeInTheDocument();
       expect(screen.getByText('How do I use it?')).toBeInTheDocument();
@@ -128,8 +132,12 @@ describe('AccordionBlock Component', () => {
       it('should render accordion block with all fields', () => {
         render(<AccordionBlockDefault {...defaultProps} />);
 
-        expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
-        expect(screen.getByText('Find answers to common questions')).toBeInTheDocument();
+        expect(
+          screen.getByText('Frequently Asked Questions'),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText('Find answers to common questions'),
+        ).toBeInTheDocument();
         expect(screen.getByTestId('accordion-button')).toBeInTheDocument();
         expect(screen.getByTestId('accordion')).toBeInTheDocument();
       });
@@ -159,7 +167,9 @@ describe('AccordionBlock Component', () => {
       it('should render description as p tag', () => {
         render(<AccordionBlockDefault {...defaultProps} />);
 
-        const description = screen.getByText('Find answers to common questions');
+        const description = screen.getByText(
+          'Find answers to common questions',
+        );
         expect(description.tagName).toBe('P');
       });
     });
@@ -168,23 +178,35 @@ describe('AccordionBlock Component', () => {
       it('should render without description field', () => {
         render(<AccordionBlockDefault {...propsWithoutDescription} />);
 
-        expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
-        expect(screen.queryByText('Find answers to common questions')).not.toBeInTheDocument();
+        expect(
+          screen.getByText('Frequently Asked Questions'),
+        ).toBeInTheDocument();
+        expect(
+          screen.queryByText('Find answers to common questions'),
+        ).not.toBeInTheDocument();
         expect(screen.getByTestId('accordion-button')).toBeInTheDocument();
       });
 
       it('should render without link field', () => {
         render(<AccordionBlockDefault {...propsWithoutLink} />);
 
-        expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
-        expect(screen.getByText('Find answers to common questions')).toBeInTheDocument();
-        expect(screen.queryByTestId('accordion-button')).not.toBeInTheDocument();
+        expect(
+          screen.getByText('Frequently Asked Questions'),
+        ).toBeInTheDocument();
+        expect(
+          screen.getByText('Find answers to common questions'),
+        ).toBeInTheDocument();
+        expect(
+          screen.queryByTestId('accordion-button'),
+        ).not.toBeInTheDocument();
       });
 
       it('should render with empty children array', () => {
         render(<AccordionBlockDefault {...propsWithEmptyChildren} />);
 
-        expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
+        expect(
+          screen.getByText('Frequently Asked Questions'),
+        ).toBeInTheDocument();
         expect(screen.queryAllByTestId('accordion-item')).toHaveLength(0);
       });
     });
@@ -195,7 +217,7 @@ describe('AccordionBlock Component', () => {
 
         const accordion = screen.getByTestId('accordion');
         const valueAttr = accordion.getAttribute('data-value');
-        
+
         expect(valueAttr).toBeTruthy();
         const values = JSON.parse(valueAttr as string);
         expect(values).toEqual([
@@ -224,24 +246,40 @@ describe('AccordionBlock Component', () => {
 
     describe('Component structure', () => {
       it('should render correct DOM structure', () => {
-        const { container } = render(<AccordionBlockDefault {...defaultProps} />);
+        const { container } = render(
+          <AccordionBlockDefault {...defaultProps} />,
+        );
 
-        const mainDiv = container.querySelector('[data-component="AccordionBlock"]');
+        const mainDiv = container.querySelector(
+          '[data-component="AccordionBlock"]',
+        );
         expect(mainDiv).toBeInTheDocument();
-        expect(mainDiv).toHaveClass('bg-secondary', 'text-secondary-foreground', 'rounded-3xl');
+        expect(mainDiv).toHaveClass(
+          'bg-secondary',
+          'text-secondary-foreground',
+          'rounded-3xl',
+        );
       });
 
       it('should apply custom styles from params', () => {
-        const { container } = render(<AccordionBlockDefault {...defaultProps} />);
+        const { container } = render(
+          <AccordionBlockDefault {...defaultProps} />,
+        );
 
-        const mainDiv = container.querySelector('[data-component="AccordionBlock"]');
+        const mainDiv = container.querySelector(
+          '[data-component="AccordionBlock"]',
+        );
         expect(mainDiv).toHaveClass('custom-accordion-style');
       });
 
       it('should render without custom styles when not provided', () => {
-        const { container } = render(<AccordionBlockDefault {...propsWithoutStyles} />);
+        const { container } = render(
+          <AccordionBlockDefault {...propsWithoutStyles} />,
+        );
 
-        const mainDiv = container.querySelector('[data-component="AccordionBlock"]');
+        const mainDiv = container.querySelector(
+          '[data-component="AccordionBlock"]',
+        );
         expect(mainDiv).toBeInTheDocument();
         expect(mainDiv).not.toHaveClass('custom-accordion-style');
       });
@@ -288,7 +326,9 @@ describe('AccordionBlock Component', () => {
       it('should handle missing datasource gracefully', () => {
         render(<AccordionBlockDefault {...propsWithoutDatasource} />);
 
-        expect(screen.queryByText('Frequently Asked Questions')).not.toBeInTheDocument();
+        expect(
+          screen.queryByText('Frequently Asked Questions'),
+        ).not.toBeInTheDocument();
         expect(screen.queryAllByTestId('accordion-item')).toHaveLength(0);
       });
 
@@ -315,9 +355,13 @@ describe('AccordionBlock Component', () => {
 
     describe('CSS classes and styling', () => {
       it('should apply container query classes', () => {
-        const { container } = render(<AccordionBlockDefault {...defaultProps} />);
+        const { container } = render(
+          <AccordionBlockDefault {...defaultProps} />,
+        );
 
-        const mainDiv = container.querySelector('[data-component="AccordionBlock"]');
+        const mainDiv = container.querySelector(
+          '[data-component="AccordionBlock"]',
+        );
         expect(mainDiv).toHaveClass('@container');
       });
 
@@ -330,15 +374,21 @@ describe('AccordionBlock Component', () => {
           'text-primary',
           'text-5xl',
           'font-normal',
-          'tracking-tighter'
+          'tracking-tighter',
         );
       });
 
       it('should apply correct description classes', () => {
         render(<AccordionBlockDefault {...defaultProps} />);
 
-        const description = screen.getByText('Find answers to common questions');
-        expect(description).toHaveClass('font-body', 'text-base', 'font-normal');
+        const description = screen.getByText(
+          'Find answers to common questions',
+        );
+        expect(description).toHaveClass(
+          'font-body',
+          'text-base',
+          'font-normal',
+        );
       });
     });
 
@@ -347,20 +397,32 @@ describe('AccordionBlock Component', () => {
         render(<AccordionBlockDefault {...defaultProps} />);
 
         const accordionItems = screen.getAllByTestId('accordion-item');
-        expect(accordionItems[0]).toHaveAttribute('data-value', 'accordion-block-item-1');
-        expect(accordionItems[1]).toHaveAttribute('data-value', 'accordion-block-item-2');
-        expect(accordionItems[2]).toHaveAttribute('data-value', 'accordion-block-item-3');
+        expect(accordionItems[0]).toHaveAttribute(
+          'data-value',
+          'accordion-block-item-1',
+        );
+        expect(accordionItems[1]).toHaveAttribute(
+          'data-value',
+          'accordion-block-item-2',
+        );
+        expect(accordionItems[2]).toHaveAttribute(
+          'data-value',
+          'accordion-block-item-3',
+        );
       });
 
       it('should render accordion item descriptions as HTML', () => {
-        const { container } = render(<AccordionBlockDefault {...defaultProps} />);
+        const { container } = render(
+          <AccordionBlockDefault {...defaultProps} />,
+        );
 
-        const descriptions = container.querySelectorAll('[data-testid="accordion-content"] div');
+        const descriptions = container.querySelectorAll(
+          '[data-testid="accordion-content"] div',
+        );
         expect(descriptions[0].innerHTML).toContain(
-          '<p>This is a detailed description of the product.</p>'
+          '<p>This is a detailed description of the product.</p>',
         );
       });
     });
   });
 });
-

@@ -43,7 +43,7 @@ const CdpPageView = (): JSX.Element => {
       route.itemId,
       language,
       context.variantId as string,
-      scope
+      scope,
     );
     // there can be cases where Events are not initialized which are expected to reject
     pageView({

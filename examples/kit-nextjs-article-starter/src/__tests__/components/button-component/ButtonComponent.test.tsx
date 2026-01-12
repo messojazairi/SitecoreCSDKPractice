@@ -84,7 +84,13 @@ interface MockNoDataFallbackProps {
 
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Link: ({ field, children, editable, className, 'aria-label': ariaLabel }: MockLinkProps) => (
+  Link: ({
+    field,
+    children,
+    editable,
+    className,
+    'aria-label': ariaLabel,
+  }: MockLinkProps) => (
     <a
       href={field?.value?.href || field?.value?.url}
       data-testid="sitecore-link"
@@ -99,7 +105,13 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 // Mock UI components
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, variant, size, className }: MockButtonProps) => (
+  Button: ({
+    children,
+    asChild,
+    variant,
+    size,
+    className,
+  }: MockButtonProps) => (
     <div
       data-testid="button"
       data-as-child={asChild}
@@ -125,18 +137,19 @@ jest.mock('@/components/icon/Icon', () => ({
 }));
 
 jest.mock('@/components/image/ImageWrapper.dev', () => {
-  const MockImageWrapper = React.forwardRef<HTMLImageElement, MockImageWrapperProps>(
-    ({ image, className, 'aria-hidden': ariaHidden }, ref) => (
-      <img
-        ref={ref}
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        aria-hidden={ariaHidden}
-        data-testid="image-wrapper"
-      />
-    )
-  );
+  const MockImageWrapper = React.forwardRef<
+    HTMLImageElement,
+    MockImageWrapperProps
+  >(({ image, className, 'aria-hidden': ariaHidden }, ref) => (
+    <img
+      ref={ref}
+      src={image?.value?.src}
+      alt={image?.value?.alt}
+      className={className}
+      aria-hidden={ariaHidden}
+      data-testid="image-wrapper"
+    />
+  ));
   MockImageWrapper.displayName = 'MockImageWrapper';
   return { Default: MockImageWrapper };
 });
@@ -221,19 +234,25 @@ describe('ButtonComponent', () => {
         render(<ButtonComponent {...propsInEditing} />);
 
         // In editing mode, only the editable link is rendered
-        expect(screen.queryByTestId('icon-arrow-right')).not.toBeInTheDocument();
+        expect(
+          screen.queryByTestId('icon-arrow-right'),
+        ).not.toBeInTheDocument();
       });
     });
 
     describe('Link validation', () => {
       it('should not render when link is invalid (no text)', () => {
-        const { container } = render(<ButtonComponent {...propsWithInvalidLink} />);
+        const { container } = render(
+          <ButtonComponent {...propsWithInvalidLink} />,
+        );
 
         expect(container.firstChild).toBeNull();
       });
 
       it('should not render when href is http://', () => {
-        const { container } = render(<ButtonComponent {...propsWithHttpOnlyLink} />);
+        const { container } = render(
+          <ButtonComponent {...propsWithHttpOnlyLink} />,
+        );
 
         expect(container.firstChild).toBeNull();
       });
@@ -287,7 +306,9 @@ describe('ButtonComponent', () => {
 
     describe('Edge cases', () => {
       it('should not render when fields is null', () => {
-        const { container } = render(<ButtonComponent {...propsWithoutFields} />);
+        const { container } = render(
+          <ButtonComponent {...propsWithoutFields} />,
+        );
 
         // Component returns null when fields is null and link validation fails
         expect(container.firstChild).toBeNull();
@@ -449,4 +470,3 @@ describe('ButtonComponent', () => {
     });
   });
 });
-

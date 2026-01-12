@@ -25,8 +25,12 @@ interface MockFlexItemProps {
 }
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
   useSitecore: jest.fn(),
   withDatasourceCheck:
     () =>
@@ -80,7 +84,9 @@ describe('Container70 Component', () => {
     it('should render container with placeholder', () => {
       render(<Container70 {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-seventy-main-70')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-seventy-main-70'),
+      ).toBeInTheDocument();
     });
 
     it('should apply custom styles', () => {
@@ -124,7 +130,9 @@ describe('Container70 Component', () => {
     it('should render centered 70% width container', () => {
       const { container } = render(<Container70 {...defaultProps} />);
 
-      const centeredDiv = container.querySelector('.mx-auto.md\\:max-w-\\[70\\%\\]');
+      const centeredDiv = container.querySelector(
+        '.mx-auto.md\\:max-w-\\[70\\%\\]',
+      );
       expect(centeredDiv).toBeInTheDocument();
     });
   });
@@ -138,7 +146,9 @@ describe('Container70 Component', () => {
     });
 
     it('should exclude top margin when excludeTopMargin is 1', () => {
-      const { container } = render(<Container70 {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <Container70 {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0');
@@ -148,13 +158,17 @@ describe('Container70 Component', () => {
   describe('Empty placeholder handling', () => {
     it('should not render when placeholder is empty and not editing', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container70 {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <Container70 {...propsWithEmptyPlaceholders} />,
+      );
 
       expect(container.firstChild).toBeNull();
     });
 
     it('should render when placeholder is empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      mockUseSitecore.mockReturnValue(
+        mockSitecoreContextEditing as ReturnType<typeof useSitecore>,
+      );
       const propsEditing = {
         ...propsWithEmptyPlaceholders,
         page: mockSitecoreContextEditing.page,
@@ -171,7 +185,9 @@ describe('Container70 Component', () => {
         children: 'Child content' as any,
       };
 
-      const { container } = render(<Container70 {...propsWithEmptyAndChildren} />);
+      const { container } = render(
+        <Container70 {...propsWithEmptyAndChildren} />,
+      );
 
       expect(container.querySelector('section')).toBeInTheDocument();
     });
@@ -185,7 +201,9 @@ describe('Container70 Component', () => {
       const flex = section?.querySelector('[data-testid="flex"]');
       const flexItem = flex?.querySelector('[data-testid="flex-item"]');
       const centeredDiv = flexItem?.querySelector('.mx-auto');
-      const placeholder = centeredDiv?.querySelector('[data-testid^="placeholder-"]');
+      const placeholder = centeredDiv?.querySelector(
+        '[data-testid^="placeholder-"]',
+      );
 
       expect(section).toBeInTheDocument();
       expect(flex).toBeInTheDocument();
@@ -195,4 +213,3 @@ describe('Container70 Component', () => {
     });
   });
 });
-

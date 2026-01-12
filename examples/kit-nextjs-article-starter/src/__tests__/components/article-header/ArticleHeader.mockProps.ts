@@ -312,5 +312,3 @@ export const propsWithAuthorNoJobTitle = {
   rendering: mockRendering,
   page: mockPage.page as any,
 };
-
-

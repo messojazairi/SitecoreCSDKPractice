@@ -67,7 +67,9 @@ describe('AnimatedSection Component', () => {
         mockUseIntersectionObserver.mockReturnValue([false, { current: null }]);
         const { container } = render(<AnimatedSection {...propsSlideUp} />);
         const wrapper = container.firstChild as HTMLElement;
-        expect(wrapper.style.transform).toBe('translate(var(--translate-x), var(--translate-y))');
+        expect(wrapper.style.transform).toBe(
+          'translate(var(--translate-x), var(--translate-y))',
+        );
       });
     });
 
@@ -136,7 +138,9 @@ describe('AnimatedSection Component', () => {
     });
 
     it('should apply custom duration', () => {
-      const { container } = render(<AnimatedSection {...propsWithCustomDuration} />);
+      const { container } = render(
+        <AnimatedSection {...propsWithCustomDuration} />,
+      );
       const wrapper = container.firstChild as HTMLElement;
       expect(wrapper.style.transition).toContain('2000ms');
     });
@@ -228,10 +232,12 @@ describe('AnimatedSection Component', () => {
       const { container } = render(<AnimatedSection {...propsSlideUp} />);
       const wrapper = container.firstChild as HTMLElement;
       expect(wrapper.style.opacity).toBe('0');
-      
+
       // Test when visible (separate render due to memo)
       mockUseIntersectionObserver.mockReturnValue([true, { current: null }]);
-      const { container: container2 } = render(<AnimatedSection {...propsSlideUp} />);
+      const { container: container2 } = render(
+        <AnimatedSection {...propsSlideUp} />,
+      );
       const wrapper2 = container2.firstChild as HTMLElement;
       expect(wrapper2.style.opacity).toBe('1');
     });
@@ -289,4 +295,3 @@ describe('AnimatedSection Component', () => {
     });
   });
 });
-

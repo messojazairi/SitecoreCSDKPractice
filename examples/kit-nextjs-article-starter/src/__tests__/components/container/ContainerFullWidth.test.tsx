@@ -26,8 +26,12 @@ interface MockFlexItemProps {
 }
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
   useSitecore: jest.fn(),
   withDatasourceCheck:
     () =>
@@ -88,7 +92,9 @@ describe('ContainerFullWidth Component', () => {
     it('should render placeholder', () => {
       render(<ContainerFullWidth {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-fullwidth-main-fullwidth')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fullwidth-main-fullwidth'),
+      ).toBeInTheDocument();
     });
 
     it('should apply custom styles', () => {
@@ -102,7 +108,11 @@ describe('ContainerFullWidth Component', () => {
       const { container } = render(<ContainerFullWidth {...defaultProps} />);
 
       const section = container.querySelector('section');
-      expect(section).toHaveClass('@container', 'container--full-width', 'group');
+      expect(section).toHaveClass(
+        '@container',
+        'container--full-width',
+        'group',
+      );
     });
   });
 
@@ -115,7 +125,9 @@ describe('ContainerFullWidth Component', () => {
     });
 
     it('should exclude top margin when excludeTopMargin is 1', () => {
-      const { container } = render(<ContainerFullWidth {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <ContainerFullWidth {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0');
@@ -147,13 +159,17 @@ describe('ContainerFullWidth Component', () => {
   describe('Empty placeholder handling', () => {
     it('should not render when placeholder is empty and not in editing mode', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<ContainerFullWidth {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <ContainerFullWidth {...propsWithEmptyPlaceholders} />,
+      );
 
       expect(container.firstChild).toBeNull();
     });
 
     it('should render when placeholder is empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      mockUseSitecore.mockReturnValue(
+        mockSitecoreContextEditing as ReturnType<typeof useSitecore>,
+      );
       const propsEditing = {
         ...propsWithEmptyPlaceholders,
         page: mockSitecoreContextEditing.page,
@@ -171,7 +187,9 @@ describe('ContainerFullWidth Component', () => {
         children: 'Child content' as any,
       };
 
-      const { container } = render(<ContainerFullWidth {...propsWithEmptyAndChildren} />);
+      const { container } = render(
+        <ContainerFullWidth {...propsWithEmptyAndChildren} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toBeInTheDocument();
@@ -182,13 +200,17 @@ describe('ContainerFullWidth Component', () => {
     it('should generate correct placeholder key with DynamicPlaceholderId', () => {
       render(<ContainerFullWidth {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-fullwidth-main-fullwidth')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fullwidth-main-fullwidth'),
+      ).toBeInTheDocument();
     });
 
     it('should generate placeholder key without DynamicPlaceholderId', () => {
       render(<ContainerFullWidth {...propsWithoutDynamicId} />);
 
-      expect(screen.getByTestId('placeholder-container-fullwidth-')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-fullwidth-'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -213,4 +235,3 @@ describe('ContainerFullWidth Component', () => {
     });
   });
 });
-

@@ -6,7 +6,13 @@ import { SubscriptionBannerProps } from './subscription-banner.props';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
@@ -20,9 +26,13 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
   const t = useTranslations();
   const dictionary = {
     CTALABEL: t(dictionaryKeys.SUBSCRIPTIONBANNER_BUTTON_LABEL),
-    EMAIL_PLACEHOLDER: t(dictionaryKeys.SUBSCRIPTIONBANNER_EMAIL_FIELD_PLACEHOLDER),
+    EMAIL_PLACEHOLDER: t(
+      dictionaryKeys.SUBSCRIPTIONBANNER_EMAIL_FIELD_PLACEHOLDER,
+    ),
     EMAIL_SUCCESS_MESSAGE: t(dictionaryKeys.SUBSCRIPTIONBANNER_SUCCESS_MESSAGE),
-    EMAIL_ERROR_MESSAGE: t(dictionaryKeys.SUBSCRIPTIONBANNER_EMAIL_FORMAT_ERROR),
+    EMAIL_ERROR_MESSAGE: t(
+      dictionaryKeys.SUBSCRIPTIONBANNER_EMAIL_FORMAT_ERROR,
+    ),
   };
   const [isSubmitted, setIsSubmitted] = useState(false);
   const form = useForm<FormValues>({
@@ -69,7 +79,8 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
                 required: 'Email is required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: dictionary.EMAIL_ERROR_MESSAGE || 'Email format is invalid',
+                  message:
+                    dictionary.EMAIL_ERROR_MESSAGE || 'Email format is invalid',
                 },
               }}
               render={({ field }) => (
@@ -77,7 +88,10 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={dictionary.EMAIL_PLACEHOLDER || 'Enter your email address'}
+                      placeholder={
+                        dictionary.EMAIL_PLACEHOLDER ||
+                        'Enter your email address'
+                      }
                       className="border-input w-full flex-1 rounded-full px-6 py-3"
                       disabled={isSubmitted}
                       {...field}

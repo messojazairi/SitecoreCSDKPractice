@@ -15,7 +15,10 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement(Tag, { className }, field?.value || '');
   },
   RichText: ({ field, className }: any) => (
-    <div className={className} dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
+    <div
+      className={className}
+      dangerouslySetInnerHTML={{ __html: field?.value || '' }}
+    />
   ),
   withDatasourceCheck: () => (Component: any) => {
     return (props: any) => {
@@ -52,7 +55,9 @@ describe('ContentBlock Component', () => {
     it('should render rich text content', () => {
       render(<ContentBlock {...defaultProps} />);
 
-      const contentDiv = screen.getByText('bold').closest('.contentDescription');
+      const contentDiv = screen
+        .getByText('bold')
+        .closest('.contentDescription');
       expect(contentDiv).toBeInTheDocument();
     });
   });
@@ -63,11 +68,11 @@ describe('ContentBlock Component', () => {
 
       const container = screen.getByText('Test Heading').closest('div');
       expect(container).toHaveClass('contentBlock');
-      
+
       const heading = container?.querySelector('.contentTitle');
       expect(heading).toBeInTheDocument();
       expect(heading?.tagName).toBe('H2');
-      
+
       const content = container?.querySelector('.contentDescription');
       expect(content).toBeInTheDocument();
     });
@@ -77,8 +82,10 @@ describe('ContentBlock Component', () => {
 
       const heading = screen.getByRole('heading', { level: 2 });
       expect(heading).toHaveClass('contentTitle');
-      
-      const contentDiv = screen.getByText('bold').closest('.contentDescription');
+
+      const contentDiv = screen
+        .getByText('bold')
+        .closest('.contentDescription');
       expect(contentDiv).toHaveClass('contentDescription');
     });
   });
@@ -96,7 +103,10 @@ describe('ContentBlock Component', () => {
       render(<ContentBlock {...propsWithEmptyContent} />);
 
       expect(screen.getByText('Test Heading')).toBeInTheDocument();
-      const contentDiv = screen.getByRole('heading', { level: 2 }).closest('div')?.querySelector('.contentDescription');
+      const contentDiv = screen
+        .getByRole('heading', { level: 2 })
+        .closest('div')
+        ?.querySelector('.contentDescription');
       expect(contentDiv).toHaveTextContent('');
     });
 
@@ -123,7 +133,9 @@ describe('ContentBlock Component', () => {
     it('should pass correct props to RichText component for content', () => {
       render(<ContentBlock {...defaultProps} />);
 
-      const contentDiv = screen.getByText('bold').closest('.contentDescription');
+      const contentDiv = screen
+        .getByText('bold')
+        .closest('.contentDescription');
       expect(contentDiv).toHaveClass('contentDescription');
     });
   });
@@ -144,9 +156,11 @@ describe('ContentBlock Component', () => {
       expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(2); // Main heading and subheading
       expect(screen.getByText('List item 1')).toBeInTheDocument();
       expect(screen.getByText('List item 2')).toBeInTheDocument();
-      
+
       // Check for blockquote
-      const blockquote = screen.getByText('This is a quote').closest('blockquote');
+      const blockquote = screen
+        .getByText('This is a quote')
+        .closest('blockquote');
       expect(blockquote).toBeInTheDocument();
     });
   });
@@ -180,8 +194,10 @@ describe('ContentBlock Component', () => {
 
       const heading = screen.getByRole('heading', { level: 2 });
       expect(heading).toHaveTextContent('');
-      
-      const contentDiv = heading.closest('div')?.querySelector('.contentDescription');
+
+      const contentDiv = heading
+        .closest('div')
+        ?.querySelector('.contentDescription');
       expect(contentDiv).toHaveTextContent('');
     });
   });

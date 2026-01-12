@@ -71,4 +71,3 @@ export const propsPageEditing = {
 export const propsMinimal = {
   children: React.createElement('div', {}, 'Minimal Content'),
 };
-

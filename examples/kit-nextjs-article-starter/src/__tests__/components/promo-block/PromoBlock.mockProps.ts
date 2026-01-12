@@ -7,7 +7,8 @@ export const mockHeadingField: Field<string> = {
 };
 
 export const mockDescriptionField: Field<string> = {
-  value: '<p>Experience the finest craftsmanship with our exclusive collection of premium products.</p>',
+  value:
+    '<p>Experience the finest craftsmanship with our exclusive collection of premium products.</p>',
 };
 
 // Mock image field
@@ -130,4 +131,3 @@ export const propsWithoutFields: PromoBlockProps = {
   fields: null as any,
   rendering: { componentName: 'PromoBlock' } as any,
 };
-

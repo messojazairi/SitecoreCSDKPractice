@@ -1,5 +1,9 @@
 import { ImageField, LinkField, TextField } from '@sitecore-content-sdk/nextjs';
-import { VideoComponentProps, VideoParams, VideoFields } from '@/components/video/video-props';
+import {
+  VideoComponentProps,
+  VideoParams,
+  VideoFields,
+} from '@/components/video/video-props';
 
 // Mock video link fields
 export const mockYouTubeVideo: LinkField = {
@@ -202,4 +206,3 @@ export const propsWithoutParams: VideoComponentProps = {
   fields: mockVideoFields,
   rendering: { componentName: 'Video' } as any,
 };
-

@@ -38,7 +38,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Link: ({ field, children }: any) => {
     if (!field?.value?.href) return null;
-    return React.createElement('a', { href: field.value.href }, field.value.text || children);
+    return React.createElement(
+      'a',
+      { href: field.value.href },
+      field.value.text || children,
+    );
   },
   Image: ({ field, className }: any) => {
     if (!field?.value?.src) return null;
@@ -72,7 +76,7 @@ jest.mock('@/components/logo/Logo.dev', () => ({
 jest.mock('framer-motion', () => ({
   motion: {
     header: React.forwardRef(({ children, ...props }: any, ref: any) =>
-      React.createElement('header', { ...props, ref }, children)
+      React.createElement('header', { ...props, ref }, children),
     ),
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
@@ -80,7 +84,8 @@ jest.mock('framer-motion', () => ({
 
 // Mock lucide-react
 jest.mock('lucide-react', () => ({
-  Menu: () => React.createElement('div', { 'data-testid': 'menu-icon' }, 'Menu'),
+  Menu: () =>
+    React.createElement('div', { 'data-testid': 'menu-icon' }, 'Menu'),
 }));
 
 // Mock UI components
@@ -88,13 +93,20 @@ jest.mock('@/components/ui/navigation-menu', () => ({
   NavigationMenu: ({ children }: any) => (
     <nav data-testid="navigation-menu">{children}</nav>
   ),
-  NavigationMenuList: ({ children }: any) => <ul data-testid="nav-menu-list">{children}</ul>,
-  NavigationMenuItem: ({ children }: any) => <li data-testid="nav-menu-item">{children}</li>,
+  NavigationMenuList: ({ children }: any) => (
+    <ul data-testid="nav-menu-list">{children}</ul>
+  ),
+  NavigationMenuItem: ({ children }: any) => (
+    <li data-testid="nav-menu-item">{children}</li>
+  ),
 }));
 
 jest.mock('@/components/ui/button', () => ({
   Button: React.forwardRef(
-    ({ children, variant, size, asChild, className, onClick, ...props }: any, ref: any) => {
+    (
+      { children, variant, size, asChild, className, onClick, ...props }: any,
+      ref: any,
+    ) => {
       const buttonProps = {
         ...props,
         ref,
@@ -105,7 +117,7 @@ jest.mock('@/components/ui/button', () => ({
         'data-as-child': asChild,
       };
       return React.createElement('button', buttonProps, children);
-    }
+    },
   ),
 }));
 
@@ -115,8 +127,13 @@ jest.mock('@/components/ui/sheet', () => ({
       {children}
     </div>
   ),
-  SheetTrigger: React.forwardRef(({ children, asChild, ...props }: any, ref: any) =>
-    React.createElement('div', { ...props, ref, 'data-testid': 'sheet-trigger' }, children)
+  SheetTrigger: React.forwardRef(
+    ({ children, asChild, ...props }: any, ref: any) =>
+      React.createElement(
+        'div',
+        { ...props, ref, 'data-testid': 'sheet-trigger' },
+        children,
+      ),
   ),
   SheetContent: ({ children, side }: any) => (
     <div data-testid="sheet-content" data-side={side}>
@@ -129,7 +146,7 @@ describe('GlobalHeader Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseSitecore.mockReturnValue(mockPageData);
-    
+
     // Mock window.scrollY
     Object.defineProperty(window, 'scrollY', {
       writable: true,
@@ -164,7 +181,7 @@ describe('GlobalHeader Component', () => {
 
       const logo = screen.getByTestId('logo-component');
       expect(logo).toBeInTheDocument();
-      
+
       const logoLink = logo.closest('a');
       expect(logoLink).toHaveAttribute('href', '/');
     });
@@ -198,10 +215,10 @@ describe('GlobalHeader Component', () => {
 
       const aboutLinks = screen.getAllByText('About');
       const servicesLinks = screen.getAllByText('Services');
-      
+
       const aboutLink = aboutLinks[0].closest('a');
       const servicesLink = servicesLinks[0].closest('a');
-      
+
       expect(aboutLink).toHaveAttribute('href', '/about');
       expect(servicesLink).toHaveAttribute('href', '/services');
     });
@@ -218,7 +235,7 @@ describe('GlobalHeader Component', () => {
 
       const ctaButtons = screen.getAllByText('Get Started');
       expect(ctaButtons.length).toBeGreaterThanOrEqual(1);
-      
+
       // Check desktop CTA
       const ctaLink = ctaButtons[0].closest('a');
       expect(ctaLink).toHaveAttribute('href', '/get-started');
@@ -293,7 +310,7 @@ describe('GlobalHeader Component', () => {
       expect(window.addEventListener).toHaveBeenCalledWith(
         'scroll',
         expect.any(Function),
-        { passive: true }
+        { passive: true },
       );
     });
 
@@ -304,7 +321,7 @@ describe('GlobalHeader Component', () => {
 
       expect(window.removeEventListener).toHaveBeenCalledWith(
         'scroll',
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });
@@ -393,7 +410,7 @@ describe('GlobalHeader Component', () => {
 
       // Check for the class by looking at the element's className
       const desktopNav = Array.from(container.querySelectorAll('div')).find(
-        (div) => div.className && div.className.includes('@lg:flex')
+        (div) => div.className && div.className.includes('@lg:flex'),
       );
       expect(desktopNav).toBeTruthy();
     });
@@ -403,7 +420,7 @@ describe('GlobalHeader Component', () => {
 
       // Check for the class by looking at the element's className
       const mobileNav = Array.from(container.querySelectorAll('div')).find(
-        (div) => div.className && div.className.includes('@lg:hidden')
+        (div) => div.className && div.className.includes('@lg:hidden'),
       );
       expect(mobileNav).toBeTruthy();
     });
@@ -432,4 +449,3 @@ describe('GlobalHeader Component', () => {
     });
   });
 });
-

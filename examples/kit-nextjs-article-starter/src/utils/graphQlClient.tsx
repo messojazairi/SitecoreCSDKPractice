@@ -24,15 +24,25 @@ export const getGraphQlKey = (): string => {
  */
 export const getValue = (
   obj: GqlField<unknown> | undefined | null,
-  valueProp?: string | null
+  valueProp?: string | null,
 ): string | number | boolean | Field => {
   if (!obj) return '';
   if (valueProp) {
     return (
-      (R.path(['jsonValue', 'value', valueProp], obj) as string | number | boolean | Field) || ''
+      (R.path(['jsonValue', 'value', valueProp], obj) as
+        | string
+        | number
+        | boolean
+        | Field) || ''
     );
   } else {
-    return (R.path(['jsonValue', 'value'], obj) as string | number | boolean | Field) || '';
+    return (
+      (R.path(['jsonValue', 'value'], obj) as
+        | string
+        | number
+        | boolean
+        | Field) || ''
+    );
   }
 };
 

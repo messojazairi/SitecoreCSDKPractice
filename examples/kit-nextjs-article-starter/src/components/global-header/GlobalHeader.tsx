@@ -53,7 +53,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
         animate={{ opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.2 }}
         className={cn(
-          'bg-background @container sticky top-0 z-50 flex h-[96px] w-full items-center justify-center border-b'
+          'bg-background @container sticky top-0 z-50 flex h-[96px] w-full items-center justify-center border-b',
         )}
       >
         <div className="@xl:px-8 mx-auto flex h-16 w-full max-w-screen-xl items-center px-4">
@@ -80,7 +80,11 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                   links.map((item, i) => (
                     <Fragment key={`desktop-nav-menu-list-item-${i}`}>
                       {pageEditing ? (
-                        <Button variant="ghost" asChild className="font-body text-base font-medium">
+                        <Button
+                          variant="ghost"
+                          asChild
+                          className="font-body text-base font-medium"
+                        >
                           <SitecoreLink field={item.link?.jsonValue} />
                         </Button>
                       ) : (
@@ -91,7 +95,9 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                               asChild
                               className="font-body text-base font-medium"
                             >
-                              <Link href={item.link.jsonValue.value.href as string}>
+                              <Link
+                                href={item.link.jsonValue.value.href as string}
+                              >
                                 {item.link.jsonValue.value.text}
                               </Link>
                             </Button>
@@ -106,14 +112,22 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
           {/* Desktop CTA */}
           {pageEditing ? (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-              <Button variant="outline" asChild className="font-heading text-medium rounded-full">
+              <Button
+                variant="outline"
+                asChild
+                className="font-heading text-medium rounded-full"
+              >
                 <SitecoreLink field={headerContact?.jsonValue} />
               </Button>
             </div>
           ) : (
             headerContact?.jsonValue?.value?.href && (
               <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-                <Button variant="outline" asChild className="font-heading text-medium rounded-full">
+                <Button
+                  variant="outline"
+                  asChild
+                  className="font-heading text-medium rounded-full"
+                >
                   <Link href={headerContact.jsonValue.value.href as Url}>
                     {headerContact.jsonValue.value.text}
                   </Link>
@@ -125,7 +139,11 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
           <div className="@lg:hidden flex flex-1 justify-end">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-transparent [&_svg]:size-8">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-transparent [&_svg]:size-8"
+                >
                   <Menu />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
@@ -143,11 +161,13 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                             asChild
                             onClick={() => setIsOpen(false)}
                           >
-                            <Link href={item.link.jsonValue.value.href as string}>
+                            <Link
+                              href={item.link.jsonValue.value.href as string}
+                            >
                               {item.link.jsonValue.value.text}
                             </Link>
                           </Button>
-                        )
+                        ),
                     )}
                   {headerContact?.jsonValue?.value?.href && (
                     <Button

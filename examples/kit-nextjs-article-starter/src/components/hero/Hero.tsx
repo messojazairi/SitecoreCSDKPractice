@@ -13,20 +13,23 @@ import { Default as MediaSection } from '@/components/media-section/MediaSection
 import { HeroProps } from './hero.props';
 
 // Define heroVariants using class-variance-authority for styling
-export const heroVariants = cva('hero @container py-24 relative w-full overflow-hidden', {
-  variants: {
-    colorScheme: {
-      primary: 'bg-primary text-primary-foreground',
-      secondary: 'bg-secondary text-primary',
-      tertiary: 'bg-tertiary text-primary',
-      dark: 'bg-dark text-primary',
-      light: 'bg-light text-primary',
+export const heroVariants = cva(
+  'hero @container py-24 relative w-full overflow-hidden',
+  {
+    variants: {
+      colorScheme: {
+        primary: 'bg-primary text-primary-foreground',
+        secondary: 'bg-secondary text-primary',
+        tertiary: 'bg-tertiary text-primary',
+        dark: 'bg-dark text-primary',
+        light: 'bg-light text-primary',
+      },
+    },
+    defaultVariants: {
+      colorScheme: 'light',
     },
   },
-  defaultVariants: {
-    colorScheme: 'light',
-  },
-});
+);
 
 export const Default: React.FC<HeroProps> = ({ fields, params, page }) => {
   // Destructure fields and params
@@ -60,7 +63,11 @@ export const Default: React.FC<HeroProps> = ({ fields, params, page }) => {
 
   if (fields) {
     return (
-      <section className={cn(heroVariants({ colorScheme }), [params?.styles && params.styles])}>
+      <section
+        className={cn(heroVariants({ colorScheme }), [
+          params?.styles && params.styles,
+        ])}
+      >
         <div className="grid gap-20">
           {/* Hero content */}
           <div className="mx-auto w-full max-w-screen-xl px-4 xl:px-8">
@@ -85,7 +92,7 @@ export const Default: React.FC<HeroProps> = ({ fields, params, page }) => {
                       {
                         'text-primary-foreground': colorScheme === 'primary',
                         'text-secondary-foreground': colorScheme !== 'primary',
-                      }
+                      },
                     )}
                     field={descriptionOptional}
                   />
@@ -95,7 +102,9 @@ export const Default: React.FC<HeroProps> = ({ fields, params, page }) => {
                     <EditableButton
                       buttonLink={linkOptional}
                       className={
-                        colorScheme === 'primary' ? 'text-primary bg-white hover:bg-gray-100' : ''
+                        colorScheme === 'primary'
+                          ? 'text-primary bg-white hover:bg-gray-100'
+                          : ''
                       }
                       isPageEditing={isPageEditing}
                     />

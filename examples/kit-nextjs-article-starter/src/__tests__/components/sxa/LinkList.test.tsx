@@ -111,13 +111,13 @@ describe('LinkList Component', () => {
       const { container } = render(<LinkList {...defaultProps} />);
 
       const listItems = container.querySelectorAll('ul li');
-      
+
       // First item: item0, odd, first
       expect(listItems[0]).toHaveClass('item0', 'odd', 'first');
-      
+
       // Second item: item1, even
       expect(listItems[1]).toHaveClass('item1', 'even');
-      
+
       // Third item: item2, odd, last
       expect(listItems[2]).toHaveClass('item2', 'odd', 'last');
     });
@@ -304,9 +304,19 @@ describe('LinkList Component', () => {
             datasource: {
               children: {
                 results: [
-                  { field: { link: defaultProps.fields.data.datasource.children.results[0].field.link } },
+                  {
+                    field: {
+                      link: defaultProps.fields.data.datasource.children
+                        .results[0].field.link,
+                    },
+                  },
                   { field: undefined } as any,
-                  { field: { link: defaultProps.fields.data.datasource.children.results[1].field.link } },
+                  {
+                    field: {
+                      link: defaultProps.fields.data.datasource.children
+                        .results[1].field.link,
+                    },
+                  },
                 ],
               },
               field: {
@@ -324,4 +334,3 @@ describe('LinkList Component', () => {
     });
   });
 });
-

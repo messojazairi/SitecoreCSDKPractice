@@ -55,7 +55,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag, className }: any) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { className, 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
   DateField: ({ field, render, tag, className }: any) => {
     const Tag = tag || 'span';
@@ -63,7 +67,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement(
       Tag,
       { className, 'data-testid': 'date-field' },
-      formattedDate || ''
+      formattedDate || '',
     );
   },
 }));
@@ -72,8 +76,8 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => {
     const translations: Record<string, string> = {
-      'Demo1_ArticleHeader_BackToNewsLabel': 'Back to News',
-      'Demo1_ArticleHeader_AuthorLabel': 'Written by',
+      Demo1_ArticleHeader_BackToNewsLabel: 'Back to News',
+      Demo1_ArticleHeader_AuthorLabel: 'Written by',
     };
     return translations[key] || key;
   },
@@ -82,7 +86,9 @@ jest.mock('next-intl', () => ({
 // Mock UI components
 jest.mock('@/components/ui/avatar', () => ({
   Avatar: ({ children }: any) => <div data-testid="avatar">{children}</div>,
-  AvatarImage: ({ src, alt }: any) => <img src={src} alt={alt} data-testid="avatar-image" />,
+  AvatarImage: ({ src, alt }: any) => (
+    <img src={src} alt={alt} data-testid="avatar-image" />
+  ),
   AvatarFallback: ({ children }: any) => (
     <div data-testid="avatar-fallback">{children}</div>
   ),
@@ -145,7 +151,11 @@ jest.mock('@/components/floating-dock/floating-dock.dev', () => ({
   FloatingDock: ({ items }: any) => (
     <div data-testid="floating-dock">
       {items.map((item: any, index: number) => (
-        <button key={index} onClick={item.onClick} data-testid={`dock-item-${index}`}>
+        <button
+          key={index}
+          onClick={item.onClick}
+          data-testid={`dock-item-${index}`}
+        >
           {item.title}
         </button>
       ))}
@@ -189,10 +199,12 @@ describe('ArticleHeader Component', () => {
     it('should render article header with all fields', () => {
       render(<ArticleHeader {...defaultProps} />);
 
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
       expect(screen.getByText('Technology')).toBeInTheDocument();
       expect(screen.getByText('5 min read')).toBeInTheDocument();
-      
+
       // Author name is rendered (check for both first and last name presence)
       // Use getAllByText since it appears in both avatar fallback and name paragraph
       const authorNames = screen.getAllByText(/John.*Doe/);
@@ -210,10 +222,13 @@ describe('ArticleHeader Component', () => {
     it('should render back button', () => {
       render(<ArticleHeader {...defaultProps} />);
 
-      const backButton = screen.getAllByRole('button').find((button) =>
-        button.textContent?.includes('Back to News') ||
-        button.textContent?.includes('Demo1_ArticleHeader_BackToNewsLabel')
-      );
+      const backButton = screen
+        .getAllByRole('button')
+        .find(
+          (button) =>
+            button.textContent?.includes('Back to News') ||
+            button.textContent?.includes('Demo1_ArticleHeader_BackToNewsLabel'),
+        );
       expect(backButton).toBeInTheDocument();
     });
 
@@ -235,34 +250,44 @@ describe('ArticleHeader Component', () => {
       render(<ArticleHeader {...propsWithoutEyebrow} />);
 
       expect(screen.queryByTestId('badge')).not.toBeInTheDocument();
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
 
     it('should render without author', () => {
       render(<ArticleHeader {...propsWithoutAuthor} />);
 
       expect(screen.queryByTestId('avatar')).not.toBeInTheDocument();
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
 
     it('should render without read time', () => {
       render(<ArticleHeader {...propsWithoutReadTime} />);
 
       expect(screen.queryByText('5 min read')).not.toBeInTheDocument();
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
 
     it('should render without display date', () => {
       render(<ArticleHeader {...propsWithoutDate} />);
 
       expect(screen.queryByTestId('date-field')).not.toBeInTheDocument();
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
 
     it('should render with minimal props', () => {
       render(<ArticleHeader {...propsMinimal} />);
 
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -320,9 +345,9 @@ describe('ArticleHeader Component', () => {
     it('should call window.history.back when clicked', () => {
       render(<ArticleHeader {...defaultProps} />);
 
-      const backButton = screen.getAllByRole('button').find((button) =>
-        button.textContent?.includes('Back to News')
-      );
+      const backButton = screen
+        .getAllByRole('button')
+        .find((button) => button.textContent?.includes('Back to News'));
       if (backButton) {
         fireEvent.click(backButton);
         expect(mockBack).toHaveBeenCalled();
@@ -338,10 +363,13 @@ describe('ArticleHeader Component', () => {
     it('should render back button with correct text', () => {
       render(<ArticleHeader {...defaultProps} />);
 
-      const backButton = screen.getAllByRole('button').find((button) =>
-        button.textContent?.includes('Back to News') ||
-        button.textContent?.includes('Demo1_ArticleHeader_BackToNewsLabel')
-      );
+      const backButton = screen
+        .getAllByRole('button')
+        .find(
+          (button) =>
+            button.textContent?.includes('Back to News') ||
+            button.textContent?.includes('Demo1_ArticleHeader_BackToNewsLabel'),
+        );
       expect(backButton).toBeDefined();
       if (backButton) {
         expect(backButton).toBeInTheDocument();
@@ -470,7 +498,9 @@ describe('ArticleHeader Component', () => {
       render(<ArticleHeader {...defaultProps} />);
 
       // Component should still render
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
   });
 
@@ -486,7 +516,11 @@ describe('ArticleHeader Component', () => {
       const { container } = render(<ArticleHeader {...defaultProps} />);
 
       const header = container.querySelector('header');
-      expect(header).toHaveClass('article-header', 'relative', 'overflow-hidden');
+      expect(header).toHaveClass(
+        'article-header',
+        'relative',
+        'overflow-hidden',
+      );
     });
 
     it('should render white bar section', () => {
@@ -539,9 +573,11 @@ describe('ArticleHeader Component', () => {
         },
       };
 
-      render(<ArticleHeader {...propsWithoutDatasource as any} />);
+      render(<ArticleHeader {...(propsWithoutDatasource as any)} />);
 
-      expect(screen.getByText('The Future of Web Development')).toBeInTheDocument();
+      expect(
+        screen.getByText('The Future of Web Development'),
+      ).toBeInTheDocument();
     });
 
     it('should handle missing externalFields gracefully', () => {
@@ -554,10 +590,12 @@ describe('ArticleHeader Component', () => {
         },
       };
 
-      render(<ArticleHeader {...propsWithoutExternal as any} />);
+      render(<ArticleHeader {...(propsWithoutExternal as any)} />);
 
       // Should still render the structure
-      const { container } = render(<ArticleHeader {...propsWithoutExternal as any} />);
+      const { container } = render(
+        <ArticleHeader {...(propsWithoutExternal as any)} />,
+      );
       expect(container.querySelector('header')).toBeInTheDocument();
     });
   });
@@ -578,4 +616,3 @@ describe('ArticleHeader Component', () => {
     });
   });
 });
-

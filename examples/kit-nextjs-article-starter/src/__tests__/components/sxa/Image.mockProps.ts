@@ -139,4 +139,3 @@ export const propsWithoutAlt = {
   params: mockParams,
   fields: mockFieldsWithoutAlt,
 };
-

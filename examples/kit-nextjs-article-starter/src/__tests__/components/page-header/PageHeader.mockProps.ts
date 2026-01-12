@@ -1,4 +1,10 @@
-import { Field, ImageField, LinkField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
+import {
+  Field,
+  ImageField,
+  LinkField,
+  Page,
+  PageModeName,
+} from '@sitecore-content-sdk/nextjs';
 import { PageHeaderProps } from '@/components/page-header/page-header.props';
 
 // Mock page objects
@@ -70,7 +76,8 @@ export const mockPageHeaderTitleField: Field<string> = {
 
 // Mock subtitle field
 export const mockPageSubtitleField: Field<string> = {
-  value: '<p>Discover innovative solutions that transform your business with cutting-edge technology and expert guidance.</p>',
+  value:
+    '<p>Discover innovative solutions that transform your business with cutting-edge technology and expert guidance.</p>',
 };
 
 // Mock logo text field
@@ -336,5 +343,3 @@ export const propsEditing: PageHeaderProps = {
   rendering: { componentName: 'PageHeader' } as any,
   page: mockPageEditing,
 };
-
-

@@ -15,7 +15,10 @@ const SitecoreStyles = ({
   enableStyles?: boolean;
   enableThemes?: boolean;
 }) => {
-  const headLinks = client.getHeadLinks(layoutData, { enableStyles, enableThemes });
+  const headLinks = client.getHeadLinks(layoutData, {
+    enableStyles,
+    enableThemes,
+  });
 
   if (headLinks.length === 0) {
     return null;

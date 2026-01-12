@@ -16,7 +16,7 @@ interface UseParallaxOptions {
  */
 export function useParallaxEnhancedOptimized(
   containerRef: RefObject<HTMLElement | null>,
-  options: UseParallaxOptions = {}
+  options: UseParallaxOptions = {},
 ) {
   const {
     disabled = false,
@@ -27,7 +27,9 @@ export function useParallaxEnhancedOptimized(
   } = options;
 
   // Check for reduced motion preference
-  const prefersReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
+  const prefersReducedMotion = useMatchMedia(
+    '(prefers-reduced-motion: reduce)',
+  );
 
   // Store elements in a ref to avoid re-querying the DOM
   const elementsRef = useRef<{
@@ -79,13 +81,16 @@ export function useParallaxEnhancedOptimized(
         0,
         Math.min(
           1,
-          (currentScrollY - containerTop + windowHeight) / (containerHeight + windowHeight)
-        )
+          (currentScrollY - containerTop + windowHeight) /
+            (containerHeight + windowHeight),
+        ),
       );
 
       // Apply transforms to standard elements
       elementsRef.current.standard.forEach((element) => {
-        const speed = Number.parseFloat(element.getAttribute('data-speed') || '0.1');
+        const speed = Number.parseFloat(
+          element.getAttribute('data-speed') || '0.1',
+        );
         const yPos = (currentScrollY - containerTop) * speed;
 
         // Use transform3d for hardware acceleration
@@ -130,13 +135,21 @@ export function useParallaxEnhancedOptimized(
     // Cache DOM elements on mount to avoid repeated queries
     const container = containerRef.current;
     elementsRef.current = {
-      standard: Array.from(container.querySelectorAll(selector)) as HTMLElement[],
-      background: Array.from(container.querySelectorAll(backgroundSelector)) as HTMLElement[],
-      foreground: Array.from(container.querySelectorAll(foregroundSelector)) as HTMLElement[],
+      standard: Array.from(
+        container.querySelectorAll(selector),
+      ) as HTMLElement[],
+      background: Array.from(
+        container.querySelectorAll(backgroundSelector),
+      ) as HTMLElement[],
+      foreground: Array.from(
+        container.querySelectorAll(foregroundSelector),
+      ) as HTMLElement[],
     };
 
     // Use passive listener for better scroll performance
-    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    window.addEventListener('scroll', throttledScrollHandler, {
+      passive: true,
+    });
 
     // Initialize positions
     handleScroll();

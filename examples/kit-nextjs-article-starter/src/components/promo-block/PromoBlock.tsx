@@ -7,7 +7,10 @@ import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import { PromoBlockProps, PromoBlockVariationClassesProps } from './promo-block.props';
+import {
+  PromoBlockProps,
+  PromoBlockVariationClassesProps,
+} from './promo-block.props';
 import { type JSX } from 'react';
 
 const PromoBlock = (props: PromoBlockProps): JSX.Element => {
@@ -52,15 +55,23 @@ const PromoBlock = (props: PromoBlockProps): JSX.Element => {
   };
 
   const variantChoice =
-    variation !== Variation.DEFAULT ? variationTwoClassesVariation : defaultClassesVariation;
+    variation !== Variation.DEFAULT
+      ? variationTwoClassesVariation
+      : defaultClassesVariation;
   if (fields) {
     return (
       <div
-        className={cn('component promo-block grid  columns-1 gap-6 align-middle sm:columns-12', [
-          `row-span-${variantChoice.row}`,
-        ])}
+        className={cn(
+          'component promo-block grid  columns-1 gap-6 align-middle sm:columns-12',
+          [`row-span-${variantChoice.row}`],
+        )}
       >
-        <Flex direction="column" justify="center" gap="4" className={variantChoice.copy}>
+        <Flex
+          direction="column"
+          justify="center"
+          gap="4"
+          className={variantChoice.copy}
+        >
           <h3>
             <Text field={heading} />
           </h3>
@@ -69,7 +80,8 @@ const PromoBlock = (props: PromoBlockProps): JSX.Element => {
             gap="2"
             className={cn({
               'justify-end':
-                orientation === Orientation.IMAGE_RIGHT && variation === Variation.VERSION_TWO,
+                orientation === Orientation.IMAGE_RIGHT &&
+                variation === Variation.VERSION_TWO,
             })}
           >
             {link && (

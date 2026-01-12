@@ -91,7 +91,9 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
   };
 
   const handleClose = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>
+    e:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.KeyboardEvent<HTMLDivElement>,
   ) => {
     e.stopPropagation();
     onClose();
@@ -122,7 +124,10 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                 className="relative h-[calc(100vh-2rem)] max-h-[calc((100vw-4rem)*9/16)] w-[calc(100%-4rem)] max-w-[calc(100vh*16/9)]"
                 onClick={(e) => e.stopPropagation()}
               >
-                <motion.div variants={itemVariants} className="absolute inset-0">
+                <motion.div
+                  variants={itemVariants}
+                  className="absolute inset-0"
+                >
                   {videoId ? (
                     <YouTube
                       videoId={videoId}
@@ -150,7 +155,10 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                   )}
                 </motion.div>
               </motion.div>
-              <motion.div variants={itemVariants} className="fixed right-4 top-4 z-[110]">
+              <motion.div
+                variants={itemVariants}
+                className="fixed right-4 top-4 z-[110]"
+              >
                 <Button
                   className={`bg-white text-black hover:bg-gray-200  ${fadeOutClass} ${
                     showCloseButton ? visibleClass : hiddenClass

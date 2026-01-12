@@ -15,7 +15,9 @@ import {
   imageBgExtensionRenderingParams as imageBgOptions,
 } from './promo-animated.util';
 
-export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => {
+export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (
+  props,
+) => {
   const { fields, params, isPageEditing } = props;
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -28,7 +30,9 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
 
     // To avoid a horizontal scrollbar, check for the nearest full bleed wrapper,
     // and add "overflow:hidden" to its style
-    const findContainerParent = (element: HTMLElement | null): HTMLElement | null => {
+    const findContainerParent = (
+      element: HTMLElement | null,
+    ): HTMLElement | null => {
       while (element) {
         if (
           element.className.includes('container--full-bleed') ||
@@ -55,12 +59,16 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
     const hasLinks = primaryLink?.value?.href || secondaryLink?.value?.href;
 
     return (
-      <section ref={wrapperRef} data-component="PromoAnimated" className="@container">
+      <section
+        ref={wrapperRef}
+        data-component="PromoAnimated"
+        className="@container"
+      >
         <div
           data-class-change
           className={cn(
             'promo-animated__content-wrapper @md:grid-cols-2 @md:items-center @md:gap-10 @xl:gap-[135px] group grid grid-cols-1',
-            { [props?.params?.styles]: props?.params?.styles }
+            { [props?.params?.styles]: props?.params?.styles },
           )}
         >
           <div className="promo-animated__image @md:flex @md:justify-start @md:order-2 w-full">
@@ -69,7 +77,12 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
                 className="@md:max-w-[452px] @xs:mx-0 relative mx-auto aspect-square h-full w-full max-w-[350px] rounded-r-full group-[.position-center]:mx-auto group-[.position-right]:ml-auto"
                 ref={imageRef}
               >
-                <div className={imageBgOptions({ colorScheme, className: 'left-1/2' })} />
+                <div
+                  className={imageBgOptions({
+                    colorScheme,
+                    className: 'left-1/2',
+                  })}
+                />
                 <ImageWrapper
                   image={image}
                   className="@md:max-w-[452px] aspect-square w-full rounded-full object-cover"
@@ -86,7 +99,9 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
                 >
                   <div
                     className={spriteOptions({ colorScheme })}
-                    style={{ clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)' }}
+                    style={{
+                      clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
+                    }}
                   />
                 </AnimatedSection>
               </div>
@@ -95,7 +110,10 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
 
           <div className="promo-animated__content @md:order-1 @md:flex @md:flex-col @md:justify-center min-w-0">
             {title && (
-              <AnimatedSection reducedMotion={prefersReducedMotion} isPageEditing={isPageEditing}>
+              <AnimatedSection
+                reducedMotion={prefersReducedMotion}
+                isPageEditing={isPageEditing}
+              >
                 <Text
                   tag="h2"
                   className="font-heading @sm:text-5xl @lg:text-6xl -ml-1 mt-6 max-w-[15.5ch] text-4xl font-normal leading-[1.1333] tracking-tighter group-[.position-center]:mx-auto group-[.position-right]:ml-auto"
@@ -125,7 +143,10 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
                 isPageEditing={isPageEditing}
               >
                 {primaryLink && (
-                  <Button buttonLink={primaryLink} isPageEditing={isPageEditing}></Button>
+                  <Button
+                    buttonLink={primaryLink}
+                    isPageEditing={isPageEditing}
+                  ></Button>
                 )}
                 {secondaryLink && (
                   <Button

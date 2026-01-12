@@ -2,7 +2,8 @@ import { RichTextField } from '@sitecore-content-sdk/nextjs';
 
 // Mock rich text field with content
 export const mockContentField: RichTextField = {
-  value: '<p>This is page content</p><h2>Heading</h2><ul><li>Item 1</li><li>Item 2</li></ul>',
+  value:
+    '<p>This is page content</p><h2>Heading</h2><ul><li>Item 1</li><li>Item 2</li></ul>',
 };
 
 export const mockEmptyContentField: RichTextField = {
@@ -126,4 +127,3 @@ export const propsWithNullContent = {
     Content: null as any,
   },
 };
-

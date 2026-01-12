@@ -36,7 +36,9 @@ describe('BackgroundThumbnail Component', () => {
     });
 
     it('should render null when not in editing mode', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>,
+      );
       expect(container.firstChild).toBeNull();
     });
 
@@ -63,7 +65,9 @@ describe('BackgroundThumbnail Component', () => {
     });
 
     it('should render when in editing mode', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>,
+      );
       expect(container.firstChild).toBeInTheDocument();
     });
 
@@ -78,21 +82,41 @@ describe('BackgroundThumbnail Component', () => {
     });
 
     it('should apply correct container classes', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>,
+      );
       const wrapper = container.firstChild as HTMLElement;
-      expect(wrapper).toHaveClass('bg-primary', 'absolute', 'bottom-4', 'right-4', 'rounded-md');
+      expect(wrapper).toHaveClass(
+        'bg-primary',
+        'absolute',
+        'bottom-4',
+        'right-4',
+        'rounded-md',
+      );
     });
 
     it('should apply opacity and ring classes', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>,
+      );
       const wrapper = container.firstChild as HTMLElement;
-      expect(wrapper).toHaveClass('opacity-50', 'ring-4', 'ring-offset-2', 'hover:opacity-100');
+      expect(wrapper).toHaveClass(
+        'opacity-50',
+        'ring-4',
+        'ring-offset-2',
+        'hover:opacity-100',
+      );
     });
 
     it('should position badge correctly', () => {
       render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('absolute', 'bottom-4', 'left-2/4', '-translate-x-2/4');
+      expect(badge).toHaveClass(
+        'absolute',
+        'bottom-4',
+        'left-2/4',
+        '-translate-x-2/4',
+      );
     });
 
     it('should apply nowrap and whitespace classes to badge', () => {
@@ -114,7 +138,9 @@ describe('BackgroundThumbnail Component', () => {
     });
 
     it('should render with image children', () => {
-      const imageChild = <img src="/test.jpg" alt="Test" data-testid="image-child" />;
+      const imageChild = (
+        <img src="/test.jpg" alt="Test" data-testid="image-child" />
+      );
       render(<BackgroundThumbnail>{imageChild}</BackgroundThumbnail>);
       expect(screen.getByTestId('image-child')).toBeInTheDocument();
     });
@@ -154,7 +180,9 @@ describe('BackgroundThumbnail Component', () => {
         },
       });
 
-      const { container } = render(<BackgroundThumbnail>{undefined as any}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{undefined as any}</BackgroundThumbnail>,
+      );
       expect(container.firstChild).toBeInTheDocument();
       expect(screen.getByText('Update Background')).toBeInTheDocument();
     });
@@ -168,7 +196,9 @@ describe('BackgroundThumbnail Component', () => {
         },
       });
 
-      const { container } = render(<BackgroundThumbnail>{null as any}</BackgroundThumbnail>);
+      const { container } = render(
+        <BackgroundThumbnail>{null as any}</BackgroundThumbnail>,
+      );
       expect(container.firstChild).toBeInTheDocument();
       expect(screen.getByText('Update Background')).toBeInTheDocument();
     });
@@ -197,7 +227,9 @@ describe('BackgroundThumbnail Component', () => {
         },
       });
 
-      const { container, rerender } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const { container, rerender } = render(
+        <BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>,
+      );
       expect(container.firstChild).toBeNull();
 
       mockUseSitecore.mockReturnValue({
@@ -213,5 +245,3 @@ describe('BackgroundThumbnail Component', () => {
     });
   });
 });
-
-

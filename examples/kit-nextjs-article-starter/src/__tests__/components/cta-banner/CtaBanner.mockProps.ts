@@ -1,4 +1,9 @@
-import { Field, LinkField, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
+import {
+  Field,
+  LinkField,
+  ComponentRendering,
+  Page,
+} from '@sitecore-content-sdk/nextjs';
 import { ColorSchemeLimited as ColorScheme } from '@/enumerations/ColorSchemeLimited.enum';
 
 // Mock page object with all required Page properties
@@ -44,7 +49,8 @@ export const mockTitleField: Field<string> = {
 };
 
 export const mockDescriptionField: Field<string> = {
-  value: 'Join thousands of satisfied customers and transform your business today.',
+  value:
+    'Join thousands of satisfied customers and transform your business today.',
 };
 
 export const mockEmptyTitleField: Field<string> = {
@@ -219,4 +225,3 @@ export const propsWithoutFields = {
   rendering: mockRendering,
   page: mockPageBase,
 };
-

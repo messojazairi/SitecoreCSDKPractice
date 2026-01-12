@@ -1,5 +1,8 @@
 import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
-import { MultiPromoTabsProps, MultiPromoTabsFields } from '@/components/multi-promo-tabs/multi-promo-tabs.props';
+import {
+  MultiPromoTabsProps,
+  MultiPromoTabsFields,
+} from '@/components/multi-promo-tabs/multi-promo-tabs.props';
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
@@ -324,4 +327,3 @@ export const propsEditing: MultiPromoTabsProps = {
   isPageEditing: true,
   page: mockPageDataEditing.page as any,
 };
-

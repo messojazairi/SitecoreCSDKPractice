@@ -68,7 +68,10 @@ const personalize = new PersonalizeMiddleware({
 });
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
-  return defineMiddleware(locale, multisite, redirects, personalize).exec(req, ev);
+  return defineMiddleware(locale, multisite, redirects, personalize).exec(
+    req,
+    ev,
+  );
 }
 
 export const config = {

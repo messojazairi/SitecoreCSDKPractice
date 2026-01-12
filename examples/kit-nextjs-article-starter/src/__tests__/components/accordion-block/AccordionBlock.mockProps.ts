@@ -1,4 +1,10 @@
-import { Field, LinkField, RichTextField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
+import {
+  Field,
+  LinkField,
+  RichTextField,
+  Page,
+  PageModeName,
+} from '@sitecore-content-sdk/nextjs';
 import { AccordionItemProps } from '@/components/accordion-block/accordion-block.props';
 
 // Mock page objects with full Page type
@@ -256,5 +262,3 @@ export const propsWithoutFields = {
   rendering: { componentName: 'AccordionBlock' } as any,
   page: mockPageBase,
 };
-
-

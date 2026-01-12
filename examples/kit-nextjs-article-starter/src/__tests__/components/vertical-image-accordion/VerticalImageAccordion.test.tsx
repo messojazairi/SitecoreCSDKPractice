@@ -29,7 +29,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement(
       Tag,
       { className, 'data-testid': 'text-field', id },
-      field?.value || ''
+      field?.value || '',
     );
   },
   Link: ({ field, editable, className }: any) => (
@@ -68,17 +68,19 @@ jest.mock('@/lib/utils', () => ({
 
 // Mock ImageWrapper
 jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className, wrapperClass }: any, ref: any) => (
-    <div className={wrapperClass} data-testid="image-wrapper-container">
-      <img
-        ref={ref}
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        data-testid="image-wrapper"
-      />
-    </div>
-  )),
+  Default: React.forwardRef(
+    ({ image, className, wrapperClass }: any, ref: any) => (
+      <div className={wrapperClass} data-testid="image-wrapper-container">
+        <img
+          ref={ref}
+          src={image?.value?.src}
+          alt={image?.value?.alt}
+          className={className}
+          data-testid="image-wrapper"
+        />
+      </div>
+    ),
+  ),
 }));
 
 // Mock EditableButton
@@ -124,7 +126,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should render all item titles in h3 tags', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const h3Elements = container.querySelectorAll('h3');
       expect(h3Elements.length).toBeGreaterThan(0);
@@ -134,13 +138,19 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordion {...defaultProps} />);
 
       expect(
-        screen.getByText('Explore cutting-edge solutions that drive digital transformation')
+        screen.getByText(
+          'Explore cutting-edge solutions that drive digital transformation',
+        ),
       ).toBeInTheDocument();
       expect(
-        screen.getByText('Crafting beautiful experiences that engage and inspire users')
+        screen.getByText(
+          'Crafting beautiful experiences that engage and inspire users',
+        ),
       ).toBeInTheDocument();
       expect(
-        screen.getByText('Building sustainable strategies for long-term success')
+        screen.getByText(
+          'Building sustainable strategies for long-term success',
+        ),
       ).toBeInTheDocument();
     });
 
@@ -161,7 +171,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Component structure', () => {
     it('should render with correct container classes', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
       expect(mainContainer).toHaveClass(
@@ -172,19 +184,23 @@ describe('VerticalImageAccordion Component', () => {
         'relative',
         'mx-auto',
         'my-6',
-        'max-w-7xl'
+        'max-w-7xl',
       );
     });
 
     it('should have role="region" on container', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
       expect(mainContainer).toHaveAttribute('role', 'region');
     });
 
     it('should have aria-label on container', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
       expect(mainContainer).toHaveAttribute('aria-label', 'Our Services');
@@ -199,14 +215,16 @@ describe('VerticalImageAccordion Component', () => {
         'text-primary-foreground',
         '@lg:text-6xl',
         'mb-16',
-        'text-4xl'
+        'text-4xl',
       );
     });
   });
 
   describe('Interactive mode', () => {
     it('should render items in tablist with correct attributes', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tablist = container.querySelector('[role="tablist"]');
       expect(tablist).toBeInTheDocument();
@@ -214,14 +232,18 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should render accordion items with role="tab"', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       expect(tabs.length).toBeGreaterThan(0);
     });
 
     it('should set first item as active by default (index 1)', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       // Default activeIndex is 1, so the second item should be selected
@@ -229,7 +251,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should handle click on accordion item', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       fireEvent.click(tabs[0]);
@@ -239,7 +263,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should handle keyboard navigation (Enter key)', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       fireEvent.keyDown(tabs[0], { key: 'Enter' });
@@ -249,7 +275,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should handle keyboard navigation (Space key)', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       fireEvent.keyDown(tabs[0], { key: ' ' });
@@ -259,7 +287,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should have tabIndex=0 on accordion items', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       tabs.forEach((tab) => {
@@ -270,7 +300,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Editing mode', () => {
     it('should render in stacked layout when in editing mode', () => {
-      const { container } = render(<VerticalImageAccordion {...propsInEditingMode} />);
+      const { container } = render(
+        <VerticalImageAccordion {...propsInEditingMode} />,
+      );
 
       // In editing mode, items are rendered in a flex-col layout
       const stackedContainer = container.querySelector('.flex.flex-col.gap-14');
@@ -278,7 +310,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should not have interactive accordion behavior in editing mode', () => {
-      const { container } = render(<VerticalImageAccordion {...propsInEditingMode} />);
+      const { container } = render(
+        <VerticalImageAccordion {...propsInEditingMode} />,
+      );
 
       // No tablist in editing mode
       const tablist = container.querySelector('[role="tablist"]');
@@ -334,7 +368,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Edge cases and fallbacks', () => {
     it('should handle empty items array', () => {
-      const { container } = render(<VerticalImageAccordion {...propsWithEmptyItems} />);
+      const { container } = render(
+        <VerticalImageAccordion {...propsWithEmptyItems} />,
+      );
 
       expect(screen.getByText('Our Services')).toBeInTheDocument();
       const tabs = container.querySelectorAll('[role="tab"]');
@@ -342,7 +378,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should handle missing items', () => {
-      const { container } = render(<VerticalImageAccordion {...propsWithoutItems} />);
+      const { container } = render(
+        <VerticalImageAccordion {...propsWithoutItems} />,
+      );
 
       expect(screen.getByText('Our Services')).toBeInTheDocument();
       const tabs = container.querySelectorAll('[role="tab"]');
@@ -365,7 +403,9 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Accessibility', () => {
     it('should have proper ARIA attributes on tabs', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       tabs.forEach((tab, index) => {
@@ -375,7 +415,9 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should have proper ARIA attributes on tabpanels', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabpanels = container.querySelectorAll('[role="tabpanel"]');
       tabpanels.forEach((panel, index) => {
@@ -385,14 +427,18 @@ describe('VerticalImageAccordion Component', () => {
     });
 
     it('should have role="img" on image containers', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const imageContainers = container.querySelectorAll('[role="img"]');
       expect(imageContainers.length).toBeGreaterThan(0);
     });
 
     it('should have aria-label on image containers', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const imageContainers = container.querySelectorAll('[role="img"]');
       imageContainers.forEach((imgContainer) => {
@@ -411,14 +457,18 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Responsive layout', () => {
     it('should apply responsive padding', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
       expect(mainContainer).toHaveClass('px-4', 'py-16', 'sm:px-6', 'lg:px-8');
     });
 
     it('should apply responsive flex layout', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const flexContainer = container.querySelector('.flex');
       expect(flexContainer).toHaveClass('@md:flex-row', 'flex-col');
@@ -427,21 +477,30 @@ describe('VerticalImageAccordion Component', () => {
 
   describe('Styling', () => {
     it('should apply rounded corners to container', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
       expect(mainContainer).toHaveClass('rounded-default');
     });
 
     it('should apply primary background color', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const mainContainer = container.firstChild as HTMLElement;
-      expect(mainContainer).toHaveClass('bg-primary', 'text-primary-foreground');
+      expect(mainContainer).toHaveClass(
+        'bg-primary',
+        'text-primary-foreground',
+      );
     });
 
     it('should apply transition classes to accordion items', () => {
-      const { container } = render(<VerticalImageAccordion {...defaultProps} />);
+      const { container } = render(
+        <VerticalImageAccordion {...defaultProps} />,
+      );
 
       const tabs = container.querySelectorAll('[role="tab"]');
       tabs.forEach((tab) => {
@@ -465,9 +524,13 @@ describe('VerticalImageAccordion Component', () => {
 
       const buttons = screen.getAllByTestId('editable-button');
       buttons.forEach((button) => {
-        expect(button).toHaveClass('font-heading', 'mt-4', 'inline-flex', 'w-fit');
+        expect(button).toHaveClass(
+          'font-heading',
+          'mt-4',
+          'inline-flex',
+          'w-fit',
+        );
       });
     });
   });
 });
-

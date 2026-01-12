@@ -92,4 +92,3 @@ export const propsWithUndefinedFields: SubscriptionBannerProps = {
   params: {},
   rendering: { componentName: 'SubscriptionBanner' } as any,
 };
-

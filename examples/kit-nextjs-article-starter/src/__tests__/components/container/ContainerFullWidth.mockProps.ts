@@ -117,4 +117,3 @@ export const propsWithoutDynamicId = {
   } as ComponentRendering,
   page: mockSitecoreContext.page,
 };
-

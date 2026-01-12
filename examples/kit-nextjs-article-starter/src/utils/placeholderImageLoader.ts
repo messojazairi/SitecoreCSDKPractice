@@ -12,7 +12,7 @@ const placeholderImageLoader = ({ src, width }: ImageLoaderProps) => {
   const aspectRatioHeight = (
     originalWidth: number,
     originalHeight: number,
-    width: number
+    width: number,
   ): number => Math.round((originalHeight / originalWidth) * width);
 
   const height = aspectRatioHeight(originalWidth, originalHeight, width);

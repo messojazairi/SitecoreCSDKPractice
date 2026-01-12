@@ -2,7 +2,8 @@ import { Field } from '@sitecore-content-sdk/nextjs';
 
 // Mock text field with HTML content
 export const mockTextField: Field<string> = {
-  value: '<p>This is rich text content</p><h2>Heading</h2><ul><li>Item 1</li><li>Item 2</li></ul>',
+  value:
+    '<p>This is rich text content</p><h2>Heading</h2><ul><li>Item 1</li><li>Item 2</li></ul>',
 };
 
 export const mockSimpleTextField: Field<string> = {
@@ -135,4 +136,3 @@ export const propsWithUndefinedId = {
     Text: mockTextField,
   },
 };
-

@@ -71,7 +71,11 @@ describe('Container Utility Functions', () => {
         placeholders: {},
       } as ComponentRendering;
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        undefined,
+      );
 
       expect(result).toBe(true);
     });
@@ -88,7 +92,11 @@ describe('Container Utility Functions', () => {
         },
       } as ComponentRendering;
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        undefined,
+      );
 
       expect(result).toBe(false);
     });
@@ -105,7 +113,11 @@ describe('Container Utility Functions', () => {
         },
       } as ComponentRendering;
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        undefined,
+      );
 
       expect(result).toBe(false);
     });
@@ -118,7 +130,11 @@ describe('Container Utility Functions', () => {
 
       const children = {} as any; // Mock child element
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, children);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        children,
+      );
 
       expect(result).toBe(false);
     });
@@ -137,13 +153,21 @@ describe('Container Utility Functions', () => {
 
       const children = {} as any; // Mock child element
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, children);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        children,
+      );
 
       expect(result).toBe(false);
     });
 
     it('should handle undefined rendering', () => {
-      const result = isContainerPlaceholderEmpty(undefined as any, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        undefined as any,
+        placeholderProps,
+        undefined,
+      );
 
       expect(result).toBe(true);
     });
@@ -153,7 +177,11 @@ describe('Container Utility Functions', () => {
         componentName: 'Container',
       } as ComponentRendering;
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        undefined,
+      );
 
       expect(result).toBe(true);
     });
@@ -166,11 +194,14 @@ describe('Container Utility Functions', () => {
         },
       } as ComponentRendering;
 
-      const result = isContainerPlaceholderEmpty(rendering, placeholderProps, undefined);
+      const result = isContainerPlaceholderEmpty(
+        rendering,
+        placeholderProps,
+        undefined,
+      );
 
       // Empty arrays are truthy in JavaScript, so placeholder is considered to exist
       expect(result).toBe(false);
     });
   });
 });
-

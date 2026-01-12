@@ -89,4 +89,3 @@ export const propsWithChildren = {
   ...defaultProps,
   children: 'Child content' as React.ReactNode,
 };
-

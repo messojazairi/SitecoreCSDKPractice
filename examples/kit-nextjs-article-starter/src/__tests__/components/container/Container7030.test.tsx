@@ -16,8 +16,12 @@ interface MockPlaceholderProps {
 }
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => (
+    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
+  ),
   useSitecore: jest.fn(),
   withDatasourceCheck:
     () =>
@@ -89,13 +93,17 @@ describe('Container7030 Component', () => {
     it('should render left placeholder (70%)', () => {
       render(<Container7030 {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-seventy-left-main-7030')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-seventy-left-main-7030'),
+      ).toBeInTheDocument();
     });
 
     it('should render right placeholder (30%)', () => {
       render(<Container7030 {...defaultProps} />);
 
-      expect(screen.getByTestId('placeholder-container-thirty-right-main-7030')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('placeholder-container-thirty-right-main-7030'),
+      ).toBeInTheDocument();
     });
 
     it('should apply custom styles', () => {
@@ -133,7 +141,9 @@ describe('Container7030 Component', () => {
     });
 
     it('should exclude top margin when excludeTopMargin is 1', () => {
-      const { container } = render(<Container7030 {...propsWithExcludeTopMargin} />);
+      const { container } = render(
+        <Container7030 {...propsWithExcludeTopMargin} />,
+      );
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0');
@@ -143,13 +153,17 @@ describe('Container7030 Component', () => {
   describe('Empty placeholder handling', () => {
     it('should not render when placeholders are empty and not editing', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container7030 {...propsWithEmptyPlaceholders} />);
+      const { container } = render(
+        <Container7030 {...propsWithEmptyPlaceholders} />,
+      );
 
       expect(container.firstChild).toBeNull();
     });
 
     it('should render when placeholders are empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      mockUseSitecore.mockReturnValue(
+        mockSitecoreContextEditing as ReturnType<typeof useSitecore>,
+      );
       const propsEditing = {
         ...propsWithEmptyPlaceholders,
         page: mockSitecoreContextEditing.page,
@@ -161,17 +175,20 @@ describe('Container7030 Component', () => {
 
     it('should render when only left placeholder is populated', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container7030 {...propsWithOnlyLeftPlaceholder} />);
+      const { container } = render(
+        <Container7030 {...propsWithOnlyLeftPlaceholder} />,
+      );
 
       expect(container.querySelector('section')).toBeInTheDocument();
     });
 
     it('should render when only right placeholder is populated', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-      const { container } = render(<Container7030 {...propsWithOnlyRightPlaceholder} />);
+      const { container } = render(
+        <Container7030 {...propsWithOnlyRightPlaceholder} />,
+      );
 
       expect(container.querySelector('section')).toBeInTheDocument();
     });
   });
 });
-

@@ -133,4 +133,3 @@ export const propsWithCustomClass = {
   pause: false,
   reducedMotion: false,
 };
-

@@ -34,7 +34,11 @@ jest.mock('@/lib/utils', () => ({
 
 jest.mock('next/link', () => {
   return ({ children, href, className }: any) =>
-    React.createElement('a', { href, className, 'data-testid': 'next-link' }, children);
+    React.createElement(
+      'a',
+      { href, className, 'data-testid': 'next-link' },
+      children,
+    );
 });
 
 jest.mock('@/components/ui/button', () => ({
@@ -47,14 +51,18 @@ jest.mock('@/components/ui/button', () => ({
     return React.createElement(
       'button',
       { 'data-testid': 'button', 'data-variant': variant, className, ...props },
-      children
+      children,
     );
   },
 }));
 
 jest.mock('@radix-ui/react-navigation-menu', () => ({
   Root: ({ children, className, orientation }: any) => (
-    <nav data-testid="navigation-root" data-orientation={orientation} className={className}>
+    <nav
+      data-testid="navigation-root"
+      data-orientation={orientation}
+      className={className}
+    >
       {children}
     </nav>
   ),
@@ -63,7 +71,9 @@ jest.mock('@radix-ui/react-navigation-menu', () => ({
       {children}
     </ul>
   ),
-  Item: ({ children }: any) => <li data-testid="navigation-item">{children}</li>,
+  Item: ({ children }: any) => (
+    <li data-testid="navigation-item">{children}</li>
+  ),
 }));
 
 jest.mock('@radix-ui/react-icons', () => ({
@@ -130,7 +140,7 @@ describe('SecondaryNavigation Component', () => {
 
       const links = screen.getAllByTestId('next-link');
       const parentLinks = links.filter((link) =>
-        ['Intro', 'Docs', 'Community'].includes(link.textContent || '')
+        ['Intro', 'Docs', 'Community'].includes(link.textContent || ''),
       );
       expect(parentLinks.length).toBe(3);
     });
@@ -161,7 +171,9 @@ describe('SecondaryNavigation Component', () => {
     it('should toggle mobile menu on button click', () => {
       const { container } = render(<SecondaryNavigation {...defaultProps} />);
 
-      const mobileButton = container.querySelector('.block.sm\\:hidden button') as HTMLElement;
+      const mobileButton = container.querySelector(
+        '.block.sm\\:hidden button',
+      ) as HTMLElement;
       expect(mobileButton).toBeInTheDocument();
 
       // Initially, dropdown should not be visible
@@ -186,7 +198,9 @@ describe('SecondaryNavigation Component', () => {
     it('should apply rotation class to chevron when open', () => {
       const { container } = render(<SecondaryNavigation {...defaultProps} />);
 
-      const mobileButton = container.querySelector('.block.sm\\:hidden button') as HTMLElement;
+      const mobileButton = container.querySelector(
+        '.block.sm\\:hidden button',
+      ) as HTMLElement;
       const chevron = screen.getByTestId('chevron-icon');
 
       // Initially not rotated
@@ -206,7 +220,7 @@ describe('SecondaryNavigation Component', () => {
 
       const links = container.querySelectorAll('a[href]');
       const introLink = Array.from(links).find((link) =>
-        link.getAttribute('href')?.includes('introduction')
+        link.getAttribute('href')?.includes('introduction'),
       );
       expect(introLink).toHaveAttribute('href', '/docs/introduction');
     });
@@ -238,7 +252,9 @@ describe('SecondaryNavigation Component', () => {
       render(<SecondaryNavigation {...propsWithFallbackTitles} />);
 
       // mockPageWithoutNavTitle has title "Frequently Asked Questions"
-      expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument();
+      expect(
+        screen.getByText('Frequently Asked Questions'),
+      ).toBeInTheDocument();
     });
 
     it('should fallback to displayName when title and navigationTitle are not available', () => {
@@ -273,7 +289,9 @@ describe('SecondaryNavigation Component', () => {
       render(<SecondaryNavigation {...propsWithoutParent} />);
 
       // Should still render the component
-      expect(screen.getAllByTestId('navigation-root').length).toBeGreaterThan(0);
+      expect(screen.getAllByTestId('navigation-root').length).toBeGreaterThan(
+        0,
+      );
     });
   });
 
@@ -397,4 +415,3 @@ describe('SecondaryNavigation Component', () => {
     });
   });
 });
-

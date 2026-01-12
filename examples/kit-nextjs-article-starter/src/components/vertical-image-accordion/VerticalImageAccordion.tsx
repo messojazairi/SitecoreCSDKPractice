@@ -8,7 +8,11 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { VerticalImageAccordionProps } from './vertical-image-accordion.props';
 import { EditableButton } from '@/components/button-component/ButtonComponent';
 
-export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageEditing, page }) => {
+export const Default: React.FC<VerticalImageAccordionProps> = ({
+  fields,
+  isPageEditing,
+  page,
+}) => {
   const [activeIndex, setActiveIndex] = useState<number>(1);
   const [isExpanding, setIsExpanding] = useState(false);
   const isEditMode = isPageEditing || page.mode.isEditing;
@@ -54,12 +58,16 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
 
           <div className="flex flex-col gap-14">
             {items?.results.map((item, index) => (
-              <div key={index} className="flex flex-col overflow-hidden rounded-lg">
+              <div
+                key={index}
+                className="flex flex-col overflow-hidden rounded-lg"
+              >
                 <div
                   className="@md:h-[513px] relative h-[300px]"
                   role="img"
                   aria-label={
-                    item?.image?.jsonValue?.value?.alt?.toString() || `Image ${index + 1}`
+                    item?.image?.jsonValue?.value?.alt?.toString() ||
+                    `Image ${index + 1}`
                   }
                 >
                   {(isEditMode || item?.image?.jsonValue?.value?.src) && (
@@ -169,7 +177,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                 className={cn(
                   'group flex cursor-pointer flex-col overflow-hidden rounded-lg transition-all',
                   '@md:w-[270px]',
-                  isActive && '@md:w-full'
+                  isActive && '@md:w-full',
                 )}
                 style={{
                   transitionDuration: '600ms',
@@ -191,7 +199,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                     '@md:h-[513px]',
                     'h-[170px]',
                     // Only apply the height increase on mobile/smaller screens
-                    isActive && !isExpanding && 'h-[350px]'
+                    isActive && !isExpanding && 'h-[350px]',
                   )}
                   style={{
                     transitionDuration: '600ms',
@@ -200,7 +208,8 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                   }}
                   role="img"
                   aria-label={
-                    item?.image?.jsonValue?.value?.alt?.toString() || `Image ${index + 1}`
+                    item?.image?.jsonValue?.value?.alt?.toString() ||
+                    `Image ${index + 1}`
                   }
                 >
                   {(isEditMode || item?.image?.jsonValue?.value?.src) && (
@@ -242,7 +251,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                     className={cn(
                       'flex flex-col gap-4 overflow-hidden',
                       isExpanding && 'h-0 opacity-0',
-                      !isExpanding && isActive && 'animate-expand-content'
+                      !isExpanding && isActive && 'animate-expand-content',
                     )}
                     style={{
                       maxHeight: isExpanding || !isActive ? '0' : '500px',
@@ -251,7 +260,8 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                       transitionProperty: 'opacity, max-height',
                       transitionDuration: '700ms',
                       transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-                      transitionDelay: !isActive && !isExpanding ? '500ms' : '0s',
+                      transitionDelay:
+                        !isActive && !isExpanding ? '500ms' : '0s',
                     }}
                   >
                     {item?.description && (

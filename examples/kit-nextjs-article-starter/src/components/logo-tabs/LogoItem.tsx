@@ -29,7 +29,7 @@ export const LogoItem: React.FC<LogoButtonProps> = ({
         '@md:w-auto flex h-[58px] w-full items-center justify-center rounded-[20px] bg-white px-6 shadow-lg transition-all duration-300',
         isActive
           ? 'origin-center scale-[1.207] opacity-100'
-          : 'scale-100 opacity-50 hover:opacity-75'
+          : 'scale-100 opacity-50 hover:opacity-75',
       )}
     >
       <span className="sr-only">{title.jsonValue.value}</span>

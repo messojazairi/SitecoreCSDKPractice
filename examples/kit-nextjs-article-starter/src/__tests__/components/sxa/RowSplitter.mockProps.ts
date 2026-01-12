@@ -211,4 +211,3 @@ export const propsWithUndefinedParams = {
     params: {} as any,
   } as ComponentRendering,
 };
-

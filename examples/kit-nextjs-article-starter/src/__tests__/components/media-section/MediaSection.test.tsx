@@ -59,15 +59,19 @@ import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 
 const mockUseSitecore = useSitecore as jest.MockedFunction<typeof useSitecore>;
-const mockUseIntersectionObserver = useIntersectionObserver as jest.MockedFunction<
-  typeof useIntersectionObserver
->;
+const mockUseIntersectionObserver =
+  useIntersectionObserver as jest.MockedFunction<
+    typeof useIntersectionObserver
+  >;
 
 describe('MediaSection Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
-    mockUseIntersectionObserver.mockReturnValue([true, { current: null } as any]);
+    mockUseIntersectionObserver.mockReturnValue([
+      true,
+      { current: null } as any,
+    ]);
 
     // Mock HTMLMediaElement play and pause methods
     window.HTMLMediaElement.prototype.play = jest.fn(() => Promise.resolve());
@@ -157,7 +161,9 @@ describe('MediaSection Component', () => {
 
   describe('Reduced motion handling', () => {
     it('should not render video when reducedMotion is true', () => {
-      const { container } = render(<MediaSection {...propsWithReducedMotion} />);
+      const { container } = render(
+        <MediaSection {...propsWithReducedMotion} />,
+      );
 
       const video = container.querySelector('video');
       expect(video).not.toBeInTheDocument();
@@ -179,7 +185,9 @@ describe('MediaSection Component', () => {
     });
 
     it('should not render video with reducedMotion even if pause is false', () => {
-      const { container } = render(<MediaSection {...propsWithVideoAndReducedMotion} />);
+      const { container } = render(
+        <MediaSection {...propsWithVideoAndReducedMotion} />,
+      );
 
       const video = container.querySelector('video');
       expect(video).not.toBeInTheDocument();
@@ -204,7 +212,10 @@ describe('MediaSection Component', () => {
 
   describe('Intersection observer', () => {
     it('should handle video when not intersecting', () => {
-      mockUseIntersectionObserver.mockReturnValue([false, { current: null } as any]);
+      mockUseIntersectionObserver.mockReturnValue([
+        false,
+        { current: null } as any,
+      ]);
 
       const { container } = render(<MediaSection {...defaultProps} />);
 
@@ -213,7 +224,10 @@ describe('MediaSection Component', () => {
     });
 
     it('should handle video when intersecting', () => {
-      mockUseIntersectionObserver.mockReturnValue([true, { current: null } as any]);
+      mockUseIntersectionObserver.mockReturnValue([
+        true,
+        { current: null } as any,
+      ]);
 
       const { container } = render(<MediaSection {...defaultProps} />);
 
@@ -352,9 +366,10 @@ describe('MediaSection Component', () => {
       const { container } = render(<MediaSection {...propsWithOnlyImage} />);
 
       const wrapper = container.querySelector('.relative');
-      const imageWrapper = wrapper?.querySelector('[data-testid="image-wrapper"]');
+      const imageWrapper = wrapper?.querySelector(
+        '[data-testid="image-wrapper"]',
+      );
       expect(imageWrapper).toBeInTheDocument();
     });
   });
 });
-

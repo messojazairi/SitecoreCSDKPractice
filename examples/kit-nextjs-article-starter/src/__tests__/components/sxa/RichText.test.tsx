@@ -19,9 +19,7 @@ import {
 // Mock Sitecore SDK RichText component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   RichText: ({ field }: any) => (
-    <div data-testid="rich-text-content">
-      {field?.value || ''}
-    </div>
+    <div data-testid="rich-text-content">{field?.value || ''}</div>
   ),
 }));
 
@@ -72,7 +70,9 @@ describe('RichText Component', () => {
       const componentContent = richText?.querySelector('.component-content');
       expect(componentContent).toBeInTheDocument();
 
-      const content = componentContent?.querySelector('[data-testid="rich-text-content"]');
+      const content = componentContent?.querySelector(
+        '[data-testid="rich-text-content"]',
+      );
       expect(content).toBeInTheDocument();
     });
 
@@ -80,7 +80,11 @@ describe('RichText Component', () => {
       const { container } = render(<RichText {...defaultProps} />);
 
       const richText = container.querySelector('.component.rich-text');
-      expect(richText).toHaveClass('component', 'rich-text', 'custom-rich-text-style');
+      expect(richText).toHaveClass(
+        'component',
+        'rich-text',
+        'custom-rich-text-style',
+      );
     });
   });
 
@@ -259,7 +263,7 @@ describe('RichText Component', () => {
 
       const content = screen.getByTestId('rich-text-content');
       const fullText = content.textContent || '';
-      
+
       expect(fullText).toContain('This is rich text content');
       expect(fullText).toContain('Heading');
       expect(fullText).toContain('Item 1');
@@ -298,4 +302,3 @@ describe('RichText Component', () => {
     });
   });
 });
-

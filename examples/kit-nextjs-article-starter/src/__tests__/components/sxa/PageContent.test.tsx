@@ -76,7 +76,9 @@ describe('PageContent Component', () => {
       const componentContent = pageContent?.querySelector('.component-content');
       expect(componentContent).toBeInTheDocument();
 
-      const richText = componentContent?.querySelector('[data-testid="rich-text"]');
+      const richText = componentContent?.querySelector(
+        '[data-testid="rich-text"]',
+      );
       expect(richText).toBeInTheDocument();
     });
 
@@ -84,7 +86,11 @@ describe('PageContent Component', () => {
       const { container } = render(<PageContent {...defaultProps} />);
 
       const pageContent = container.querySelector('.component.page-content');
-      expect(pageContent).toHaveClass('component', 'page-content', 'custom-page-content-style');
+      expect(pageContent).toHaveClass(
+        'component',
+        'page-content',
+        'custom-page-content-style',
+      );
     });
   });
 
@@ -98,7 +104,9 @@ describe('PageContent Component', () => {
     });
 
     it('should handle undefined Styles parameter', () => {
-      const { container } = render(<PageContent {...propsWithUndefinedParams} />);
+      const { container } = render(
+        <PageContent {...propsWithUndefinedParams} />,
+      );
 
       const pageContent = container.querySelector('.component.page-content');
       expect(pageContent).toBeInTheDocument();
@@ -143,7 +151,9 @@ describe('PageContent Component', () => {
 
     it('should render fallback when Content field is missing', () => {
       mockUseSitecore.mockReturnValue(mockSitecoreContextWithoutContent as any);
-      const { container } = render(<PageContent {...propsWithoutContentField} />);
+      const { container } = render(
+        <PageContent {...propsWithoutContentField} />,
+      );
 
       const componentContent = container.querySelector('.component-content');
       const fallback = componentContent?.querySelector('.field-content');
@@ -253,7 +263,9 @@ describe('PageContent Component', () => {
         },
       } as any);
 
-      const { container } = render(<PageContent {...propsWithoutContentField} />);
+      const { container } = render(
+        <PageContent {...propsWithoutContentField} />,
+      );
 
       const fallback = container.querySelector('.field-content');
       expect(fallback).toHaveTextContent('[Page Content]');
@@ -288,7 +300,9 @@ describe('PageContent Component', () => {
       const { container } = render(<PageContent {...propsWithTrailingSpace} />);
 
       const pageContent = container.querySelector('.component.page-content');
-      expect(pageContent?.className).toBe('component page-content custom-style   ');
+      expect(pageContent?.className).toBe(
+        'component page-content custom-style   ',
+      );
     });
   });
 
@@ -305,7 +319,9 @@ describe('PageContent Component', () => {
 
       const richText = screen.getByTestId('rich-text');
       expect(richText).toHaveClass('field-content');
-      expect(richText).toHaveTextContent(defaultProps.fields.Content.value || '');
+      expect(richText).toHaveTextContent(
+        defaultProps.fields.Content.value || '',
+      );
     });
 
     it('should render route content with correct field class', () => {
@@ -317,4 +333,3 @@ describe('PageContent Component', () => {
     });
   });
 });
-

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
 
-function useVisibility(delay = 0): [boolean, MutableRefObject<HTMLDivElement | null>] {
+function useVisibility(
+  delay = 0,
+): [boolean, MutableRefObject<HTMLDivElement | null>] {
   const [isVisible, setVisible] = useState(false);
   const domRef = useRef<HTMLDivElement | null>(null);
 

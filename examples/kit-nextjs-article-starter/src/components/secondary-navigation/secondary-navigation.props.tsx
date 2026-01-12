@@ -5,7 +5,8 @@ import { GqlFieldString } from '../../utils/graphQlClient';
 /**
  * Model used for Sitecore Component integration
  */
-export type SecondaryNavigationProps = ComponentProps & SecondaryNavigationFields;
+export type SecondaryNavigationProps = ComponentProps &
+  SecondaryNavigationFields;
 
 export type SecondaryNavigationFields = {
   fields: {

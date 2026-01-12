@@ -15,7 +15,10 @@ interface ProviderProps extends ImageOptions {
   children: React.ReactNode;
 }
 
-export const ImageOptimizationProvider = ({ children, unoptimized }: ProviderProps) => {
+export const ImageOptimizationProvider = ({
+  children,
+  unoptimized,
+}: ProviderProps) => {
   return (
     <ImageOptimizationContext.Provider value={{ unoptimized }}>
       {children}

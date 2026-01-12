@@ -73,10 +73,17 @@ interface MockImageWrapperProps {
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag }: MockTextProps) => {
     const Tag = tag || 'span';
-    return React.createElement(Tag, { 'data-testid': 'text-field' }, field?.value || '');
+    return React.createElement(
+      Tag,
+      { 'data-testid': 'text-field' },
+      field?.value || '',
+    );
   },
   RichText: ({ field }: MockRichTextProps) => (
-    <div data-testid="rich-text-field" dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
+    <div
+      data-testid="rich-text-field"
+      dangerouslySetInnerHTML={{ __html: field?.value || '' }}
+    />
   ),
   Link: ({ field, children, editable }: MockLinkProps) => (
     <a
@@ -96,9 +103,15 @@ jest.mock('@/components/ui/card', () => ({
       {children}
     </div>
   ),
-  CardHeader: ({ children }: MockChildrenProps) => <div data-testid="card-header">{children}</div>,
-  CardTitle: ({ children }: MockChildrenProps) => <div data-testid="card-title">{children}</div>,
-  CardFooter: ({ children }: MockChildrenProps) => <div data-testid="card-footer">{children}</div>,
+  CardHeader: ({ children }: MockChildrenProps) => (
+    <div data-testid="card-header">{children}</div>
+  ),
+  CardTitle: ({ children }: MockChildrenProps) => (
+    <div data-testid="card-title">{children}</div>
+  ),
+  CardFooter: ({ children }: MockChildrenProps) => (
+    <div data-testid="card-footer">{children}</div>
+  ),
 }));
 
 jest.mock('@/components/ui/button', () => ({
@@ -110,24 +123,27 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName }: MockIconProps) => <span data-testid={`icon-${iconName}`}>{iconName}</span>,
+  Default: ({ iconName }: MockIconProps) => (
+    <span data-testid={`icon-${iconName}`}>{iconName}</span>
+  ),
 }));
 
 jest.mock('@/components/image/ImageWrapper.dev', () => {
-  const MockImageWrapper = React.forwardRef<HTMLImageElement, MockImageWrapperProps>(
-    ({ image, className }, ref) => {
-      if (!image?.value?.src) return null;
-      return (
-        <img
-          ref={ref}
-          src={image?.value?.src}
-          alt={image?.value?.alt}
-          className={className}
-          data-testid="image-wrapper"
-        />
-      );
-    }
-  );
+  const MockImageWrapper = React.forwardRef<
+    HTMLImageElement,
+    MockImageWrapperProps
+  >(({ image, className }, ref) => {
+    if (!image?.value?.src) return null;
+    return (
+      <img
+        ref={ref}
+        src={image?.value?.src}
+        alt={image?.value?.alt}
+        className={className}
+        data-testid="image-wrapper"
+      />
+    );
+  });
   MockImageWrapper.displayName = 'MockImageWrapper';
   return { Default: MockImageWrapper };
 });
@@ -395,4 +411,3 @@ describe('Card Component', () => {
     });
   });
 });
-

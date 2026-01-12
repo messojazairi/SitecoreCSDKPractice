@@ -55,12 +55,15 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
           <BreadcrumbList>
             {ancestors?.map((ancestor: BreadcrumbsPage, index) => {
               const title =
-                ancestor.navigationTitle?.jsonValue.value || ancestor.title?.jsonValue.value;
+                ancestor.navigationTitle?.jsonValue.value ||
+                ancestor.title?.jsonValue.value;
 
               return (
                 <>
                   <BreadcrumbItem key={index}>
-                    <BreadcrumbLink href={ancestor.url?.href || ''}>{title}</BreadcrumbLink>
+                    <BreadcrumbLink href={ancestor.url?.href || ''}>
+                      {title}
+                    </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                 </>

@@ -62,4 +62,3 @@ export const propsWithEmptyPlaceholders = {
   children: undefined as React.ReactNode,
   page: mockSitecoreContext.page,
 };
-

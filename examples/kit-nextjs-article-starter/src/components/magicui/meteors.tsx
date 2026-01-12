@@ -25,13 +25,16 @@ export const Meteors = ({
   className,
   size = '1',
 }: MeteorsProps) => {
-  const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>([]);
+  const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>(
+    [],
+  );
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Function to generate meteor styles based on container width
     const generateStyles = () => {
-      const containerWidth = containerRef.current?.offsetWidth || window.innerWidth;
+      const containerWidth =
+        containerRef.current?.offsetWidth || window.innerWidth;
 
       const styles = [...new Array(number)].map(() => ({
         '--angle': angle + 'deg',
@@ -40,7 +43,9 @@ export const Meteors = ({
         left: `${Math.floor(Math.random() * containerWidth)}px`,
         animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + 's',
         animationDuration:
-          Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) + 's',
+          Math.floor(
+            Math.random() * (maxDuration - minDuration) + minDuration,
+          ) + 's',
       }));
       setMeteorStyles(styles);
     };
@@ -77,7 +82,7 @@ export const Meteors = ({
           }}
           className={cn(
             'pointer-events-none absolute rotate-[var(--angle)] rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.1)]',
-            className
+            className,
           )}
         >
           {/* Meteor Tail */}

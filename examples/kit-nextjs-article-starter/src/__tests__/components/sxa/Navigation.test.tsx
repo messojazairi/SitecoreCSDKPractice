@@ -17,8 +17,8 @@ const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Link: ({ field, children, onClick, editable }: any) => (
-    <a 
-      href={field?.value?.href || '#'} 
+    <a
+      href={field?.value?.href || '#'}
       onClick={onClick}
       data-editable={editable}
       data-testid="nav-link"
@@ -59,14 +59,23 @@ describe('Navigation Component', () => {
     it('should apply custom styles', () => {
       render(<Navigation {...defaultProps} />);
 
-      const container = screen.getByText('Home').closest('.component.navigation');
-      expect(container).toHaveClass('component', 'navigation', 'col-12', 'custom-nav-style');
+      const container = screen
+        .getByText('Home')
+        .closest('.component.navigation');
+      expect(container).toHaveClass(
+        'component',
+        'navigation',
+        'col-12',
+        'custom-nav-style',
+      );
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Navigation {...propsWithoutStyles} />);
 
-      const container = screen.getByText('Home').closest('.component.navigation');
+      const container = screen
+        .getByText('Home')
+        .closest('.component.navigation');
       expect(container).toHaveClass('component', 'navigation', 'col-12');
       expect(container).not.toHaveClass('custom-nav-style');
     });
@@ -74,14 +83,18 @@ describe('Navigation Component', () => {
     it('should have correct rendering identifier', () => {
       render(<Navigation {...defaultProps} />);
 
-      const container = screen.getByText('Home').closest('.component.navigation');
+      const container = screen
+        .getByText('Home')
+        .closest('.component.navigation');
       expect(container).toHaveAttribute('id', 'nav-rendering-id');
     });
 
     it('should render without id when RenderingIdentifier is not provided', () => {
       render(<Navigation {...propsWithoutId} />);
 
-      const container = screen.getByText('Home').closest('.component.navigation');
+      const container = screen
+        .getByText('Home')
+        .closest('.component.navigation');
       expect(container).not.toHaveAttribute('id');
     });
   });
@@ -111,12 +124,12 @@ describe('Navigation Component', () => {
     it('should prevent default when in editing mode', () => {
       mockUseSitecore.mockReturnValue(mockPageDataEditing);
       const mockPreventDefault = jest.fn();
-      
+
       render(<Navigation {...defaultProps} />);
 
       const checkbox = screen.getByRole('checkbox');
       fireEvent.click(checkbox, { preventDefault: mockPreventDefault });
-      
+
       // The component should handle editing mode differently
       expect(checkbox).toBeInTheDocument();
     });
@@ -185,7 +198,11 @@ describe('Navigation Component', () => {
       const product1 = screen.getByText('Product 1');
       const product1Container = product1.closest('li');
       // Parent items get relativeLevel=1, children get relativeLevel=2
-      expect(product1Container).toHaveClass('nav-item', 'nav-subitem', 'rel-level2');
+      expect(product1Container).toHaveClass(
+        'nav-item',
+        'nav-subitem',
+        'rel-level2',
+      );
     });
 
     it('should handle click events for children', () => {
@@ -194,11 +211,11 @@ describe('Navigation Component', () => {
       // Find the link by getting all nav-link elements and filtering by text
       const product1 = screen.getByText('Product 1');
       const product1Link = product1.closest('a');
-      
+
       // Verify the link exists and is clickable
       expect(product1Link).toBeInTheDocument();
       expect(product1Link).toHaveAttribute('href', '/products/product-1');
-      
+
       // Click should not throw error
       fireEvent.click(product1Link as HTMLElement);
     });
@@ -208,24 +225,26 @@ describe('Navigation Component', () => {
     it('should render correct DOM structure', () => {
       render(<Navigation {...defaultProps} />);
 
-      const container = screen.getByText('Home').closest('.component.navigation');
+      const container = screen
+        .getByText('Home')
+        .closest('.component.navigation');
       expect(container).toHaveClass('component', 'navigation');
-      
+
       const label = container?.querySelector('label');
       expect(label).toHaveClass('menu-mobile-navigate-wrapper');
-      
+
       const checkbox = label?.querySelector('input[type="checkbox"]');
       expect(checkbox).toBeInTheDocument();
-      
+
       const hamburger = label?.querySelector('.menu-humburger');
       expect(hamburger).toBeInTheDocument();
-      
+
       const contentDiv = label?.querySelector('.component-content');
       expect(contentDiv).toBeInTheDocument();
-      
+
       const nav = contentDiv?.querySelector('nav');
       expect(nav).toBeInTheDocument();
-      
+
       const ul = nav?.querySelector('ul');
       expect(ul).toHaveClass('clearfix');
     });
@@ -244,11 +263,13 @@ describe('Navigation Component', () => {
     it('should toggle active state when navigation title is clicked', () => {
       render(<Navigation {...defaultProps} />);
 
-      const navigationTitle = screen.getByText('Home').closest('.navigation-title');
+      const navigationTitle = screen
+        .getByText('Home')
+        .closest('.navigation-title');
       expect(navigationTitle).toBeInTheDocument();
 
       fireEvent.click(navigationTitle!);
-      
+
       const listItem = navigationTitle?.closest('li');
       expect(listItem).toHaveClass('active');
     });
@@ -257,7 +278,7 @@ describe('Navigation Component', () => {
   describe('Editing mode', () => {
     it('should render with editable links in editing mode', () => {
       mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      
+
       render(<Navigation {...defaultProps} />);
 
       const link = screen.getByTestId('nav-link');
@@ -266,7 +287,7 @@ describe('Navigation Component', () => {
 
     it('should render without editable links in normal mode', () => {
       mockUseSitecore.mockReturnValue(mockPageData);
-      
+
       render(<Navigation {...defaultProps} />);
 
       const link = screen.getByTestId('nav-link');

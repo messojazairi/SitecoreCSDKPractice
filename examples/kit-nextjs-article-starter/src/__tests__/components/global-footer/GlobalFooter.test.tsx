@@ -13,7 +13,13 @@ import {
 } from './GlobalFooter.mockProps';
 
 // Mock the cn utility
-type ClassValue = string | number | boolean | undefined | null | Record<string, boolean>;
+type ClassValue =
+  | string
+  | number
+  | boolean
+  | undefined
+  | null
+  | Record<string, boolean>;
 jest.mock('@/lib/utils', () => ({
   cn: (...args: ClassValue[]) => {
     return args
@@ -100,23 +106,33 @@ jest.mock('@/components/logo/Logo.dev', () => ({
 }));
 
 // Mock FooterCallout component
-jest.mock('@/components/footer-navigation-callout/FooterNavigationCallout.dev', () => ({
-  Default: ({ fields }: MockFooterCalloutProps) => (
-    <div data-testid="footer-callout">
-      <div data-testid="callout-title">{fields.title?.value}</div>
-      <div data-testid="callout-description">{fields.description?.value}</div>
-      {fields.linkOptional?.value && (
-        <a href={fields.linkOptional.value.href} data-testid="callout-link">
-          {fields.linkOptional.value.text}
-        </a>
-      )}
-    </div>
-  ),
-}));
+jest.mock(
+  '@/components/footer-navigation-callout/FooterNavigationCallout.dev',
+  () => ({
+    Default: ({ fields }: MockFooterCalloutProps) => (
+      <div data-testid="footer-callout">
+        <div data-testid="callout-title">{fields.title?.value}</div>
+        <div data-testid="callout-description">{fields.description?.value}</div>
+        {fields.linkOptional?.value && (
+          <a href={fields.linkOptional.value.href} data-testid="callout-link">
+            {fields.linkOptional.value.text}
+          </a>
+        )}
+      </div>
+    ),
+  }),
+);
 
 // Mock EditableImageButton component
 jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableImageButton: ({ buttonLink, icon, className, variant, size, isPageEditing }: MockEditableImageButtonProps) => (
+  EditableImageButton: ({
+    buttonLink,
+    icon,
+    className,
+    variant,
+    size,
+    isPageEditing,
+  }: MockEditableImageButtonProps) => (
     <button
       data-testid="social-link-button"
       data-href={buttonLink?.value?.href}
@@ -150,7 +166,9 @@ describe('GlobalFooter Component', () => {
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
       expect(screen.getByTestId('footer-logo')).toBeInTheDocument();
       expect(screen.getByTestId('footer-callout')).toBeInTheDocument();
-      expect(screen.getByText('© 2024 Company Name. All rights reserved.')).toBeInTheDocument();
+      expect(
+        screen.getByText('© 2024 Company Name. All rights reserved.'),
+      ).toBeInTheDocument();
     });
 
     it('should render footer as a footer element', () => {
@@ -166,30 +184,42 @@ describe('GlobalFooter Component', () => {
 
       const logo = screen.getByTestId('footer-logo');
       expect(logo).toBeInTheDocument();
-      expect(logo.querySelector('img')).toHaveAttribute('src', '/images/footer-logo.svg');
+      expect(logo.querySelector('img')).toHaveAttribute(
+        'src',
+        '/images/footer-logo.svg',
+      );
     });
 
     it('should render placeholder for footer columns', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-container-footer-column');
+      const placeholder = screen.getByTestId(
+        'placeholder-container-footer-column',
+      );
       expect(placeholder).toBeInTheDocument();
     });
 
     it('should render callout section with correct data', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      expect(screen.getByTestId('callout-title')).toHaveTextContent('Stay Connected');
-      expect(screen.getByTestId('callout-description')).toHaveTextContent(
-        'Subscribe to our newsletter for updates'
+      expect(screen.getByTestId('callout-title')).toHaveTextContent(
+        'Stay Connected',
       );
-      expect(screen.getByTestId('callout-link')).toHaveAttribute('href', '/newsletter');
+      expect(screen.getByTestId('callout-description')).toHaveTextContent(
+        'Subscribe to our newsletter for updates',
+      );
+      expect(screen.getByTestId('callout-link')).toHaveAttribute(
+        'href',
+        '/newsletter',
+      );
     });
 
     it('should render copyright text', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      const copyrightText = screen.getByText('© 2024 Company Name. All rights reserved.');
+      const copyrightText = screen.getByText(
+        '© 2024 Company Name. All rights reserved.',
+      );
       expect(copyrightText).toBeInTheDocument();
       expect(copyrightText).toHaveClass('text-sm', 'text-white/80');
     });
@@ -207,9 +237,18 @@ describe('GlobalFooter Component', () => {
       render(<GlobalFooter {...defaultProps} />);
 
       const socialButtons = screen.getAllByTestId('social-link-button');
-      expect(socialButtons[0]).toHaveAttribute('data-href', 'https://facebook.com');
-      expect(socialButtons[1]).toHaveAttribute('data-href', 'https://twitter.com');
-      expect(socialButtons[2]).toHaveAttribute('data-href', 'https://instagram.com');
+      expect(socialButtons[0]).toHaveAttribute(
+        'data-href',
+        'https://facebook.com',
+      );
+      expect(socialButtons[1]).toHaveAttribute(
+        'data-href',
+        'https://twitter.com',
+      );
+      expect(socialButtons[2]).toHaveAttribute(
+        'data-href',
+        'https://instagram.com',
+      );
     });
 
     it('should render social links with ghost variant', () => {
@@ -296,7 +335,9 @@ describe('GlobalFooter Component', () => {
     it('should pass rendering object to Placeholder', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      const placeholder = screen.getByTestId('placeholder-container-footer-column');
+      const placeholder = screen.getByTestId(
+        'placeholder-container-footer-column',
+      );
       expect(placeholder).toHaveAttribute('data-rendering', 'footer-uid');
     });
   });
@@ -392,9 +433,10 @@ describe('GlobalFooter Component', () => {
     it('should render copyright text with proper encoding disabled', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      const copyrightText = screen.getByText('© 2024 Company Name. All rights reserved.');
+      const copyrightText = screen.getByText(
+        '© 2024 Company Name. All rights reserved.',
+      );
       expect(copyrightText).toBeInTheDocument();
     });
   });
 });
-

@@ -12,7 +12,10 @@ export function useIntersectionObserver({
   threshold = 0.1,
   rootMargin = '0px',
   unobserveAfterVisible = true,
-}: UseIntersectionObserverProps = {}): [boolean, RefObject<HTMLDivElement | null>] {
+}: UseIntersectionObserverProps = {}): [
+  boolean,
+  RefObject<HTMLDivElement | null>,
+] {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -30,7 +33,7 @@ export function useIntersectionObserver({
           }
         });
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     const currentRef = ref.current;

@@ -9,7 +9,8 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing, params } = props || {};
 
-  const { heading, description, link, children } = fields?.data?.datasource || {};
+  const { heading, description, link, children } =
+    fields?.data?.datasource || {};
   const accordionItems = children?.results ?? [];
   const accordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
@@ -19,9 +20,12 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
       <div
         data-component="AccordionBlock"
         data-class-change
-        className={cn('@container bg-secondary text-secondary-foreground rounded-3xl', {
-          [params.styles as string]: params?.styles,
-        })}
+        className={cn(
+          '@container bg-secondary text-secondary-foreground rounded-3xl',
+          {
+            [params.styles as string]: params?.styles,
+          },
+        )}
       >
         <div className=" @md:py-16 @lg:py-20 @lg:grid-cols-[320px,1fr] @lg:gap-12 @xl:gap-16 mx-auto grid max-w-screen-xl gap-8 py-10">
           <div className="@lg:pr-0 space-y-4 px-6">
@@ -48,9 +52,11 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
               value={isPageEditing ? accordionItemValues : undefined} //force open all accordion items
               onValueChange={isPageEditing ? () => {} : undefined} //prevent accordion item from closing
             >
-              {accordionItems.map((child: AccordionItemProps, index: number) => (
-                <AccordionBlockItem key={index} index={index} child={child} />
-              ))}
+              {accordionItems.map(
+                (child: AccordionItemProps, index: number) => (
+                  <AccordionBlockItem key={index} index={index} child={child} />
+                ),
+              )}
             </Accordion>
           </div>
         </div>

@@ -217,7 +217,11 @@ export const mockFieldsWithFallbackTitles = {
     datasource: {
       id: 'current-page',
       children: {
-        results: [mockPageWithoutNavTitle, mockPageWithDisplayNameOnly, mockPageWithNameOnly],
+        results: [
+          mockPageWithoutNavTitle,
+          mockPageWithDisplayNameOnly,
+          mockPageWithNameOnly,
+        ],
       },
       parent: {
         children: {
@@ -273,5 +277,3 @@ export const propsWithoutFields: SecondaryNavigationProps = {
   fields: null as any,
   rendering: { componentName: 'SecondaryNavigation' } as any,
 };
-
-

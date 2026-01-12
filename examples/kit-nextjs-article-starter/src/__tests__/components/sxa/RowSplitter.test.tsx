@@ -17,7 +17,10 @@ import {
 // Mock the AppPlaceholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   AppPlaceholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering?.componentName}>
+    <div
+      data-testid={`placeholder-${name}`}
+      data-rendering={rendering?.componentName}
+    >
       Placeholder Content for {name}
     </div>
   ),
@@ -57,7 +60,9 @@ describe('RowSplitter Component', () => {
     it('should apply correct row styles', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0]).toHaveClass('container-fluid', 'row-style-1');
       expect(rows[1]).toHaveClass('container-fluid', 'row-style-2');
       expect(rows[2]).toHaveClass('container-fluid', 'row-style-3');
@@ -66,7 +71,9 @@ describe('RowSplitter Component', () => {
     it('should render two rows correctly', () => {
       const { container } = render(<RowSplitter {...propsWithTwoRows} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows.length).toBe(2);
       expect(rows[0]).toHaveClass('container-fluid', 'first-row');
       expect(rows[1]).toHaveClass('container-fluid', 'second-row');
@@ -75,7 +82,9 @@ describe('RowSplitter Component', () => {
     it('should render single row correctly', () => {
       const { container } = render(<RowSplitter {...propsWithOneRow} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows.length).toBe(1);
       expect(rows[0]).toHaveClass('container-fluid', 'single-row');
     });
@@ -84,7 +93,9 @@ describe('RowSplitter Component', () => {
       render(<RowSplitter {...propsWithMaxRows} />);
 
       for (let i = 1; i <= 8; i++) {
-        expect(screen.getByTestId(`placeholder-row-${i}-{*}`)).toBeInTheDocument();
+        expect(
+          screen.getByTestId(`placeholder-row-${i}-{*}`),
+        ).toBeInTheDocument();
       }
     });
   });
@@ -93,7 +104,9 @@ describe('RowSplitter Component', () => {
     it('should handle rows without specified styles', () => {
       const { container } = render(<RowSplitter {...propsWithoutRowStyles} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows.length).toBe(2);
       expect(rows[0]).toHaveClass('container-fluid');
       expect(rows[1]).toHaveClass('container-fluid');
@@ -117,14 +130,18 @@ describe('RowSplitter Component', () => {
 
       const { container } = render(<RowSplitter {...propsWithTrailingSpace} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0].className).toBe('container-fluid row-style-1');
     });
 
     it('should apply row-specific styles correctly', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0]).toHaveClass('row-style-1');
       expect(rows[1]).toHaveClass('row-style-2');
       expect(rows[2]).toHaveClass('row-style-3');
@@ -147,7 +164,9 @@ describe('RowSplitter Component', () => {
     it('should wrap placeholders in row divs', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       rows.forEach((row) => {
         const innerDiv = row.querySelector('div > .row');
         expect(innerDiv).toBeInTheDocument();
@@ -177,7 +196,9 @@ describe('RowSplitter Component', () => {
     it('should apply container-fluid class to each row wrapper', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       rows.forEach((row) => {
         expect(row).toHaveClass('container-fluid');
       });
@@ -186,7 +207,9 @@ describe('RowSplitter Component', () => {
     it('should nest row div inside container-fluid', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       rows.forEach((row) => {
         const rowDiv = row.querySelector('div > .row');
         expect(rowDiv).toBeInTheDocument();
@@ -227,7 +250,9 @@ describe('RowSplitter Component', () => {
       expect(splitter).toBeInTheDocument();
 
       // Empty string splits to [''], resulting in one empty row
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows.length).toBe(1);
     });
 
@@ -252,12 +277,16 @@ describe('RowSplitter Component', () => {
       const splitter = container.querySelector('.component.row-splitter');
       expect(splitter).toBeInTheDocument();
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows.length).toBe(0);
     });
 
     it('should handle missing params gracefully', () => {
-      const { container } = render(<RowSplitter {...propsWithUndefinedParams} />);
+      const { container } = render(
+        <RowSplitter {...propsWithUndefinedParams} />,
+      );
 
       const splitter = container.querySelector('.component.row-splitter');
       expect(splitter).toBeInTheDocument();
@@ -296,9 +325,13 @@ describe('RowSplitter Component', () => {
     });
 
     it('should apply correct styles to non-sequential rows', () => {
-      const { container } = render(<RowSplitter {...propsWithNonSequentialRows} />);
+      const { container } = render(
+        <RowSplitter {...propsWithNonSequentialRows} />,
+      );
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0]).toHaveClass('second-row');
       expect(rows[1]).toHaveClass('fifth-row');
       expect(rows[2]).toHaveClass('seventh-row');
@@ -321,7 +354,9 @@ describe('RowSplitter Component', () => {
     it('should apply container-fluid with row styles', () => {
       const { container } = render(<RowSplitter {...defaultProps} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0].className).toContain('container-fluid');
       expect(rows[0].className).toContain('row-style-1');
     });
@@ -329,7 +364,9 @@ describe('RowSplitter Component', () => {
     it('should handle empty row styles', () => {
       const { container } = render(<RowSplitter {...propsWithoutRowStyles} />);
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0].className).toBe('container-fluid');
       expect(rows[1].className).toBe('container-fluid');
     });
@@ -350,11 +387,14 @@ describe('RowSplitter Component', () => {
         },
       };
 
-      const { container } = render(<RowSplitter {...propsWithTrailingSpaces} />);
+      const { container } = render(
+        <RowSplitter {...propsWithTrailingSpaces} />,
+      );
 
-      const rows = container.querySelectorAll('.component.row-splitter > .container-fluid');
+      const rows = container.querySelectorAll(
+        '.component.row-splitter > .container-fluid',
+      );
       expect(rows[0].className).toBe('container-fluid');
     });
   });
 });
-

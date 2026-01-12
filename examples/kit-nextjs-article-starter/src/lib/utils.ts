@@ -20,7 +20,11 @@ export function cn(...inputs: ClassValue[]) {
  * @param height Desired height in pixels (optional)
  * @returns URL to the most appropriate thumbnail size
  */
-export function getYouTubeThumbnail(videoId: string, width: number, height?: number): string {
+export function getYouTubeThumbnail(
+  videoId: string,
+  width: number,
+  height?: number,
+): string {
   if (!videoId || typeof videoId !== 'string') {
     throw new Error('Invalid YouTube video ID');
   }

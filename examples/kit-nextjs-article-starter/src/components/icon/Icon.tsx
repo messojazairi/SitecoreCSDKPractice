@@ -21,7 +21,6 @@ export type IconProps = SvgProps & {
 export const defaultSvgProps = {};
 
 export const sharedAttributes = (props: SvgProps): Record<string, unknown> => {
-  
   const { isAriaHidden = true, altText, ...rest } = props;
 
   // attributes where a blank value would not affect user experience can be defined here as default
@@ -65,7 +64,8 @@ const loadIcon = async (path: string) => {
 
 export const Default: React.FC<IconProps> = (props) => {
   const { iconName, isAriaHidden = true, ...rest } = props;
-  const [IconType, setIconType] = useState<React.ComponentType<SvgProps> | null>(null);
+  const [IconType, setIconType] =
+    useState<React.ComponentType<SvgProps> | null>(null);
 
   useEffect(() => {
     const iconType = iconMap[iconName];

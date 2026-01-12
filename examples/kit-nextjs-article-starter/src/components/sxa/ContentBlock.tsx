@@ -1,4 +1,9 @@
-import { Text, RichText, Field, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
+import {
+  Text,
+  RichText,
+  Field,
+  withDatasourceCheck,
+} from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
 import { JSX } from 'react';
 

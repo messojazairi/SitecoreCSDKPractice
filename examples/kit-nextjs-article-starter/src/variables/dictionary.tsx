@@ -14,9 +14,13 @@ export const dictionaryKeys = {
   ...ArticleHeaderDictionaryKeys,
 };
 
-export const mockDictionary = (dictionary: Record<string, string>): Record<string, string> => {
+export const mockDictionary = (
+  dictionary: Record<string, string>,
+): Record<string, string> => {
   const temp: Record<string, string> = {};
-  Object.keys(dictionary).map((key) => (temp[`${dictionary[`${key}`]}`] = dictionary[key]));
+  Object.keys(dictionary).map(
+    (key) => (temp[`${dictionary[`${key}`]}`] = dictionary[key]),
+  );
   const withTokens = {};
   return Object.assign(temp, withTokens);
 };

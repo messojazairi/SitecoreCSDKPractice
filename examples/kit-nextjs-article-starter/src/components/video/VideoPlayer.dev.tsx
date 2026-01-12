@@ -42,9 +42,15 @@ export function VideoPlayer({
   };
 
   return (
-    <div className={`relative ${fullScreen ? 'inset-0 aspect-video' : 'h-full w-full'}`}>
+    <div
+      className={`relative ${fullScreen ? 'inset-0 aspect-video' : 'h-full w-full'}`}
+    >
       {!isPlaying && (
-        <button onClick={handlePlay} className={btnClasses} aria-label="Play video">
+        <button
+          onClick={handlePlay}
+          className={btnClasses}
+          aria-label="Play video"
+        >
           <Icon
             iconName="play"
             className={`h-[65px] w-[65px] transition-transform hover:scale-110`}

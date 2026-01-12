@@ -1,4 +1,8 @@
-import type { Field, LinkField, RichTextField } from '@sitecore-content-sdk/nextjs';
+import type {
+  Field,
+  LinkField,
+  RichTextField,
+} from '@sitecore-content-sdk/nextjs';
 import type { ComponentProps } from '@/lib/component-props';
 
 /**

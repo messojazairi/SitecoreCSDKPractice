@@ -33,8 +33,14 @@ export const FloatingDock = ({
 }) => {
   return (
     <>
-      {!forceCollapse && <FloatingDockDesktop items={items} className={desktopClassName} />}
-      <FloatingDockMobile items={items} className={mobileClassName} forceCollapse={forceCollapse} />
+      {!forceCollapse && (
+        <FloatingDockDesktop items={items} className={desktopClassName} />
+      )}
+      <FloatingDockMobile
+        items={items}
+        className={mobileClassName}
+        forceCollapse={forceCollapse}
+      />
     </>
   );
 };
@@ -104,7 +110,10 @@ const FloatingDockMobile = ({
           if (!e.shiftKey && document.activeElement === lastItemRef.current) {
             e.preventDefault();
             firstItemRef.current?.focus();
-          } else if (e.shiftKey && document.activeElement === firstItemRef.current) {
+          } else if (
+            e.shiftKey &&
+            document.activeElement === firstItemRef.current
+          ) {
             e.preventDefault();
             lastItemRef.current?.focus();
           }
@@ -115,10 +124,13 @@ const FloatingDockMobile = ({
             firstItemRef.current?.focus();
           } else {
             const currentIndex = items.findIndex(
-              (_, i) => document.activeElement === menuRef.current?.querySelectorAll('button')[i]
+              (_, i) =>
+                document.activeElement ===
+                menuRef.current?.querySelectorAll('button')[i],
             );
             if (currentIndex !== -1 && currentIndex < items.length - 1) {
-              const nextButton = menuRef.current?.querySelectorAll('button')[currentIndex + 1];
+              const nextButton =
+                menuRef.current?.querySelectorAll('button')[currentIndex + 1];
               (nextButton as HTMLButtonElement)?.focus();
             }
           }
@@ -129,10 +141,13 @@ const FloatingDockMobile = ({
             lastItemRef.current?.focus();
           } else {
             const currentIndex = items.findIndex(
-              (_, i) => document.activeElement === menuRef.current?.querySelectorAll('button')[i]
+              (_, i) =>
+                document.activeElement ===
+                menuRef.current?.querySelectorAll('button')[i],
             );
             if (currentIndex !== -1 && currentIndex > 0) {
-              const prevButton = menuRef.current?.querySelectorAll('button')[currentIndex - 1];
+              const prevButton =
+                menuRef.current?.querySelectorAll('button')[currentIndex - 1];
               (prevButton as HTMLButtonElement)?.focus();
             }
           }
@@ -148,12 +163,16 @@ const FloatingDockMobile = ({
 
   return (
     <div
-      className={cn('relative z-50 block md:hidden', className, { 'md:block': forceCollapse })}
+      className={cn('relative z-50 block md:hidden', className, {
+        'md:block': forceCollapse,
+      })}
       role="region"
       aria-label="Share menu"
     >
       <AnimatePresence>
-        {open && isMounted && createPortal(<Backdrop onClick={closeMenu} />, document.body)}
+        {open &&
+          isMounted &&
+          createPortal(<Backdrop onClick={closeMenu} />, document.body)}
       </AnimatePresence>
 
       <AnimatePresence>
@@ -194,7 +213,13 @@ const FloatingDockMobile = ({
                   transition={{ delay: (items.length - 1 - idx) * 0.05 }}
                 >
                   <button
-                    ref={idx === 0 ? firstItemRef : idx === items.length - 1 ? lastItemRef : null}
+                    ref={
+                      idx === 0
+                        ? firstItemRef
+                        : idx === items.length - 1
+                          ? lastItemRef
+                          : null
+                    }
                     onClick={() => {
                       item.onClick?.();
                       setTimeout(() => closeMenu(), 2000);
@@ -272,13 +297,18 @@ const FloatingDockDesktop = ({
       onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
       className={cn(
         'mx-auto hidden h-auto w-16 flex-col items-center gap-4 rounded-2xl py-4 md:flex',
-        className
+        className,
       )}
       role="region"
       aria-label="Share options"
     >
       {items.map((item) => (
-        <IconContainer mouseX={mouseX} key={item.title} {...item} tabIndex={0} />
+        <IconContainer
+          mouseX={mouseX}
+          key={item.title}
+          {...item}
+          tabIndex={0}
+        />
       ))}
     </motion.div>
   );
@@ -309,8 +339,16 @@ function IconContainer({
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
   const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
-  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-  const heightTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
+  const widthTransformIcon = useTransform(
+    distance,
+    [-150, 0, 150],
+    [20, 40, 20],
+  );
+  const heightTransformIcon = useTransform(
+    distance,
+    [-150, 0, 150],
+    [20, 40, 20],
+  );
 
   const width = useSpring(widthTransform, {
     mass: 0.1,

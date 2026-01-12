@@ -69,7 +69,9 @@ describe('ImageBlock Component', () => {
       render(<ImageBlock {...defaultProps} />);
 
       expect(screen.getByTestId('image-wrapper')).toBeInTheDocument();
-      expect(screen.getByText('This is a beautiful image caption')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a beautiful image caption'),
+      ).toBeInTheDocument();
     });
 
     it('should render image element with correct src', () => {
@@ -108,7 +110,9 @@ describe('ImageBlock Component', () => {
       render(<ImageBlock {...propsWithoutCaption} />);
 
       expect(screen.getByTestId('image-wrapper')).toBeInTheDocument();
-      expect(screen.queryByText('This is a beautiful image caption')).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('This is a beautiful image caption'),
+      ).not.toBeInTheDocument();
     });
 
     it('should render with empty caption', () => {
@@ -140,7 +144,12 @@ describe('ImageBlock Component', () => {
       render(<ImageBlock {...defaultProps} />);
 
       const wrapper = screen.getByTestId('image-wrapper');
-      expect(wrapper).toHaveClass('mb-[24px]', 'h-full', 'w-full', 'object-cover');
+      expect(wrapper).toHaveClass(
+        'mb-[24px]',
+        'h-full',
+        'w-full',
+        'object-cover',
+      );
     });
 
     it('should handle large images', () => {
@@ -203,7 +212,7 @@ describe('ImageBlock Component', () => {
       // Component checks for fields !== undefined, not fields !== null
       // so null fields will still render the component
       const { container } = render(<ImageBlock {...propsWithNullFields} />);
-      
+
       // When fields is null but not undefined, component renders with empty data
       expect(container.querySelector('.component')).toBeInTheDocument();
     });
@@ -223,7 +232,9 @@ describe('ImageBlock Component', () => {
       // When image value is undefined, src attribute won't be set or will be empty
       if (img) {
         const srcAttr = img.getAttribute('src');
-        expect(srcAttr === null || srcAttr === '' || srcAttr === 'undefined').toBe(true);
+        expect(
+          srcAttr === null || srcAttr === '' || srcAttr === 'undefined',
+        ).toBe(true);
       }
     });
   });
@@ -267,4 +278,3 @@ describe('ImageBlock Component', () => {
     });
   });
 });
-

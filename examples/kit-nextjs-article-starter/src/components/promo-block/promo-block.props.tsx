@@ -4,7 +4,9 @@ import { ComponentProps } from 'lib/component-props';
 /**
  * Model used for Sitecore Component integration
  */
-export type PromoBlockProps = ComponentProps & PromoBlockParams & PromoBlockFields;
+export type PromoBlockProps = ComponentProps &
+  PromoBlockParams &
+  PromoBlockFields;
 
 // Component Rendering Parameter fields
 export type PromoBlockParams = {

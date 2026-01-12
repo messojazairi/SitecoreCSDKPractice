@@ -27,7 +27,8 @@ export const mockArticle1 = {
       editable: 'Introduction to React Hooks',
     } as Field<string>,
     pageSummary: {
-      value: 'Learn the fundamentals of React Hooks and how they can improve your code.',
+      value:
+        'Learn the fundamentals of React Hooks and how they can improve your code.',
       editable: 'Learn the fundamentals of React Hooks',
     } as Field<string>,
     pageThumbnail: {
@@ -74,7 +75,8 @@ export const mockArticle2 = {
       editable: 'Advanced TypeScript Patterns',
     } as Field<string>,
     pageSummary: {
-      value: 'Explore advanced TypeScript patterns for building robust applications.',
+      value:
+        'Explore advanced TypeScript patterns for building robust applications.',
       editable: 'Explore advanced TypeScript patterns',
     } as Field<string>,
     pageThumbnail: {
@@ -220,7 +222,12 @@ export const mockFields = {
     editable: 'Discover our latest insights and tutorials',
   } as Field<string>,
   linkOptional: mockLinkField,
-  featuredContent: [mockArticle1, mockArticle2, mockArticle3, mockArticle4] as any,
+  featuredContent: [
+    mockArticle1,
+    mockArticle2,
+    mockArticle3,
+    mockArticle4,
+  ] as any,
 };
 
 export const mockFieldsWithoutTitle = {
@@ -333,5 +340,3 @@ export const propsEditing = {
   rendering: mockRendering,
   page: mockPageDataEditing.page as any,
 };
-
-
