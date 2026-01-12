@@ -1,5 +1,22 @@
 import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
+// Mock page data
+export const mockPage = {
+  page: {
+    mode: {
+      isEditing: false,
+    },
+  },
+};
+
+export const mockPageEditing = {
+  page: {
+    mode: {
+      isEditing: true,
+    },
+  },
+};
+
 // Mock images
 export const mockImageField: ImageField = {
   value: {
@@ -210,48 +227,56 @@ export const defaultProps = {
   params: mockParams,
   fields: mockFields,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutEyebrow = {
   params: mockParams,
   fields: mockFieldsWithoutEyebrow,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutAuthor = {
   params: mockParams,
   fields: mockFieldsWithoutAuthor,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutReadTime = {
   params: mockParams,
   fields: mockFieldsWithoutReadTime,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutDate = {
   params: mockParams,
   fields: mockFieldsWithoutDate,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutImage = {
   params: mockParams,
   fields: mockFieldsWithoutImage,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsMinimal = {
   params: mockParams,
   fields: mockFieldsMinimal,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithoutFields = {
   params: mockParams,
   fields: null as any,
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithAuthorNoImage = {
@@ -268,6 +293,7 @@ export const propsWithAuthorNoImage = {
     },
   },
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 export const propsWithAuthorNoJobTitle = {
@@ -284,6 +310,7 @@ export const propsWithAuthorNoJobTitle = {
     },
   },
   rendering: mockRendering,
+  page: mockPage.page as any,
 };
 
 

@@ -325,6 +325,7 @@ describe('AccordionBlock Component', () => {
             },
           },
         },
+        page: defaultAccordionProps.page,
       };
 
       const { container } = render(<AccordionBlockDefault {...propsWithoutHeading} />);
@@ -351,6 +352,7 @@ describe('AccordionBlock Component', () => {
             },
           },
         },
+        page: defaultAccordionProps.page,
       };
 
       const { container } = render(<AccordionBlockDefault {...propsWithEmptyItem} />);
@@ -363,6 +365,7 @@ describe('AccordionBlock Component', () => {
         params: {
           styles: 'test-styles',
         },
+        page: defaultAccordionProps.page,
       };
 
       const { container } = render(<AccordionBlockDefault {...propsWithoutId} />);

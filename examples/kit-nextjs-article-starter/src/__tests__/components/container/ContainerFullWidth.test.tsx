@@ -11,18 +11,37 @@ import {
   mockSitecoreContextEditing,
 } from './ContainerFullWidth.mockProps';
 
+interface MockPlaceholderProps {
+  name?: string;
+}
+
+interface MockFlexProps {
+  children?: React.ReactNode;
+  className?: string;
+}
+
+interface MockFlexItemProps {
+  children?: React.ReactNode;
+  basis?: string;
+}
+
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  Placeholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
+  AppPlaceholder: ({ name }: MockPlaceholderProps) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
   useSitecore: jest.fn(),
+  withDatasourceCheck:
+    () =>
+    <T extends object>(Component: React.ComponentType<T>) =>
+      Component,
 }));
 
 jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, className }: any) => (
+  Flex: ({ children, className }: MockFlexProps) => (
     <div data-testid="flex" className={className}>
       {children}
     </div>
   ),
-  FlexItem: ({ children, basis }: any) => (
+  FlexItem: ({ children, basis }: MockFlexItemProps) => (
     <div data-testid="flex-item" data-basis={basis}>
       {children}
     </div>
@@ -30,7 +49,7 @@ jest.mock('@/components/flex/Flex.dev', () => ({
 }));
 
 jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
+  cn: (...args: (string | Record<string, boolean> | undefined)[]) => {
     return args
       .flat()
       .filter(Boolean)
@@ -134,8 +153,12 @@ describe('ContainerFullWidth Component', () => {
     });
 
     it('should render when placeholder is empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as any);
-      const { container } = render(<ContainerFullWidth {...propsWithEmptyPlaceholders} />);
+      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as ReturnType<typeof useSitecore>);
+      const propsEditing = {
+        ...propsWithEmptyPlaceholders,
+        page: mockSitecoreContextEditing.page,
+      };
+      const { container } = render(<ContainerFullWidth {...propsEditing} />);
 
       const section = container.querySelector('section');
       expect(section).toBeInTheDocument();

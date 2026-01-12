@@ -112,6 +112,7 @@ const config = {
     '^utils/(.*)$': '<rootDir>/src/utils/$1',
     '^types/(.*)$': '<rootDir>/src/types/$1',
     'sitecore.config': '<rootDir>/sitecore.config.ts',
+    '\\.sitecore/component-map': '<rootDir>/__mocks__/component-map.ts',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

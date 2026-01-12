@@ -23,6 +23,13 @@ const mockEmptyImageField = createMockImageField('', '');
 export const defaultImageGalleryProps: ImageGalleryProps = {
   rendering: { componentName: 'ImageGallery', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: mockTitleField,
     description: mockDescriptionField,
@@ -37,6 +44,13 @@ export const defaultImageGalleryProps: ImageGalleryProps = {
 export const imageGalleryPropsNoFields: ImageGalleryProps = {
   rendering: { componentName: 'ImageGallery', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     image1: mockEmptyImageField,
     image2: mockEmptyImageField,
@@ -49,6 +63,13 @@ export const imageGalleryPropsNoFields: ImageGalleryProps = {
 export const imageGalleryPropsMinimal: ImageGalleryProps = {
   rendering: { componentName: 'ImageGallery', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: mockTitleField,
     image1: mockImage1,
@@ -61,6 +82,13 @@ export const imageGalleryPropsMinimal: ImageGalleryProps = {
 
 export const imageGalleryPropsEditing: ImageGalleryProps = {
   ...defaultImageGalleryProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 

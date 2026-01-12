@@ -1,7 +1,38 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Default as PlaceholderTabs } from '../../components/component-library/PlaceholderTabs';
 import { IGQLTextField } from 'types/igql';
+
+// Mock component-map BEFORE importing PlaceholderTabs to avoid circular dependency
+jest.mock('../../components/component-library/.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
+// Import PlaceholderTabs after mocking component-map
+import { Default as PlaceholderTabs } from '../../components/component-library/PlaceholderTabs';
+
+// Mock lucide-react to avoid ES module parsing issues
+jest.mock('lucide-react', () => ({
+  X: () => <span data-testid="lucide-x">X</span>,
+}));
+
+// Mock next-intl to avoid ES module parsing issues
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
+// Mock NoDataFallback to avoid change-case ES module issues
+jest.mock('../../utils/NoDataFallback', () => ({
+  NoDataFallback: ({ componentName }: { componentName: string }) => (
+    <div data-testid="no-data-fallback">{componentName}</div>
+  ),
+}));
+
+// Mock component-map using virtual module
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
 
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
@@ -11,6 +42,10 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} />
   ),
+  AppPlaceholder: ({ name }: { name: string; rendering: unknown }) => (
+    <div data-testid="app-placeholder" data-name={name} />
+  ),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock shadcn Tabs components
@@ -136,7 +171,7 @@ describe('PlaceholderTabs', () => {
   it('renders placeholders for each tab', () => {
     render(<PlaceholderTabs {...defaultProps} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(3);
     expect(placeholders[0]).toHaveAttribute('data-name', 'tab-content-one-123');
     expect(placeholders[1]).toHaveAttribute('data-name', 'tab-content-two-123');

@@ -300,6 +300,7 @@ export const defaultProps: LogoTabsProps = {
   fields: mockFields as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutBackground: LogoTabsProps = {
@@ -307,6 +308,7 @@ export const propsWithoutBackground: LogoTabsProps = {
   fields: mockFieldsWithoutBackground as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutLogos: LogoTabsProps = {
@@ -314,6 +316,7 @@ export const propsWithoutLogos: LogoTabsProps = {
   fields: mockFieldsWithoutLogos as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutContent: LogoTabsProps = {
@@ -321,6 +324,7 @@ export const propsWithoutContent: LogoTabsProps = {
   fields: mockFieldsWithoutContent as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutTitle: LogoTabsProps = {
@@ -328,6 +332,7 @@ export const propsWithoutTitle: LogoTabsProps = {
   fields: mockFieldsWithoutTitle as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsEditing: LogoTabsProps = {
@@ -335,6 +340,7 @@ export const propsEditing: LogoTabsProps = {
   fields: mockFields as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: true,
+  page: mockPageDataEditing.page as any,
 };
 
 export const propsEditingWithoutLogos: LogoTabsProps = {
@@ -342,6 +348,7 @@ export const propsEditingWithoutLogos: LogoTabsProps = {
   fields: mockFieldsWithoutLogos as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: true,
+  page: mockPageDataEditing.page as any,
 };
 
 export const propsWithoutDatasource: LogoTabsProps = {
@@ -349,6 +356,7 @@ export const propsWithoutDatasource: LogoTabsProps = {
   fields: mockFieldsWithoutDatasource as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 
 export const propsWithoutFields: LogoTabsProps = {
@@ -356,5 +364,6 @@ export const propsWithoutFields: LogoTabsProps = {
   fields: null as any,
   rendering: { componentName: 'LogoTabs' } as any,
   isPageEditing: false,
+  page: mockPageData.page as any,
 };
 

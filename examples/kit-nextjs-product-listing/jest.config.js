@@ -14,6 +14,8 @@ const customJestConfig = {
     '^shadcn/(.*)$': '<rootDir>/shadcn/$1',
     '^shadcd/(.*)$': '<rootDir>/shadcn/$1',
     'sitecore.config': '<rootDir>/sitecore.config.ts',
+    '^\\.sitecore/component-map$': '<rootDir>/src/__mocks__/component-map.ts',
+    '^(\\.\\./)*\\.sitecore/component-map$': '<rootDir>/src/__mocks__/component-map.ts',
   },
   testMatch: [
     '<rootDir>/src/__tests__/**/*.test.[jt]s?(x)',

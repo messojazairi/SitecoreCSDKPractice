@@ -27,22 +27,38 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     if (!f?.value?.href) return React.createElement(React.Fragment, {}, children);
     return React.createElement('a', { href: f.value.href, className }, children || f.value.text);
   },
-  useSitecore: jest.fn(() => ({ page: { mode: { isEditing: false } } })),
+  useSitecore: jest.fn(() => ({ page: global.mockPage })),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        Demo2_Footer_EmailSubmitLabel: 'Subscribe',
-        Demo2_Footer_EmailPlaceholder: 'Enter your email',
-        Demo2_Footer_EmailErrorMessage: 'Please enter a valid email',
-        Demo2_Footer_EmailSuccessMessage: 'Successfully subscribed!',
-      };
-      return translations[key] || key;
-    },
+// Mock next-intl for ESM module support
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      Demo2_Footer_EmailSubmitLabel: 'Subscribe',
+      Demo2_Footer_EmailPlaceholder: 'Enter your email',
+      Demo2_Footer_EmailErrorMessage: 'Please enter a valid email',
+      Demo2_Footer_EmailSuccessMessage: 'Successfully subscribed!',
+      FOOTER_EmailSubmitLabel: 'Subscribe',
+      FOOTER_EmailPlaceholder: 'Enter your email',
+      FOOTER_EmailErrorMessage: 'Please enter a valid email',
+      FOOTER_EmailSuccessMessage: 'Successfully subscribed!',
+    };
+    return translations[key] || key;
+  },
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
   }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
 }));
 
 // Mock components

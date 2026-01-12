@@ -13,13 +13,48 @@ import {
   propsWithSecondaryColorScheme,
   propsWithoutColorScheme,
   propsWithoutFields,
+  mockPageEditing,
 } from './CtaBanner.mockProps';
+
+// Mock component prop interfaces
+interface MockTextProps {
+  field?: { value?: string };
+  tag?: keyof JSX.IntrinsicElements;
+  className?: string;
+}
+
+interface MockLinkFieldValue {
+  href?: string;
+  url?: string;
+  text?: string;
+}
+
+interface MockLinkProps {
+  field?: { value?: MockLinkFieldValue };
+  editable?: boolean;
+}
+
+interface MockButtonProps {
+  children?: React.ReactNode;
+  asChild?: boolean;
+  className?: string;
+}
+
+interface MockAnimatedSectionProps {
+  children?: React.ReactNode;
+  direction?: string;
+  isPageEditing?: boolean;
+}
+
+interface MockNoDataFallbackProps {
+  componentName?: string;
+}
 
 // Mock useSitecore hook
 const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
+  Text: ({ field, tag, className }: MockTextProps) => {
     const Tag = tag || 'span';
     return React.createElement(
       Tag,
@@ -27,7 +62,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       field?.value || ''
     );
   },
-  Link: ({ field, editable }: any) => (
+  Link: ({ field, editable }: MockLinkProps) => (
     <a
       href={field?.value?.href || field?.value?.url}
       data-testid="sitecore-link"
@@ -40,7 +75,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
 
 // Mock UI components
 jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, className }: any) => (
+  Button: ({ children, asChild, className }: MockButtonProps) => (
     <div data-testid="button" data-as-child={asChild} className={className}>
       {children}
     </div>
@@ -48,7 +83,7 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ children, direction, isPageEditing }: any) => (
+  Default: ({ children, direction, isPageEditing }: MockAnimatedSectionProps) => (
     <div
       data-testid="animated-section"
       data-direction={direction}
@@ -60,7 +95,7 @@ jest.mock('@/components/animated-section/AnimatedSection.dev', () => ({
 }));
 
 jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
+  NoDataFallback: ({ componentName }: MockNoDataFallbackProps) => (
     <div data-testid="no-data-fallback">{componentName}</div>
   ),
 }));
@@ -238,32 +273,24 @@ describe('CtaBanner Component', () => {
   });
 
   describe('Page editing mode', () => {
-    beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-    });
+    const editingProps = { ...defaultProps, page: mockPageEditing };
 
     it('should pass editing mode to animated section', () => {
-      render(<CtaBanner {...defaultProps} />);
+      render(<CtaBanner {...editingProps} />);
 
       const animatedSection = screen.getByTestId('animated-section');
       expect(animatedSection).toHaveAttribute('data-editing', 'true');
     });
 
     it('should render editable link', () => {
-      render(<CtaBanner {...defaultProps} />);
+      render(<CtaBanner {...editingProps} />);
 
       const link = screen.getByTestId('sitecore-link');
       expect(link).toHaveAttribute('data-editable', 'true');
     });
 
     it('should render all fields in editing mode', () => {
-      render(<CtaBanner {...defaultProps} />);
+      render(<CtaBanner {...editingProps} />);
 
       expect(screen.getByTestId('text-h2')).toBeInTheDocument();
       expect(screen.getByTestId('text-p')).toBeInTheDocument();
@@ -272,7 +299,7 @@ describe('CtaBanner Component', () => {
   });
 
   describe('Edge cases', () => {
-    it('should render NoDataFallback when fields is null', () => {
+    it('should render NoDataFallback when fields is undefined', () => {
       render(<CtaBanner {...propsWithoutFields} />);
 
       const fallback = screen.getByTestId('no-data-fallback');
@@ -283,8 +310,10 @@ describe('CtaBanner Component', () => {
     it('should handle missing params gracefully', () => {
       const propsWithoutParams = {
         fields: defaultProps.fields,
-        params: {} as any,
-      } as any;
+        params: {},
+        page: defaultProps.page,
+        rendering: defaultProps.rendering,
+      };
 
       render(<CtaBanner {...propsWithoutParams} />);
 

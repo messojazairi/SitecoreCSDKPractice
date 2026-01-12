@@ -10,19 +10,17 @@ import {
   propsWithUndefinedFields,
 } from './SubscriptionBanner.mockProps';
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        'Demo1_SubscriptionBanner_ButtonLabel': 'Subscribe',
-        'Demo1_SubscriptionBanner_EmailFieldPlaceholder': 'Enter your email address',
-        'Demo1_SubscriptionBanner_SuccessMessage': 'Thank you for subscribing!',
-        'Demo1_SubscriptionBanner_EmailFormatError': 'Invalid email format',
-      };
-      return translations[key] || key;
-    },
-  }),
+// Mock next-intl
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      'Demo1_SubscriptionBanner_ButtonLabel': 'Subscribe',
+      'Demo1_SubscriptionBanner_EmailFieldPlaceholder': 'Enter your email address',
+      'Demo1_SubscriptionBanner_FormSuccess': 'Thank you for subscribing!',
+      'Demo1_SubscriptionBanner_EmailFormatError': 'Invalid email format',
+    };
+    return translations[key] || key;
+  },
 }));
 
 // Mock Sitecore Content SDK

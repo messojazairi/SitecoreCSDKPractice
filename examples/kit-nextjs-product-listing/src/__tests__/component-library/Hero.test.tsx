@@ -8,7 +8,7 @@ import {
   Hero4,
   Hero5,
   Hero6,
-} from '../../components/component-library/Hero';
+} from '../../components/component-library/CLHero';
 
 // Mock Sitecore Content SDK
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
@@ -51,6 +51,10 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 const defaultProps = {
+  rendering: {
+    componentName: 'Hero',
+    params: {},
+  },
   params: { styles: '' },
   fields: {
     HeroTitle: { value: 'Welcome to Our Platform' },
@@ -59,6 +63,13 @@ const defaultProps = {
     HeroLink2: { value: { href: '/learn-more', text: 'Learn More' } },
     HeroImage1: { value: { src: '/images/hero1.jpg', alt: 'Hero Image 1' } },
     HeroImage2: { value: { src: '/images/hero2.jpg', alt: 'Hero Image 2' } },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
   },
 };
 
@@ -113,6 +124,10 @@ describe('Hero Variants', () => {
 
     it('handles missing optional fields', () => {
       const minimalProps = {
+        rendering: {
+          componentName: 'Hero',
+          params: {},
+        },
         params: { styles: '' },
         fields: {
           HeroTitle: { value: 'Title Only' },
@@ -121,6 +136,13 @@ describe('Hero Variants', () => {
           HeroLink2: { value: { href: '', text: '' } },
           HeroImage1: { value: { src: '', alt: '' } },
           HeroImage2: { value: { src: '', alt: '' } },
+        },
+        page: {
+          mode: {
+            isEditing: false,
+            isNormal: true,
+            isPreview: false,
+          },
         },
       };
 

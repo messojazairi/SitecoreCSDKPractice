@@ -116,8 +116,7 @@ describe('AccordionBlock Component', () => {
     });
 
     it('should pass isPageEditing from useSitecore to AccordionBlockDefault', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
-      render(<AccordionBlock {...defaultProps} />);
+      render(<AccordionBlock {...propsEditing} />);
 
       const accordion = screen.getByTestId('accordion');
       expect(accordion).toHaveAttribute('data-has-value-change', 'true');

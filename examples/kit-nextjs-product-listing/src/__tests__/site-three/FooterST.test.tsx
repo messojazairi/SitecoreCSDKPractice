@@ -18,16 +18,28 @@ jest.mock('@fortawesome/react-fontawesome', () => ({
   ),
 }));
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag: Tag = 'span', ...props }: any) => <Tag {...props}>{field?.value || ''}</Tag>,
   RichText: ({ field, ...props }: any) => <div {...props}>{field?.value || ''}</div>,
-  Link: ({ field, children, ...props }: any) => (
-    <a href={field?.value?.href || '#'} {...props}>
-      {children}
-    </a>
-  ),
+  Link: ({ field, children, prefetch, ...props }: any) => {
+    // Remove prefetch from props since it's not a valid HTML attribute
+    const { prefetch: _, ...linkProps } = props;
+    return (
+      <a href={field?.value?.href || '#'} {...linkProps}>
+        {children}
+      </a>
+    );
+  },
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`} />,
+  AppPlaceholder: ({ name }: any) => <div data-testid={`placeholder-${name}`} />,
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 describe('FooterST', () => {

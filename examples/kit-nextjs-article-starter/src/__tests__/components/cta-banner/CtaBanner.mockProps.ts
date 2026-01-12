@@ -1,5 +1,42 @@
-import { Field, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, LinkField, ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
 import { ColorSchemeLimited as ColorScheme } from '@/enumerations/ColorSchemeLimited.enum';
+
+// Mock page object with all required Page properties
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+export const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 // Mock text fields
 export const mockTitleField: Field<string> = {
@@ -87,7 +124,7 @@ export const mockFieldsWithEmptyValues = {
 
 // Mock params
 export const mockParamsDefault = {
-  colorScheme: 'default' as any, // Use string value instead of enum
+  colorScheme: 'default' as ColorScheme,
 };
 
 export const mockParamsPrimary = {
@@ -100,70 +137,86 @@ export const mockParamsSecondary = {
 
 export const mockParamsWithoutColorScheme = {};
 
+// Mock rendering
+const mockRendering: ComponentRendering = {
+  componentName: 'CtaBanner',
+};
+
 // Complete props combinations
 export const defaultProps = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithoutDescription = {
   fields: mockFieldsWithoutDescription,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithoutLink = {
   fields: mockFieldsWithoutLink,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithEmptyLink = {
   fields: mockFieldsWithEmptyLink,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithExternalLink = {
   fields: mockFieldsWithExternalLink,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsMinimal = {
   fields: mockFieldsMinimal,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithEmptyValues = {
   fields: mockFieldsWithEmptyValues,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithPrimaryColorScheme = {
   fields: mockFieldsDefault,
   params: mockParamsPrimary,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithSecondaryColorScheme = {
   fields: mockFieldsDefault,
   params: mockParamsSecondary,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithoutColorScheme = {
   fields: mockFieldsDefault,
   params: mockParamsWithoutColorScheme,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 
 export const propsWithoutFields = {
-  fields: null as any,
+  fields: undefined,
   params: mockParamsDefault,
-  rendering: { componentName: 'CtaBanner' } as any,
+  rendering: mockRendering,
+  page: mockPageBase,
 };
 

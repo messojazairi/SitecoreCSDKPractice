@@ -8,11 +8,22 @@ import {
   container303030WithContent,
 } from './Container303030.mockProps';
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
       Placeholder: {name}
+    </div>
+  ),
+  AppPlaceholder: ({ name }: { name: string }) => (
+    <div data-testid="app-placeholder" data-name={name}>
+      AppPlaceholder: {name}
     </div>
   ),
   useSitecore: () => ({
@@ -22,10 +33,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock FlexItem component
-jest.mock('@/components/flex/Flex.dev', () => ({
+jest.mock('../../components/flex/Flex.dev', () => ({
   FlexItem: ({ children, as, basis }: { children: React.ReactNode; as: string; basis: string }) => (
     <div data-testid="flex-item" data-as={as} data-basis={basis}>
       {children}
@@ -83,7 +95,7 @@ describe('Container303030', () => {
   it('renders three placeholders with correct names', () => {
     render(<Container303030 {...defaultContainer303030Props} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(3);
     expect(placeholders[0]).toHaveAttribute('data-name', 'container-thirty-left-dynamic');
     expect(placeholders[1]).toHaveAttribute('data-name', 'container-thirty-center-dynamic');
@@ -121,7 +133,7 @@ describe('Container303030', () => {
   it('renders with content in placeholders', () => {
     render(<Container303030 {...container303030WithContent} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(3);
   });
 

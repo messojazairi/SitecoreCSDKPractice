@@ -1,4 +1,5 @@
 import { Container303030Props } from '../../components/container/container-303030/container-303030.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer303030Props: Container303030Props = {
   rendering: {
@@ -15,6 +16,7 @@ export const defaultContainer303030Props: Container303030Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container303030WithStyles: Container303030Props = {
@@ -32,6 +34,7 @@ export const container303030WithStyles: Container303030Props = {
     styles: 'custom-container-class',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container303030NoTopMargin: Container303030Props = {
@@ -49,6 +52,7 @@ export const container303030NoTopMargin: Container303030Props = {
     styles: '',
     excludeTopMargin: '1',
   },
+  page: mockPage,
 };
 
 export const container303030WithContent: Container303030Props = {
@@ -84,6 +88,7 @@ export const container303030WithContent: Container303030Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };
 
 export const container303030EmptyInEditMode: Container303030Props = {
@@ -101,4 +106,5 @@ export const container303030EmptyInEditMode: Container303030Props = {
     styles: '',
     excludeTopMargin: '0',
   },
+  page: mockPage,
 };

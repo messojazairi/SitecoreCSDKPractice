@@ -28,6 +28,13 @@ const mockDealership2: DealershipFields = {
 export const defaultLocationSearchProps: LocationSearchProps = {
   rendering: { componentName: 'LocationSearch', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -48,6 +55,13 @@ export const defaultLocationSearchProps: LocationSearchProps = {
 export const locationSearchPropsNoResults: LocationSearchProps = {
   rendering: { componentName: 'LocationSearch', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -68,6 +82,13 @@ export const locationSearchPropsNoResults: LocationSearchProps = {
 export const locationSearchPropsMinimal: LocationSearchProps = {
   rendering: { componentName: 'LocationSearch', params: {} },
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -87,6 +108,13 @@ export const locationSearchPropsMinimal: LocationSearchProps = {
 
 export const locationSearchPropsEditing: LocationSearchProps = {
   ...defaultLocationSearchProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Field } from '@sitecore-content-sdk/nextjs';
 import { SubmissionFormProps } from '../../components/submission-form/submission-form.props';
+import { mockPage, mockPageEditing } from '../test-utils/mockPage';
 
 // Inline utility functions
 const createMockField = <T>(value: T): Field<T> => ({ value }) as unknown as Field<T>;
@@ -23,6 +24,7 @@ export const defaultSubmissionFormProps: SubmissionFormProps = {
   fields: {
     title: createMockField('Get Started with SYNC Audio'),
   },
+  page: mockPage,
 };
 
 // Props for centered variant
@@ -34,6 +36,7 @@ export const submissionFormPropsCentered: SubmissionFormProps = {
   fields: {
     title: createMockField('Join the SYNC Community'),
   },
+  page: mockPage,
 };
 
 // Props with custom position styles
@@ -45,6 +48,7 @@ export const submissionFormPropsCustomPosition: SubmissionFormProps = {
   fields: {
     title: createMockField('Contact Our Audio Experts'),
   },
+  page: mockPage,
 };
 
 // Props without position styles (should default)
@@ -56,6 +60,7 @@ export const submissionFormPropsNoPosition: SubmissionFormProps = {
   fields: {
     title: createMockField('Connect with SYNC'),
   },
+  page: mockPage,
 };
 
 // Props with no styles parameter
@@ -65,6 +70,7 @@ export const submissionFormPropsNoStyles: SubmissionFormProps = {
   fields: {
     title: createMockField('Simple Form Title'),
   },
+  page: mockPage,
 };
 
 // Props with empty title
@@ -76,6 +82,7 @@ export const submissionFormPropsEmptyTitle: SubmissionFormProps = {
   fields: {
     title: createMockField(''),
   },
+  page: mockPage,
 };
 
 // Props with no title field
@@ -85,6 +92,7 @@ export const submissionFormPropsNoTitle: SubmissionFormProps = {
     styles: 'position-center',
   },
   fields: {} as any,
+  page: mockPage,
 };
 
 // Props with no fields (should show fallback)
@@ -94,6 +102,7 @@ export const submissionFormPropsNoFields: SubmissionFormProps = {
     styles: 'position-left',
   },
   fields: null as any,
+  page: mockPage,
 };
 
 // Props with long title text
@@ -107,6 +116,7 @@ export const submissionFormPropsLongTitle: SubmissionFormProps = {
       'Experience Premium Audio Excellence with SYNC Professional Equipment - Connect with Our Expert Team for Personalized Recommendations'
     ),
   },
+  page: mockPage,
 };
 
 // Props with special characters
@@ -118,6 +128,7 @@ export const submissionFormPropsSpecialChars: SubmissionFormProps = {
   fields: {
     title: createMockField('SYNC™ Àudio - Jóin Öur Prémium Cömmunity & Gët Ëxclusive Àccess'),
   },
+  page: mockPage,
 };
 
 // Props for testing different positions
@@ -129,6 +140,7 @@ export const submissionFormPropsPositionLeft: SubmissionFormProps = {
   fields: {
     title: createMockField('Left Aligned Form'),
   },
+  page: mockPage,
 };
 
 export const submissionFormPropsPositionCenter: SubmissionFormProps = {
@@ -139,6 +151,7 @@ export const submissionFormPropsPositionCenter: SubmissionFormProps = {
   fields: {
     title: createMockField('Center Aligned Form'),
   },
+  page: mockPage,
 };
 
 export const submissionFormPropsPositionRight: SubmissionFormProps = {
@@ -149,6 +162,7 @@ export const submissionFormPropsPositionRight: SubmissionFormProps = {
   fields: {
     title: createMockField('Right Aligned Form'),
   },
+  page: mockPage,
 };
 
 // Props with undefined fields
@@ -160,4 +174,5 @@ export const submissionFormPropsUndefinedTitle: SubmissionFormProps = {
   fields: {
     title: undefined as any,
   },
+  page: mockPage,
 };

@@ -1,4 +1,29 @@
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render, screen } from '@testing-library/react';
 import { Default as Container } from '@/components/sxa/Container';
 import {
@@ -16,6 +41,13 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder Content
     </div>
   ),
+  AppPlaceholder: ({ name, rendering }: { name: string; rendering: { componentName?: string } & Record<string, unknown> }) => (
+    <div data-testid={`placeholder-${name}`} data-rendering={rendering?.componentName || JSON.stringify(rendering)}>
+      AppPlaceholder: {name}
+    </div>
+  ),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  withDatasourceCheck: () => (Component: React.ComponentType<any>) => Component,
 }));
 
 describe('Container Component', () => {
@@ -113,6 +145,7 @@ describe('Container Component', () => {
           ...defaultProps.rendering,
           params: invalidBackgroundParams,
         },
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithInvalidBackground} />);
@@ -200,6 +233,7 @@ describe('Container Component', () => {
           params: emptyParams,
         },
         params: emptyParams,
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithoutParams} />);
@@ -221,6 +255,7 @@ describe('Container Component', () => {
           ...defaultProps.rendering,
           params: undefinedPlaceholderParams,
         },
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithUndefinedPlaceholder} />);
@@ -242,6 +277,7 @@ describe('Container Component', () => {
           ...defaultProps.rendering,
           params: complexBackgroundParams,
         },
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithComplexBackground} />);
@@ -269,6 +305,7 @@ describe('Container Component', () => {
           ...defaultProps.rendering,
           params: uppercaseMediaUrlParams,
         },
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithUppercaseMediaUrl} />);
@@ -292,6 +329,7 @@ describe('Container Component', () => {
           ...defaultProps.rendering,
           params: complexMediaUrlParams,
         },
+        page: defaultProps.page,
       };
 
       render(<Container {...propsWithComplexMediaUrl} />);

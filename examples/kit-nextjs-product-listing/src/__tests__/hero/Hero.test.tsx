@@ -39,19 +39,33 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     return React.createElement('a', { href: f.value.href, className }, children || f.value.text);
   },
   useSitecore: jest.fn(() => ({ page: { mode: { isEditing: false } } })),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        Demo2_Hero_SubmitCTALabel: 'Find Store',
-        Demo2_Hero_ZipPlaceholder: 'Enter ZIP code',
-      };
-      return translations[key] || key;
-    },
+// Mock next-intl for ESM module support
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      Demo2_Hero_SubmitCTALabel: 'Find Store',
+      Demo2_Hero_ZipPlaceholder: 'Enter ZIP code',
+      HERO_SubmitCTALabel: 'Find Store',
+      HERO_ZipPlaceholder: 'Enter ZIP code',
+    };
+    return translations[key] || key;
+  },
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
   }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
 }));
 
 // Mock the hero components
@@ -274,16 +288,12 @@ describe('Hero Component', () => {
 
   describe('Editing Mode', () => {
     it('indicates editing state correctly', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-
       // Test editing mode
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-      const { unmount } = render(<HeroDefault {...heroPropsEditing} />);
+      const { unmount: unmountEditing } = render(<HeroDefault {...heroPropsEditing} />);
       expect(screen.getByTestId('editing-mode')).toHaveTextContent('editing');
-      unmount();
+      unmountEditing();
 
       // Test normal mode
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
       render(<HeroDefault {...defaultHeroProps} />);
       expect(screen.getByTestId('editing-mode')).toHaveTextContent('normal');
     });
@@ -301,9 +311,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBottom variant in editing mode', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-
       render(<ImageBottom {...heroPropsEditing} />);
 
       expect(screen.getByTestId('hero-image-bottom')).toBeInTheDocument();
@@ -311,9 +318,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBottom variant with no fields', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
-
       render(<ImageBottom {...heroPropsNoFields} />);
 
       expect(screen.getByTestId('hero-image-bottom')).toBeInTheDocument();
@@ -331,9 +335,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBottomInset variant in editing mode', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-
       render(<ImageBottomInset {...heroPropsEditing} />);
 
       expect(screen.getByTestId('hero-image-bottom-inset')).toBeInTheDocument();
@@ -341,9 +342,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBottomInset variant with no fields', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
-
       render(<ImageBottomInset {...heroPropsNoFields} />);
 
       expect(screen.getByTestId('hero-image-bottom-inset')).toBeInTheDocument();
@@ -361,9 +359,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBackground variant in editing mode', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-
       render(<ImageBackground {...heroPropsEditing} />);
 
       expect(screen.getByTestId('hero-image-background')).toBeInTheDocument();
@@ -371,9 +366,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageBackground variant with no fields', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
-
       render(<ImageBackground {...heroPropsNoFields} />);
 
       expect(screen.getByTestId('hero-image-background')).toBeInTheDocument();
@@ -391,9 +383,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageRight variant in editing mode', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: true } } });
-
       render(<ImageRight {...heroPropsEditing} />);
 
       expect(screen.getByTestId('hero-image-right')).toBeInTheDocument();
@@ -401,9 +390,6 @@ describe('Hero Component', () => {
     });
 
     it('renders ImageRight variant with no fields', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
-
       render(<ImageRight {...heroPropsNoFields} />);
 
       expect(screen.getByTestId('hero-image-right')).toBeInTheDocument();
@@ -428,9 +414,6 @@ describe('Hero Component', () => {
     });
 
     it('passes isPageEditing prop to all variants', () => {
-      const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-      useSitecore.mockReturnValue({ page: { mode: { isEditing: false } } });
-
       const variants = [
         { Component: ImageBottom, testId: 'hero-image-bottom' },
         { Component: ImageBottomInset, testId: 'hero-image-bottom-inset' },

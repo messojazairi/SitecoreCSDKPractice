@@ -8,11 +8,22 @@ import {
   container4060WithContent,
 } from './Container4060.mockProps';
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
       Placeholder: {name}
+    </div>
+  ),
+  AppPlaceholder: ({ name }: { name: string }) => (
+    <div data-testid="app-placeholder" data-name={name}>
+      AppPlaceholder: {name}
     </div>
   ),
   useSitecore: () => ({
@@ -22,10 +33,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock Flex components
-jest.mock('@/components/flex/Flex.dev', () => ({
+jest.mock('../../components/flex/Flex.dev', () => ({
   Flex: ({ children, wrap }: { children: React.ReactNode; wrap: string }) => (
     <div data-testid="flex" data-wrap={wrap}>
       {children}
@@ -88,7 +100,7 @@ describe('Container4060', () => {
   it('renders two placeholders with correct names', () => {
     render(<Container4060 {...defaultContainer4060Props} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(2);
     expect(placeholders[0]).toHaveAttribute('data-name', 'container-forty-left-dynamic');
     expect(placeholders[1]).toHaveAttribute('data-name', 'container-sixty-right-dynamic');
@@ -134,7 +146,7 @@ describe('Container4060', () => {
   it('renders with content in placeholders', () => {
     render(<Container4060 {...container4060WithContent} />);
 
-    const placeholders = screen.getAllByTestId('placeholder');
+    const placeholders = screen.getAllByTestId('app-placeholder');
     expect(placeholders).toHaveLength(2);
   });
 

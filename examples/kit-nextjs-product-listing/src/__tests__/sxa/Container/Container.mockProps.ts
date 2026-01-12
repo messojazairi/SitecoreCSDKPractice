@@ -1,4 +1,23 @@
-import { ComponentRendering, ComponentParams } from '@sitecore-content-sdk/nextjs';
+import { ComponentRendering, ComponentParams, Page } from '@sitecore-content-sdk/nextjs';
+
+/**
+ * Mock page object
+ */
+export const mockPage: Page = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  locale: 'en',
+};
 
 // Mock params data
 export const mockParams: ComponentParams = {
@@ -103,29 +122,35 @@ const mockRenderingWithoutId: ComponentRendering & { params: ComponentParams } =
 export const defaultProps = {
   rendering: mockRendering,
   params: mockParams,
+  page: mockPage,
 };
 
 export const propsWithContainer = {
   rendering: mockRenderingWithContainer,
   params: mockParamsWithContainer,
+  page: mockPage,
 };
 
 export const propsWithBackgroundImage = {
   rendering: mockRenderingWithBackgroundImage,
   params: mockParamsWithBackgroundImage,
+  page: mockPage,
 };
 
 export const propsWithoutStyles = {
   rendering: mockRenderingWithoutStyles,
   params: mockParamsWithoutStyles,
+  page: mockPage,
 };
 
 export const propsWithoutGridParameters = {
   rendering: mockRenderingWithoutGridParameters,
   params: mockParamsWithoutGridParameters,
+  page: mockPage,
 };
 
 export const propsWithoutId = {
   rendering: mockRenderingWithoutId,
   params: mockParamsWithoutId,
+  page: mockPage,
 };

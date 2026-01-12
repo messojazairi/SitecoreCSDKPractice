@@ -31,6 +31,13 @@ const mockDictionary = {
 export const defaultHeroProps: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: mockTitleField,
     image: mockImageField,
@@ -46,6 +53,13 @@ export const defaultHeroProps: HeroProps = {
 export const heroPropsNoFields: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: createMockField(''),
     image: createMockImageField('', ''),
@@ -57,6 +71,13 @@ export const heroPropsNoFields: HeroProps = {
 export const heroPropsMinimal: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: mockTitleField,
     image: mockEmptyImageField, // Use empty image to avoid Next.js validation in tests
@@ -68,6 +89,13 @@ export const heroPropsMinimal: HeroProps = {
 export const heroPropsWithoutBanner: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     title: mockTitleField,
     image: mockImageField,
@@ -79,6 +107,13 @@ export const heroPropsWithoutBanner: HeroProps = {
 
 export const heroPropsEditing: HeroProps = {
   ...defaultHeroProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 

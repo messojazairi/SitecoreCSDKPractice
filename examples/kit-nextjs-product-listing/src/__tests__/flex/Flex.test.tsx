@@ -9,7 +9,15 @@ jest.mock('@/lib/utils', () => ({
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: { name: string }) => <div data-testid={`ph-${name}`} />,
+  AppPlaceholder: ({ name }: { name: string }) => <div data-testid={`ph-${name}`} />,
   getFieldValue: (fields: any, key: string) => fields?.[key],
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
 }));
 
 import { Flex, FlexItem, XMFlex, XMFlexItem } from '@/components/flex/Flex.dev';
@@ -50,14 +58,24 @@ describe('Flex', () => {
   });
 
   it('XMFlex renders Placeholder with dynamic key', () => {
-    const props = { params: { DynamicPlaceholderId: 'X' }, rendering: {}, fields: {} } as any;
+    const props = {
+      params: { DynamicPlaceholderId: 'X' },
+      rendering: {},
+      fields: {},
+      page: global.mockPage,
+    } as any;
     render(<XMFlex {...props} />);
 
     expect(screen.getByTestId('ph-flex-X')).toBeInTheDocument();
   });
 
   it('XMFlexItem renders Placeholder for item', () => {
-    const props = { params: { DynamicPlaceholderId: 'Y' }, rendering: {}, fields: {} } as any;
+    const props = {
+      params: { DynamicPlaceholderId: 'Y' },
+      rendering: {},
+      fields: {},
+      page: global.mockPage,
+    } as any;
     render(<XMFlexItem {...props} />);
 
     expect(screen.getByTestId('ph-flex-item-Y')).toBeInTheDocument();

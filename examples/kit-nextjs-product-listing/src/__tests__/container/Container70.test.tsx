@@ -8,11 +8,22 @@ import {
   container70WithContent,
 } from './Container70.mockProps';
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
     <div data-testid="placeholder" data-name={name} data-rendering={JSON.stringify(rendering)}>
       Placeholder: {name}
+    </div>
+  ),
+  AppPlaceholder: ({ name }: { name: string }) => (
+    <div data-testid="app-placeholder" data-name={name}>
+      AppPlaceholder: {name}
     </div>
   ),
   useSitecore: () => ({
@@ -22,10 +33,11 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock Flex components
-jest.mock('@/components/flex/Flex.dev', () => ({
+jest.mock('../../components/flex/Flex.dev', () => ({
   Flex: ({ children, wrap }: { children: React.ReactNode; wrap: string }) => (
     <div data-testid="flex" data-wrap={wrap}>
       {children}
@@ -69,7 +81,7 @@ describe('Container70', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<Container70 {...defaultContainer70Props} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-seventy-1');
   });
 
@@ -111,7 +123,7 @@ describe('Container70', () => {
   it('renders with content in placeholder', () => {
     render(<Container70 {...container70WithContent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

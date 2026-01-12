@@ -36,7 +36,18 @@ describe('BackgroundThumbnail', () => {
     // Mock useSitecore to return editing mode
     (useSitecore as jest.Mock).mockReturnValue(mockUseSitecoreEditing);
 
-    render(<BackgroundThumbnailDefault {...defaultBackgroundThumbnailProps} />);
+    render(
+      <BackgroundThumbnailDefault
+        {...defaultBackgroundThumbnailProps}
+        page={{
+          mode: {
+            isEditing: true,
+            isNormal: false,
+            isPreview: false,
+          },
+        }}
+      />
+    );
 
     expect(screen.getByTestId('badge')).toBeInTheDocument();
     expect(screen.getByText('Update Background')).toBeInTheDocument();
@@ -48,7 +59,16 @@ describe('BackgroundThumbnail', () => {
     (useSitecore as jest.Mock).mockReturnValue(mockUseSitecoreNormal);
 
     const { container } = render(
-      <BackgroundThumbnailDefault {...defaultBackgroundThumbnailProps} />
+      <BackgroundThumbnailDefault
+        {...defaultBackgroundThumbnailProps}
+        page={{
+          mode: {
+            isEditing: false,
+            isNormal: true,
+            isPreview: false,
+          },
+        }}
+      />
     );
 
     expect(container.firstChild).toBeNull();

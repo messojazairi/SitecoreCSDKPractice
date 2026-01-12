@@ -127,6 +127,13 @@ export const defaultProductListingProps: ProductListingProps = {
   params: {
     styles: 'test-product-listing',
   },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -213,12 +220,26 @@ export const productListingPropsMinimal: ProductListingProps = {
 // Props with editing mode enabled
 export const productListingPropsEditing: ProductListingProps = {
   ...defaultProductListingProps,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+      isPreview: false,
+    },
+  },
   isPageEditing: true,
 };
 
 // Props without datasource
 export const productListingPropsNoDataSource: ProductListingProps = {
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   fields: {
     data: {
       datasource: {
@@ -238,6 +259,13 @@ export const productListingPropsNoDataSource: ProductListingProps = {
 // Props without fields
 export const productListingPropsNoFields: ProductListingProps = {
   params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fields: undefined as any,
   rendering: {

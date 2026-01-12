@@ -1,21 +1,50 @@
-import { ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { ImageField, LinkField, Page } from '@sitecore-content-sdk/nextjs';
 import { GlobalHeaderProps } from '@/components/global-header/global-header.props';
+
+// Mock page object with all required Page properties
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  page: {
-    mode: {
-      isEditing: false,
-    },
-  },
+  page: mockPageBase,
 };
 
 export const mockPageDataEditing = {
-  page: {
-    mode: {
-      isEditing: true,
-    },
-  },
+  page: mockPageEditing,
 };
 
 // Mock logo field
@@ -178,54 +207,61 @@ export const defaultProps: GlobalHeaderProps = {
     styles: 'custom-header-style',
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: mockFields as any,
+  fields: mockFields as GlobalHeaderProps['fields'],
   rendering: { 
     componentName: 'GlobalHeader',
     uid: 'header-uid',
-  } as any,
+  } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutLogo: GlobalHeaderProps = {
   params: {
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: mockFieldsWithoutLogo as any,
-  rendering: { componentName: 'GlobalHeader' } as any,
+  fields: mockFieldsWithoutLogo as GlobalHeaderProps['fields'],
+  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutLinks: GlobalHeaderProps = {
   params: {
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: mockFieldsWithoutLinks as any,
-  rendering: { componentName: 'GlobalHeader' } as any,
+  fields: mockFieldsWithoutLinks as GlobalHeaderProps['fields'],
+  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutContact: GlobalHeaderProps = {
   params: {
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: mockFieldsWithoutContact as any,
-  rendering: { componentName: 'GlobalHeader' } as any,
+  fields: mockFieldsWithoutContact as GlobalHeaderProps['fields'],
+  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithEmptyItem: GlobalHeaderProps = {
   params: {
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: mockFieldsWithEmptyItem as any,
-  rendering: { componentName: 'GlobalHeader' } as any,
+  fields: mockFieldsWithEmptyItem as GlobalHeaderProps['fields'],
+  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutFields: GlobalHeaderProps = {
   params: {
     RenderingIdentifier: 'header-rendering-id',
   },
-  fields: null as any,
-  rendering: { componentName: 'GlobalHeader' } as any,
+  fields: undefined as GlobalHeaderProps['fields'],
+  rendering: { componentName: 'GlobalHeader' } as GlobalHeaderProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsEditing: GlobalHeaderProps = {
   ...defaultProps,
+  page: mockPageEditing,
 };
 

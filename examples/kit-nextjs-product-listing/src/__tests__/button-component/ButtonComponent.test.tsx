@@ -56,6 +56,13 @@ jest.mock('../../components/ui/button', () => ({
   ),
 }));
 
+// Mock next/link
+jest.mock('next/link', () => {
+  return ({ children, href }: { children: React.ReactNode; href: string }) => {
+    return <a href={href} data-testid="link">{children}</a>;
+  };
+});
+
 // Mock the Link component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Link: ({

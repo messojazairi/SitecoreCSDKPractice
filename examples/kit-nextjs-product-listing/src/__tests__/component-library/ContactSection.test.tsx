@@ -49,6 +49,10 @@ jest.mock('@fortawesome/react-fontawesome', () => ({
 }));
 
 const defaultProps = {
+  rendering: {
+    componentName: 'ContactSection',
+    params: {},
+  },
   params: { styles: '' },
   fields: {
     data: {
@@ -78,6 +82,13 @@ const defaultProps = {
           ],
         },
       },
+    },
+  },
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
     },
   },
 };

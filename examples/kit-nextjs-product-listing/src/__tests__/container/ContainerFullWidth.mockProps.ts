@@ -1,4 +1,5 @@
 import { ContainerFullWidthProps } from '../../components/container/container-full-width/container-full-width.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainerFullWidthProps: ContainerFullWidthProps = {
   rendering: {
@@ -14,6 +15,7 @@ export const defaultContainerFullWidthProps: ContainerFullWidthProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '1',
   },
+  page: mockPage,
 };
 
 export const containerFullWidthWithStyles: ContainerFullWidthProps = {
@@ -30,6 +32,7 @@ export const containerFullWidthWithStyles: ContainerFullWidthProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '2',
   },
+  page: mockPage,
 };
 
 export const containerFullWidthNoTopMargin: ContainerFullWidthProps = {
@@ -46,6 +49,7 @@ export const containerFullWidthNoTopMargin: ContainerFullWidthProps = {
     excludeTopMargin: '1',
     DynamicPlaceholderId: '3',
   },
+  page: mockPage,
 };
 
 export const containerFullWidthWithContent: ContainerFullWidthProps = {
@@ -68,6 +72,7 @@ export const containerFullWidthWithContent: ContainerFullWidthProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '4',
   },
+  page: mockPage,
 };
 
 export const containerFullWidthEmptyInEditMode: ContainerFullWidthProps = {
@@ -82,4 +87,5 @@ export const containerFullWidthEmptyInEditMode: ContainerFullWidthProps = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '5',
   },
+  page: mockPage,
 };

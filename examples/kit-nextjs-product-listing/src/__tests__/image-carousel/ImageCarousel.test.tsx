@@ -1,4 +1,5 @@
 /* eslint-disable */
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   Default as ImageCarousel,
@@ -19,6 +20,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       },
     },
   }),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
 // Mock the variant implementations
@@ -70,6 +72,13 @@ describe('ImageCarousel Component', () => {
       dataSource: '',
     },
     params: {},
+    page: {
+      mode: {
+        isEditing: false,
+        isNormal: true,
+        isPreview: false,
+      },
+    },
     fields: {
       data: {
         datasource: {

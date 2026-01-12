@@ -1,4 +1,5 @@
 import { Container70Props } from '../../components/container/container-70/container-70.props';
+import { mockPage } from '../test-utils/mockPage';
 
 export const defaultContainer70Props: Container70Props = {
   rendering: {
@@ -14,6 +15,7 @@ export const defaultContainer70Props: Container70Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '1',
   },
+  page: mockPage,
 };
 
 export const container70WithStyles: Container70Props = {
@@ -30,6 +32,7 @@ export const container70WithStyles: Container70Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '2',
   },
+  page: mockPage,
 };
 
 export const container70NoTopMargin: Container70Props = {
@@ -46,6 +49,7 @@ export const container70NoTopMargin: Container70Props = {
     excludeTopMargin: '1',
     DynamicPlaceholderId: '3',
   },
+  page: mockPage,
 };
 
 export const container70WithContent: Container70Props = {
@@ -68,6 +72,7 @@ export const container70WithContent: Container70Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '4',
   },
+  page: mockPage,
 };
 
 export const container70EmptyInEditMode: Container70Props = {
@@ -82,4 +87,5 @@ export const container70EmptyInEditMode: Container70Props = {
     excludeTopMargin: '0',
     DynamicPlaceholderId: '5',
   },
+  page: mockPage,
 };

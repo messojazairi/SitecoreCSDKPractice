@@ -2,7 +2,7 @@
  * Test fixtures and mock data for PageContent component
  */
 
-import type { RichTextField, LinkField, TextField } from '@sitecore-content-sdk/nextjs';
+import type { RichTextField, LinkField, TextField, Page } from '@sitecore-content-sdk/nextjs';
 
 interface PageContentFields {
   Title: TextField;
@@ -13,6 +13,7 @@ interface PageContentFields {
 type PageContentProps = {
   params: { [key: string]: string };
   fields: PageContentFields;
+  page: Page;
 };
 
 /**
@@ -76,6 +77,28 @@ export const mockLinkField: LinkField = {
 };
 
 /**
+ * Mock page object
+ */
+export const mockPage: Page = {
+  layout: {
+    sitecore: {
+      route: {
+        fields: {
+          Title: mockTitleField,
+          Content: mockContentField,
+        },
+      },
+    },
+  },
+  mode: {
+    isNormal: true,
+    isEditing: false,
+    isPreview: false,
+  },
+  locale: 'en',
+};
+
+/**
  * Default props for PageContent component testing
  */
 export const defaultPageContentProps: PageContentProps = {
@@ -88,6 +111,7 @@ export const defaultPageContentProps: PageContentProps = {
     Content: mockContentField,
     MainLink: mockLinkField,
   },
+  page: mockPage,
 };
 
 /**
@@ -103,6 +127,7 @@ export const pageContentPropsEmptyContent: PageContentProps = {
     Content: mockEmptyContentField,
     MainLink: mockLinkField,
   },
+  page: mockPage,
 };
 
 /**
@@ -118,6 +143,7 @@ export const pageContentPropsSimpleContent: PageContentProps = {
     Content: mockSimpleContentField,
     MainLink: mockLinkField,
   },
+  page: mockPage,
 };
 
 /**
@@ -130,6 +156,7 @@ export const pageContentPropsMinimal: PageContentProps = {
     Content: mockContentField,
     MainLink: mockLinkField,
   },
+  page: mockPage,
 };
 
 /**
@@ -141,30 +168,14 @@ export const pageContentPropsNullFields: PageContentProps = {
     styles: 'pagecontent-styles',
   },
   fields: null as unknown as PageContentFields,
+  page: mockPage,
 };
 
 /**
  * Mock useSitecore hook
  */
 export const mockUseSitecore = {
-  page: {
-    layout: {
-      sitecore: {
-        route: {
-          fields: {
-            Title: mockTitleField,
-            Content: mockContentField,
-          },
-        },
-      },
-    },
-    mode: {
-      isNormal: true,
-      isEditing: false,
-      isPreview: false,
-    },
-    locale: 'en',
-  },
+  page: mockPage,
 };
 
 /**
@@ -172,22 +183,12 @@ export const mockUseSitecore = {
  */
 export const mockSitecoreContextEditing = {
   page: {
-    layout: {
-      sitecore: {
-        route: {
-          fields: {
-            Title: mockTitleField,
-            Content: mockContentField,
-          },
-        },
-      },
-    },
+    ...mockPage,
     mode: {
       isNormal: false,
       isEditing: true,
       isPreview: false,
     },
-    locale: 'en',
   },
 };
 
@@ -196,6 +197,7 @@ export const mockSitecoreContextEditing = {
  */
 export const mockSitecoreContextEmptyContent = {
   page: {
+    ...mockPage,
     layout: {
       sitecore: {
         route: {
@@ -206,12 +208,6 @@ export const mockSitecoreContextEmptyContent = {
         },
       },
     },
-    mode: {
-      isNormal: true,
-      isEditing: false,
-      isPreview: false,
-    },
-    locale: 'en',
   },
 };
 

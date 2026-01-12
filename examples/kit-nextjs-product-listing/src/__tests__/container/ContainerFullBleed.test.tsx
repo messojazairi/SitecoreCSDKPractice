@@ -10,6 +10,12 @@ import {
   containerFullBleedTransparent,
 } from './ContainerFullBleed.mockProps';
 
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}), { virtual: true });
+
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name, rendering }: { name: string; rendering: unknown }) => (
@@ -17,10 +23,23 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       Placeholder: {name}
     </div>
   ),
+  AppPlaceholder: ({ name }: { name: string }) => (
+    <div data-testid="app-placeholder" data-name={name}>
+      AppPlaceholder: {name}
+    </div>
+  ),
+  useSitecore: () => ({
+    page: {
+      mode: {
+        isEditing: false,
+      },
+    },
+  }),
+  withDatasourceCheck: () => (component: React.ComponentType) => component,
 }));
 
 // Mock Flex components
-jest.mock('@/components/flex/Flex.dev', () => ({
+jest.mock('../../components/flex/Flex.dev', () => ({
   Flex: ({ children }: { children: React.ReactNode }) => <div data-testid="flex">{children}</div>,
   FlexItem: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="flex-item">{children}</div>
@@ -50,7 +69,7 @@ describe('ContainerFullBleed', () => {
   it('renders placeholder with correct dynamic name', () => {
     render(<ContainerFullBleed {...defaultContainerFullBleedProps} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toHaveAttribute('data-name', 'container-fullbleed-1');
   });
 
@@ -65,35 +84,35 @@ describe('ContainerFullBleed', () => {
     render(<ContainerFullBleed {...containerFullBleedNoTopMargin} />);
 
     // Verify component renders (margin class applied by cva)
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with background image', () => {
     render(<ContainerFullBleed {...containerFullBleedWithBackground} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with primary background color', () => {
     render(<ContainerFullBleed {...containerFullBleedWithBackground} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with inset when specified', () => {
     render(<ContainerFullBleed {...containerFullBleedWithInset} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 
   it('renders with transparent background', () => {
     render(<ContainerFullBleed {...containerFullBleedTransparent} />);
 
-    const placeholder = screen.getByTestId('placeholder');
+    const placeholder = screen.getByTestId('app-placeholder');
     expect(placeholder).toBeInTheDocument();
   });
 

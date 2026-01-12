@@ -1,21 +1,50 @@
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page } from '@sitecore-content-sdk/nextjs';
 import { GlobalFooterProps, FooterSocialLink } from '@/components/global-footer/global-footer.props';
+
+// Mock page object with all required Page properties
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as const,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  page: {
-    mode: {
-      isEditing: false,
-    },
-  },
+  page: mockPageBase,
 };
 
 export const mockPageDataEditing = {
-  page: {
-    mode: {
-      isEditing: true,
-    },
-  },
+  page: mockPageEditing,
 };
 
 // Mock logo field
@@ -211,47 +240,53 @@ export const defaultProps: GlobalFooterProps = {
     styles: 'custom-footer-style',
     RenderingIdentifier: 'footer-rendering-id',
   },
-  fields: mockFields as any,
+  fields: mockFields as GlobalFooterProps['fields'],
   rendering: { 
     componentName: 'GlobalFooter',
     uid: 'footer-uid',
     placeholders: {},
-  } as any,
+  } as GlobalFooterProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutPromoLink: GlobalFooterProps = {
   params: {
     RenderingIdentifier: 'footer-rendering-id',
   },
-  fields: mockFieldsWithoutPromoLink as any,
-  rendering: { componentName: 'GlobalFooter' } as any,
+  fields: mockFieldsWithoutPromoLink as GlobalFooterProps['fields'],
+  rendering: { componentName: 'GlobalFooter' } as GlobalFooterProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutSocialLinks: GlobalFooterProps = {
   params: {
     RenderingIdentifier: 'footer-rendering-id',
   },
-  fields: mockFieldsWithoutSocialLinks as any,
-  rendering: { componentName: 'GlobalFooter' } as any,
+  fields: mockFieldsWithoutSocialLinks as GlobalFooterProps['fields'],
+  rendering: { componentName: 'GlobalFooter' } as GlobalFooterProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutDatasource: GlobalFooterProps = {
   params: {
     RenderingIdentifier: 'footer-rendering-id',
   },
-  fields: mockFieldsWithoutDatasource as any,
-  rendering: { componentName: 'GlobalFooter' } as any,
+  fields: mockFieldsWithoutDatasource as GlobalFooterProps['fields'],
+  rendering: { componentName: 'GlobalFooter' } as GlobalFooterProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsWithoutFields: GlobalFooterProps = {
   params: {
     RenderingIdentifier: 'footer-rendering-id',
   },
-  fields: null as any,
-  rendering: { componentName: 'GlobalFooter' } as any,
+  fields: undefined as GlobalFooterProps['fields'],
+  rendering: { componentName: 'GlobalFooter' } as GlobalFooterProps['rendering'],
+  page: mockPageBase,
 };
 
 export const propsEditing: GlobalFooterProps = {
   ...defaultProps,
+  page: mockPageEditing,
 };
 

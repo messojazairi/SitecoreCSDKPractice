@@ -2,7 +2,7 @@
  * Test fixtures and mock data for Image component
  */
 
-import type { ImageField, LinkField, Field } from '@sitecore-content-sdk/nextjs';
+import type { ImageField, LinkField, Field, Page } from '@sitecore-content-sdk/nextjs';
 
 interface ImageFields {
   Image: ImageField & { metadata?: { [key: string]: unknown } };
@@ -13,6 +13,7 @@ interface ImageFields {
 type ImageProps = {
   params: { [key: string]: string };
   fields: ImageFields;
+  page: Page;
 };
 
 /**
@@ -74,6 +75,41 @@ export const mockEmptyTargetUrl: LinkField = {
 };
 
 /**
+ * Mock page object for Image component testing
+ */
+export const mockPage: Page = {
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  locale: 'en',
+};
+
+export const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isNormal: false,
+    isPreview: false,
+  },
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  locale: 'en',
+};
+
+/**
  * Default props for Image component testing
  */
 export const defaultImageProps: ImageProps = {
@@ -86,6 +122,7 @@ export const defaultImageProps: ImageProps = {
     ImageCaption: mockImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPage,
 };
 
 export const imagePropsWithCaption: ImageProps = {
@@ -98,6 +135,7 @@ export const imagePropsWithCaption: ImageProps = {
     ImageCaption: mockImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPage,
 };
 
 export const imagePropsWithLink: ImageProps = {
@@ -110,6 +148,7 @@ export const imagePropsWithLink: ImageProps = {
     ImageCaption: mockImageCaption,
     TargetUrl: mockTargetUrl,
   },
+  page: mockPage,
 };
 
 /**
@@ -125,6 +164,7 @@ export const imagePropsEmptyImage: ImageProps = {
     ImageCaption: mockEmptyImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPageEditing,
 };
 
 export const imagePropsMinimal: ImageProps = {
@@ -134,6 +174,7 @@ export const imagePropsMinimal: ImageProps = {
     ImageCaption: mockEmptyImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPage,
 };
 
 export const imagePropsNullFields: ImageProps = {
@@ -142,6 +183,7 @@ export const imagePropsNullFields: ImageProps = {
     styles: 'image-styles',
   },
   fields: null as unknown as ImageFields,
+  page: mockPage,
 };
 
 /**
@@ -157,6 +199,7 @@ export const bannerImageProps: ImageProps = {
     ImageCaption: mockEmptyImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPage,
 };
 
 /**
@@ -178,4 +221,5 @@ export const bannerImagePropsWithBackground: ImageProps = {
     ImageCaption: mockEmptyImageCaption,
     TargetUrl: mockEmptyTargetUrl,
   },
+  page: mockPageEditing,
 };

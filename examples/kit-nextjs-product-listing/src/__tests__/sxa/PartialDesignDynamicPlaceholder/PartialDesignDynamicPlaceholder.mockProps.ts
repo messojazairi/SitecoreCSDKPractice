@@ -3,6 +3,7 @@
  */
 
 import type { ComponentProps } from 'lib/component-props';
+import type { Page } from '@sitecore-content-sdk/nextjs';
 
 /**
  * Base mock data for PartialDesignDynamicPlaceholder component
@@ -10,6 +11,25 @@ import type { ComponentProps } from 'lib/component-props';
 export const mockPartialDesignData = {
   placeholderName: 'main-content',
   emptyPlaceholderName: '',
+};
+
+/**
+ * Mock page object
+ */
+export const mockPage: Page = {
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+  locale: 'en',
 };
 
 /**
@@ -46,6 +66,7 @@ export const mockRenderingNoParams = {
 export const defaultPartialDesignProps: ComponentProps = {
   rendering: mockRenderingWithName,
   params: {},
+  page: mockPage,
 };
 
 /**
@@ -54,6 +75,7 @@ export const defaultPartialDesignProps: ComponentProps = {
 export const partialDesignPropsEmptyName: ComponentProps = {
   rendering: mockRenderingEmptyName,
   params: {},
+  page: mockPage,
 };
 
 /**
@@ -62,4 +84,5 @@ export const partialDesignPropsEmptyName: ComponentProps = {
 export const partialDesignPropsNoParams: ComponentProps = {
   rendering: mockRenderingNoParams,
   params: {},
+  page: mockPage,
 };

@@ -1,5 +1,42 @@
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
 import { PromoAnimatedProps } from '@/components/promo-animated/promo-animated.props';
+
+// Mock page objects
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as PageModeName,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as PageModeName,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 // Mock image field
 export const mockImageField: ImageField = {
@@ -116,6 +153,7 @@ export const defaultProps: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsEditing: PromoAnimatedProps = {
@@ -123,6 +161,7 @@ export const propsEditing: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: true,
+  page: mockPageEditing,
 };
 
 export const propsPrimaryColorScheme: PromoAnimatedProps = {
@@ -130,6 +169,7 @@ export const propsPrimaryColorScheme: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsSecondaryColorScheme: PromoAnimatedProps = {
@@ -137,6 +177,7 @@ export const propsSecondaryColorScheme: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithoutDescription: PromoAnimatedProps = {
@@ -144,6 +185,7 @@ export const propsWithoutDescription: PromoAnimatedProps = {
   fields: mockFieldsWithoutDescription,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithoutLinks: PromoAnimatedProps = {
@@ -151,6 +193,7 @@ export const propsWithoutLinks: PromoAnimatedProps = {
   fields: mockFieldsWithoutLinks,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithoutPrimaryLink: PromoAnimatedProps = {
@@ -158,6 +201,7 @@ export const propsWithoutPrimaryLink: PromoAnimatedProps = {
   fields: mockFieldsWithoutPrimaryLink,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithoutSecondaryLink: PromoAnimatedProps = {
@@ -165,6 +209,7 @@ export const propsWithoutSecondaryLink: PromoAnimatedProps = {
   fields: mockFieldsWithoutSecondaryLink,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithCustomStyles: PromoAnimatedProps = {
@@ -172,6 +217,7 @@ export const propsWithCustomStyles: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithPositionRight: PromoAnimatedProps = {
@@ -179,6 +225,7 @@ export const propsWithPositionRight: PromoAnimatedProps = {
   fields: mockFields,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 export const propsWithoutFields: PromoAnimatedProps = {
@@ -186,6 +233,7 @@ export const propsWithoutFields: PromoAnimatedProps = {
   fields: null as any,
   rendering: { componentName: 'PromoAnimated' } as any,
   isPageEditing: false,
+  page: mockPageBase,
 };
 
 

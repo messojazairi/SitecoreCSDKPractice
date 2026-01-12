@@ -17,4 +17,16 @@ export const mockUseSitecoreNormal = {
 // Default props for testing
 export const defaultBackgroundThumbnailProps: BackgroundThumbailProps = {
   children: mockChildren,
+  rendering: {
+    componentName: 'BackgroundThumbnail',
+    params: {},
+  },
+  params: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+      isPreview: false,
+    },
+  },
 };

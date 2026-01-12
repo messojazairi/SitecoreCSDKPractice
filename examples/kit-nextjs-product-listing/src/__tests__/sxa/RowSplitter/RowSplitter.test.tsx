@@ -4,6 +4,31 @@
  */
 
 import React from 'react';
+
+// Mock next-intl BEFORE any other imports to prevent ESM parsing errors
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
+  }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+}));
+
+// Mock component-map to avoid circular dependency
+jest.mock('.sitecore/component-map', () => ({
+  __esModule: true,
+  default: new Map(),
+}));
+
 import { render } from '@testing-library/react';
 import { Default as RowSplitter } from 'components/sxa/RowSplitter';
 import {
@@ -18,6 +43,8 @@ import {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: any) => <div data-placeholder={name} className="placeholder" />,
+  AppPlaceholder: ({ name }: any) => <div data-placeholder={name} className="placeholder" />,
+  withDatasourceCheck: () => (Component: React.ComponentType<any>) => Component,
 }));
 /* eslint-enable @typescript-eslint/no-explicit-any */
 

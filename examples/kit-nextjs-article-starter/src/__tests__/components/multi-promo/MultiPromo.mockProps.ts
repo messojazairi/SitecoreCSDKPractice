@@ -1,21 +1,50 @@
-import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Field, ImageField, LinkField, Page, PageModeName } from '@sitecore-content-sdk/nextjs';
 import { MultiPromoProps, MultiPromoItemProps } from '@/components/multi-promo/multi-promo.props';
+
+// Mock page objects
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as PageModeName,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as PageModeName,
+    designLibrary: false,
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  page: {
-    mode: {
-      isEditing: false,
-    },
-  },
+  page: mockPageBase,
 };
 
 export const mockPageDataEditing = {
-  page: {
-    mode: {
-      isEditing: true,
-    },
-  },
+  page: mockPageEditing,
 };
 
 // Mock text fields
@@ -268,6 +297,7 @@ export const defaultProps: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWith4Columns: MultiPromoProps = {
@@ -276,6 +306,7 @@ export const propsWith4Columns: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithPositionStyles: MultiPromoProps = {
@@ -284,6 +315,7 @@ export const propsWithPositionStyles: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithoutDescription: MultiPromoProps = {
@@ -292,6 +324,7 @@ export const propsWithoutDescription: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithoutTitle: MultiPromoProps = {
@@ -300,6 +333,7 @@ export const propsWithoutTitle: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithoutChildren: MultiPromoProps = {
@@ -308,6 +342,7 @@ export const propsWithoutChildren: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWith3Items: MultiPromoProps = {
@@ -316,6 +351,7 @@ export const propsWith3Items: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithoutDatasource: MultiPromoProps = {
@@ -324,6 +360,7 @@ export const propsWithoutDatasource: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsWithoutFields: MultiPromoProps = {
@@ -332,6 +369,7 @@ export const propsWithoutFields: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const propsEditing: MultiPromoProps = {
@@ -340,5 +378,6 @@ export const propsEditing: MultiPromoProps = {
   rendering: { componentName: 'MultiPromo' } as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageEditing,
 };
 

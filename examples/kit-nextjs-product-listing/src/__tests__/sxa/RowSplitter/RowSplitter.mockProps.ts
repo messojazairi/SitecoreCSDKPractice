@@ -3,7 +3,26 @@
  */
 
 import { ComponentProps } from 'lib/component-props';
-import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import { ComponentRendering, Page } from '@sitecore-content-sdk/nextjs';
+
+/**
+ * Mock page object
+ */
+export const mockPage: Page = {
+  layout: {
+    sitecore: {
+      route: {
+        fields: {},
+      },
+    },
+  },
+  mode: {
+    isEditing: false,
+    isNormal: true,
+    isPreview: false,
+  },
+  locale: 'en',
+};
 
 type RowNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
@@ -42,6 +61,7 @@ export const twoRowSplitterProps: RowSplitterProps = {
     Styles1: 'row-style-1',
     Styles2: 'row-style-2',
   },
+  page: mockPage,
 };
 
 /**
@@ -57,6 +77,7 @@ export const threeRowSplitterProps: RowSplitterProps = {
     Styles2: '',
     Styles3: '',
   },
+  page: mockPage,
 };
 
 /**
@@ -70,6 +91,7 @@ export const singleRowSplitterProps: RowSplitterProps = {
     styles: '',
     Styles1: 'primary-row',
   },
+  page: mockPage,
 };
 
 /**
@@ -82,6 +104,7 @@ export const noRowsSplitterProps: RowSplitterProps = {
     RenderingIdentifier: 'row-splitter-empty',
     styles: '',
   },
+  page: mockPage,
 };
 
 /**
@@ -93,4 +116,5 @@ export const missingPlaceholdersProps: RowSplitterProps = {
     RenderingIdentifier: 'row-splitter-missing',
     styles: 'test-style',
   },
+  page: mockPage,
 };

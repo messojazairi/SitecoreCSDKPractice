@@ -10,8 +10,6 @@ import {
   productListingPropsMinimal,
   productListingPropsEditing,
   productListingPropsNoFields,
-  mockUseSitecoreNormal,
-  mockUseSitecoreEditing,
 } from './ProductListing.mockProps';
 
 // Mock dependencies
@@ -22,19 +20,31 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     </Tag>
   ),
   useSitecore: jest.fn(),
+  withDatasourceCheck: () => (Component: React.ComponentType) => Component,
 }));
 
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const dictionary: { [key: string]: string } = {
-        PRODUCTLISTING_DrivingRange: 'Battery Life',
-        PRODUCTLISTING_Price: 'Starting at',
-        PRODUCTLISTING_SeeFullSpecs: 'See Full Specs',
-      };
-      return dictionary[key] || key;
-    },
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const dictionary: { [key: string]: string } = {
+      PRODUCTLISTING_DrivingRange: 'Battery Life',
+      PRODUCTLISTING_Price: 'Starting at',
+      PRODUCTLISTING_SeeFullSpecs: 'See Full Specs',
+    };
+    return dictionary[key] || key;
+  },
+  useLocale: () => 'en',
+  useTimeZone: () => 'UTC',
+  useFormatter: () => ({
+    dateTime: jest.fn(),
+    number: jest.fn(),
+    relativeTime: jest.fn(),
+    plural: jest.fn(),
+    select: jest.fn(),
+    selectOrdinal: jest.fn(),
+    list: jest.fn(),
   }),
+  IntlProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
+  NextIntlClientProvider: ({ children }: { children: React.ReactNode }) => React.createElement(React.Fragment, null, children),
 }));
 
 jest.mock('../../hooks/use-match-media', () => ({
@@ -95,12 +105,9 @@ jest.mock('../../utils/NoDataFallback', () => ({
   ),
 }));
 
-const { useSitecore } = jest.requireMock('@sitecore-content-sdk/nextjs');
-
 describe('ProductListing Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    useSitecore.mockReturnValue(mockUseSitecoreNormal);
   });
 
   describe('Default Rendering', () => {
@@ -250,7 +257,6 @@ describe('ProductListing Component', () => {
 
   describe('Editing Mode', () => {
     it('passes editing state to child components', () => {
-      useSitecore.mockReturnValue(mockUseSitecoreEditing);
       render(<ProductListingDefault {...productListingPropsEditing} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
@@ -265,7 +271,6 @@ describe('ProductListing Component', () => {
     });
 
     it('handles editing mode when not explicitly set', () => {
-      useSitecore.mockReturnValue(mockUseSitecoreNormal);
       render(<ProductListingDefault {...defaultProductListingProps} />);
 
       const animatedSections = screen.getAllByTestId('animated-section');
