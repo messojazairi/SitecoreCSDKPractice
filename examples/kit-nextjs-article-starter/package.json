@@ -135,7 +135,9 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:build next:build",
-    "lint": "eslint ./src/**/*.tsx ./src/**/*.ts",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "type-check": "tsc --noEmit --incremental false",
     "next:build": "next build",
     "next:dev": "cross-env NODE_OPTIONS='--inspect' next dev --turbopack",
     "next:start": "next start",
