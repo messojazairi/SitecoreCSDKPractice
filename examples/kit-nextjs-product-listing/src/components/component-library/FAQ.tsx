@@ -22,19 +22,36 @@ import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
 const extractTextFromRichField = (field: IGQLRichTextField | undefined): string => {
   if (!field?.jsonValue?.value) return '';
   
+  const value = field.jsonValue.value;
+  
   // Handle different possible structures
-  if (typeof field.jsonValue.value === 'string') {
-    return field.jsonValue.value;
+  if (typeof value === 'string') {
+    return value;
   }
   
   // If it's an object with text property
-  if (typeof field.jsonValue.value === 'object' && 'text' in field.jsonValue.value) {
-    return String(field.jsonValue.value.text || '');
+  if (typeof value === 'object' && value !== null && 'text' in value) {
+    return String((value as { text: unknown }).text || '');
   }
   
-  // Fallback: try to stringify
+  // Check if it's an array of content blocks
+  if (Array.isArray(value)) {
+    const arrayValue = value as unknown[];
+    return arrayValue
+      .map((item: unknown) => {
+        if (typeof item === 'string') return item;
+        if (typeof item === 'object' && item !== null && 'text' in item) {
+          return String((item as { text: unknown }).text || '');
+        }
+        return '';
+      })
+      .join(' ')
+      .trim();
+  }
+  
+  // Fallback: try to stringify and strip HTML
   try {
-    return JSON.stringify(field.jsonValue.value).replace(/<[^>]*>/g, '').trim();
+    return JSON.stringify(value).replace(/<[^>]*>/g, '').trim();
   } catch {
     return '';
   }

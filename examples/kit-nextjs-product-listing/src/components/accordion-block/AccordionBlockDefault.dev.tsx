@@ -1,6 +1,6 @@
 'use client';
 
-import { Text, RichText } from '@sitecore-content-sdk/nextjs';
+import { Text } from '@sitecore-content-sdk/nextjs';
 import { Accordion } from '@/components/ui/accordion';
 import { EditableButton } from '@/components/button-component/ButtonComponent';
 import { AccordionProps, AccordionItemProps } from './accordion-block.props';
@@ -12,22 +12,42 @@ import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
 import { useMemo } from 'react';
 
 // Helper function to extract plain text from RichTextField
-const extractTextFromRichField = (field: any): string => {
+const extractTextFromRichField = (field: AccordionItemProps['description'] | undefined): string => {
   if (!field?.jsonValue?.value) return '';
   
+  const value = field.jsonValue.value;
+  
   // Handle different possible structures
-  if (typeof field.jsonValue.value === 'string') {
-    return field.jsonValue.value;
+  if (typeof value === 'string') {
+    return value;
   }
   
-  // If it's an object with text property
-  if (typeof field.jsonValue.value === 'object' && 'text' in field.jsonValue.value) {
-    return String(field.jsonValue.value.text || '');
+  // If it's an object, try to extract text
+  if (typeof value === 'object' && value !== null) {
+    // Check if it has a text property
+    if ('text' in value && typeof (value as { text: unknown }).text === 'string') {
+      return (value as { text: string }).text;
+    }
+    
+    // Check if it's an array of content blocks
+    if (Array.isArray(value)) {
+      const arrayValue = value as unknown[];
+      return arrayValue
+        .map((item: unknown) => {
+          if (typeof item === 'string') return item;
+          if (typeof item === 'object' && item !== null && 'text' in item) {
+            return String((item as { text: unknown }).text || '');
+          }
+          return '';
+        })
+        .join(' ')
+        .trim();
+    }
   }
   
   // Fallback: try to stringify and strip HTML
   try {
-    return JSON.stringify(field.jsonValue.value).replace(/<[^>]*>/g, '').trim();
+    return JSON.stringify(value).replace(/<[^>]*>/g, '').trim();
   } catch {
     return '';
   }

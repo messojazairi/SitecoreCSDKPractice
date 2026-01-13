@@ -1,7 +1,7 @@
 'use client';
 
 import { Text } from '@sitecore-content-sdk/nextjs';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { ProductListingProps, ProductItemProps } from './product-listing.props';
@@ -15,6 +15,36 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
   const { products, title, viewAllLink } = fields?.data?.datasource ?? {};
+
+  // Generate ItemList schema for all products - hooks must be called before early returns
+  const productSchemas = useMemo(() => {
+    const allProducts = products?.targetItems || [];
+    return allProducts.map((product) => {
+      const productName = product.productName?.jsonValue?.value || '';
+      const productDescription = product.productFeatureText?.jsonValue?.value || '';
+      const productImage = product.productThumbnail?.jsonValue?.value?.src;
+      const productPrice = product.productBasePrice?.jsonValue?.value;
+      const productUrl = product.url?.path
+        ? `${typeof window !== 'undefined' ? window.location.origin : ''}${product.url.path}`
+        : viewAllLink?.jsonValue?.value?.href;
+
+      return generateProductSchema({
+        name: productName,
+        description: productDescription,
+        image: productImage,
+        price: productPrice,
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: productUrl,
+      });
+    });
+  }, [products?.targetItems, viewAllLink]);
+
+  const itemListSchema = useMemo(() => {
+    if (productSchemas.length === 0) return null;
+    return generateItemListSchema(productSchemas);
+  }, [productSchemas]);
+
   if (fields) {
     const getCardClasses = (productId: string) => {
       if (isReducedMotion) {
@@ -39,35 +69,6 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 1) || [];
     const rightColumnProducts =
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 0) || [];
-
-    // Generate ItemList schema for all products
-    const allProducts = products?.targetItems || [];
-    const productSchemas = useMemo(() => {
-      return allProducts.map((product) => {
-        const productName = product.productName?.jsonValue?.value || '';
-        const productDescription = product.productFeatureText?.jsonValue?.value || '';
-        const productImage = product.productThumbnail?.jsonValue?.value?.src;
-        const productPrice = product.productBasePrice?.jsonValue?.value;
-        const productUrl = product.url?.path
-          ? `${typeof window !== 'undefined' ? window.location.origin : ''}${product.url.path}`
-          : viewAllLink?.jsonValue?.value?.href;
-
-        return generateProductSchema({
-          name: productName,
-          description: productDescription,
-          image: productImage,
-          price: productPrice,
-          priceCurrency: 'USD',
-          availability: 'https://schema.org/InStock',
-          url: productUrl,
-        });
-      });
-    }, [allProducts, viewAllLink]);
-
-    const itemListSchema = useMemo(() => {
-      if (productSchemas.length === 0) return null;
-      return generateItemListSchema(productSchemas);
-    }, [productSchemas]);
 
     return (
       <>

@@ -45,7 +45,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
       image: articleImage ? [articleImage] : undefined,
       datePublished: pageDisplayDate?.value || undefined,
       dateModified: pageDisplayDate?.value || undefined,
-      author: authorName
+      author: authorName && pageAuthor?.value
         ? {
             name: authorName,
             jobTitle: pageAuthor.value.personJobTitle?.value || undefined,
