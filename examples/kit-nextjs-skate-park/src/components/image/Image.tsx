@@ -45,15 +45,9 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
     },
   };
 
-  // Get the image src for background-image style
-  const backgroundImageUrl = fields?.Image?.value?.src;
-  const backgroundStyle = backgroundImageUrl 
-    ? { backgroundImage: `url('${backgroundImageUrl}')` }
-    : {};
-
   return (
     <div className={`component hero-banner ${styles}`.trim()} id={id}>
-      <div className="component-content sc-sxa-image-hero-banner" style={backgroundStyle}>
+      <div className="component-content sc-sxa-image-hero-banner">
         <ContentSdkImage
           field={imageField}
           loading="eager"
@@ -74,7 +68,7 @@ export const Default: React.FC<ImageProps> = (props) => {
 
   const Image = () => <ContentSdkImage field={fields.Image} />;
   const shouldWrapWithLink =
-    !page?.mode?.isEditing && fields.TargetUrl?.value?.href;
+    !page.mode.isEditing && fields.TargetUrl?.value?.href;
 
   return (
     <ImageWrapper className={`component image ${styles}`} id={id}>

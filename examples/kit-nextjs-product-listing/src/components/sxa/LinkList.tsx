@@ -99,7 +99,7 @@ export const Default = (props: LinkListProps): JSX.Element => {
             field={datasource?.field?.title}
             className="text-nowrap mb-5 text-xl font-bold text-gray-600"
           />
-          <ul className="list-none p-0 m-0" role="listbox" aria-label="Navigation options">
+          <ul className="list-none p-0 m-0" aria-label="Navigation options">
             {list}
           </ul>
         </div>

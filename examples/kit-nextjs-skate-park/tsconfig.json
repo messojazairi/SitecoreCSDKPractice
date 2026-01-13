@@ -20,11 +20,7 @@
       "next/*": ["node_modules/next/*"],
     },
     "target": "ES2017",
-    "types": [
-      "node",
-      "jest",
-      "@testing-library/jest-dom"
-    ],
+    "types": ["node"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
