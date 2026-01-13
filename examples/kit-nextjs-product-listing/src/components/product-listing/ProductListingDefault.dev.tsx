@@ -1,13 +1,15 @@
 'use client';
 
 import { Text } from '@sitecore-content-sdk/nextjs';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { ProductListingProps, ProductItemProps } from './product-listing.props';
 import { ProductListingCard } from './ProductListingCard.dev';
 import { useMatchMedia } from '@/hooks/use-match-media';
 import { cn } from '@/lib/utils';
+import { generateProductSchema, generateItemListSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
 export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
@@ -37,11 +39,47 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 1) || [];
     const rightColumnProducts =
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 0) || [];
+
+    // Generate ItemList schema for all products
+    const allProducts = products?.targetItems || [];
+    const productSchemas = useMemo(() => {
+      return allProducts.map((product) => {
+        const productName = product.productName?.jsonValue?.value || '';
+        const productDescription = product.productFeatureText?.jsonValue?.value || '';
+        const productImage = product.productThumbnail?.jsonValue?.value?.src;
+        const productPrice = product.productBasePrice?.jsonValue?.value;
+        const productUrl = product.url?.path
+          ? `${typeof window !== 'undefined' ? window.location.origin : ''}${product.url.path}`
+          : viewAllLink?.jsonValue?.value?.href;
+
+        return generateProductSchema({
+          name: productName,
+          description: productDescription,
+          image: productImage,
+          price: productPrice,
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: productUrl,
+        });
+      });
+    }, [allProducts, viewAllLink]);
+
+    const itemListSchema = useMemo(() => {
+      if (productSchemas.length === 0) return null;
+      return generateItemListSchema(productSchemas);
+    }, [productSchemas]);
+
     return (
-      <div
+      <>
+        {/* ItemList Schema JSON-LD */}
+        {!isPageEditing && itemListSchema && (
+          <JsonLdScript id="product-listing-itemlist-schema" schema={itemListSchema} strategy="afterInteractive" />
+        )}
+      <section
         className={cn('@container transform-gpu border-b-2 border-t-2 [.border-b-2+&]:border-t-0', {
           [props?.params?.styles]: props?.params?.styles,
         })}
+        aria-label="Product listing"
       >
         <div className="@md:px-6 @md:py-20 @lg:py-28 mx-auto max-w-screen-xl px-4 py-12">
           <AnimatedSection
@@ -65,7 +103,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
             </div>
           </AnimatedSection>
 
-          <div className="@md:grid-cols-2 @md:gap-[68px] grid grid-cols-1 gap-[40px]">
+          <section className="@md:grid-cols-2 @md:gap-[68px] grid grid-cols-1 gap-[40px]" aria-label="Products">
             {/* Left column - offset by 50% */}
             {leftColumnProducts.length > 0 && (
               <div className="@md:mt-1/2 @md:gap-[60px] flex flex-col gap-[40px]">
@@ -126,9 +164,10 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
                 ))}
               </div>
             )}
-          </div>
+          </section>
         </div>
-      </div>
+      </section>
+      </>
     );
   }
 

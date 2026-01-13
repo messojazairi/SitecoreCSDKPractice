@@ -15,6 +15,30 @@ import {
   AccordionTrigger,
 } from 'shadcd/components/ui/accordion';
 import ContentSdkRichText from '@/components/content-sdk-rich-text/ContentSdkRichText';
+import { generateFAQPageSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
+
+// Helper function to extract plain text from RichTextField
+const extractTextFromRichField = (field: IGQLRichTextField | undefined): string => {
+  if (!field?.jsonValue?.value) return '';
+  
+  // Handle different possible structures
+  if (typeof field.jsonValue.value === 'string') {
+    return field.jsonValue.value;
+  }
+  
+  // If it's an object with text property
+  if (typeof field.jsonValue.value === 'object' && 'text' in field.jsonValue.value) {
+    return String(field.jsonValue.value.text || '');
+  }
+  
+  // Fallback: try to stringify
+  try {
+    return JSON.stringify(field.jsonValue.value).replace(/<[^>]*>/g, '').trim();
+  } catch {
+    return '';
+  }
+};
 
 interface Fields {
   data: {
@@ -152,8 +176,24 @@ const QuestionItem = (props: QuestionItemProps) => {
 export const Default = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate FAQPage schema
+  const faqSchema = useMemo(() => {
+    const faqs = datasource.children.results
+      .map((q) => {
+        const question = q.question?.jsonValue?.value || '';
+        const answer = extractTextFromRichField(q.answer);
+        return question && answer ? { question, answer } : null;
+      })
+      .filter((faq): faq is { question: string; answer: string } => faq !== null);
+
+    return faqs.length > 0 ? generateFAQPageSchema(faqs) : null;
+  }, [datasource.children.results]);
+
   return (
-    <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+    <>
+      {/* FAQPage Schema JSON-LD */}
+      {faqSchema && <JsonLdScript id="faq-schema" schema={faqSchema} strategy="afterInteractive" />}
+      <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -183,6 +223,7 @@ export const Default = (props: FAQProps): JSX.Element => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

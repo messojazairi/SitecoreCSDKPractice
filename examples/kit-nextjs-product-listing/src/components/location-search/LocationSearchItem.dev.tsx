@@ -1,12 +1,43 @@
+'use client';
+
 import type { LocationSearchItemProps } from './location-search.props';
 import { Text } from '@sitecore-content-sdk/nextjs';
+import { generatePlaceSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
+import { useMemo } from 'react';
 
 export const LocationSearchItem = ({
   dealership,
   isSelected,
   onSelect,
 }: LocationSearchItemProps) => {
+  // Generate Place/LocalBusiness schema
+  const placeSchema = useMemo(() => {
+    const dealershipName = dealership?.dealershipName?.jsonValue?.value;
+    if (!dealershipName) return null;
+
+    return generatePlaceSchema({
+      name: dealershipName,
+      type: 'LocalBusiness', // Using LocalBusiness for dealerships
+      streetAddress: dealership.dealershipAddress?.jsonValue?.value || undefined,
+      addressLocality: dealership.dealershipCity?.jsonValue?.value || undefined,
+      addressRegion: dealership.dealershipState?.jsonValue?.value || undefined,
+      postalCode: dealership.dealershipZipCode?.jsonValue?.value || undefined,
+      latitude: dealership.latitude,
+      longitude: dealership.longitude,
+    });
+  }, [dealership]);
+
   return (
+    <>
+      {/* Place/LocalBusiness Schema JSON-LD */}
+      {placeSchema && (
+        <JsonLdScript
+          id={`place-schema-${dealership?.dealershipName?.jsonValue?.value?.replace(/\s+/g, '-').toLowerCase() || 'location'}`}
+          schema={placeSchema}
+          strategy="afterInteractive"
+        />
+      )}
     <div
       className={`border-1 cursor-pointer p-5 transition-colors ${
         isSelected
@@ -43,5 +74,6 @@ export const LocationSearchItem = ({
         )}
       </div>
     </div>
+    </>
   );
 };

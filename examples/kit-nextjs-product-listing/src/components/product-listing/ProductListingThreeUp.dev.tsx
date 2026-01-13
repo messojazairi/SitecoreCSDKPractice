@@ -36,7 +36,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
     };
 
     return (
-      <div
+      <section
         className={cn(
           '@container @md:px-6 mx-auto max-w-screen-xl border-b-2 border-t-2 py-12 [.border-b-2+&]:border-t-0',
           {
@@ -44,6 +44,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
           }
         )}
         data-component="ProductListingThreeUp"
+        aria-label="Product listing"
       >
         <AnimatedSection
           direction="down"
@@ -59,7 +60,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
           />
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-label="Products">
           {products?.targetItems?.map((product, index) => (
             <AnimatedSection
               key={JSON.stringify(`${product.productName}-${index}`)}
@@ -85,8 +86,8 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
               </div>
             </AnimatedSection>
           ))}
-        </div>
-      </div>
+        </section>
+      </section>
     );
   }
 

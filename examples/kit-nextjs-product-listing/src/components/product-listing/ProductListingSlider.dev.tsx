@@ -39,10 +39,11 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
     };
 
     return (
-      <div
+      <section
         className={cn('@container transform-gpu border-b-2 border-t-2 [.border-b-2+&]:border-t-0', {
           [props?.params?.styles]: props?.params?.styles,
         })}
+        aria-label="Product listing"
       >
         <div className="@md:py-20 @lg:py-28 py-12 ">
           <div className="@xl:px-0 @md:pb-0 mx-auto max-w-screen-xl px-0 pb-10 [&:not(.px-6_&):not(.px-8_&):not(.px-10_&)]:px-6">
@@ -58,7 +59,8 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
               </div>
             </AnimatedSection>
           </div>
-          <SlideCarousel>
+          <section aria-label="Products">
+            <SlideCarousel>
             {products?.targetItems.map((product, index) => (
               <SlideCarouselItemWrap key={index} className="max-w-[546px]">
                 <div
@@ -78,8 +80,9 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
               </SlideCarouselItemWrap>
             ))}
           </SlideCarousel>
+          </section>
         </div>
-      </div>
+      </section>
     );
   }
 

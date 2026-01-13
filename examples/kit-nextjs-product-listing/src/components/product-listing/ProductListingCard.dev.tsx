@@ -1,3 +1,5 @@
+'use client';
+
 import { Text, Link as EditableLink } from '@sitecore-content-sdk/nextjs';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { Button } from '@/components/ui/button';
@@ -6,6 +8,8 @@ import type { ProductCardProps } from './product-listing.props';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
+import { generateProductSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
 
 const ProductListingCard = ({
   product,
@@ -19,9 +23,37 @@ const ProductListingCard = ({
     PRODUCTLISTING_Price: t(dictionaryKeys.PRODUCTLISTING_Price),
     PRODUCTLISTING_SeeFullSpecs: t(dictionaryKeys.PRODUCTLISTING_SeeFullSpecs),
   };
+
+  // Generate Product schema
+  const productName = product.productName?.jsonValue?.value || '';
+  const productDescription = product.productFeatureText?.jsonValue?.value || '';
+  const productImage = product.productThumbnail?.jsonValue?.value?.src;
+  const productPrice = product.productBasePrice?.jsonValue?.value;
+  const productUrl = product.url?.path ? `${typeof window !== 'undefined' ? window.location.origin : ''}${product.url.path}` : link?.value?.href;
+
+  const productSchema = generateProductSchema({
+    name: productName,
+    description: productDescription,
+    image: productImage,
+    price: productPrice,
+    priceCurrency: 'USD', // Default currency, can be made configurable
+    availability: 'https://schema.org/InStock', // Default, can be made configurable
+    url: productUrl,
+  });
+
+  // Generate unique script ID for this product
+  const scriptId = productName
+    ? `product-schema-${productName.replace(/\s+/g, '-').toLowerCase()}`
+    : 'product-schema';
+
   return (
+    <>
+      {/* Product Schema JSON-LD */}
+      {!isPageEditing && productName && (
+        <JsonLdScript id={scriptId} schema={productSchema} strategy="afterInteractive" />
+      )}
     <CardSpotlight className="h-full w-full" prefersReducedMotion={prefersReducedMotion}>
-      <div
+      <article
         className="@md:px-12 @md:py-12 font-heading relative z-10 flex w-full flex-col justify-between gap-8 px-6 py-10"
         data-component="ProductListingCard"
       >
@@ -86,8 +118,9 @@ const ProductListingCard = ({
             )}
           </div>
         </div>
-      </div>
+      </article>
     </CardSpotlight>
+    </>
   );
 };
 

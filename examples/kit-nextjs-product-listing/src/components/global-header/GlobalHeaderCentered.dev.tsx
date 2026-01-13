@@ -68,7 +68,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
       >
         <div className="@xl:px-8 relative mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between px-4">
           {/* Desktop Navigation */}
-          <div className="@lg:flex z-10 hidden" ref={navRef}>
+          <nav className="@lg:flex z-10 hidden" ref={navRef} aria-label="Main navigation">
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
@@ -108,7 +108,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                 </AnimatedHoverNav>
               </div>
             </NavigationMenu>
-          </div>
+          </nav>
           <div className="absolute left-1/2 top-1/2 flex w-[112px] -translate-x-1/2 -translate-y-1/2 items-center justify-center [&_.image-container]:mx-auto [&_.image-container]:w-full">
             {!isPageEditing ? (
               <Link href="/" className="flex items-center justify-center" aria-label="Home">

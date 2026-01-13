@@ -102,30 +102,32 @@ export const GlobalFooterBlackLarge: React.FC<GlobalFooterProps> = (props) => {
         <div className="border-foreground border-t">
           <div className="@sm:flex-row @sm:justify-between mx-auto flex max-w-screen-2xl flex-col items-center justify-start gap-4 px-4 py-12">
             {/* Social media icons - using responsive AnimatedHoverNav */}
-            <div ref={socialContainerRef}>
-              <AnimatedHoverNav
-                parentRef={footerRef}
-                orientation="horizontal"
-                indicatorClassName="h-0-5 bg-white rounded-default bottom-0 mt-10"
-                mobileBreakpoint={null}
-              >
-                <ul className="@sm:gap-6 mx-auto flex items-center gap-4">
-                  {socialLinks?.results?.map((socialLink, index) => (
-                    <li key={index} className="relative z-10">
-                      <EditableButton
-                        buttonLink={socialLink?.link?.jsonValue}
-                        className={cn('relative hover:bg-transparent')}
-                        variant="ghost"
-                        size={isPageEditing ? 'default' : 'icon'}
-                        isPageEditing={isPageEditing}
-                        icon={socialLink?.socialIcon?.jsonValue}
-                        asIconLink={true}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </AnimatedHoverNav>
-            </div>
+            <nav aria-label="Social media links">
+              <div ref={socialContainerRef}>
+                <AnimatedHoverNav
+                  parentRef={footerRef}
+                  orientation="horizontal"
+                  indicatorClassName="h-0-5 bg-white rounded-default bottom-0 mt-10"
+                  mobileBreakpoint={null}
+                >
+                  <ul className="@sm:gap-6 mx-auto flex items-center gap-4">
+                    {socialLinks?.results?.map((socialLink, index) => (
+                      <li key={index} className="relative z-10">
+                        <EditableButton
+                          buttonLink={socialLink?.link?.jsonValue}
+                          className={cn('relative hover:bg-transparent')}
+                          variant="ghost"
+                          size={isPageEditing ? 'default' : 'icon'}
+                          isPageEditing={isPageEditing}
+                          icon={socialLink?.socialIcon?.jsonValue}
+                          asIconLink={true}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </AnimatedHoverNav>
+              </div>
+            </nav>
             {/* Copyright text */}
             <Text field={footerCopyright?.jsonValue} encode={false} />
           </div>

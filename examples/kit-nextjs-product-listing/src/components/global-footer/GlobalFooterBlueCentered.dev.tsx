@@ -89,27 +89,29 @@ export const GlobalFooterBlueCentered: React.FC<GlobalFooterProps> = (props) => 
         <div className="relative mx-auto flex max-w-screen-2xl flex-col justify-center px-4 py-8 ">
           <div className="@sm:flex-row flex flex-col items-center justify-between">
             {/* Social media icons */}
-            <AnimatedHoverNav
-              parentRef={footerRef}
-              mobileBreakpoint={null}
-              indicatorClassName="h-0-5 bg-secondary rounded-default bottom-0"
-            >
-              <ul className="@sm:mb-0 mb-0 flex list-none gap-6">
-                {socialLinks?.results?.map((socialLink, index) => (
-                  <li key={index}>
-                    <EditableButton
-                      buttonLink={socialLink?.link?.jsonValue}
-                      className={cn('relative hover:bg-transparent')}
-                      variant="ghost"
-                      size={isPageEditing ? 'default' : 'icon'}
-                      isPageEditing={isPageEditing}
-                      icon={socialLink?.socialIcon?.jsonValue}
-                      asIconLink={true}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </AnimatedHoverNav>
+            <nav aria-label="Social media links">
+              <AnimatedHoverNav
+                parentRef={footerRef}
+                mobileBreakpoint={null}
+                indicatorClassName="h-0-5 bg-secondary rounded-default bottom-0"
+              >
+                <ul className="@sm:mb-0 mb-0 flex list-none gap-6">
+                  {socialLinks?.results?.map((socialLink, index) => (
+                    <li key={index}>
+                      <EditableButton
+                        buttonLink={socialLink?.link?.jsonValue}
+                        className={cn('relative hover:bg-transparent')}
+                        variant="ghost"
+                        size={isPageEditing ? 'default' : 'icon'}
+                        isPageEditing={isPageEditing}
+                        icon={socialLink?.socialIcon?.jsonValue}
+                        asIconLink={true}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </AnimatedHoverNav>
+            </nav>
             {/* Copyright text */}
             <Text field={footerCopyright?.jsonValue} encode={false} />
           </div>

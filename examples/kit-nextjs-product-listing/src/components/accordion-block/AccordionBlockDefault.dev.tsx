@@ -1,10 +1,37 @@
-import { Text } from '@sitecore-content-sdk/nextjs';
+'use client';
+
+import { Text, RichText } from '@sitecore-content-sdk/nextjs';
 import { Accordion } from '@/components/ui/accordion';
 import { EditableButton } from '@/components/button-component/ButtonComponent';
 import { AccordionProps, AccordionItemProps } from './accordion-block.props';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { AccordionBlockItem } from './AccordionBlockItem.dev';
 import { cn } from '@/lib/utils';
+import { generateFAQPageSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
+import { useMemo } from 'react';
+
+// Helper function to extract plain text from RichTextField
+const extractTextFromRichField = (field: any): string => {
+  if (!field?.jsonValue?.value) return '';
+  
+  // Handle different possible structures
+  if (typeof field.jsonValue.value === 'string') {
+    return field.jsonValue.value;
+  }
+  
+  // If it's an object with text property
+  if (typeof field.jsonValue.value === 'object' && 'text' in field.jsonValue.value) {
+    return String(field.jsonValue.value.text || '');
+  }
+  
+  // Fallback: try to stringify and strip HTML
+  try {
+    return JSON.stringify(field.jsonValue.value).replace(/<[^>]*>/g, '').trim();
+  } catch {
+    return '';
+  }
+};
 
 export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing } = props;
@@ -14,9 +41,29 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const acordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
+
+  // Generate FAQPage schema if accordion items have question/answer structure
+  const faqSchema = useMemo(() => {
+    const faqs = accordionItems
+      .map((item) => {
+        const question = item.heading?.jsonValue?.value || '';
+        const answer = extractTextFromRichField(item.description);
+        return question && answer ? { question, answer } : null;
+      })
+      .filter((faq): faq is { question: string; answer: string } => faq !== null);
+
+    // Only generate FAQ schema if we have at least one Q&A pair
+    return faqs.length > 0 ? generateFAQPageSchema(faqs) : null;
+  }, [accordionItems]);
+
   if (fields) {
     return (
-      <div
+      <>
+        {/* FAQPage Schema JSON-LD */}
+        {faqSchema && (
+          <JsonLdScript id="accordion-faq-schema" schema={faqSchema} strategy="afterInteractive" />
+        )}
+        <div
         data-component="AccordionBlock"
         className={cn(
           '@container @md:py-16 @lg:py-20 border-b-2 border-t-2 py-10 [.border-b-2+&]:border-t-0',
@@ -71,6 +118,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
           </div>
         </div>
       </div>
+      </>
     );
   }
 

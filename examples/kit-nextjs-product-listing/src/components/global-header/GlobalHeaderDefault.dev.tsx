@@ -90,7 +90,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
             </div>
           </div>
           {/* Desktop Navigation */}
-          <div className="@lg:flex @lg:flex-1 hidden" ref={navRef}>
+          <nav className="@lg:flex @lg:flex-1 hidden" ref={navRef} aria-label="Main navigation">
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
@@ -130,7 +130,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                 </AnimatedHoverNav>
               </div>
             </NavigationMenu>
-          </div>
+          </nav>
           {/* Desktop CTA */}
           {headerContact?.jsonValue?.value && (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">

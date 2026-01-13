@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Facebook, Linkedin, Twitter, Link, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,8 @@ import { ButtonBase } from '../button-component/ButtonComponent';
 import { FloatingDock } from '@/components/floating-dock/floating-dock.dev';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
+import { generateArticleSchema } from '@/utils/schema-org';
+import { JsonLdScript } from '@/components/schema-org/JsonLdScript';
 
 export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }) => {
   const { imageRequired, eyebrowOptional } = fields;
@@ -26,6 +28,38 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
   const [copySuccess, setCopySuccess] = useState(false);
   const [forceCollapse] = useState(true);
   const copyNotificationRef = useRef<HTMLDivElement>(null);
+
+  // Generate Article schema
+  const articleSchema = useMemo(() => {
+    if (!pageHeaderTitle?.value) return null;
+
+    const articleImage = imageRequired?.value?.src;
+    const articleUrl = typeof window !== 'undefined' ? window.location.href : '';
+    const authorName = pageAuthor?.value
+      ? `${pageAuthor.value.personFirstName?.value || ''} ${pageAuthor.value.personLastName?.value || ''}`.trim()
+      : undefined;
+
+    return generateArticleSchema({
+      headline: pageHeaderTitle.value,
+      description: undefined, // Can be added if available
+      image: articleImage ? [articleImage] : undefined,
+      datePublished: pageDisplayDate?.value || undefined,
+      dateModified: pageDisplayDate?.value || undefined,
+      author: authorName
+        ? {
+            name: authorName,
+            jobTitle: pageAuthor.value.personJobTitle?.value || undefined,
+            image: pageAuthor.value.personProfileImage?.value?.src || undefined,
+          }
+        : undefined,
+      publisher: {
+        name: 'SYNC', // Default, should be configurable
+        logo: undefined, // Can be added from Sitecore configuration
+      },
+      url: articleUrl,
+      articleSection: eyebrowOptional?.value || undefined,
+    });
+  }, [pageHeaderTitle, imageRequired, pageDisplayDate, pageAuthor, eyebrowOptional]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -171,6 +205,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
 
     return (
       <>
+        {/* Article Schema JSON-LD */}
+        {articleSchema && (
+          <JsonLdScript id="article-schema" schema={articleSchema} strategy="afterInteractive" />
+        )}
         <header
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
