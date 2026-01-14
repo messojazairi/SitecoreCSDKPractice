@@ -1,0 +1,34 @@
+// Auto-generated client component map
+// Built-in components from Content SDK
+import { BYOCServerWrapper, NextjsContentSdkComponent, FEaaSServerWrapper } from '@sitecore-content-sdk/nextjs';
+import { Form } from '@sitecore-content-sdk/nextjs';
+
+// Custom components
+import * as Hero from 'src/components/hero/Hero';
+import * as ProductListing from 'src/components/product-listing/ProductListing';
+import * as ContactForm from 'src/components/contact-form/ContactForm';
+import * as FAQ from 'src/components/faq/FAQ';
+import * as PricingTable from 'src/components/pricing-table/PricingTable';
+import * as ContentBlock from 'src/components/content-block/ContentBlock';
+import * as TwoColumnLayout from 'src/components/two-column-layout/TwoColumnLayout';
+import * as CtaBanner from 'src/components/cta-banner/CtaBanner';
+import * as PartialDesignDynamicPlaceholder from 'src/components/partial-design-dynamic-placeholder/PartialDesignDynamicPlaceholder';
+
+export const componentMap = new Map<string, NextjsContentSdkComponent>([
+  // Built-in components
+  ['BYOCWrapper', BYOCServerWrapper],
+  ['FEaaSWrapper', FEaaSServerWrapper],
+  ['Form', Form],
+  // Custom components
+  ['Hero', { ...Hero }],
+  ['ProductListing', { ...ProductListing }],
+  ['ContactForm', { ...ContactForm }],
+  ['FAQ', { ...FAQ }],
+  ['PricingTable', { ...PricingTable }],
+  ['ContentBlock', { ...ContentBlock }],
+  ['TwoColumnLayout', { ...TwoColumnLayout }],
+  ['CtaBanner', { ...CtaBanner }],
+  ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
+]);
+
+export default componentMap;
