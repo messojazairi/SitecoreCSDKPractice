@@ -1,0 +1,13 @@
+---
+ID: "55555555-5555-5555-5555-555555555561"
+Parent: "55555555-5555-5555-5555-555555555560"
+Template: "e269fbb5-3750-427a-9149-7aa950b49301"
+Path: "/sitecore/templates/Project/click-click-launch/Components/Enterprise/FAQItem/FAQItem"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260114T000000Z

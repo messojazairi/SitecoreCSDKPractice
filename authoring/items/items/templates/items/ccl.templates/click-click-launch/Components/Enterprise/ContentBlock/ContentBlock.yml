@@ -1,0 +1,13 @@
+---
+ID: "33333333-3333-3333-3333-333333333334"
+Parent: "33333333-3333-3333-3333-333333333333"
+Template: "e269fbb5-3750-427a-9149-7aa950b49301"
+Path: "/sitecore/templates/Project/click-click-launch/Components/Enterprise/ContentBlock/ContentBlock"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260114T000000Z
