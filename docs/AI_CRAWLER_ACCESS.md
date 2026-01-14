@@ -14,6 +14,10 @@ This guide explains how to configure AI crawler and search engine bot access for
   - [Netlify](#netlify)
   - [XM Cloud Rendering Hosts](#xm-cloud-rendering-hosts)
 - [Restricting Bot Access](#restricting-bot-access)
+- [Sitemap Configuration](#sitemap-configuration)
+  - [Configuring Sitemap in Sitecore Content Editor](#configuring-sitemap-in-sitecore-content-editor)
+  - [Automated Sitemap Configuration Script](#automated-sitemap-configuration-script)
+  - [Troubleshooting Sitemap Issues](#troubleshooting-sitemap-issues)
 - [Testing Crawler Access](#testing-crawler-access)
 - [References](#references)
 
@@ -297,6 +301,137 @@ Configure bot blocking at the infrastructure level:
 - **Azure**: Configure Azure WAF or Front Door rules
 - **Netlify**: Use Edge Functions or serverless functions
 - **Cloudflare**: Configure Bot Management rules
+
+## Sitemap Configuration
+
+The sitemap.xml file lists all crawlable pages on your site, helping search engines and AI crawlers discover your content efficiently.
+
+### Sitemap Overview
+
+A properly configured sitemap includes:
+
+```xml
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://your-domain.com/</loc>
+    <lastmod>2026-01-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://your-domain.com/products</loc>
+    <lastmod>2026-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Additional pages... -->
+</urlset>
+```
+
+### Configuring Sitemap in Sitecore Content Editor
+
+#### Step 1: Configure Site Grouping
+
+Navigate to your site's Site Grouping settings:
+
+```
+/sitecore/content/<Tenant>/<Site>/Settings/Site Grouping/<SiteName>
+```
+
+Configure these fields:
+
+| Field | Value | Description |
+|-------|-------|-------------|
+| **Host Name** | `*` | Matches all incoming requests |
+| **Target Host Name** | `your-domain.com` | Used for sitemap URLs (NO protocol, NO trailing slash) |
+| **Scheme** | `https` | Protocol for URLs |
+
+> ⚠️ **Important**: The Target Host Name must be the domain only, without `https://` prefix or trailing `/`. Incorrect configuration will result in malformed URLs like `https://https://domain.com//`.
+
+#### Step 2: Enable Sitemap on Pages
+
+Each page needs sitemap settings configured. On page items, set:
+
+| Field | Description | Recommended Value |
+|-------|-------------|-------------------|
+| **Change Frequency** | How often content changes | `daily`, `weekly`, or `monthly` |
+| **Priority** | Page importance (0.0 - 1.0) | `1.0` for home, `0.5` - `0.8` for others |
+| **Include in Sitemap** | Whether to include page | ✅ Checked |
+
+#### Step 3: Publish to Experience Edge
+
+After configuration:
+
+1. Select the root of your site content
+2. **Publish** → **Publish Site**
+3. Enable **Smart Publish** and **Publish subitems**
+4. Wait 2-5 minutes for Edge cache to refresh
+
+### Automated Sitemap Configuration Script
+
+A PowerShell script is provided to automatically configure sitemap settings for all pages:
+
+```
+authoring/spe-scripts/configure-sitemap.ps1
+```
+
+#### Running the Script in SPE Console
+
+1. Open Sitecore Content Editor
+2. Navigate to **Sitecore** → **PowerShell ISE** (or Desktop → PowerShell ISE)
+3. Run the script:
+
+```powershell
+# Configure SYNC site
+.\configure-sitemap.ps1 -SiteName "SYNC" -TargetHostName "ai-crawler-access.vercel.app"
+
+# Configure with custom settings
+.\configure-sitemap.ps1 -SiteName "SYNC" -TargetHostName "mysite.com" -DefaultChangeFrequency "daily" -DefaultPriority 0.7
+```
+
+#### Script Parameters
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `SiteName` | Yes | - | Site name (e.g., "SYNC", "Alaris") |
+| `TargetHostName` | Yes | - | Domain for sitemap URLs |
+| `DefaultChangeFrequency` | No | `weekly` | Default change frequency |
+| `DefaultPriority` | No | `0.5` | Default page priority |
+| `HomePagePriority` | No | `1.0` | Home page priority |
+| `Scheme` | No | `https` | URL scheme |
+
+#### What the Script Does
+
+1. ✅ Configures Site Grouping with correct hostname and scheme
+2. ✅ Sets sitemap settings on all pages under `/Home`
+3. ✅ Assigns higher priority to the home page
+4. ✅ Optionally publishes changes to Experience Edge
+
+### Troubleshooting Sitemap Issues
+
+#### Sitemap Only Shows Homepage
+
+- Verify other pages are published to Experience Edge
+- Check that pages have sitemap settings configured
+- Ensure "Exclude from Sitemap" is unchecked
+
+#### Malformed URLs (https://https://...)
+
+- Remove protocol (`https://`) from Target Host Name field
+- Remove trailing slash from Target Host Name field
+- Republish the Site Grouping item
+
+#### Sitemap Returns 404
+
+- Verify Host Name and Target Host Name are configured
+- Check that the site is published to Experience Edge
+- Ensure the sitemap API route exists at `/api/sitemap/route.ts`
+
+#### Changes Not Appearing
+
+- Clear Experience Edge cache in XM Cloud Deploy Portal
+- Wait 2-5 minutes for cache to expire
+- Force refresh with `Ctrl + Shift + R` in browser
 
 ## Testing Crawler Access
 
