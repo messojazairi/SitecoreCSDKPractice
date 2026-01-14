@@ -1,0 +1,13 @@
+---
+ID: "HERO-STD-0001-0000-000000000001"
+Parent: "f1e2d3c4-b5a6-4789-0123-456789abcdef"
+Template: "f1e2d3c4-b5a6-4789-0123-456789abcdef"
+Path: "/sitecore/templates/Project/click-click-launch/Components/Enterprise/Hero/__Standard Values"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260114T000000Z

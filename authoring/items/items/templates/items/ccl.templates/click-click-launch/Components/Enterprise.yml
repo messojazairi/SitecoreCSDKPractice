@@ -1,0 +1,13 @@
+---
+ID: "e1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c"
+Parent: "0906b950-0047-4b98-93e1-cca545685259"
+Template: "e269fbb5-3750-427a-9149-7aa950b49301"
+Path: "/sitecore/templates/Project/click-click-launch/Components/Enterprise"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260114T000000Z
