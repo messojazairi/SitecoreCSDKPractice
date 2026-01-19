@@ -36,6 +36,10 @@ export const Default = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { isEditing } = props.page.mode;
 
+  const altText = props.fields?.PromoIcon?.value?.alt || 
+                  props.fields?.PromoIcon?.value?.title || 
+                  'Promotional image';
+
   if (props.fields) {
     return (
       <div
@@ -43,8 +47,8 @@ export const Default = (props: PromoProps): JSX.Element => {
         className={`component promo flex-1 shadow-lg pointer mb-5 lg:mb-0 ${props.params.styles}`}
         id={id ? id : undefined}
       >
-        <div className="flex flex-col items-start justify-end h-full">
-          <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" />
+        <aside role="complementary" className="flex flex-col items-start justify-end h-full">
+          <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" alt={altText} />
           <div className={`flex-1 relative pt-4 px-6 ${isEditing ? 'min-w-[300px] w-full' : ''}`}>
             {(props.fields.PromoText3?.value || isEditing) && (
               <ContentSdkRichText
@@ -77,7 +81,7 @@ export const Default = (props: PromoProps): JSX.Element => {
           >
             <ContentSdkLink field={props.fields.PromoLink} />
           </Button>
-        </div>
+        </aside>
       </div>
     );
   }
@@ -89,6 +93,10 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { isEditing } = props.page.mode;
 
+  const altText = props.fields?.PromoIcon?.value?.alt || 
+                  props.fields?.PromoIcon?.value?.title || 
+                  'Promotional image';
+
   if (props.fields) {
     return (
       <div
@@ -96,8 +104,8 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
         className={`component promo flex-1 w-full shadow-lg pointer mb-5 lg:mb-0 align-stretch ${props.params.styles}`}
         id={id ? id : undefined}
       >
-        <div className="flex flex-col items-start justify-end">
-          <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" />
+        <aside role="complementary" className="flex flex-col items-start justify-end">
+          <ContentSdkImage field={props.fields.PromoIcon} className="w-full h-auto object-cover" alt={altText} />
           <div
             className={`flex-1 relative pt-4 px-4 w-full justify-center text-center ${
               isEditing ? 'min-w-[300px]' : ''
@@ -126,7 +134,7 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
           >
             <ContentSdkLink field={props.fields.PromoLink} />
           </Button>
-        </div>
+        </aside>
       </div>
     );
   }

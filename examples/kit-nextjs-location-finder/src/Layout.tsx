@@ -11,6 +11,12 @@ import { Sora, Roboto } from 'next/font/google';
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
 import { DesignLibraryApp } from '@sitecore-content-sdk/nextjs';
 import componentMap from '.sitecore/component-map';
+import {
+  generateWebSiteSchema,
+  generateOrganizationSchema,
+  renderJsonLdScript,
+  getBaseUrl,
+} from 'src/lib/seo';
 import Providers from './Providers';
 
 const heading = Sora({
@@ -51,10 +57,26 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
   const mainClassPageEditing = mode.isEditing ? 'editing-mode' : 'prod-mode';
   const classNamesMain = `${mainClassPageEditing} ${body.variable} ${heading.variable} main-layout`;
 
+  // Generate site-wide structured data
+  const baseUrl = getBaseUrl();
+  const websiteSchema = generateWebSiteSchema('Alaris', baseUrl, 'Find your nearest Alaris dealership');
+  const organizationSchema = generateOrganizationSchema('Alaris', baseUrl, undefined, 'Alaris - Premium automotive dealership network');
+
   return (
     <>
       <Scripts />
       <SitecoreStyles layoutData={layout} />
+      
+      {/* Site-wide structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: renderJsonLdScript(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: renderJsonLdScript(organizationSchema) }}
+      />
+      
       <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
@@ -71,7 +93,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
             )
           ) : (
             <>
-              <header>
+              <header role="banner">
                 <div id="header">
                   {route && (
                     <AppPlaceholder
@@ -83,7 +105,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                   )}
                 </div>
               </header>
-              <main>
+              <main role="main">
                 <div id="content">
                   {route && (
                     <AppPlaceholder
@@ -95,7 +117,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                   )}
                 </div>
               </main>
-              <footer>
+              <footer role="contentinfo">
                 <div id="footer">
                   {route && (
                     <AppPlaceholder
