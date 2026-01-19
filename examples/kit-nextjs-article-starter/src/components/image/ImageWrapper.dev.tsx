@@ -68,7 +68,14 @@ export const Default: React.FC<ImageWrapperProps> = (props) => {
           className={className}
           unoptimized={isUnoptimized}
           priority={inView ? true : false}
-          sizes={isSvg ? sizes : undefined}
+          // Always use sizes for responsive images (except SVG which doesn't need it)
+          // If sizes not provided, use a sensible default for full-width images
+          sizes={
+            isSvg
+              ? undefined
+              : sizes ||
+                '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 1200px'
+          }
           blurDataURL={image?.value?.src}
           placeholder="blur"
           //if image is an svg and no width is provide, set a default to avoid error, this will be overwritten by css

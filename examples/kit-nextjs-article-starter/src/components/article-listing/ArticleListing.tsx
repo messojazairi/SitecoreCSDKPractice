@@ -168,6 +168,7 @@ export const Default: React.FC<ArticleListingProps> = ({
                       src={article.image}
                       alt={article.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-300 group-hover/article:scale-105"
                     />
                   </div>

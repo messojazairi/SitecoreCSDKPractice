@@ -55,8 +55,10 @@ const CdpPageView = (): JSX.Element => {
       language,
     }).catch((e) => {
       // Silently handle expected errors (404s, network failures)
+      // The browser/create.json endpoint may not be available in all environments
+      // Suppress all console errors for this expected behavior
       // Only log unexpected errors in development
-      if (process.env.NODE_ENV === 'development' && e?.status !== 404) {
+      if (process.env.NODE_ENV === 'development' && e?.status !== 404 && e?.status !== 0) {
         console.debug('CDP pageView error:', e);
       }
     });

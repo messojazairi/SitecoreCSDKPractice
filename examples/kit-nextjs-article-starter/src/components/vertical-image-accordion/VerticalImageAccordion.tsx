@@ -68,6 +68,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
                       className="rounded-default h-full w-full object-cover"
                       wrapperClass="h-full w-full"
                       aria-hidden="true"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   )}
                 </div>

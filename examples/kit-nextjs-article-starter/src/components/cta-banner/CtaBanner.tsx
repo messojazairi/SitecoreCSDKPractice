@@ -81,7 +81,27 @@ export const Default: React.FC<CtaBannerProps> = (props) => {
             {/* Render button with link */}
             {linkOptional && (
               <Button className={ctaButtonVariants({ colorScheme })} asChild>
-                <Link field={linkOptional} editable={isPageEditing} />
+                <Link
+                  field={
+                    // Enhance link with descriptive text for SEO
+                    !isPageEditing && linkOptional?.value?.text
+                      ? {
+                          ...linkOptional,
+                          value: {
+                            ...linkOptional.value,
+                            text:
+                              linkOptional.value.text &&
+                              /^(learn\s+more|read\s+more|click\s+here|here|link|more|continue|go|view\s+more)$/i.test(
+                                linkOptional.value.text.trim()
+                              )
+                                ? `Read about ${titleRequired?.value || 'this'}`
+                                : linkOptional.value.text,
+                          },
+                        }
+                      : linkOptional
+                  }
+                  editable={isPageEditing}
+                />
               </Button>
             )}
           </AnimatedSection>

@@ -78,12 +78,24 @@ const ButtonBase = (
     ? buttonLink?.value?.text
     : getDescriptiveLinkText(buttonLink, contextTitle);
 
+  // Create a modified link field with descriptive text for SEO
+  // This ensures the Link component uses descriptive text instead of generic "Learn More"
+  const enhancedButtonLink = !isPageEditing && displayText && displayText !== buttonLink?.value?.text
+    ? {
+        ...buttonLink,
+        value: {
+          ...buttonLink?.value,
+          text: displayText,
+        },
+      }
+    : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
         <Link field={buttonLink} editable={true} />
       ) : (
-        <Link field={buttonLink} editable={isPageEditing}>
+        <Link field={enhancedButtonLink} editable={isPageEditing}>
           {iconPosition === IconPosition.LEADING && icon ? (
             <Icon
               iconName={iconName ? iconName : IconName.ARROW_LEFT}
@@ -143,6 +155,18 @@ const EditableButton = (props: {
     ? buttonLink?.value?.text
     : getDescriptiveLinkText(buttonLink, contextTitle);
 
+  // Create a modified link field with descriptive text for SEO
+  // This ensures the Link component uses descriptive text instead of generic "Learn More"
+  const enhancedButtonLink = !isPageEditing && displayText && displayText !== buttonLink?.value?.text
+    ? {
+        ...buttonLink,
+        value: {
+          ...buttonLink?.value,
+          text: displayText,
+        },
+      }
+    : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -166,7 +190,7 @@ const EditableButton = (props: {
       ) : (
         <Link
           className={className}
-          field={buttonLink}
+          field={enhancedButtonLink}
           editable={isPageEditing}
           aria-label={asIconLink ? buttonLink?.value?.text : undefined}
         >

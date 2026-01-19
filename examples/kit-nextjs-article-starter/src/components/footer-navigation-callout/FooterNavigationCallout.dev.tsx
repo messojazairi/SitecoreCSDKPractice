@@ -27,7 +27,11 @@ export const Default: React.FC<FooterNavigationCalloutProps> = ({ fields }) => {
         <CardContent>
           <Text field={description} className="font-body text-sm" />
           {linkOptional && (
-            <Button className="mt-10 block w-full text-center" buttonLink={linkOptional} />
+            <Button
+              className="mt-10 block w-full text-center"
+              buttonLink={linkOptional}
+              contextTitle={title?.value}
+            />
           )}
         </CardContent>
       </Card>
