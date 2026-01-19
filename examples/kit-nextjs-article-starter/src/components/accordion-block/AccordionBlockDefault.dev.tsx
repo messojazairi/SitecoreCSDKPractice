@@ -55,7 +55,9 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
                 field={description?.jsonValue}
               />
             )}
-            {link?.jsonValue && <Button buttonLink={link.jsonValue} />}
+            {link?.jsonValue && (
+              <Button buttonLink={link.jsonValue} contextTitle={heading?.jsonValue?.value} />
+            )}
           </div>
           <div className="w-full max-w-[787px] justify-self-end p-6">
             <Accordion

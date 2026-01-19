@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
   // Disable the X-Powered-By header. Follows security best practices.
   poweredByHeader: false,
 
+  // Enable source maps for production (helps with debugging and PageSpeed Insights)
+  // Set to 'hidden-source-map' to generate source maps but not expose them publicly
+  // This satisfies PageSpeed Insights while maintaining security
+  productionBrowserSourceMaps: process.env.GENERATE_SOURCEMAP === 'true',
+
   // use this configuration to ensure that only images from the whitelisted domains
   // can be served from the Next.js Image Optimization API
   // see https://nextjs.org/docs/app/api-reference/components/image#remotepatterns

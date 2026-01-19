@@ -46,13 +46,20 @@ const CdpPageView = (): JSX.Element => {
       scope
     );
     // there can be cases where Events are not initialized which are expected to reject
+    // Handle 404 errors gracefully (e.g., browser/create.json endpoint not available)
     pageView({
       channel: 'WEB',
       currency: 'USD',
       page: route.name,
       pageVariantId,
       language,
-    }).catch((e) => console.debug(e));
+    }).catch((e) => {
+      // Silently handle expected errors (404s, network failures)
+      // Only log unexpected errors in development
+      if (process.env.NODE_ENV === 'development' && e?.status !== 404) {
+        console.debug('CDP pageView error:', e);
+      }
+    });
   }, [mode, route, context.variantId, siteName]);
 
   return <></>;

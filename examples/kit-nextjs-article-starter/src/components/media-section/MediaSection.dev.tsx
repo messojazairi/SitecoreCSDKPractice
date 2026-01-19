@@ -99,8 +99,18 @@ export const Default = ({
           poster={imgSrc.src}
           preload="metadata"
           loading="lazy"
+          onError={(e) => {
+            // Handle video loading errors gracefully (e.g., pexels.com failures)
+            console.warn('Video failed to load:', video);
+            const videoElement = e.currentTarget;
+            if (videoElement) {
+              videoElement.style.display = 'none';
+            }
+          }}
         >
-          <source src={video} type="video/mp4" />
+          <source src={video} type="video/mp4" onError={() => {
+            console.warn('Video source failed to load:', video);
+          }} />
         </video>
       )}
       {(reducedMotion && image) || (!video && image) ? (

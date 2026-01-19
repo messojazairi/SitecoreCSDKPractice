@@ -89,9 +89,9 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
         {ogTitle && <meta property="og:title" content={ogTitle} />}
         {ogDescription && (
-          <meta property="og:description " content={ogDescription} />
+          <meta property="og:description" content={ogDescription} />
         )}
-        {ogImage && <meta property="og:image " content={ogImage} />}
+        {ogImage && <meta property="og:image" content={ogImage} />}
       </Head>
       <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}

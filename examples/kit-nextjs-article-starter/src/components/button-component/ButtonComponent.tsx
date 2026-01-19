@@ -10,6 +10,7 @@ import { ButtonVariants, ButtonSize } from '@/enumerations/ButtonStyle.enum';
 import { IconPosition } from '@/enumerations/IconPosition.enum';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 /**
  * Model used for Sitecore Component integration
  */
@@ -52,6 +53,8 @@ const ButtonBase = (
   props: ButtonFields['params'] &
     ButtonFields['fields'] & { variant?: EnumValues<typeof ButtonVariants> } & {
       className?: string;
+      // Context title for generating descriptive link text when link text is generic
+      contextTitle?: string | null;
     }
 ): JSX.Element | null => {
   const {
@@ -64,10 +67,16 @@ const ButtonBase = (
     isAriaHidden = true,
     className = '',
     isPageEditing,
+    contextTitle,
   } = props || {};
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+
+  // Generate descriptive link text for SEO (only in production, preserve CMS text in editing mode)
+  const displayText = isPageEditing
+    ? buttonLink?.value?.text
+    : getDescriptiveLinkText(buttonLink, contextTitle);
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
@@ -82,7 +91,7 @@ const ButtonBase = (
               isAriaHidden={ariaHidden}
             />
           ) : null}
-          {buttonLink?.value?.text}
+          {displayText}
           {iconPosition !== IconPosition.LEADING && icon ? (
             <Icon
               iconName={iconName ? iconName : IconName.ARROW_LEFT}
@@ -108,6 +117,8 @@ const EditableButton = (props: {
   size?: EnumValues<typeof ButtonSize>;
   //if asIconLink is set the text will not show up in the link but as an aria label
   asIconLink?: boolean;
+  // Context title for generating descriptive link text when link text is generic
+  contextTitle?: string | null;
   [key: string]: any;
 }): JSX.Element | null => {
   const {
@@ -121,10 +132,16 @@ const EditableButton = (props: {
     className,
     isPageEditing = false,
     asIconLink = false,
+    contextTitle,
   } = props || {};
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+
+  // Generate descriptive link text for SEO (only in production, preserve CMS text in editing mode)
+  const displayText = isPageEditing
+    ? buttonLink?.value?.text
+    : getDescriptiveLinkText(buttonLink, contextTitle);
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
@@ -160,7 +177,7 @@ const EditableButton = (props: {
               isAriaHidden={ariaHidden}
             />
           ) : null}
-          {!asIconLink && buttonLink?.value?.text}
+          {!asIconLink && displayText}
           {iconPosition !== IconPosition.LEADING && icon ? (
             <Icon
               iconName={iconName ? iconName : IconName.ARROW_LEFT}
