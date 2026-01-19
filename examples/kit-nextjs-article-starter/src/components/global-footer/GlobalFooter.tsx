@@ -33,7 +33,7 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
     sameAs:
       footerSocialLinks?.results
         ?.map((link) => link?.link?.jsonValue?.value?.href)
-        .filter(Boolean) || [],
+        .filter((href): href is string => Boolean(href)) || [],
   });
 
   if (fields) {
