@@ -5,6 +5,10 @@ import { ButtonBase as Button } from '@/components/button-component/ButtonCompon
 import { AccordionProps, AccordionItemProps } from './accordion-block.props';
 import { AccordionBlockItem } from './AccordionBlockItem.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
+import {
+  StructuredData,
+  generateFAQPageSchema,
+} from '@/components/structured-data/StructuredData';
 
 export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing, params } = props || {};
@@ -14,15 +18,29 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const accordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
+
+  // Generate FAQPage schema if we have accordion items
+  const faqSchema =
+    accordionItems.length > 0
+      ? generateFAQPageSchema({
+          faqs: accordionItems.map((item) => ({
+            question: item?.heading?.jsonValue?.value || '',
+            answer: item?.description?.jsonValue?.value || '',
+          })),
+        })
+      : null;
+
   if (fields) {
     return (
-      <div
-        data-component="AccordionBlock"
-        data-class-change
-        className={cn('@container bg-secondary text-secondary-foreground rounded-3xl', {
-          [params.styles as string]: params?.styles,
-        })}
-      >
+      <>
+        {faqSchema && <StructuredData data={faqSchema} />}
+        <section
+          data-component="AccordionBlock"
+          data-class-change
+          className={cn('@container bg-secondary text-secondary-foreground rounded-3xl', {
+            [params.styles as string]: params?.styles,
+          })}
+        >
         <div className=" @md:py-16 @lg:py-20 @lg:grid-cols-[320px,1fr] @lg:gap-12 @xl:gap-16 mx-auto grid max-w-screen-xl gap-8 py-10">
           <div className="@lg:pr-0 space-y-4 px-6">
             {heading?.jsonValue && (
@@ -54,7 +72,8 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
             </Accordion>
           </div>
         </div>
-      </div>
+      </section>
+      </>
     );
   }
 
