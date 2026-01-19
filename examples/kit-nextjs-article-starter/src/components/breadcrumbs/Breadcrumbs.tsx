@@ -11,10 +11,8 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { LinkFieldValue } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { GqlFieldString } from '@/types/gql.props';
-import {
-  StructuredData,
-  generateBreadcrumbListSchema,
-} from '@/components/structured-data/StructuredData';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import { generateBreadcrumbListSchema } from '@/components/structured-data/schema-generators';
 
 /**
  * Model used for Sitecore Component integration

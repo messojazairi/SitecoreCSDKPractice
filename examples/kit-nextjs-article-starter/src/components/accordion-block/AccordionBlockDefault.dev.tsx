@@ -5,10 +5,8 @@ import { ButtonBase as Button } from '@/components/button-component/ButtonCompon
 import { AccordionProps, AccordionItemProps } from './accordion-block.props';
 import { AccordionBlockItem } from './AccordionBlockItem.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import {
-  StructuredData,
-  generateFAQPageSchema,
-} from '@/components/structured-data/StructuredData';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import { generateFAQPageSchema } from '@/components/structured-data/schema-generators';
 
 export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing, params } = props || {};

@@ -7,10 +7,8 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { EditableImageButton } from 'components/button-component/ButtonComponent';
 import { cn } from 'lib/utils';
 import componentMap from '.sitecore/component-map';
-import {
-  StructuredData,
-  generateOrganizationSchema,
-} from '@/components/structured-data/StructuredData';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import { generateOrganizationSchema } from '@/components/structured-data/schema-generators';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
   const { fields, rendering, page } = props;

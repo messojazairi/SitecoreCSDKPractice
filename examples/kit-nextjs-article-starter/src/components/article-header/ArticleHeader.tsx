@@ -26,11 +26,11 @@ import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 import { formatDateInUTC } from '@/utils/date-utils';
 import { Default as Icon } from '@/components/icon/Icon';
+import { StructuredData } from '@/components/structured-data/StructuredData';
 import {
-  StructuredData,
   generateArticleSchema,
   generatePersonSchema,
-} from '@/components/structured-data/StructuredData';
+} from '@/components/structured-data/schema-generators';
 
 interface ArticleHeaderParams {
   [key: string]: any; // eslint-disable-line
@@ -296,7 +296,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
         >
-          <article itemScope itemType="https://schema.org/Article">
+          <article itemScope={true} itemType="https://schema.org/Article">
           <div className="relative z-0 h-[auto] overflow-hidden bg-black">
             {/* Background Image with Parallax */}
             <div
