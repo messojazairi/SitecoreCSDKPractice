@@ -44,20 +44,16 @@ export interface RouteFields {
   ogTitle?: Field;
   ogDescription?: Field;
   ogImage?: ImageField;
-  ogType?: Field;
   thumbnailImage?: ImageField;
-  twitterCard?: Field;
-  twitterSite?: Field;
 }
 
 const Layout = ({ page }: LayoutProps): JSX.Element => {
-  const { layout, mode, siteName } = page;
+  const { layout, mode } = page;
   const { route } = layout.sitecore;
   const fields = route?.fields as RouteFields;
   const mainClassPageEditing = mode.isEditing ? 'editing-mode' : 'prod-mode';
   const classNamesMain = `${mainClassPageEditing} ${body.variable} ${heading.variable} main-layout`;
 
-  // Basic metadata
   const metaTitle =
     fields?.metadataTitle?.value?.toString() ||
     fields?.pageTitle?.value?.toString() ||
@@ -67,26 +63,18 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
     fields?.pageSummary?.value?.toString() ||
     '';
   const metaKeywords = fields?.metadataKeywords?.value?.toString() || '';
-
-  // OpenGraph metadata
   const ogTitle =
     fields?.ogTitle?.value?.toString() ||
     fields?.metadataTitle?.value?.toString() ||
     fields?.pageTitle?.value?.toString() ||
     'Page';
+  const ogImage =
+    fields?.ogImage?.value?.src || fields?.thumbnailImage?.value?.src;
   const ogDescription =
     fields?.ogDescription?.value?.toString() ||
     fields?.metadataDescription?.value?.toString() ||
     fields?.pageSummary?.value?.toString() ||
     '';
-  const ogImage =
-    fields?.ogImage?.value?.src || fields?.thumbnailImage?.value?.src || '';
-  const ogType = fields?.ogType?.value?.toString() || 'website';
-
-  // Twitter Card metadata (falls back to OG values for consistency)
-  const twitterCard = fields?.twitterCard?.value?.toString() || 'summary_large_image';
-  const twitterSite = fields?.twitterSite?.value?.toString() || '';
-
   return (
     <>
       <Scripts />
@@ -99,24 +87,11 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
         )}
         {metaKeywords && <meta name="keywords" content={metaKeywords} />}
         <link rel="icon" href="/favicon.ico" />
-
-        {/* OpenGraph tags for social sharing and AI/GEO */}
         {ogTitle && <meta property="og:title" content={ogTitle} />}
         {ogDescription && (
-          <meta property="og:description" content={ogDescription} />
+          <meta property="og:description " content={ogDescription} />
         )}
-        {ogImage && <meta property="og:image" content={ogImage} />}
-        <meta property="og:type" content={ogType} />
-        {siteName && <meta property="og:site_name" content={siteName} />}
-
-        {/* Twitter Card tags for rich previews */}
-        <meta name="twitter:card" content={twitterCard} />
-        {twitterSite && <meta name="twitter:site" content={twitterSite} />}
-        {ogTitle && <meta name="twitter:title" content={ogTitle} />}
-        {ogDescription && (
-          <meta name="twitter:description" content={ogDescription} />
-        )}
-        {ogImage && <meta name="twitter:image" content={ogImage} />}
+        {ogImage && <meta property="og:image " content={ogImage} />}
       </Head>
       <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}
