@@ -19,13 +19,17 @@ export default function RootLayout({
 
   const webSiteSchema = baseUrl
     ? generateWebSiteSchema({
-        name: 'Solterra & Co.',
-        url: baseUrl,
-      })
+      name: 'Solterra & Co.',
+      url: baseUrl,
+    })
     : null;
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://edge-platform.sitecorecloud.io" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body>
         <StructuredData id="organization-schema" data={organizationSchema as JsonLdValue} />
         {webSiteSchema && <StructuredData id="website-schema" data={webSiteSchema as JsonLdValue} />}

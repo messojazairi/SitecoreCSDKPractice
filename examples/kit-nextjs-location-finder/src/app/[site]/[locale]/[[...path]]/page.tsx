@@ -112,51 +112,39 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
   const host = headersList.get('host');
-  const baseUrl = getBaseUrl(host);
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const baseUrl = `${protocol}://${host}`;
 
   const { site, locale, path } = await params;
+
+  // Construct the canonical URL with the full path
+  // For home page, add trailing slash to avoid Lighthouse "points to root" false positive
+  const pathSegment = path?.length ? `/${path.join('/')}` : '/';
+  const canonicalUrl = `${baseUrl}/${site}/${locale}${pathSegment}`;
+
   const page = await client.getPage(path ?? [], { site, locale });
   const fields = page?.layout.sitecore.route?.fields as RouteFields;
 
-  const currentPath = path?.length ? `/${path.join('/')}` : '/';
-  const fullUrl = getFullUrl(currentPath, host);
-
-  const title = fields?.ogTitle?.value?.toString() || fields?.Title?.value?.toString() || 'Page';
-  const description = fields?.ogDescription?.value?.toString() || fields?.metadataDescription?.value?.toString() || 'Find your nearest Alaris dealership';
-  const ogImage = fields?.ogImage?.value?.src;
+  // Parse keywords from comma-separated string to array
+  const keywordsString = fields?.metadataKeywords?.value?.toString() || '';
+  const keywords = keywordsString
+    ? keywordsString.split(',').map((k: string) => k.trim())
+    : [];
 
   return {
-    title,
-    description,
-    metadataBase: new URL(baseUrl),
+    title: fields?.ogTitle?.value?.toString() || 'Page',
+    description:
+      fields?.ogDescription?.value?.toString() || 'Sitecore Next.js Alaris Example',
+    keywords,
     alternates: {
-      canonical: fullUrl,
-      languages: {
-        'en-US': fullUrl,
-        'en-CA': fullUrl.replace('/en/', '/en-CA/'),
-      },
+      canonical: canonicalUrl,
     },
     openGraph: {
-      title,
-      description,
-      url: fullUrl,
-      siteName: 'Alaris',
-      type: 'website',
-      images: ogImage ? [{ url: ogImage }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ogImage ? [ogImage] : undefined,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
+      title: fields?.Title?.value?.toString() || 'Page',
+      description:
+        fields?.ogDescription?.value?.toString() || 'Sitecore Next.js Alaris Example',
+      url: canonicalUrl,
+      images: fields?.ogImage?.value?.src || undefined,
     },
   };
 };
