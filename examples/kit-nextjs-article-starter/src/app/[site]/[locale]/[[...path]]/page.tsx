@@ -121,8 +121,7 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const { path, site, locale } = await params;
 
   // Construct the canonical URL with the full path
-  // For home page, add trailing slash to avoid Lighthouse "points to root" false positive
-  const pathSegment = path?.length ? `/${path.join('/')}` : '/';
+  const pathSegment = path?.length ? `/${path.join('/')}` : '';
   const canonicalUrl = `${baseUrl}/${site}/${locale}${pathSegment}`;
 
   // The same call as for rendering the page. Should be cached by default react behavior
