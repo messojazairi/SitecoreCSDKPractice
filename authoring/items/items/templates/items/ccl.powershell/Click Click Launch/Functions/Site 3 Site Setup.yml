@@ -202,20 +202,23 @@ SharedFields:
               -DataSource "local:/Data/MultiPromo 2" -FinalLayout
             Add-Rendering -Item $item -PlaceHolder "headless-main" -Instance $renderingSignupBannerDefinition -Parameter @{ "DynamicPlaceholderId" = "5"; "FieldNames" = $signupBannerVariant.ID; } -DataSource "local:/Data/SignupBanner 1" -FinalLayout
     
-            Write-Verbose "Update home page fields"
-            $title = "SYNC"
-            $shortTitle = "SYNC"
-    
-            $item."pageTitle" = $title
-            $item."pageShortTitle" = $shortTitle
-            $item."pageHeaderTitle" = $shortTitle
-            $item."pageSummary" = $title
-    
-            $item."metadataTitle" = $title
-            $item."metadataDescription" = $title
-            $item."metadataKeywords" = "Symphonic, audio, speakers, headphones"
-            $item."ogTitle" = $title
-            $item."ogDescription" = $title
+        Write-Verbose "Update home page fields"
+        $title = "SYNC"
+        $shortTitle = "SYNC"
+        $description = "Premium audio equipment and speakers designed for audiophiles. Experience exceptional sound quality with SYNC's heritage collection."
+
+        $item."pageTitle" = $title
+        $item."pageShortTitle" = $shortTitle
+        $item."pageHeaderTitle" = $shortTitle
+        $item."pageSummary" = $description
+
+        $item."metadataTitle" = $title
+        $item."metadataDescription" = $description
+        $item."metadataKeywords" = "SYNC, audio equipment, speakers, headphones, premium sound, audiophile"
+        
+        # OpenGraph metadata for social sharing
+        $item."ogTitle" = $title
+        $item."ogDescription" = $description
             
             Write-Verbose "Create dictionary items"
             $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
