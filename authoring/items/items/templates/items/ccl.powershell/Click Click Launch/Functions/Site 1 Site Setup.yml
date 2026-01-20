@@ -195,7 +195,7 @@ SharedFields:
     
             $item."metadataTitle" = $title
             $item."metadataDescription" = $title
-            $item."metadataKeywords" = "Alaris, electric, future"
+            $item."metadataKeywords" = "Solterra & Co., wellness, editorial"
             $item."ogTitle" = $title
             $item."ogDescription" = $title
             
