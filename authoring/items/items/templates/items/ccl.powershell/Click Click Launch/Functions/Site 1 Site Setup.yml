@@ -188,20 +188,15 @@ SharedFields:
             $title = "Solterra & Co."
             $shortTitle = "Solterra & Co."
             $description = "Discover wellness, lifestyle, and editorial content that inspires your everyday journey with Solterra & Co."
-
             $item."pageTitle" = $title
             $item."pageShortTitle" = $shortTitle
             $item."pageHeaderTitle" = $shortTitle
             $item."pageSummary" = $description
-
             $item."metadataTitle" = $title
             $item."metadataDescription" = $description
             $item."metadataKeywords" = "Solterra & Co., wellness, editorial, lifestyle"
-            
-            # OpenGraph metadata for social sharing
             $item."ogTitle" = $title
             $item."ogDescription" = $description
-            
             Write-Verbose "Update nagivation links"
             $aboutUs = Get-Item "$sitePath/Presentation/Partial Designs/Global/Header/Data/Global Header/About Us"
             Update-LinkField -Item $aboutUs -FieldName "link" -TargetItem $item

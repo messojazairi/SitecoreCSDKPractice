@@ -205,21 +205,16 @@ SharedFields:
             Write-Verbose "Update home page fields"
             $title = "SYNC"
             $shortTitle = "SYNC"
-            $description = "Premium audio equipment and speakers designed for audiophiles. Experience exceptional sound quality with SYNC's heritage collection."
-
+            $description = "Premium audio equipment and speakers designed for audiophiles. Experience exceptional sound quality with SYNCs heritage collection."
             $item."pageTitle" = $title
             $item."pageShortTitle" = $shortTitle
             $item."pageHeaderTitle" = $shortTitle
             $item."pageSummary" = $description
-
             $item."metadataTitle" = $title
             $item."metadataDescription" = $description
             $item."metadataKeywords" = "SYNC, audio equipment, speakers, headphones, premium sound, audiophile"
-            
-            # OpenGraph metadata for social sharing
             $item."ogTitle" = $title
             $item."ogDescription" = $description
-            
             Write-Verbose "Create dictionary items"
             $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
             $dictionaryBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Add Dictionary Items" -Language $Site.Language
