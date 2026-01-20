@@ -1,0 +1,40 @@
+﻿---
+ID: "9a6b2655-4744-4697-ae4f-afe990df2974"
+Parent: "c7ac85e4-680d-417d-8758-c1dece212843"
+Template: "c7ac85e4-680d-417d-8758-c1dece212843"
+Path: /sitecore/templates/Project/SCXelerateSC/Page Design Folder/__Standard Values
+SharedFields:
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Value: |
+    {C7AC85E4-680D-417D-8758-C1DECE212843}
+    {1105B8F8-1E00-426B-BF1F-C840742D827B}
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "f999689c-804e-402e-bbe4-edd956694802"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260119T190008Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "3ba826fa-3136-41e0-a229-9ff3df502cb8"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260119T190014Z

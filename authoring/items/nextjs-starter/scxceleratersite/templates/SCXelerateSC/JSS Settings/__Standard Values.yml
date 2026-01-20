@@ -1,0 +1,31 @@
+﻿---
+ID: "12ca35de-0712-4674-b58d-c504d0f2e55b"
+Parent: "647e8149-2649-4f0c-9c57-79848e0d5d32"
+Template: "647e8149-2649-4f0c-9c57-79848e0d5d32"
+Path: /sitecore/templates/Project/SCXelerateSC/JSS Settings/__Standard Values
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260119T190011Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "bcafb460-23c4-4a0f-a2a4-67133270b495"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\maaz.shaikh@slalom.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260119T190011Z
