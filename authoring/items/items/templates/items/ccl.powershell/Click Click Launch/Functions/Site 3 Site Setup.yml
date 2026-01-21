@@ -215,7 +215,7 @@ SharedFields:
             $item."metadataKeywords" = "SYNC, audio equipment, speakers, headphones, premium sound, audiophile"
             $item."ogTitle" = $title
             $item."ogDescription" = $description
-            $item."ogImage" = "<image mediaid=`"{1CF4B85B-F2C8-4372-919E-3618A930DC59}`" />"
+            $item."ogImage" = "<image mediaid=`"{66ABE98A-5F71-44DA-86AF-37F1ABF198AD}`" />"
             Write-Verbose "Create dictionary items"
             $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
             $dictionaryBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Add Dictionary Items" -Language $Site.Language
