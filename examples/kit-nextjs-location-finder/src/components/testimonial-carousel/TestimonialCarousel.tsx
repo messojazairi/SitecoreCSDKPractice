@@ -17,6 +17,7 @@ import {
 } from './testimonial-carousel.props';
 import { Default as TestimonialCarouselItem } from './TestimonialCarouselItem';
 import { NoDataFallback } from '@/utils/NoDataFallback';
+import { generateReviewSchema, renderJsonLdScript } from '@/lib/seo';
 
 export const Default: React.FC<TestimonialCarouselProps> = (props) => {
   const { fields } = props || {};
@@ -104,19 +105,37 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [api, isFocused]);
   if (fields) {
+    // Generate Review schemas for each testimonial
+    const reviewSchemas = children?.results?.map((item) =>
+      generateReviewSchema(
+        item.testimonialAttribution?.jsonValue?.value?.toString() || 'Anonymous',
+        item.testimonialQuote?.jsonValue?.value?.toString()
+      )
+    ) || [];
+
     return (
-      <div
-        className={cn(
-          '@container component testimonial-carousel text-secondary-foreground @md:px-6 @lg:px-0 overflow-hidden rounded-[24px]',
-          { [`${props?.params?.styles}`]: props?.params?.styles }
-        )}
-        ref={carouselRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        onFocus={() => setIsFocused(true)} // Added focus handler
-        onBlur={() => setIsFocused(false)} // Added blur handler
-        tabIndex={0} // Added tabIndex
-      >
+      <>
+        {/* Review structured data for each testimonial */}
+        {reviewSchemas.map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: renderJsonLdScript(schema) }}
+          />
+        ))}
+        
+        <div
+          className={cn(
+            '@container component testimonial-carousel text-secondary-foreground @md:px-6 @lg:px-0 overflow-hidden rounded-[24px]',
+            { [`${props?.params?.styles}`]: props?.params?.styles }
+          )}
+          ref={carouselRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          onFocus={() => setIsFocused(true)} // Added focus handler
+          onBlur={() => setIsFocused(false)} // Added blur handler
+          tabIndex={0} // Added tabIndex
+        >
         <Carousel
           setApi={setApi}
           opts={{
@@ -165,10 +184,11 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
             disabled={!canScrollNext}
           />
         </Carousel>
-        <div className="sr-only" aria-live="polite" aria-atomic="true">
-          {announcement}
+          <div className="sr-only" aria-live="polite" aria-atomic="true">
+            {announcement}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 

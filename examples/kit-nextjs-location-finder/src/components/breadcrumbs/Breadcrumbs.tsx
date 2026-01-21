@@ -10,6 +10,7 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { ComponentProps } from '@/lib/component-props';
 import { GqlFieldString } from '@/types/gql.props';
 import { LinkFieldValue } from '@sitecore-content-sdk/nextjs';
+import { generateBreadcrumbListSchema, renderJsonLdScript, getBaseUrl } from '@/lib/seo';
 
 type BreadcrumbsProps = ComponentProps & BreadcrumbsData;
 
@@ -44,41 +45,66 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
       : str;
   };
 
+  // Generate BreadcrumbList schema
+  const breadcrumbItems = [
+    ...(ancestors?.map((ancestor) => ({
+      name: (ancestor.navigationTitle?.jsonValue.value || ancestor.title?.jsonValue.value) as string,
+      url: ancestor.url?.href ? `${getBaseUrl()}${ancestor.url.href}` : undefined,
+    })) || []),
+    { name, url: undefined }, // Current page
+  ];
+
+  const breadcrumbSchema = generateBreadcrumbListSchema(breadcrumbItems);
+
   if (fields) {
     if (ancestors) {
       return (
-        <Breadcrumb>
-          <BreadcrumbList>
-            {ancestors?.map((ancestor: BreadcrumbsPage, index) => {
-              const title =
-                ancestor.navigationTitle?.jsonValue.value || ancestor.title?.jsonValue.value;
+        <>
+          {/* BreadcrumbList structured data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: renderJsonLdScript(breadcrumbSchema) }}
+          />
+          
+          <Breadcrumb>
+            <BreadcrumbList>
+              {ancestors?.map((ancestor: BreadcrumbsPage, index) => {
+                const title =
+                  ancestor.navigationTitle?.jsonValue.value || ancestor.title?.jsonValue.value;
 
-              return (
-                <>
-                  <BreadcrumbItem key={index}>
-                    <BreadcrumbLink href={ancestor.url?.href || ''}>{title}</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                </>
-              );
-            })}
-            <BreadcrumbItem>
-              <BreadcrumbPage>{truncate(name)}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+                return (
+                  <>
+                    <BreadcrumbItem key={index}>
+                      <BreadcrumbLink href={ancestor.url?.href || ''}>{title}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                  </>
+                );
+              })}
+              <BreadcrumbItem>
+                <BreadcrumbPage>{truncate(name)}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
       );
     }
 
     //if no ancestors
     return (
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: renderJsonLdScript(generateBreadcrumbListSchema([{ name: 'Home', url: getBaseUrl() }])) }}
+        />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </>
     );
   }
 
