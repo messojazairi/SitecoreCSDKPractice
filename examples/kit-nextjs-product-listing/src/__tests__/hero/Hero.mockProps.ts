@@ -1,5 +1,5 @@
 import type { HeroProps } from '../../components/hero/hero.props';
-import type { Field, LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
+import type { Field, LinkField, ImageField, Page, PageMode } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions
 const createMockField = <T>(value: T): Field<T> => ({ value }) as unknown as Field<T>;
@@ -28,16 +28,47 @@ const mockDictionary = {
   ZipPlaceholder: 'Enter ZIP code',
 };
 
+// Mock page objects
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as PageMode['name'],
+    designLibrary: { isVariantGeneration: false },
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
+const mockPageEditing: Page = {
+  mode: {
+    isEditing: true,
+    isPreview: false,
+    isNormal: false,
+    name: 'edit' as PageMode['name'],
+    designLibrary: { isVariantGeneration: false },
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
+
 export const defaultHeroProps: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
-  page: {
-    mode: {
-      isEditing: false,
-      isNormal: true,
-      isPreview: false,
-    },
-  },
+  page: mockPageBase,
   fields: {
     title: mockTitleField,
     image: mockImageField,
@@ -53,13 +84,7 @@ export const defaultHeroProps: HeroProps = {
 export const heroPropsNoFields: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
-  page: {
-    mode: {
-      isEditing: false,
-      isNormal: true,
-      isPreview: false,
-    },
-  },
+  page: mockPageBase,
   fields: {
     title: createMockField(''),
     image: createMockImageField('', ''),
@@ -71,13 +96,7 @@ export const heroPropsNoFields: HeroProps = {
 export const heroPropsMinimal: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
-  page: {
-    mode: {
-      isEditing: false,
-      isNormal: true,
-      isPreview: false,
-    },
-  },
+  page: mockPageBase,
   fields: {
     title: mockTitleField,
     image: mockEmptyImageField, // Use empty image to avoid Next.js validation in tests
@@ -89,13 +108,7 @@ export const heroPropsMinimal: HeroProps = {
 export const heroPropsWithoutBanner: HeroProps = {
   rendering: { componentName: 'Hero', params: {} },
   params: { mock_param: '' },
-  page: {
-    mode: {
-      isEditing: false,
-      isNormal: true,
-      isPreview: false,
-    },
-  },
+  page: mockPageBase,
   fields: {
     title: mockTitleField,
     image: mockImageField,
@@ -107,13 +120,7 @@ export const heroPropsWithoutBanner: HeroProps = {
 
 export const heroPropsEditing: HeroProps = {
   ...defaultHeroProps,
-  page: {
-    mode: {
-      isEditing: true,
-      isNormal: false,
-      isPreview: false,
-    },
-  },
+  page: mockPageEditing,
   isPageEditing: true,
 };
 

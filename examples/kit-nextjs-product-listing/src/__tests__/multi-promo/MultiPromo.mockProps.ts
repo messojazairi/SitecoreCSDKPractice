@@ -2,7 +2,7 @@ import type {
   MultiPromoProps,
   MultiPromoItemProps,
 } from '../../components/multi-promo/multi-promo.props';
-import type { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import type { Field, ImageField, LinkField, Page, PageMode } from '@sitecore-content-sdk/nextjs';
 
 // Inline utility functions
 const createMockField = <T>(value: T): Field<T> => ({ value }) as unknown as Field<T>;
@@ -14,6 +14,25 @@ const createMockLinkField = (href: string, text: string): LinkField =>
   ({
     value: { href, text },
   }) as unknown as LinkField;
+
+// Mock page objects
+const mockPageBase: Page = {
+  mode: {
+    isEditing: false,
+    isPreview: false,
+    isNormal: true,
+    name: 'normal' as PageMode['name'],
+    designLibrary: { isVariantGeneration: false },
+    isDesignLibrary: false,
+  },
+  layout: {
+    sitecore: {
+      context: {},
+      route: null,
+    },
+  },
+  locale: 'en',
+};
 
 const mockTitleField = createMockField('Featured Promotions');
 const mockDescriptionField = createMockField('Discover our latest offers and exclusive deals');
@@ -58,6 +77,7 @@ export const defaultMultiPromoProps: MultiPromoProps = {
   },
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const multiPromoPropsNoChildren: MultiPromoProps = {
@@ -76,6 +96,7 @@ export const multiPromoPropsNoChildren: MultiPromoProps = {
   },
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const multiPromoPropsMinimal: MultiPromoProps = {
@@ -93,6 +114,7 @@ export const multiPromoPropsMinimal: MultiPromoProps = {
   },
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
 
 export const multiPromoPropsThreeColumns: MultiPromoProps = {
@@ -107,4 +129,5 @@ export const multiPromoPropsEmpty: MultiPromoProps = {
   fields: undefined as any,
   name: 'MultiPromo',
   promos: [],
+  page: mockPageBase,
 };
