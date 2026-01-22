@@ -27,5 +27,8 @@
 !.sitecore/component-map.ts
 !.sitecore/component-map.client.ts
 !.sitecore/import-map.ts
+
+# testing
+.jest-cache
 /coverage
-/.jest-cache
+
