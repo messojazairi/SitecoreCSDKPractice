@@ -124,7 +124,7 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
           />
         ))}
         
-        <div
+        <section
           className={cn(
             '@container component testimonial-carousel text-secondary-foreground @md:px-6 @lg:px-0 overflow-hidden rounded-[24px]',
             { [`${props?.params?.styles}`]: props?.params?.styles }
@@ -135,6 +135,8 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
           onFocus={() => setIsFocused(true)} // Added focus handler
           onBlur={() => setIsFocused(false)} // Added blur handler
           tabIndex={0} // Added tabIndex
+          aria-label="Customer testimonials"
+          aria-roledescription="carousel"
         >
         <Carousel
           setApi={setApi}
@@ -187,7 +189,7 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
           <div className="sr-only" aria-live="polite" aria-atomic="true">
             {announcement}
           </div>
-        </div>
+        </section>
       </>
     );
   }

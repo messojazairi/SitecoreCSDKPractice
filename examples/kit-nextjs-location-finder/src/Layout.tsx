@@ -93,42 +93,39 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
             )
           ) : (
             <>
-              <header role="banner">
-                <div id="header">
-                  {route && (
-                    <AppPlaceholder
-                      page={page}
-                      componentMap={componentMap}
-                      name="headless-header"
-                      rendering={route}
-                    />
-                  )}
-                </div>
-              </header>
-              <main role="main">
-                <div id="content">
-                  {route && (
-                    <AppPlaceholder
-                      page={page}
-                      componentMap={componentMap}
-                      name="headless-main"
-                      rendering={route}
-                    />
-                  )}
-                </div>
+              {/* Header placeholder - components handle their own semantic elements */}
+              <div id="header">
+                {route && (
+                  <AppPlaceholder
+                    page={page}
+                    componentMap={componentMap}
+                    name="headless-header"
+                    rendering={route}
+                  />
+                )}
+              </div>
+              {/* Main content area */}
+              <main id="content" role="main">
+                {route && (
+                  <AppPlaceholder
+                    page={page}
+                    componentMap={componentMap}
+                    name="headless-main"
+                    rendering={route}
+                  />
+                )}
               </main>
-              <footer role="contentinfo">
-                <div id="footer">
-                  {route && (
-                    <AppPlaceholder
-                      page={page}
-                      componentMap={componentMap}
-                      name="headless-footer"
-                      rendering={route}
-                    />
-                  )}
-                </div>
-              </footer>
+              {/* Footer placeholder - components handle their own semantic elements */}
+              <div id="footer">
+                {route && (
+                  <AppPlaceholder
+                    page={page}
+                    componentMap={componentMap}
+                    name="headless-footer"
+                    rendering={route}
+                  />
+                )}
+              </div>
             </>
           )}
         </div>
