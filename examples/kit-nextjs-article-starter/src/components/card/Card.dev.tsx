@@ -13,6 +13,7 @@ import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { IconName } from '@/enumerations/Icon.enum';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { cn } from '@/lib/utils';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 
 type CardProps = {
   heading: Field<string>; // Sitecore editable text field
@@ -33,6 +34,22 @@ export const Default: React.FC<CardProps> = (props) => {
   const { image, heading, description, link, className, icon, editable } =
     props;
 
+  // Generate descriptive link text for SEO (only in production, preserve CMS text in editing mode)
+  const displayText = editable
+    ? link?.value?.text
+    : getDescriptiveLinkText(link, heading?.value);
+
+  // Create a modified link field with descriptive text for SEO
+  const enhancedLink = !editable && displayText && displayText !== link?.value?.text
+    ? {
+        ...link,
+        value: {
+          ...link?.value,
+          text: displayText,
+        },
+      }
+    : link;
+
   return (
     <Card className={cn('flex flex-col overflow-hidden', className)}>
       <ImageWrapper
@@ -48,7 +65,7 @@ export const Default: React.FC<CardProps> = (props) => {
       {link && (
         <CardFooter>
           <Button asChild>
-            <Link editable={editable} field={link}>
+            <Link editable={editable} field={enhancedLink}>
               {editable && (
                 <>
                   {link?.value?.text}{' '}

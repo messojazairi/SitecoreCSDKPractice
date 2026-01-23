@@ -7,6 +7,7 @@ import { Field, LinkField, Text, Link } from '@sitecore-content-sdk/nextjs';
 import { ColorSchemeLimited as ColorScheme } from '@/enumerations/ColorSchemeLimited.enum';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { ComponentProps } from '@/lib/component-props';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 
 type CtaBannerParams = {
   params?: {
@@ -89,13 +90,7 @@ export const Default: React.FC<CtaBannerProps> = (props) => {
                           ...linkOptional,
                           value: {
                             ...linkOptional.value,
-                            text:
-                              linkOptional.value.text &&
-                              /^(learn\s+more|read\s+more|click\s+here|here|link|more|continue|go|view\s+more)$/i.test(
-                                linkOptional.value.text.trim()
-                              )
-                                ? `Read about ${titleRequired?.value || 'this'}`
-                                : linkOptional.value.text,
+                            text: getDescriptiveLinkText(linkOptional, titleRequired?.value),
                           },
                         }
                       : linkOptional
