@@ -2,6 +2,7 @@ import { Link, Text } from '@sitecore-content-sdk/nextjs';
 import { Button } from '@/components/ui/button';
 import { MultiPromoItemProps } from '@/components/multi-promo/multi-promo.props';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
+import { getDescriptiveLinkText } from '@/utils/link-text';
 const mapToItemProps = (fields: MultiPromoItemProps) => {
   return {
     title: fields?.heading?.jsonValue,
@@ -37,7 +38,20 @@ export const Default: React.FC<MultiPromoItemProps> = (props) => {
           asChild
           className="text-box-trim-both text-box-edge-asc-desc mt-4 h-auto text-pretty px-0 pt-0 text-[0.875rem] font-normal last:pb-0"
         >
-          <Link field={link || {}}></Link>
+          <Link
+            field={
+              // Enhance link with descriptive text for SEO
+              !isPageEditing && link?.value?.text
+                ? {
+                    ...link,
+                    value: {
+                      ...link.value,
+                      text: getDescriptiveLinkText(link, title?.value),
+                    },
+                  }
+                : link || {}
+            }
+          ></Link>
         </Button>
       )}
     </>
