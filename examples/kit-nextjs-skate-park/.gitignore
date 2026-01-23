@@ -31,5 +31,3 @@
 #testing
 /coverage
 /.jest-cache
-
-package-lock.json
