@@ -65,17 +65,30 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
       ))
     : null;
 
+  const textContent = getTextContent(fields);
+
   return (
     <li className={classNames} key={fields.Id} tabIndex={0}>
-      <div
-        className={`navigation-title ${hasChildren ? 'child' : ''}`}
-        onClick={() => setIsActive(!isActive)}
-      >
-        <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
-          {getTextContent(fields)}
-        </Link>
-      </div>
-      {hasChildren && <ul className="clearfix">{children}</ul>}
+      {hasChildren ? (
+        <details
+          className={`navigation-title ${hasChildren ? 'child' : ''}`}
+          open={isActive}
+          onToggle={() => setIsActive(!isActive)}
+        >
+          <summary>
+            <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
+              {textContent}
+            </Link>
+          </summary>
+          <ul className="clearfix">{children}</ul>
+        </details>
+      ) : (
+        <div className="navigation-title">
+          <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
+            {textContent}
+          </Link>
+        </div>
+      )}
     </li>
   );
 };
@@ -113,7 +126,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
     ));
 
   return (
-    <div className={`component navigation ${styles}`} id={id}>
+    <nav className={`component navigation ${styles}`} id={id} aria-label="Primary">
       <label className="menu-mobile-navigate-wrapper">
         <input
           type="checkbox"
@@ -123,11 +136,9 @@ export const Default = ({ params, fields }: NavigationProps) => {
         />
         <div className="menu-humburger" />
         <div className="component-content">
-          <nav>
-            <ul className="clearfix">{navigationItems}</ul>
-          </nav>
+          <ul className="clearfix">{navigationItems}</ul>
         </div>
       </label>
-    </div>
+    </nav>
   );
 };

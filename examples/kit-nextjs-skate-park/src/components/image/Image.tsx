@@ -24,9 +24,9 @@ const ImageWrapper: React.FC<{
   id?: string;
   children: React.ReactNode;
 }> = ({ className, id, children }) => (
-  <div className={className.trim()} id={id}>
+  <figure className={className.trim()} id={id}>
     <div className="component-content">{children}</div>
-  </div>
+  </figure>
 );
 
 const ImageDefault: React.FC<ImageProps> = ({ params }) => (
@@ -46,7 +46,7 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
   };
 
   return (
-    <div className={`component hero-banner ${styles}`.trim()} id={id}>
+    <figure className={`component hero-banner ${styles}`.trim()} id={id}>
       <div className="component-content sc-sxa-image-hero-banner">
         <ContentSdkImage
           field={imageField}
@@ -54,7 +54,7 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
           fetchPriority="high"
         />
       </div>
-    </div>
+    </figure>
   );
 };
 
@@ -79,11 +79,9 @@ export const Default: React.FC<ImageProps> = (props) => {
       ) : (
         <Image />
       )}
-      <Text
-        tag="span"
-        className="image-caption field-imagecaption"
-        field={fields.ImageCaption}
-      />
+      <figcaption className="image-caption field-imagecaption">
+        <Text tag="span" field={fields.ImageCaption} />
+      </figcaption>
     </ImageWrapper>
   );
 };
