@@ -7,8 +7,6 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { EditableImageButton } from 'components/button-component/ButtonComponent';
 import { cn } from 'lib/utils';
 import componentMap from '.sitecore/component-map';
-import { StructuredData } from '@/components/structured-data/StructuredData';
-import { generateOrganizationSchema } from '@/components/structured-data/schema-generators';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
   const { fields, rendering, page } = props;
@@ -23,21 +21,9 @@ export const Default: React.FC<GlobalFooterProps> = (props) => {
     footerSocialLinks,
   } = fields?.data?.datasource ?? {};
 
-  // Generate Organization schema
-  const organizationSchema = generateOrganizationSchema({
-    name: 'Solterra & Co.',
-    url: typeof window !== 'undefined' ? window.location.origin : undefined,
-    logo: footerLogo?.jsonValue?.value?.src,
-    sameAs:
-      footerSocialLinks?.results
-        ?.map((link) => link?.link?.jsonValue?.value?.href)
-        .filter((href): href is string => Boolean(href)) || [],
-  });
-
   if (fields) {
     return (
       <>
-        <StructuredData data={organizationSchema} />
         <footer className="@container bg-primary text-white">
         <div className="@md:grid-cols-2 @lg:grid-cols-12 @lg:gap-8 @xl:px-8 mx-auto grid w-full max-w-screen-xl grid-cols-1 gap-8 px-4  py-12">
           {/* Logo section */}

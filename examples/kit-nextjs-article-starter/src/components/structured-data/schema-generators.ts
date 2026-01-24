@@ -4,6 +4,14 @@
  */
 
 /**
+ * Convert schema object to JSON-LD string.
+ * (Useful for debugging / testing and parity with other starters.)
+ */
+export const schemaToJsonLd = (schema: Record<string, unknown>): string => {
+  return JSON.stringify(schema, null, 2);
+};
+
+/**
  * Generate Article schema.org structured data
  */
 export interface ArticleSchemaProps {
@@ -164,6 +172,76 @@ export const generateOrganizationSchema = (props: OrganizationSchemaProps) => {
       ...(contactPoint.telephone && { telephone: contactPoint.telephone }),
       ...(contactPoint.contactType && { contactType: contactPoint.contactType }),
       ...(contactPoint.email && { email: contactPoint.email }),
+    };
+  }
+
+  return schema;
+};
+
+/**
+ * Generate WebSite schema.org structured data
+ */
+export interface WebSiteSchemaProps {
+  name: string;
+  url: string;
+  searchUrlTemplate?: string;
+}
+
+export const generateWebSiteSchema = (props: WebSiteSchemaProps) => {
+  const { name, url, searchUrlTemplate } = props;
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name,
+    url,
+  };
+
+  if (searchUrlTemplate) {
+    schema.potentialAction = {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: searchUrlTemplate,
+      },
+      'query-input': 'required name=search_term_string',
+    };
+  }
+
+  return schema;
+};
+
+/**
+ * Generate WebPage schema.org structured data
+ */
+export interface WebPageSchemaProps {
+  name: string;
+  url?: string;
+  description?: string;
+  inLanguage?: string;
+  isPartOf?: {
+    name: string;
+    url: string;
+  };
+}
+
+export const generateWebPageSchema = (props: WebPageSchemaProps) => {
+  const { name, url, description, inLanguage, isPartOf } = props;
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name,
+  };
+
+  if (description) schema.description = description;
+  if (url) schema.url = url;
+  if (inLanguage) schema.inLanguage = inLanguage;
+  if (isPartOf) {
+    schema.isPartOf = {
+      '@type': 'WebSite',
+      name: isPartOf.name,
+      url: isPartOf.url,
     };
   }
 

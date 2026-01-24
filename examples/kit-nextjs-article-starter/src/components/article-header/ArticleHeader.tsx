@@ -26,7 +26,7 @@ import { useTranslations } from 'next-intl';
 import { dictionaryKeys } from '@/variables/dictionary';
 import { formatDateInUTC } from '@/utils/date-utils';
 import { Default as Icon } from '@/components/icon/Icon';
-import { StructuredData } from '@/components/structured-data/StructuredData';
+import { JsonLdScript } from '@/components/structured-data/JsonLdScript';
 import {
   generateArticleSchema,
   generatePersonSchema,
@@ -290,8 +290,12 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
 
     return (
       <>
-        {articleSchema && <StructuredData data={articleSchema} />}
-        {personSchema && <StructuredData data={personSchema} />}
+        {articleSchema && (
+          <JsonLdScript id="article-schema" schema={articleSchema} strategy="afterInteractive" />
+        )}
+        {personSchema && (
+          <JsonLdScript id="author-person-schema" schema={personSchema} strategy="afterInteractive" />
+        )}
         <header
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}

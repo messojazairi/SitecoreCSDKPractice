@@ -5,8 +5,44 @@ import { ButtonBase as Button } from '@/components/button-component/ButtonCompon
 import { AccordionProps, AccordionItemProps } from './accordion-block.props';
 import { AccordionBlockItem } from './AccordionBlockItem.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import { StructuredData } from '@/components/structured-data/StructuredData';
+import { JsonLdScript } from '@/components/structured-data/JsonLdScript';
 import { generateFAQPageSchema } from '@/components/structured-data/schema-generators';
+
+const stripHtml = (value: string): string => value.replace(/<[^>]*>/g, '').trim();
+
+const extractTextFromRichField = (field: AccordionItemProps['description'] | undefined): string => {
+  const value: unknown = field?.jsonValue?.value;
+  if (!value) return '';
+
+  if (typeof value === 'string') {
+    return stripHtml(value);
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    if ('text' in value && typeof (value as { text: unknown }).text === 'string') {
+      return stripHtml((value as { text: string }).text);
+    }
+
+    if (Array.isArray(value)) {
+      return value
+        .map((item: unknown) => {
+          if (typeof item === 'string') return item;
+          if (typeof item === 'object' && item !== null && 'text' in item) {
+            return String((item as { text: unknown }).text || '');
+          }
+          return '';
+        })
+        .join(' ')
+        .trim();
+    }
+  }
+
+  try {
+    return stripHtml(JSON.stringify(value));
+  } catch {
+    return '';
+  }
+};
 
 export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing, params } = props || {};
@@ -23,7 +59,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
       ? generateFAQPageSchema({
           faqs: accordionItems.map((item) => ({
             question: item?.heading?.jsonValue?.value || '',
-            answer: item?.description?.jsonValue?.value || '',
+            answer: extractTextFromRichField(item?.description),
           })),
         })
       : null;
@@ -31,7 +67,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   if (fields) {
     return (
       <>
-        {faqSchema && <StructuredData data={faqSchema} />}
+        {faqSchema && <JsonLdScript id="accordion-faq-schema" schema={faqSchema} strategy="afterInteractive" />}
         <section
           data-component="AccordionBlock"
           data-class-change

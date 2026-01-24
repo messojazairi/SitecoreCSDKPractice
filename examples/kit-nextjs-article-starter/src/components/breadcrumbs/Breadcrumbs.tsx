@@ -11,7 +11,7 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 import { LinkFieldValue } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { GqlFieldString } from '@/types/gql.props';
-import { StructuredData } from '@/components/structured-data/StructuredData';
+import { JsonLdScript } from '@/components/structured-data/JsonLdScript';
 import { generateBreadcrumbListSchema } from '@/components/structured-data/schema-generators';
 
 /**
@@ -71,7 +71,9 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
 
       return (
         <>
-          {breadcrumbSchema && <StructuredData data={breadcrumbSchema} />}
+          {breadcrumbSchema && (
+            <JsonLdScript id="breadcrumb-schema" schema={breadcrumbSchema} strategy="afterInteractive" />
+          )}
           {/* Breadcrumb component already includes <nav> with aria-label */}
           <Breadcrumb>
           <BreadcrumbList>
@@ -110,7 +112,9 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
 
     return (
       <>
-        {homeBreadcrumbSchema && <StructuredData data={homeBreadcrumbSchema} />}
+        {homeBreadcrumbSchema && (
+          <JsonLdScript id="breadcrumb-schema" schema={homeBreadcrumbSchema} strategy="afterInteractive" />
+        )}
         {/* Breadcrumb component already includes <nav> with aria-label */}
         <Breadcrumb>
         <BreadcrumbList>
