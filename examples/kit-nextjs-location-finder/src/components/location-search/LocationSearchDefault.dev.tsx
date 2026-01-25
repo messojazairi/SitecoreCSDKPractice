@@ -150,13 +150,6 @@ export const LocationSearchDefault = (props: LocationSearchProps) => {
     return dealerships
       .filter((dealership) => dealership.dealershipName?.jsonValue?.value)
       .map((dealership) => {
-        const addressParts = [
-          dealership.dealershipAddress?.jsonValue?.value,
-          dealership.dealershipCity?.jsonValue?.value,
-          dealership.dealershipState?.jsonValue?.value,
-          dealership.dealershipZipCode?.jsonValue?.value,
-        ].filter(Boolean);
-
         return generatePlaceSchema({
           name: dealership.dealershipName?.jsonValue?.value || '',
           address: {
