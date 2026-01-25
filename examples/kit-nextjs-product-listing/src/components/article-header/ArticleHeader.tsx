@@ -28,6 +28,34 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
   const [forceCollapse] = useState(true);
   const copyNotificationRef = useRef<HTMLDivElement>(null);
 
+  // Generate JSON-LD structured data for article (must be at top level)
+  const articleSchema = useMemo(() => {
+    const headline = pageHeaderTitle?.value || '';
+    const image = imageRequired?.value?.src || '';
+    const datePublished = pageDisplayDate?.value || '';
+    const authorName = pageAuthor?.value?.personFirstName?.value && pageAuthor?.value?.personLastName?.value
+      ? `${pageAuthor.value.personFirstName.value} ${pageAuthor.value.personLastName.value}`
+      : undefined;
+    const authorImage = pageAuthor?.value?.personProfileImage?.value?.src;
+    const authorJobTitle = pageAuthor?.value?.personJobTitle?.value;
+
+    return generateArticleSchema({
+      headline,
+      image: image ? [image] : undefined,
+      datePublished,
+      author: authorName
+        ? {
+            name: authorName,
+            image: authorImage,
+            jobTitle: authorJobTitle,
+          }
+        : undefined,
+      publisher: {
+        name: 'SYNC',
+      },
+    });
+  }, [pageHeaderTitle, imageRequired, pageDisplayDate, pageAuthor]);
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
@@ -169,34 +197,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
         ariaLabel: copySuccess ? 'Link copied' : 'Copy link',
       },
     ];
-
-    // Generate JSON-LD structured data for article
-    const articleSchema = useMemo(() => {
-      const headline = pageHeaderTitle?.value || '';
-      const image = imageRequired?.value?.src || '';
-      const datePublished = pageDisplayDate?.value || '';
-      const authorName = pageAuthor?.value?.personFirstName?.value && pageAuthor?.value?.personLastName?.value
-        ? `${pageAuthor.value.personFirstName.value} ${pageAuthor.value.personLastName.value}`
-        : undefined;
-      const authorImage = pageAuthor?.value?.personProfileImage?.value?.src;
-      const authorJobTitle = pageAuthor?.value?.personJobTitle?.value;
-
-      return generateArticleSchema({
-        headline,
-        image: image ? [image] : undefined,
-        datePublished,
-        author: authorName
-          ? {
-              name: authorName,
-              image: authorImage,
-              jobTitle: authorJobTitle,
-            }
-          : undefined,
-        publisher: {
-          name: 'SYNC',
-        },
-      });
-    }, [pageHeaderTitle, imageRequired, pageDisplayDate, pageAuthor]);
 
     return (
       <>

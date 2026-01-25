@@ -14,6 +14,28 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
   const { products, title, viewAllLink } = fields?.data?.datasource ?? {};
+
+  // Generate JSON-LD structured data for products (must be at top level)
+  const productSchemas = useMemo(() => {
+    if (!products?.targetItems) return [];
+    return products.targetItems.map((product) => {
+      const productName = product.productName?.jsonValue?.value || '';
+      const productImage = product.productThumbnail?.jsonValue?.value?.src || '';
+      const productPrice = product.productBasePrice?.jsonValue?.value || '';
+      const productUrl = product.url?.path || '';
+      const productDescription = product.productFeatureText?.jsonValue?.value || '';
+
+      return generateProductSchema({
+        name: productName,
+        image: productImage,
+        description: productDescription,
+        price: productPrice,
+        priceCurrency: 'USD',
+        url: productUrl || undefined,
+      });
+    });
+  }, [products?.targetItems]);
+
   if (fields) {
     const getCardClasses = (productId: string) => {
       if (isReducedMotion) {
@@ -38,27 +60,6 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 1) || [];
     const rightColumnProducts =
       products?.targetItems?.filter((_: ProductItemProps, index: number) => index % 2 === 0) || [];
-
-    // Generate JSON-LD structured data for products
-    const productSchemas = useMemo(() => {
-      if (!products?.targetItems) return [];
-      return products.targetItems.map((product) => {
-        const productName = product.productName?.jsonValue?.value || '';
-        const productImage = product.productThumbnail?.jsonValue?.value?.src || '';
-        const productPrice = product.productBasePrice?.jsonValue?.value || '';
-        const productUrl = product.url?.path || '';
-        const productDescription = product.productFeatureText?.jsonValue?.value || '';
-
-        return generateProductSchema({
-          name: productName,
-          image: productImage,
-          description: productDescription,
-          price: productPrice,
-          priceCurrency: 'USD',
-          url: productUrl || undefined,
-        });
-      });
-    }, [products?.targetItems]);
 
     return (
       <section
