@@ -77,14 +77,7 @@ interface PersonItem {
 }
 
 export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
-  const { imageRequired, eyebrowOptional } = fields?.data?.datasource ?? {};
-  const externalFields = fields?.data?.externalFields ?? {};
-  const {
-    pageHeaderTitle = null,
-    pageReadTime = null,
-    pageDisplayDate = null,
-    pageAuthor = null,
-  } = externalFields;
+  // All hooks must be called unconditionally at the top
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const headerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -241,9 +234,20 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
     [copySuccess, handleShare]
   );
 
+  // Early return check after all hooks
   if (!fields) {
     return <NoDataFallback componentName="ArticleHeader" />;
   }
+
+  // Field destructuring after early return check
+  const { imageRequired, eyebrowOptional } = fields?.data?.datasource ?? {};
+  const externalFields = fields?.data?.externalFields ?? {};
+  const {
+    pageHeaderTitle = null,
+    pageReadTime = null,
+    pageDisplayDate = null,
+    pageAuthor = null,
+  } = externalFields;
 
   const parallaxStyle = imageRequired?.jsonValue?.value?.src
     ? {
