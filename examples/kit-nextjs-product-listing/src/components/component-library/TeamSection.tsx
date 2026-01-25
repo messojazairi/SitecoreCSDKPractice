@@ -163,9 +163,9 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
             <h3 className="text-lg font-bold">
               <ContentSdkText field={props.tm.fullName?.jsonValue} />
             </h3>
-            <h6 className="text-lg mb-4">
+            <p className="text-lg mb-4">
               <ContentSdkText field={props.tm.jobTitle?.jsonValue} />
-            </h6>
+            </p>
             <div>
               <ContentSdkRichText field={props.tm.description?.jsonValue} />
             </div>
@@ -180,9 +180,9 @@ const TeamMemberCard = (props: TeamMemberCardProps) => {
           <h3 className="text-lg font-bold mt-6">
             <ContentSdkText field={props.tm.fullName?.jsonValue} />
           </h3>
-          <h6 className="text-lg mb-4">
+          <p className="text-lg mb-4">
             <ContentSdkText field={props.tm.jobTitle?.jsonValue} />
-          </h6>
+          </p>
           <div>
             <ContentSdkRichText field={props.tm.description?.jsonValue} />
           </div>
@@ -199,9 +199,9 @@ const TeamSectionTemplateVertical = (props: TeamSectionTemplateVerticalProps) =>
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className={`${props.centered ? 'max-w-3xl mx-auto text-center' : ''}`}>
-          <h6 className="font-semibold mb-4">
+          <p className="font-semibold mb-4" role="text">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
-          </h6>
+          </p>
           <h2 className="text-5xl font-bold mb-6">
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
@@ -244,9 +244,9 @@ const TeamSectionTemplateHorizontal = (props: TeamSectionTemplateHorizontalProps
       <div className="container mx-auto">
         <div className={`grid md:grid-cols-${props.columns + 1} gap-x-16 gap-y-12`}>
           <div>
-            <h6 className="font-semibold mb-4">
+            <p className="font-semibold mb-4" role="text">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
-            </h6>
+            </p>
             <h2 className="text-5xl font-bold mb-6">
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>

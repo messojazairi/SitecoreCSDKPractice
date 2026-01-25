@@ -43,9 +43,9 @@ const AccordionBlockItem = (props: AccordionItemFields) => {
   return (
     <AccordionItem value={props.id} className="border-border mb-10">
       <AccordionTrigger>
-        <h5 className="text-base">
+        <h3 className="text-base">
           <ContentSdkText field={props.heading?.jsonValue} />
-        </h5>
+        </h3>
       </AccordionTrigger>
       <AccordionContent>
         <ContentSdkRichText field={props.description?.jsonValue} />
@@ -72,9 +72,9 @@ export const Default = (props: AccordionProps) => {
               )) || []}
             </Accordion>
             <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
-              <h6 className="text-sm">
+              <p className="text-sm">
                 <ContentSdkText field={datasource?.description?.jsonValue} />
-              </h6>
+              </p>
               {datasource?.link?.jsonValue && (
                 <ContentSdkLink
                   field={datasource?.link.jsonValue}
@@ -107,9 +107,9 @@ export const TwoColumn = (props: AccordionProps) => {
         </Accordion>
         <div className="grid lg:grid-cols-2 gap-x-12">
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
-            <h6 className="text-sm">
+            <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
-            </h6>
+            </p>
             {datasource?.link?.jsonValue && (
               <ContentSdkLink
                 field={datasource?.link.jsonValue}
@@ -141,9 +141,9 @@ export const Vertical = (props: AccordionProps) => {
             )) || []}
           </Accordion>
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
-            <h6 className="text-sm">
+            <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
-            </h6>
+            </p>
             {datasource?.link?.jsonValue && (
               <ContentSdkLink
                 field={datasource?.link.jsonValue}
@@ -176,9 +176,9 @@ export const BoxedAccordion = (props: AccordionProps) => {
             )) || []}
           </Accordion>
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
-            <h6 className="text-sm">
+            <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
-            </h6>
+            </p>
             {datasource?.link?.jsonValue && (
               <ContentSdkLink
                 field={datasource?.link.jsonValue}
@@ -210,9 +210,9 @@ export const BoxedContent = (props: AccordionProps) => {
               )) || []}
             </Accordion>
             <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
-              <h6 className="text-sm">
+              <p className="text-sm">
                 <ContentSdkText field={datasource?.description?.jsonValue} />
-              </h6>
+              </p>
               {datasource?.link?.jsonValue && (
                 <ContentSdkLink
                   field={datasource?.link.jsonValue}
