@@ -133,6 +133,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
           className="menu-mobile-navigate"
           checked={isMenuOpen}
           onChange={() => handleToggleMenu()}
+          aria-label="Toggle mobile navigation menu"
         />
         <div className="menu-humburger" />
         <div className="component-content">
