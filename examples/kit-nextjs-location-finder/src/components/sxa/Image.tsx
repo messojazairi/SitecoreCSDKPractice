@@ -63,9 +63,10 @@ export const Default = (props: ImageProps): JSX.Element => {
   if (props.fields) {
     const Image = () => <ContentSdkImage field={props.fields.Image} />;
     const id = props.params.RenderingIdentifier;
+    const hasCaption = props.fields.ImageCaption?.value;
 
     return (
-      <div className={`component image ${props.params.styles}`} id={id ? id : undefined}>
+      <figure className={`component image ${props.params.styles}`} id={id ? id : undefined}>
         <div className="component-content">
           {isEditing || !props.fields.TargetUrl?.value?.href ? (
             <Image />
@@ -74,13 +75,16 @@ export const Default = (props: ImageProps): JSX.Element => {
               <Image />
             </ContentSdkLink>
           )}
-          <Text
-            tag="span"
-            className="image-caption field-imagecaption"
-            field={props.fields.ImageCaption}
-          />
+          {hasCaption && (
+            <figcaption className="image-caption field-imagecaption">
+              <Text
+                tag="span"
+                field={props.fields.ImageCaption}
+              />
+            </figcaption>
+          )}
         </div>
-      </div>
+      </figure>
     );
   }
 

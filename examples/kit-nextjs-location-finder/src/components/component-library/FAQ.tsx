@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from 'shadcd/components/ui/accordion';
 import ContentSdkRichText from '@/components/content-sdk-rich-text/ContentSdkRichText';
+import { generateFAQPageSchema, renderJsonLdScript } from '@/lib/structured-data';
 
 interface Fields {
   data: {
@@ -150,8 +151,22 @@ const QuestionItem = (props: QuestionItemProps) => {
 export const Default = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate FAQPage structured data
+  const faqSchema = useMemo(() => {
+    const faqs = datasource.children.results
+      .filter((q) => q.question?.jsonValue?.value && q.answer?.jsonValue?.value)
+      .map((q) => ({
+        question: q.question.jsonValue.value || '',
+        answer: q.answer.jsonValue.value || '',
+      }));
+
+    return faqs.length > 0 ? generateFAQPageSchema(faqs) : null;
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* FAQPage structured data JSON-LD */}
+      {faqSchema && renderJsonLdScript(faqSchema)}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -162,11 +177,14 @@ export const Default = (props: FAQProps): JSX.Element => {
               <ContentSdkRichText field={datasource.text?.jsonValue} />
             </div>
           </div>
-          <Accordion type="multiple" className="w-full my-20">
-            {datasource.children.results.map((q) => (
-              <QuestionAccordionItem key={q.id} q={q} type="bordered" />
-            ))}
-          </Accordion>
+          <details className="w-full my-20">
+            <summary className="sr-only">Frequently Asked Questions</summary>
+            <Accordion type="multiple" className="w-full">
+              {datasource.children.results.map((q) => (
+                <QuestionAccordionItem key={q.id} q={q} type="bordered" />
+              ))}
+            </Accordion>
+          </details>
           <div className="text-center">
             <h3 className="text-3xl font-bold mb-4">
               <ContentSdkText field={datasource.heading2?.jsonValue} />
@@ -192,8 +210,22 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
   const expandAll = () => setOpenItems(itemIds);
   const collapseAll = () => setOpenItems([]);
 
+  // Generate FAQPage structured data
+  const faqSchema = useMemo(() => {
+    const faqs = datasource.children.results
+      .filter((q) => q.question?.jsonValue?.value && q.answer?.jsonValue?.value)
+      .map((q) => ({
+        question: q.question.jsonValue.value || '',
+        answer: q.answer.jsonValue.value || '',
+      }));
+
+    return faqs.length > 0 ? generateFAQPageSchema(faqs) : null;
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* FAQPage structured data JSON-LD */}
+      {faqSchema && renderJsonLdScript(faqSchema)}
       <div className="container mx-auto">
         <div>
           <h2 className="text-3xl font-semibold mb-6">
@@ -227,16 +259,19 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
             </button>
           </div>
 
-          <Accordion
-            type="multiple"
-            value={openItems}
-            onValueChange={(value) => setOpenItems(value)}
-            className="w-full"
-          >
-            {datasource.children.results.map((q) => (
-              <QuestionAccordionItem key={q.id} q={q} type="bordered" />
-            ))}
-          </Accordion>
+          <details className="w-full">
+            <summary className="sr-only">Frequently Asked Questions</summary>
+            <Accordion
+              type="multiple"
+              value={openItems}
+              onValueChange={(value) => setOpenItems(value)}
+              className="w-full"
+            >
+              {datasource.children.results.map((q) => (
+                <QuestionAccordionItem key={q.id} q={q} type="bordered" />
+              ))}
+            </Accordion>
+          </details>
         </div>
       </div>
     </section>
@@ -246,8 +281,22 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
 export const FAQ2 = (props: FAQProps): JSX.Element => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Generate FAQPage structured data
+  const faqSchema = useMemo(() => {
+    const faqs = datasource.children.results
+      .filter((q) => q.question?.jsonValue?.value && q.answer?.jsonValue?.value)
+      .map((q) => ({
+        question: q.question.jsonValue.value || '',
+        answer: q.answer.jsonValue.value || '',
+      }));
+
+    return faqs.length > 0 ? generateFAQPageSchema(faqs) : null;
+  }, [datasource.children.results]);
+
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
+      {/* FAQPage structured data JSON-LD */}
+      {faqSchema && renderJsonLdScript(faqSchema)}
       <div className="container mx-auto">
         <div className="grid gap-x-20 gap-y-12 md:grid-cols-2">
           <div>
@@ -261,13 +310,16 @@ export const FAQ2 = (props: FAQProps): JSX.Element => {
               <ContentSdkLink field={datasource.link.jsonValue} prefetch={false} />
             </Button>
           </div>
-          <div>
-            <Accordion type="multiple" className="w-full grid gap-4">
-              {datasource.children.results.map((q) => (
-                <QuestionAccordionItem key={q.id} q={q} type="boxed" />
-              ))}
-            </Accordion>
-          </div>
+          <aside>
+            <details className="w-full">
+              <summary className="sr-only">Frequently Asked Questions</summary>
+              <Accordion type="multiple" className="w-full grid gap-4">
+                {datasource.children.results.map((q) => (
+                  <QuestionAccordionItem key={q.id} q={q} type="boxed" />
+                ))}
+              </Accordion>
+            </details>
+          </aside>
         </div>
       </div>
     </section>

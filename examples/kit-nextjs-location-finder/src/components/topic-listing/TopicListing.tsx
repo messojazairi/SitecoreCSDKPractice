@@ -10,7 +10,7 @@ export const Default: React.FC<TopicListingProps> = (props) => {
 
   if (fields) {
     return (
-      <div className="bg-primary relative overflow-hidden py-24 md:pb-[128px] md:pt-28 @container">
+      <section className="bg-primary relative overflow-hidden py-24 md:pb-[128px] md:pt-28 @container" aria-labelledby="topic-listing-title">
         <div
           className="absolute inset-0 z-10"
           style={
@@ -36,13 +36,14 @@ export const Default: React.FC<TopicListingProps> = (props) => {
               {title && (
                 <Text
                   tag="h2"
+                  id="topic-listing-title"
                   field={title?.jsonValue}
                   className="font-heading text-4xl @sm:text-5xl @md:text-6xl @lg:text-7xl font-semibold tracking-normal leading-tight text-white"
                 />
               )}
             </div>
             {children?.results && (
-              <div className="flex flex-wrap items-center justify-center gap-6">
+              <div className="flex flex-wrap items-center justify-center gap-6" role="list">
                 {children.results.map((topic, index) => (
                   <TopicItem key={index} {...topic} />
                 ))}
@@ -50,7 +51,7 @@ export const Default: React.FC<TopicListingProps> = (props) => {
             )}
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 

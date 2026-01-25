@@ -14,6 +14,7 @@ import { useZipcode } from '@/hooks/use-zipcode';
 import { ZipcodeModal } from '@/components/zipcode-modal/zipcode-modal.dev';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { useMatchMedia } from '@/hooks/use-match-media';
+import { generatePlaceSchema, renderJsonLdScript } from '@/lib/structured-data';
 
 export const LocationSearchDefault = (props: LocationSearchProps) => {
   const { fields, isPageEditing } = props;
@@ -144,15 +145,52 @@ export const LocationSearchDefault = (props: LocationSearchProps) => {
     setShowChangeZipcodeModal(false);
   };
 
+  // Generate structured data for all dealerships
+  const placeSchemas = useMemo(() => {
+    return dealerships
+      .filter((dealership) => dealership.dealershipName?.jsonValue?.value)
+      .map((dealership) => {
+        const addressParts = [
+          dealership.dealershipAddress?.jsonValue?.value,
+          dealership.dealershipCity?.jsonValue?.value,
+          dealership.dealershipState?.jsonValue?.value,
+          dealership.dealershipZipCode?.jsonValue?.value,
+        ].filter(Boolean);
+
+        return generatePlaceSchema({
+          name: dealership.dealershipName?.jsonValue?.value || '',
+          address: {
+            streetAddress: dealership.dealershipAddress?.jsonValue?.value,
+            addressLocality: dealership.dealershipCity?.jsonValue?.value,
+            addressRegion: dealership.dealershipState?.jsonValue?.value,
+            postalCode: dealership.dealershipZipCode?.jsonValue?.value,
+          },
+          geo: dealership.latitude && dealership.longitude
+            ? {
+                latitude: dealership.latitude.toString(),
+                longitude: dealership.longitude.toString(),
+              }
+            : undefined,
+        });
+      });
+  }, [dealerships]);
+
   if (fields) {
     return (
-      <div
+      <section
         className={cn('@container bg-background text-foreground relative', {
           [props?.params?.styles]: props?.params?.styles,
         })}
         data-class-change
         data-component="LocationSearch"
+        aria-label="Location finder"
       >
+        {/* Structured data JSON-LD for all locations */}
+        {placeSchemas.map((schema, index) => (
+          <React.Fragment key={`place-schema-${index}`}>
+            {renderJsonLdScript(schema)}
+          </React.Fragment>
+        ))}
         {googleMapsApiKey === '' && isPageEditing && (
           <AnimatedSection
             direction="up"
@@ -233,7 +271,7 @@ export const LocationSearchDefault = (props: LocationSearchProps) => {
                   onDealershipSelect={handleSelectDealership}
                 />
               </div>
-              <div className="max-h-[500px] space-y-6 overflow-y-auto pr-2">
+              <aside className="max-h-[500px] space-y-6 overflow-y-auto pr-2" aria-label="Location listings">
                 {isLoading ? (
                   <div className="py-4 text-center">Loading dealerships...</div>
                 ) : dealerships.length === 0 ? (
@@ -257,7 +295,7 @@ export const LocationSearchDefault = (props: LocationSearchProps) => {
                     />
                   ))
                 )}
-              </div>
+              </aside>
             </div>
           </AnimatedSection>
         </div>
@@ -274,7 +312,7 @@ export const LocationSearchDefault = (props: LocationSearchProps) => {
           isGeoLoading={geoLoading}
           error={geoError}
         />
-      </div>
+      </section>
     );
   }
   return <NoDataFallback componentName="LocationSearchDefault" />;

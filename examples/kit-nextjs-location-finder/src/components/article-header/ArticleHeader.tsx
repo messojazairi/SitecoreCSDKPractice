@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Facebook, Linkedin, Twitter, Link, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,7 @@ import { FloatingDock } from '@/components/floating-dock/floating-dock.dev';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { ComponentProps } from '@/lib/component-props';
+import { generateArticleSchema, renderJsonLdScript } from '@/lib/structured-data';
 
 interface ArticleHeaderParams {
   [key: string]: any; // eslint-disable-line
@@ -203,8 +204,33 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
       },
     ];
 
+    // Generate Article structured data
+    const articleSchema = useMemo(() => {
+      if (!pageHeaderTitle?.value) return null;
+
+      const authorName = pageAuthor?.value
+        ? `${pageAuthor.value.personFirstName?.value || ''} ${pageAuthor.value.personLastName?.value || ''}`.trim()
+        : undefined;
+
+      return generateArticleSchema({
+        headline: pageHeaderTitle.value,
+        image: imageRequired?.value?.src,
+        datePublished: pageDisplayDate?.value,
+        dateModified: pageDisplayDate?.value,
+        author: authorName
+          ? {
+              name: authorName,
+              image: pageAuthor?.value?.personProfileImage?.value?.src,
+              jobTitle: pageAuthor?.value?.personJobTitle?.value,
+            }
+          : undefined,
+      });
+    }, [pageHeaderTitle, pageDisplayDate, pageAuthor, imageRequired]);
+
     return (
       <>
+        {/* Article structured data JSON-LD */}
+        {articleSchema && renderJsonLdScript(articleSchema)}
         <header
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
@@ -268,11 +294,13 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
                       <span className="@md:inline-block hidden text-pretty antialiased">•</span>
                     )}
                     {pageDisplayDate && (
-                      <Text
-                        tag="span"
-                        field={pageDisplayDate}
-                        className="@md:inline-block block text-pretty antialiased"
-                      />
+                      <time dateTime={pageDisplayDate.value || undefined}>
+                        <Text
+                          tag="span"
+                          field={pageDisplayDate}
+                          className="@md:inline-block block text-pretty antialiased"
+                        />
+                      </time>
                     )}
                   </div>
                 )}
@@ -312,7 +340,7 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
                 </div>
 
                 {/* Featured Image */}
-                <div className="@md:col-span-6 relative z-10 col-span-2 mx-auto flex aspect-[16/9] w-full max-w-[800px] justify-center overflow-hidden rounded-[24px]">
+                <figure className="@md:col-span-6 relative z-10 col-span-2 mx-auto flex aspect-[16/9] w-full max-w-[800px] justify-center overflow-hidden rounded-[24px]">
                   <ImageWrapper
                     image={imageRequired}
                     alt={pageHeaderTitle?.value || 'Article header image'}
@@ -322,7 +350,10 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
                     ref={imageRef}
                     page={page}
                   />
-                </div>
+                  {pageHeaderTitle?.value && (
+                    <figcaption className="sr-only">{pageHeaderTitle.value}</figcaption>
+                  )}
+                </figure>
 
                 {/* Share Section - Desktop Only */}
                 <div className="@md:col-span-3 @md:justify-start @md:pt-4 @md:h-[250px] @md:items-start @md:flex hidden h-[auto] items-center justify-center gap-4 p-6 pb-6">
@@ -337,6 +368,15 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
           {/* Screen reader notification */}
           <div ref={copyNotificationRef} className="sr-only" aria-live="polite"></div>
         </header>
+        <article itemScope itemType="https://schema.org/Article">
+          <meta itemProp="headline" content={pageHeaderTitle?.value || ''} />
+          {pageDisplayDate?.value && (
+            <meta itemProp="datePublished" content={pageDisplayDate.value} />
+          )}
+          {imageRequired?.value?.src && (
+            <meta itemProp="image" content={imageRequired.value.src} />
+          )}
+        </article>
         <Toaster />
       </>
     );

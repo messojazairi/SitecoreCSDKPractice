@@ -11,13 +11,16 @@ export const Default: React.FC<ImageProps> = (props) => {
   const { image, caption } = fields ?? {};
 
   if (fields !== undefined) {
+    const hasCaption = caption?.value;
     return (
-      <div className={cn('component', props.params.styles)}>
+      <figure className={cn('component', props.params.styles)}>
         <ImageWrapper image={image} className="mb-[24px] h-full w-full object-cover" page={props.page} />
-        <p>
-          <Text field={caption} />
-        </p>
-      </div>
+        {hasCaption && (
+          <figcaption>
+            <Text field={caption} />
+          </figcaption>
+        )}
+      </figure>
     );
   }
   return <NoDataFallback componentName="Image" />;
