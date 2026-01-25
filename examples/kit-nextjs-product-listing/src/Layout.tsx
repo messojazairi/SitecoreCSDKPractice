@@ -97,8 +97,8 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
     <>
       <Scripts />
       {/* JSON-LD structured data for Organization and WebSite */}
-      {renderJsonLdScript(organizationSchema)}
-      {renderJsonLdScript(websiteSchema)}
+      {renderJsonLdScript(organizationSchema, 'organization-schema')}
+      {renderJsonLdScript(websiteSchema, 'website-schema')}
       <SitecoreStyles layoutData={layout} />
       <Providers page={page}>
         {/* root placeholder for the app, which we add components to using route data */}

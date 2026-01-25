@@ -201,12 +201,12 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
     return (
       <>
         {/* JSON-LD structured data for article */}
-        {renderJsonLdScript(articleSchema)}
+        {renderJsonLdScript(articleSchema, 'article-schema')}
         <header
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
         >
-          <article className="  relative z-0 h-[auto] overflow-hidden bg-black" itemScope itemType="https://schema.org/Article">
+          <article className="  relative z-0 h-[auto] overflow-hidden bg-black">
             {/* Background Image with Parallax */}
             <figure
               className="z-5 absolute inset-0 h-[120%] w-[120%] bg-cover bg-center opacity-70 transition-transform duration-200 ease-out"
@@ -219,7 +219,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                 priority
                 sizes="(max-width: 768px) 100vw, 800px"
                 ref={imageRef}
-                itemProp="image"
               />
             </figure>
             {/* Blur overlay - separate for better performance */}
@@ -250,7 +249,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                   tag="h1"
                   className="@md:text-[62px] @md:mb-0 font-heading line-height-[69px] mx-auto max-w-4xl text-pretty px-6 text-center text-4xl font-normal tracking-tighter text-white antialiased"
                   field={pageHeaderTitle}
-                  itemProp="headline"
                 />
                 {/* Read Time and Date - Centered */}
                 {(pageReadTime || pageDisplayDate) && (
@@ -266,7 +264,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                       <span className="@md:inline-block hidden text-pretty antialiased">•</span>
                     )}
                     {pageDisplayDate && (
-                      <time itemProp="datePublished" dateTime={pageDisplayDate?.value || undefined}>
+                      <time dateTime={pageDisplayDate?.value || undefined}>
                         <Text
                           tag="span"
                           field={pageDisplayDate}
@@ -320,7 +318,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
                     priority
                     sizes="(max-width: 768px) 100vw, 800px"
                     ref={imageRef}
-                    itemProp="image"
                   />
                 </figure>
 

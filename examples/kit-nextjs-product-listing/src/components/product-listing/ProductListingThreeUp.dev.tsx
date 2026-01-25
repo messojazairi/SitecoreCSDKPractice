@@ -70,7 +70,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
         {/* JSON-LD structured data for products */}
         {productSchemas.map((schema, index) => (
           <React.Fragment key={`product-schema-${index}`}>
-            {renderJsonLdScript(schema)}
+            {renderJsonLdScript(schema, `product-schema-${index}`)}
           </React.Fragment>
         ))}
         <AnimatedSection

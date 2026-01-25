@@ -32,13 +32,14 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
               page={page}
               rendering={route}
               componentMap={componentMap}
+              // @ts-expect-error - Generated file, exists at runtime
               loadServerImportMap={() => import(".sitecore/import-map.server")}
             />
           )
         ) : (
           <>
             <header>
-              <div id="header">
+              <nav id="header" aria-label="Main navigation">
                 {route && (
                   <AppPlaceholder
                     page={page}
@@ -47,10 +48,10 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                     rendering={route}
                   />
                 )}
-              </div>
+              </nav>
             </header>
             <main>
-              <div id="content">
+              <section id="content" aria-label="Main content">
                 {route && (
                   <AppPlaceholder
                     page={page}
@@ -59,7 +60,7 @@ const Layout = ({ page }: LayoutProps): JSX.Element => {
                     rendering={route}
                   />
                 )}
-              </div>
+              </section>
             </main>
             <footer>
               <div id="footer">

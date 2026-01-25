@@ -6,8 +6,12 @@ interface JsonLdScriptProps {
   strategy?: 'beforeInteractive' | 'afterInteractive' | 'lazyOnload' | 'worker';
 }
 
+/**
+ * Safely serializes JSON-LD for embedding in a <script type="application/ld+json" /> tag.
+ * Replaces `<` to avoid ending the script tag early (e.g. `</script>` injection).
+ */
 const schemaToJsonLd = (schema: Record<string, unknown>): string => {
-  return JSON.stringify(schema, null, 2);
+  return JSON.stringify(schema, null, 2).replace(/</g, '\\u003c');
 };
 
 /**

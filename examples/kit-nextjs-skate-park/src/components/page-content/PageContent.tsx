@@ -27,11 +27,9 @@ export const Default = ({ params, fields, page }: PageContentProps): JSX.Element
     <article
       className={`component content ${styles}`}
       id={id}
-      itemScope
-      itemType="https://schema.org/Article"
     >
       <div className="component-content">
-        <div className="field-content" itemProp="articleBody">
+        <div className="field-content">
           {field ? <ContentSdkRichText field={field} /> : '[Content]'}
         </div>
       </div>

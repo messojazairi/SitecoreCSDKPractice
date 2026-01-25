@@ -300,7 +300,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
           className={cn('@container article-header relative mb-[86px] overflow-hidden')}
           ref={headerRef}
         >
-          <article itemScope={true} itemType="https://schema.org/Article">
+          <article>
           <div className="relative z-0 h-[auto] overflow-hidden bg-black">
             {/* Background Image with Parallax */}
             <div
@@ -383,7 +383,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                     {pageDisplayDate?.jsonValue?.value && (
                       <time
                         dateTime={publishedDateISO}
-                        itemProp="datePublished"
                         className="@md:inline-block block text-pretty"
                       >
                         <DateField

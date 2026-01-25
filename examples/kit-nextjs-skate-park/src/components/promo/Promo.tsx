@@ -31,12 +31,7 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { styles, RenderingIdentifier: id } = params;
 
   const Wrapper = ({ children }: { children: JSX.Element }): JSX.Element => (
-    <article
-      className={`component promo ${styles}`}
-      id={id}
-      itemScope
-      itemType="https://schema.org/Product"
-    >
+    <article className={`component promo ${styles}`} id={id}>
       <div className="component-content">{children}</div>
     </article>
   );
@@ -52,10 +47,10 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
   return (
     <Wrapper>
       <>
-        <figure className="field-promoicon" itemProp="image">
+        <figure className="field-promoicon">
           <ContentSdkImage field={fields.PromoIcon} />
         </figure>
-        <div className="promo-text" itemProp="description">
+        <div className="promo-text">
           {renderText(fields)}
         </div>
         <StructuredData

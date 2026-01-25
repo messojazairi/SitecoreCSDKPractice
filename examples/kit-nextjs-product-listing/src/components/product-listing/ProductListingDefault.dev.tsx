@@ -71,7 +71,7 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
         {/* JSON-LD structured data for products */}
         {productSchemas.map((schema, index) => (
           <React.Fragment key={`product-schema-${index}`}>
-            {renderJsonLdScript(schema)}
+            {renderJsonLdScript(schema, `product-schema-${index}`)}
           </React.Fragment>
         ))}
         <div className="@md:px-6 @md:py-20 @lg:py-28 mx-auto max-w-screen-xl px-4 py-12">

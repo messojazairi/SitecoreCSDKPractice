@@ -70,7 +70,7 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
         {/* JSON-LD structured data for products */}
         {productSchemas.map((schema, index) => (
           <React.Fragment key={`product-schema-${index}`}>
-            {renderJsonLdScript(schema)}
+            {renderJsonLdScript(schema, `product-schema-${index}`)}
           </React.Fragment>
         ))}
         <div className="@md:py-20 @lg:py-28 py-12 ">

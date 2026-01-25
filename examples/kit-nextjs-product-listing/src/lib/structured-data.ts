@@ -406,13 +406,34 @@ export function generatePlaceSchema(place: {
 }
 
 /**
- * Render JSON-LD script tag
+ * Safely serializes JSON-LD for embedding in a <script type="application/ld+json" /> tag.
+ * Replaces `<` to avoid ending the script tag early (e.g. `</script>` injection).
+ */
+function toJsonLdString(value: unknown): string {
+  return JSON.stringify(value, null, 2).replace(/</g, '\\u003c');
+}
+
+/**
+ * Render JSON-LD script tag with XSS protection
+ * @param schema - The structured data schema to render
+ * @param id - Optional unique identifier for the script tag (prevents duplicates)
  */
 export function renderJsonLdScript(
-  schema: ProductSchema | ArticleSchema | OrganizationSchema | WebSiteSchema | FAQPageSchema | PlaceSchema
+  schema: ProductSchema | ArticleSchema | OrganizationSchema | WebSiteSchema | FAQPageSchema | PlaceSchema,
+  id?: string
 ): React.JSX.Element {
-  return React.createElement('script', {
+  const scriptProps: {
+    type: string;
+    dangerouslySetInnerHTML: { __html: string };
+    id?: string;
+  } = {
     type: 'application/ld+json',
-    dangerouslySetInnerHTML: { __html: JSON.stringify(schema, null, 2) },
-  });
+    dangerouslySetInnerHTML: { __html: toJsonLdString(schema) },
+  };
+
+  if (id) {
+    scriptProps.id = id;
+  }
+
+  return React.createElement('script', scriptProps);
 }

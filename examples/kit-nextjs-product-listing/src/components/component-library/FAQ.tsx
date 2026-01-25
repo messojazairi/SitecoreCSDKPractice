@@ -165,7 +165,7 @@ export const Default = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-default')}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -218,7 +218,7 @@ export const FAQ1 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-1')}
       <div className="container mx-auto">
         <div>
           <h2 className="text-3xl font-semibold mb-6">
@@ -325,7 +325,7 @@ export const FAQ3 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-3')}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-5xl font-bold mb-6">
@@ -382,7 +382,7 @@ export const FAQ4 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-4')}
       <div className="container mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="text-center">
@@ -430,7 +430,7 @@ export const FAQ5 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-5')}
       <div className="container mx-auto">
         <div className="grid gap-x-20 gap-y-12 md:grid-cols-2">
           <div>
@@ -472,7 +472,7 @@ export const FAQ6 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-6')}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">
@@ -518,7 +518,7 @@ export const FAQ7 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-7')}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">
@@ -564,7 +564,7 @@ export const FAQ8 = (props: FAQProps): JSX.Element => {
   return (
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       {/* JSON-LD structured data for FAQPage */}
-      {renderJsonLdScript(faqSchema)}
+      {renderJsonLdScript(faqSchema, 'faq-schema-8')}
       <div className="container mx-auto">
         <div className="max-w-3xl">
           <h2 className="text-5xl font-bold mb-6">

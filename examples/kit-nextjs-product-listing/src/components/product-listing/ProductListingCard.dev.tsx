@@ -24,8 +24,6 @@ const ProductListingCard = ({
       <article
         className="@md:px-12 @md:py-12 font-heading relative z-10 flex w-full flex-col justify-between gap-8 px-6 py-10"
         data-component="ProductListingCard"
-        itemScope
-        itemType="https://schema.org/Product"
       >
         <figure className="relative overflow-hidden">
           <ImageWrapper image={product.productThumbnail.jsonValue} className="mx-auto" />
@@ -36,15 +34,12 @@ const ProductListingCard = ({
               tag="h3"
               className="text-secondary-foreground text-2xl font-semibold"
               field={product.productName?.jsonValue}
-              itemProp="name"
             />
             {(isPageEditing || product?.productBasePrice?.jsonValue?.value) && (
               <p className="text-muted-foreground text-base font-light transition-all group-[.spotlight]:brightness-125">
                 {dictionary.PRODUCTLISTING_Price}{' '}
-                <span itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                  <Text field={product?.productBasePrice?.jsonValue} itemProp="price" />
-                  <meta itemProp="priceCurrency" content="USD" />
-                  <meta itemProp="availability" content="https://schema.org/InStock" />
+                <span>
+                  <Text field={product?.productBasePrice?.jsonValue} />
                 </span>
               </p>
             )}
