@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Facebook, Linkedin, Twitter, Link, Check, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -135,17 +135,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
     };
   }, []);
 
-  if (fields) {
-    const parallaxStyle = imageRequired?.jsonValue?.value?.src
-      ? {
-          transform: prefersReducedMotion
-            ? 'none'
-            : `translate(${mousePosition.x * -30}px, ${mousePosition.y * -30}px)`,
-          transition: prefersReducedMotion ? 'none' : 'transform 200ms ease-out',
-        }
-      : {};
-
-    const handleShare = (platform: string) => {
+  const handleShare = useCallback(
+    (platform: string) => {
       const url = encodeURIComponent(window.location.href);
       const title = encodeURIComponent(document.title);
       let shareUrl = '';
@@ -193,9 +184,12 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       }
 
       window.open(shareUrl, '_blank', 'width=600,height=400');
-    };
+    },
+    [toast]
+  );
 
-    const links = [
+  const links = useMemo(
+    () => [
       {
         title: 'Share on Facebook',
         icon: (
@@ -243,7 +237,22 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
         onClick: () => handleShare('copy'),
         ariaLabel: copySuccess ? 'Link copied' : 'Copy link',
       },
-    ];
+    ],
+    [copySuccess, handleShare]
+  );
+
+  if (!fields) {
+    return <NoDataFallback componentName="ArticleHeader" />;
+  }
+
+  const parallaxStyle = imageRequired?.jsonValue?.value?.src
+    ? {
+        transform: prefersReducedMotion
+          ? 'none'
+          : `translate(${mousePosition.x * -30}px, ${mousePosition.y * -30}px)`,
+        transition: prefersReducedMotion ? 'none' : 'transform 200ms ease-out',
+      }
+    : {};
 
     return (
       <>
@@ -409,7 +418,4 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
         <Toaster />
       </>
     );
-  }
-
-  return <NoDataFallback componentName="ArticleHeader" />;
 };
