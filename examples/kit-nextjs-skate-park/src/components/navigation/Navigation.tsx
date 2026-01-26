@@ -65,30 +65,17 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
       ))
     : null;
 
-  const textContent = getTextContent(fields);
-
   return (
     <li className={classNames} key={fields.Id} tabIndex={0}>
-      {hasChildren ? (
-        <details
-          className={`navigation-title ${hasChildren ? 'child' : ''}`}
-          open={isActive}
-          onToggle={() => setIsActive(!isActive)}
-        >
-          <summary>
-            <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
-              {textContent}
-            </Link>
-          </summary>
-          <ul className="clearfix">{children}</ul>
-        </details>
-      ) : (
-        <div className="navigation-title">
-          <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
-            {textContent}
-          </Link>
-        </div>
-      )}
+      <div
+        className={`navigation-title ${hasChildren ? 'child' : ''}`}
+        onClick={() => setIsActive(!isActive)}
+      >
+        <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
+          {getTextContent(fields)}
+        </Link>
+      </div>
+      {hasChildren && <ul className="clearfix">{children}</ul>}
     </li>
   );
 };
@@ -126,20 +113,21 @@ export const Default = ({ params, fields }: NavigationProps) => {
     ));
 
   return (
-    <nav className={`component navigation ${styles}`} id={id} aria-label="Primary">
+    <div className={`component navigation ${styles}`} id={id}>
       <label className="menu-mobile-navigate-wrapper">
         <input
           type="checkbox"
           className="menu-mobile-navigate"
           checked={isMenuOpen}
           onChange={() => handleToggleMenu()}
-          aria-label="Toggle mobile navigation menu"
         />
         <div className="menu-humburger" />
         <div className="component-content">
-          <ul className="clearfix">{navigationItems}</ul>
+          <nav>
+            <ul className="clearfix">{navigationItems}</ul>
+          </nav>
         </div>
       </label>
-    </nav>
+    </div>
   );
 };
