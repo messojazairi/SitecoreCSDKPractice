@@ -16,10 +16,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={roboto.variable}>
-      <head>
-        <link rel="preconnect" href="https://edge-platform.sitecorecloud.io" />
-        <link rel="icon" href="/favicon.ico" />
-      </head>
       <body>{children}</body>
     </html>
   );

@@ -82,38 +82,34 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl = `${protocol}://${host}`;
+  const url = `${protocol}://${host}`;
 
   const { site, locale, path } = await params;
-
-  // Construct the canonical URL using the public-facing path (what users see in browser)
-  // The middleware rewrites / -> /site/locale internally, but canonical should match the browser URL
-  const pathSegment = path?.length ? `/${path.join('/')}` : '';
-  const canonicalUrl = `${baseUrl}${pathSegment}`;
-
   const page = await client.getPage(path ?? [], { site, locale });
-  const fields = page?.layout.sitecore.route?.fields as RouteFields;
-
-  // Parse keywords from comma-separated string to array
-  const keywordsString = fields?.metadataKeywords?.value?.toString() || '';
-  const keywords = keywordsString
-    ? keywordsString.split(',').map((k: string) => k.trim())
-    : [];
-
   return {
-    title: fields?.ogTitle?.value?.toString() || 'Page',
+    title:
+      (
+        page?.layout.sitecore.route?.fields as RouteFields
+      )?.ogTitle?.value?.toString() || 'Page',
+    type: 'website',
     description:
-      fields?.ogDescription?.value?.toString() || 'Sitecore Next.js Alaris Example',
-    keywords,
-    alternates: {
-      canonical: canonicalUrl,
-    },
+      (
+        page?.layout.sitecore.route?.fields as RouteFields
+      )?.ogDescription?.value?.toString() || 'Sitecore Next.js Alaris Example',
     openGraph: {
-      title: fields?.Title?.value?.toString() || 'Page',
+      title:
+        (
+          page?.layout.sitecore.route?.fields as RouteFields
+        )?.Title?.value?.toString() || 'Page',
       description:
-        fields?.ogDescription?.value?.toString() || 'Sitecore Next.js Alaris Example',
-      url: canonicalUrl,
-      images: fields?.ogImage?.value?.src || undefined,
+        (
+          page?.layout.sitecore.route?.fields as RouteFields
+        )?.ogDescription?.value?.toString() ||
+        'Sitecore Next.js Alaris Example',
+      url: url,
+      images:
+        (page?.layout.sitecore.route?.fields as RouteFields)?.ogImage?.value
+          ?.src || undefined,
     },
   };
 };

@@ -88,42 +88,38 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
   const host = headersList.get('host');
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl = `${protocol}://${host}`;
+  const url = `${protocol}://${host}`;
 
   const { path, site, locale } = await params;
 
-  // Construct the canonical URL using the public-facing path (what users see in browser)
-  // The middleware rewrites / -> /site/locale internally, but canonical should match the browser URL
-  const pathSegment = path?.length ? `/${path.join('/')}` : '';
-  const canonicalUrl = `${baseUrl}${pathSegment}`;
-
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
-  const fields = page?.layout.sitecore.route?.fields as RouteFields;
-
-  // Parse keywords from comma-separated string to array
-  const keywordsString = fields?.metadataKeywords?.value?.toString() || '';
-  const keywords = keywordsString
-    ? keywordsString.split(',').map((k: string) => k.trim())
-    : [];
-
   return {
-    title: fields?.Title?.value?.toString() || 'Page',
+    title:
+      (
+        page?.layout.sitecore.route?.fields as RouteFields
+      )?.Title?.value?.toString() || 'Page',
     description:
-      fields?.ogDescription?.value?.toString() ||
+      (
+        page?.layout.sitecore.route?.fields as RouteFields
+      )?.ogDescription?.value?.toString() ||
       'Sitecore Next.js App Router Example',
-    keywords,
-    alternates: {
-      canonical: canonicalUrl,
-    },
     openGraph: {
-      title: fields?.ogTitle?.value?.toString() || 'Page',
+      title:
+        (
+          page?.layout.sitecore.route?.fields as RouteFields
+        )?.ogTitle?.value?.toString() || 'Page',
       description:
-        fields?.ogDescription?.value?.toString() ||
+        (
+          page?.layout.sitecore.route?.fields as RouteFields
+        )?.ogDescription?.value?.toString() ||
         'Sitecore Next.js App Router Example',
-      url: canonicalUrl,
+      url: url,
       images:
-        fields?.ogImage?.value?.src || fields?.thumbnailImage?.value?.src,
+        (page?.layout.sitecore.route?.fields as RouteFields)?.ogImage?.value
+          ?.src ||
+        (page?.layout.sitecore.route?.fields as RouteFields)?.thumbnailImage
+          ?.value?.src,
     },
   };
 };
