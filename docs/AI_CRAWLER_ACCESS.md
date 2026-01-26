@@ -367,46 +367,6 @@ After configuration:
 3. Enable **Smart Publish** and **Publish subitems**
 4. Wait 2-5 minutes for Edge cache to refresh
 
-### Automated Sitemap Configuration Script
-
-A PowerShell script is provided to automatically configure sitemap settings for all pages:
-
-```
-authoring/spe-scripts/configure-sitemap.ps1
-```
-
-#### Running the Script in SPE Console
-
-1. Open Sitecore Content Editor
-2. Navigate to **Sitecore** → **PowerShell ISE** (or Desktop → PowerShell ISE)
-3. Run the script:
-
-```powershell
-# Configure SYNC site
-.\configure-sitemap.ps1 -SiteName "SYNC" -TargetHostName "ai-crawler-access.vercel.app"
-
-# Configure with custom settings
-.\configure-sitemap.ps1 -SiteName "SYNC" -TargetHostName "mysite.com" -DefaultChangeFrequency "daily" -DefaultPriority 0.7
-```
-
-#### Script Parameters
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| `SiteName` | Yes | - | Site name (e.g., "SYNC", "Alaris") |
-| `TargetHostName` | Yes | - | Domain for sitemap URLs |
-| `DefaultChangeFrequency` | No | `weekly` | Default change frequency |
-| `DefaultPriority` | No | `0.5` | Default page priority |
-| `HomePagePriority` | No | `1.0` | Home page priority |
-| `Scheme` | No | `https` | URL scheme |
-
-#### What the Script Does
-
-1. ✅ Configures Site Grouping with correct hostname and scheme
-2. ✅ Sets sitemap settings on all pages under `/Home`
-3. ✅ Assigns higher priority to the home page
-4. ✅ Optionally publishes changes to Experience Edge
-
 ### Troubleshooting Sitemap Issues
 
 #### Sitemap Only Shows Homepage
