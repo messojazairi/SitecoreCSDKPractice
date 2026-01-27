@@ -98,12 +98,15 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const ogTitle = routeFields?.ogTitle?.value?.toString();
   const ogDescription = routeFields?.ogDescription?.value?.toString();
   const ogImageSrc = routeFields?.ogImage?.value?.src;
+  const thumbnailImageSrc = routeFields?.thumbnailImage?.value?.src;
 
   // Build metadata with proper fallbacks
   const resolvedTitle = metadataTitle || pageTitle || 'Page';
   const resolvedDescription = metadataDescription || pageSummary || ogDescription || 'SYNC';
   const resolvedOgTitle = ogTitle || resolvedTitle;
   const resolvedOgDescription = ogDescription || resolvedDescription;
+  const resolvedImage = ogImageSrc || thumbnailImageSrc;
+
 
   return {
     title: resolvedTitle,
@@ -115,9 +118,7 @@ export const generateMetadata = async ({ params }: PageProps) => {
       description: resolvedOgDescription,
       url: url,
       siteName: site,
-      images:
-        ogImageSrc ||
-        'https://edge.sitecorecloud.io/sitecoresaa60dc-chahcontentabf6-maina179-91b6/media/Feature/JSS-Experience-Accelerator/Basic-Site/banner-image.jpg?h=2001&iar=0&w=3000',
+      images: resolvedImage || undefined,
     },
     twitter: {
       card: 'summary_large_image',
