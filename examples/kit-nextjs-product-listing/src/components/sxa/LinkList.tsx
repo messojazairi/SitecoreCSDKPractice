@@ -99,7 +99,7 @@ export const Default = (props: LinkListProps): JSX.Element => {
             field={datasource?.field?.title}
             className="text-nowrap mb-5 text-xl font-bold text-gray-600"
           />
-          <ul className="list-none p-0 m-0" aria-label="Navigation options">
+          <ul className="list-none p-0 m-0" role="listbox" aria-label="Navigation options">
             {list}
           </ul>
         </div>
@@ -349,9 +349,9 @@ export const HeaderSecondaryLinks = (props: LinkListProps): JSX.Element => {
 
     return (
       <div className={`flex flex-col gap-2 ${styles}`} id={id ? id : undefined} data-class-change>
-        <h5 className="text-sm font-(family-name:--font-accent) font-medium text-secondary-foreground uppercase">
+        <h2 className="text-sm font-(family-name:--font-accent) font-medium text-secondary-foreground uppercase">
           <Text field={datasource?.field?.title} />
-        </h5>
+        </h2>
         <ul className="flex flex-col gap-1">{list}</ul>
       </div>
     );

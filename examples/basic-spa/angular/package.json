@@ -1,5 +1,8 @@
 {
   "name": "angular-starter",
+  "overrides": {
+    "qs": "6.14.1"
+  },
   "version": "0.1.0",
   "description": "Application utilizing Sitecore JavaScript Services and Angular (angular-cli).",
   "config": {
@@ -23,7 +26,6 @@
     "build": "npm-run-all --serial bootstrap build:client build:server",
     "build:client": "cross-env-shell ng build --configuration=production --base-href $npm_package_config_sitecoreDistPath/browser/ --output-path=$npm_package_config_buildArtifactsPath/browser/",
     "build:server": "cross-env-shell ng run angular-starter:server:production --output-path=$npm_package_config_buildArtifactsPath",
-    "e2e": "ng e2e",
     "graphql:update": "ts-node --project src/tsconfig.webpack-server.json ./scripts/update-graphql-fragment-data.ts",
     "install-pre-push-hook": "ts-node --project src/tsconfig.webpack-server.json ./scripts/install-pre-push-hook.ts",
     "jss": "jss",
@@ -95,7 +97,6 @@
     "@sitecore-jss/sitecore-jss-cli": "~22.10.0",
     "@sitecore-jss/sitecore-jss-dev-tools": "~22.10.0",
     "@types/jasmine": "~3.6.7",
-    "@types/jasminewd2": "~2.0.8",
     "@types/node": "~22.9.0",
     "@typescript-eslint/eslint-plugin": "^8.14.0",
     "@typescript-eslint/parser": "^8.14.0",
@@ -121,7 +122,6 @@
     "karma-jasmine-html-reporter": "~1.5.4",
     "move-cli": "^2.0.0",
     "npm-run-all2": "^7.0.1",
-    "protractor": "^7.0.0",
     "ts-node": "~10.9.2",
     "typescript": "~5.8.0",
     "webpack": "^5.104.1"

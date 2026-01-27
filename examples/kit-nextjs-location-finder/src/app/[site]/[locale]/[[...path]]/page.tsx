@@ -10,6 +10,12 @@ import Layout, { RouteFields } from 'src/Layout';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
+import {
+  generateWebPageSchema,
+  generateProductSchema,
+} from 'src/lib/structured-data/schema';
+import { StructuredData } from '@/components/structured-data/StructuredData';
+import { getBaseUrl, getFullUrl } from '@/lib/utils';
 
 type PageProps = {
   params: Promise<{
@@ -24,6 +30,8 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
+  const headersList = await headers();
+  const host = headersList.get('host');
 
   setRequestLocale(`${site}_${locale}`);
 
@@ -44,9 +52,32 @@ export default async function Page({ params, searchParams }: PageProps) {
     notFound();
   }
 
+  // Generate page-specific structured data
+  const fields = page.layout.sitecore.route?.fields as RouteFields;
+  const pageTitle = fields?.Title?.value?.toString() || fields?.pageTitle?.value?.toString() || 'Page';
+  const pageDescription = fields?.metadataDescription?.value?.toString() || fields?.ogDescription?.value?.toString();
+  const currentPath = path?.length ? `/${path.join('/')}` : '/';
+  const fullUrl = getFullUrl(currentPath, host);
+  const webPageSchema = generateWebPageSchema(pageTitle, fullUrl, pageDescription, locale);
+
+  // Detect if this is a product page and generate Product schema
+  const isProductPage = path && path[0] === 'Products';
+  const productSchema = isProductPage
+    ? generateProductSchema(
+        pageTitle,
+        fields?.pageSummary?.value?.toString() || pageDescription,
+        fields?.thumbnailImage?.value?.src || fields?.ogImage?.value?.src,
+        fullUrl,
+        undefined // Price not available on detail pages by default
+      )
+    : null;
+
   return (
     <NextIntlClientProvider>
       <Providers page={page}>
+        {/* Page-specific structured data */}
+        <StructuredData id="webpage-schema" data={webPageSchema} />
+        {productSchema && <StructuredData id="product-schema-page" data={productSchema} />}
         <Layout page={page} />
       </Providers>
     </NextIntlClientProvider>

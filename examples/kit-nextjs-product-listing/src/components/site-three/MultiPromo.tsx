@@ -48,9 +48,9 @@ const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
         className="w-full h-full aspect-square object-cover shadow-2xl"
       />
       <div>
-        <h4 className="text-xl lg:text-2xl mb-2 uppercase">
+        <h3 className="text-xl lg:text-2xl mb-2 uppercase">
           <ContentSdkText field={heading?.jsonValue} />
-        </h4>
+        </h3>
         <p className="lg:text-lg mb-2">
           <ContentSdkText field={description?.jsonValue} />
         </p>

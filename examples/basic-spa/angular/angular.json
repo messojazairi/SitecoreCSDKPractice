@@ -6,31 +6,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-e2e": {
-      "root": "",
-      "sourceRoot": "",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "buildTarget": "angular-starter:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/angular-eslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "angular-starter": {
       "architect": {
         "build": {

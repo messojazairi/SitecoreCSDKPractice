@@ -48,3 +48,23 @@ export function getYouTubeThumbnail(videoId: string, width: number, height?: num
 
   return `https://img.youtube.com/vi/${videoId}/${selectedSize}.jpg`;
 }
+
+/**
+ * Get base URL for the application
+ */
+export function getBaseUrl(host?: string | null): string {
+  if (host) {
+    const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+    return `${protocol}://${host}`;
+  }
+  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+}
+
+/**
+ * Get full URL by combining base URL with path
+ */
+export function getFullUrl(path: string, host?: string | null): string {
+  const baseUrl = getBaseUrl(host);
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${baseUrl}${cleanPath}`;
+}
