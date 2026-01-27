@@ -4,7 +4,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig: NextConfig = {
   // Allow specifying a distinct distDir when concurrently running app in a container
   distDir: process.env.NEXTJS_DIST_DIR || '.next',
-  
+
+  // Prevent Next.js from bundling @swc/core and its native .node bindings (used by next-intl's
+  // extractor). Otherwise webpack tries to parse the binary and fails with "no loaders configured".
+  serverExternalPackages: ['@swc/core'],
+
   // Enable React Strict Mode
   reactStrictMode: true,
 
@@ -47,16 +51,30 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Webpack configuration to prevent Node.js modules from being bundled on the client
+  // Webpack configuration to prevent Node.js modules from being bundled on the client,
+  // and to externalize @swc/core native bindings on the server (used by next-intl's extractor).
   webpack: (config, { isServer }) => {
-    if (!isServer) {
+    if (isServer) {
+      // Externalize @swc/core and its platform-specific .node packages so webpack does not
+      // try to parse the native binary. next-intl's extractor pulls these in during build.
+      const externals = config.externals ?? [];
+      config.externals = [
+        ...externals,
+        ({ request }, callback: (err?: Error | null, result?: string) => void) => {
+          if (request && /^@swc\/core(-|$)/.test(request)) {
+            return callback(null, `commonjs ${request}`);
+          }
+          callback();
+        },
+      ];
+    } else {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         module: false,
         path: false,
       };
-    }    
+    }
     return config;
   },
 };
