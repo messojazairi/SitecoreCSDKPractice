@@ -70,10 +70,14 @@ const nextConfig = {
 
   webpack: (config, options) => {
     if (!options.isServer) {
-      // Add a loader to strip out getComponentServerProps from components in the client bundle
+      // Add a loader to strip out getComponentServerProps from components in the client bundle.
+      // Chain with defaultLoaders.babel so TS/JSX is still compiled after the custom loader runs.
       config.module.rules.unshift({
-        test: /src\\components\\.*\.tsx$/,
-        use: ['@sitecore-content-sdk\\nextjs\\component-props-loader'],
+        test: /src[\\/]components[\\/].*\.tsx$/,
+        use: [
+          options.defaultLoaders.babel,
+          '@sitecore-content-sdk/nextjs/component-props-loader',
+        ],
       });
     } else {
       // Force use of CommonJS on the server for FEAAS SDK since Content SDK also uses CommonJS entrypoint to FEAAS SDK.
