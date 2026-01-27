@@ -68,56 +68,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
-  // Security headers and Content Security Policy
-  async headers() {
-    return [
-      {
-        // Apply security headers to all routes
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://edge-platform.sitecorecloud.io https://www.youtube.com https://www.youtube-nocookie.com https://vercel.live",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https: blob:",
-              "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://edge-platform.sitecorecloud.io https://*.sitecorecloud.io https://www.google-analytics.com https://www.youtube.com https://www.youtube-nocookie.com https://videos.pexels.com https://vercel.live",
-              "media-src 'self' https://videos.pexels.com https://www.youtube.com https://www.youtube-nocookie.com",
-              "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-              "upgrade-insecure-requests",
-            ].join('; '),
-          },
-        ],
-      },
-    ];
-  },
 };
 
 const withNextIntl = createNextIntlPlugin();
