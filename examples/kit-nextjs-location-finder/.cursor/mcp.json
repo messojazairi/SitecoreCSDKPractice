@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"],
+      "env": {
+        "CURSOR_API_KEY": "key_8a7092dbc93b66b02faeade7bd01198aeb3d3167821830224c97b2337561993a"
+      }
+    },
+    "sitecore": {
+      "command": "node",
+      "args": ["C:/content-sdk/xmcloud-starter-js/examples/kit-nextjs-location-finder/sitecore-mcp-server/dist/index.js"],
+      "env": {
+        "SITECORE_INSTANCE_URL": "https://xmc-horizontaldcf51-sitecoreaicfbe5-prod1a65.sitecorecloud.io",
+        "SITECORE_CLIENT_ID": "TJbAgyECcled9UWbHnzXCgxZxsVOdlPr",
+        "SITECORE_CLIENT_SECRET": "PRE7y729u22ueHALj0SI-EG8ppiPzPTZ3lWl-tLRZrqAZEM8KIvbHMFXfoGCH9Po",
+        "SITECORE_OAUTH_TOKEN_URL": "https://auth.sitecorecloud.io/oauth/token",
+        "SITECORE_OAUTH_AUDIENCE": "https://api.sitecorecloud.io",
+        "LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

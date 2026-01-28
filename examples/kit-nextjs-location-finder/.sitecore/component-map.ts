@@ -63,6 +63,8 @@ import * as PageHeaderCentereddev from 'src/components/page-header/PageHeaderCen
 import * as PageHeaderBlueTextdev from 'src/components/page-header/PageHeaderBlueText.dev';
 import * as PageHeaderBlueBackgrounddev from 'src/components/page-header/PageHeaderBlueBackground.dev';
 import * as PageHeader from 'src/components/page-header/PageHeader';
+import * as NexusHeroDefaultdev from 'src/components/nexus-hero/NexusHeroDefault.dev';
+import * as NexusHero from 'src/components/nexus-hero/NexusHero';
 import * as MultiPromoTabs from 'src/components/multi-promo-tabs/MultiPromoTabs';
 import * as MultiPromoTabdev from 'src/components/multi-promo-tabs/MultiPromoTab.dev';
 import * as MultiPromoItemdev from 'src/components/multi-promo/MultiPromoItem.dev';
@@ -81,6 +83,10 @@ import * as LocationSearchItemdev from 'src/components/location-search/LocationS
 import * as LocationSearchDefaultdev from 'src/components/location-search/LocationSearchDefault.dev';
 import * as LocationSearch from 'src/components/location-search/LocationSearch';
 import * as GoogleMapdev from 'src/components/location-search/GoogleMap.dev';
+import * as JobSectiondev from 'src/components/job-section/JobSection.dev';
+import * as JobSection from 'src/components/job-section/JobSection';
+import * as JobItemdev from 'src/components/job-section/JobItem.dev';
+import * as JobItem from 'src/components/job-section/JobItem';
 import * as ImageGalleryNoSpacingdev from 'src/components/image-gallery/ImageGalleryNoSpacing.dev';
 import * as ImageGalleryGriddev from 'src/components/image-gallery/ImageGalleryGrid.dev';
 import * as ImageGalleryFiftyFiftydev from 'src/components/image-gallery/ImageGalleryFiftyFifty.dev';
@@ -233,6 +239,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['PageHeaderBlueText', { ...PageHeaderBlueTextdev }],
   ['PageHeaderBlueBackground', { ...PageHeaderBlueBackgrounddev }],
   ['PageHeader', { ...PageHeader, componentType: 'client' }],
+  ['NexusHeroDefault', { ...NexusHeroDefaultdev }],
+  ['NexusHero', { ...NexusHero, componentType: 'client' }],
   ['MultiPromoTabs', { ...MultiPromoTabs, componentType: 'client' }],
   ['MultiPromoTab', { ...MultiPromoTabdev }],
   ['MultiPromoItem', { ...MultiPromoItemdev }],
@@ -251,6 +259,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['LocationSearchDefault', { ...LocationSearchDefaultdev }],
   ['LocationSearch', { ...LocationSearch, componentType: 'client' }],
   ['GoogleMap', { ...GoogleMapdev }],
+  ['JobSection', { ...JobSectiondev, ...JobSection, componentType: 'client' }],
+  ['JobItem', { ...JobItemdev, ...JobItem, componentType: 'client' }],
   ['ImageGalleryNoSpacing', { ...ImageGalleryNoSpacingdev }],
   ['ImageGalleryGrid', { ...ImageGalleryGriddev }],
   ['ImageGalleryFiftyFifty', { ...ImageGalleryFiftyFiftydev }],
