@@ -160,9 +160,20 @@ jest.mock('@/utils/isMobile', () => ({
 // Mock video utility
 jest.mock('@/utils/video', () => ({
   extractVideoId: jest.fn((url) => {
-    if (url?.includes('youtube.com')) return 'dQw4w9WgXcQ';
-    if (url?.includes('vimeo.com')) return '123456789';
-    return null;
+    if (!url) return null;
+    try {
+      const parsed = new URL(url);
+      const host = parsed.hostname.toLowerCase();
+      if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+        return 'dQw4w9WgXcQ';
+      }
+      if (host === 'vimeo.com' || host.endsWith('.vimeo.com')) {
+        return '123456789';
+      }
+      return null;
+    } catch {
+      return null;
+    }
   }),
 }));
 
