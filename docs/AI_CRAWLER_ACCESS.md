@@ -348,7 +348,7 @@ Configure these fields:
 
 > ⚠️ **Important**: The Target Host Name must be the domain only, without `https://` prefix or trailing `/`. Incorrect configuration will result in malformed URLs like `https://https://domain.com//`.
 
-#### Step 2: Enable Sitemap on Pages
+#### Step 2: Enable Sitemap/ Sitemap-llm on Pages
 
 Each page needs sitemap settings configured. On page items, set:
 
@@ -356,7 +356,6 @@ Each page needs sitemap settings configured. On page items, set:
 |-------|-------------|-------------------|
 | **Change Frequency** | How often content changes | `daily`, `weekly`, or `monthly` |
 | **Priority** | Page importance (0.0 - 1.0) | `1.0` for home, `0.5` - `0.8` for others |
-| **Include in Sitemap** | Whether to include page | ✅ Checked |
 
 #### Step 3: Publish to Experience Edge
 
@@ -367,13 +366,11 @@ After configuration:
 3. Enable **Smart Publish** and **Publish subitems**
 4. Wait 2-5 minutes for Edge cache to refresh
 
-### Troubleshooting Sitemap Issues
+### Troubleshooting Sitemap/ Sitemap-llm Issues
 
 #### Sitemap Only Shows Homepage
 
-- Verify other pages are published to Experience Edge
-- Check that pages have sitemap settings configured
-- Ensure "Exclude from Sitemap" is unchecked
+- Verify all the pages are approved in the page builder and published to Experience Edge
 
 #### Malformed URLs (https://https://...)
 
@@ -428,15 +425,6 @@ curl -H "User-Agent: ClaudeBot/1.0" https://your-domain.com/
 # Simulate PerplexityBot
 curl -H "User-Agent: PerplexityBot" https://your-domain.com/
 ```
-
-### Verification Checklist
-
-- [ ] robots.txt returns HTTP 200 status
-- [ ] Sitemap URL is correctly linked in robots.txt
-- [ ] AI crawler User-Agents have Allow: / rules
-- [ ] 404 pages have noindex meta tags
-- [ ] Content pages do NOT have noindex/nofollow
-- [ ] Sitemap.xml is accessible and valid
 
 ## References
 
