@@ -62,6 +62,12 @@ const nextConfig: NextConfig = {
         locale: false,
       },
       {
+        // LLM-optimized sitemap for AI crawler ingestion
+        source: '/sitemap-llm.xml',
+        destination: '/api/sitemap-llm',
+        locale: false,
+      },
+      {
         source: '/robots.txt',
         destination: '/api/robots',
         locale: false,

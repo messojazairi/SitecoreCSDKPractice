@@ -120,6 +120,7 @@ Allow: /
 # ==============================================
 
 Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${baseUrl}/sitemap-llm.xml
 `;
 }
 
@@ -193,7 +194,9 @@ function ensureAICrawlerAccess(existingContent: string, baseUrl: string): string
 
   // Ensure sitemap is present
   if (!existingContent.toLowerCase().includes('sitemap:')) {
-    enhanced += `\n\n# Sitemap\nSitemap: ${baseUrl}/sitemap.xml`;
+    enhanced += `\n\n# Sitemaps\nSitemap: ${baseUrl}/sitemap.xml\nSitemap: ${baseUrl}/sitemap-llm.xml`;
+  } else if (!existingContent.toLowerCase().includes('sitemap-llm')) {
+    enhanced += `\n\n# LLM-Optimized Sitemap\nSitemap: ${baseUrl}/sitemap-llm.xml`;
   }
 
   return enhanced;

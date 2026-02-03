@@ -60,6 +60,11 @@ const nextConfig = {
         source: '/sitemap:id([\\w-]{0,}).xml',
         destination: '/api/sitemap'
       },
+      // LLM-optimized sitemap for AI crawler ingestion
+      {
+        source: '/sitemap-llm.xml',
+        destination: '/api/sitemap-llm',
+      },
       // feaas api route
       {
         source: '/feaas-render',
