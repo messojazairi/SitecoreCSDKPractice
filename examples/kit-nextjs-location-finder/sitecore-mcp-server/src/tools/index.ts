@@ -15,6 +15,7 @@ import { createGraphQLTools, handleGraphQLTool } from './graphql.js';
 import { createSystemTools, handleSystemTool } from './system.js';
 import { createReferenceTools, handleReferenceTool } from './references.js';
 import { createRenderingTools, handleRenderingTool } from './rendering.js';
+import { createDesignAnalyzerTools, handleDesignAnalyzerTool } from './design-analyzer.js';
 
 /**
  * Create all tools
@@ -29,6 +30,7 @@ export function createAllTools(client: SitecoreClient): Tool[] {
     ...createSystemTools(client),
     ...createReferenceTools(client),
     ...createRenderingTools(client),
+    ...createDesignAnalyzerTools(client),
   ];
 }
 
@@ -56,6 +58,8 @@ export function getToolsByCategory(
       return createReferenceTools(client);
     case 'rendering':
       return createRenderingTools(client);
+    case 'design':
+      return createDesignAnalyzerTools(client);
     default:
       return [];
   }
@@ -71,7 +75,12 @@ export async function handleToolRequest(
 ): Promise<MCPToolResponse> {
   try {
     // Determine tool category and route to handler
-    if (toolName.includes('template')) {
+    if (toolName.includes('analyze') || toolName.includes('field_types') || toolName.includes('suggest_fields') || toolName.includes('generate_template_from')) {
+      return await handleDesignAnalyzerTool(toolName, args, client);
+    } else if (toolName.includes('validate_item') || toolName.includes('suggest_folder')) {
+      // Best practices validation tools - route to item handler
+      return await handleItemTool(toolName, args, client);
+    } else if (toolName.includes('template')) {
       return await handleTemplateTool(toolName, args, client);
     } else if (toolName.includes('rendering') || toolName.includes('presentation')) {
       return await handleRenderingTool(toolName, args, client);
@@ -120,6 +129,7 @@ export function getToolStats(client: SitecoreClient): Record<string, number> {
     system: createSystemTools(client).length,
     references: createReferenceTools(client).length,
     rendering: createRenderingTools(client).length,
+    design: createDesignAnalyzerTools(client).length,
     total: createAllTools(client).length,
   };
 }
@@ -144,5 +154,7 @@ export {
   handleReferenceTool,
   createRenderingTools,
   handleRenderingTool,
+  createDesignAnalyzerTools,
+  handleDesignAnalyzerTool,
 };
 

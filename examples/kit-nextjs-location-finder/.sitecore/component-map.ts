@@ -21,6 +21,9 @@ import * as TextBanner01dev from 'src/components/text-banner/TextBanner01.dev';
 import * as TextBanner from 'src/components/text-banner/TextBanner';
 import * as TestimonialCarouselItem from 'src/components/testimonial-carousel/TestimonialCarouselItem';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
+import * as TestimonialWithButtondev from 'src/components/testimonial/TestimonialWithButton.dev';
+import * as TestimonialDefaultdev from 'src/components/testimonial/TestimonialDefault.dev';
+import * as Testimonial from 'src/components/testimonial/Testimonial';
 import * as Title from 'src/components/sxa/Title';
 import * as RowSplitter from 'src/components/sxa/RowSplitter';
 import * as RichText from 'src/components/sxa/RichText';
@@ -39,7 +42,11 @@ import * as SubmissionFormCentereddev from 'src/components/submission-form/Submi
 import * as SubmissionForm from 'src/components/submission-form/SubmissionForm';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
 import * as SiteMetadata from 'src/components/site-metadata/SiteMetadata';
+import * as SimilarIdeasDefaultdev from 'src/components/similar-ideas/SimilarIdeasDefault.dev';
+import * as SimilarIdeas from 'src/components/similar-ideas/SimilarIdeas';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
+import * as SearchBarDefaultdev from 'src/components/search-bar/SearchBarDefault.dev';
+import * as SearchBar from 'src/components/search-bar/SearchBar';
 import * as RichTextBlock from 'src/components/rich-text-block/RichTextBlock';
 import * as PromoImageTitlePartialOverlaydev from 'src/components/promo-image/PromoImageTitlePartialOverlay.dev';
 import * as PromoImageRightdev from 'src/components/promo-image/PromoImageRight.dev';
@@ -65,6 +72,8 @@ import * as PageHeaderBlueBackgrounddev from 'src/components/page-header/PageHea
 import * as PageHeader from 'src/components/page-header/PageHeader';
 import * as NexusHeroDefaultdev from 'src/components/nexus-hero/NexusHeroDefault.dev';
 import * as NexusHero from 'src/components/nexus-hero/NexusHero';
+import * as NexusCardsDefaultdev from 'src/components/nexus-cards/NexusCardsDefault.dev';
+import * as NexusCards from 'src/components/nexus-cards/NexusCards';
 import * as MultiPromoTabs from 'src/components/multi-promo-tabs/MultiPromoTabs';
 import * as MultiPromoTabdev from 'src/components/multi-promo-tabs/MultiPromoTab.dev';
 import * as MultiPromoItemdev from 'src/components/multi-promo/MultiPromoItem.dev';
@@ -197,6 +206,9 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TextBanner', { ...TextBanner, componentType: 'client' }],
   ['TestimonialCarouselItem', { ...TestimonialCarouselItem }],
   ['TestimonialCarousel', { ...TestimonialCarousel, componentType: 'client' }],
+  ['TestimonialWithButton', { ...TestimonialWithButtondev }],
+  ['TestimonialDefault', { ...TestimonialDefaultdev }],
+  ['Testimonial', { ...Testimonial, componentType: 'client' }],
   ['Title', { ...Title }],
   ['RowSplitter', { ...RowSplitter }],
   ['RichText', { ...RichText }],
@@ -215,7 +227,11 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmissionForm', { ...SubmissionForm, componentType: 'client' }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['SiteMetadata', { ...SiteMetadata }],
+  ['SimilarIdeasDefault', { ...SimilarIdeasDefaultdev }],
+  ['SimilarIdeas', { ...SimilarIdeas, componentType: 'client' }],
   ['SecondaryNavigation', { ...SecondaryNavigation, componentType: 'client' }],
+  ['SearchBarDefault', { ...SearchBarDefaultdev }],
+  ['SearchBar', { ...SearchBar, componentType: 'client' }],
   ['RichTextBlock', { ...RichTextBlock }],
   ['PromoImageTitlePartialOverlay', { ...PromoImageTitlePartialOverlaydev }],
   ['PromoImageRight', { ...PromoImageRightdev }],
@@ -241,6 +257,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['PageHeader', { ...PageHeader, componentType: 'client' }],
   ['NexusHeroDefault', { ...NexusHeroDefaultdev }],
   ['NexusHero', { ...NexusHero, componentType: 'client' }],
+  ['NexusCardsDefault', { ...NexusCardsDefaultdev }],
+  ['NexusCards', { ...NexusCards, componentType: 'client' }],
   ['MultiPromoTabs', { ...MultiPromoTabs, componentType: 'client' }],
   ['MultiPromoTab', { ...MultiPromoTabdev }],
   ['MultiPromoItem', { ...MultiPromoItemdev }],

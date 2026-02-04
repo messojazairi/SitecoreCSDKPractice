@@ -4,6 +4,15 @@
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import type { SitecoreClient } from '../sitecore-client.js';
+import {
+  validateItemCreation,
+  formatValidationResult,
+  getRecommendedIcon,
+  suggestFolderStructure,
+  SITECORE_ICONS,
+  VALID_CONTENT_PATHS,
+  type ItemCreationContext,
+} from '../utils/sitecore-best-practices.js';
 
 export function createItemTools(client: SitecoreClient): Tool[] {
   return [
@@ -50,8 +59,52 @@ export function createItemTools(client: SitecoreClient): Tool[] {
       },
     },
     {
+      name: 'sitecore_suggest_folder_structure',
+      description: 'Get recommended folder structure for a specific content type. Helps you organize content properly before creating items.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          siteName: {
+            type: 'string',
+            description: 'Your site name (e.g., "MySite", "CorporateSite")',
+          },
+          contentType: {
+            type: 'string',
+            description: 'Type of content (e.g., "articles", "products", "locations", "events", "data")',
+          },
+        },
+        required: ['siteName', 'contentType'],
+      },
+    },
+    {
+      name: 'sitecore_validate_item_creation',
+      description: 'Validate item creation against Sitecore best practices BEFORE creating. Checks folder structure, naming conventions, and recommends icons. Use this to preview validation results without actually creating the item.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            description: 'Name of the item to validate',
+          },
+          templateId: {
+            type: 'string',
+            description: 'Template ID to use (without curly braces)',
+          },
+          parentPath: {
+            type: 'string',
+            description: 'Parent path where item would be created (e.g., "/sitecore/content/Site/Data")',
+          },
+          parent: {
+            type: 'string',
+            description: 'Parent item ID (alternative to parentPath)',
+          },
+        },
+        required: ['name'],
+      },
+    },
+    {
       name: 'sitecore_create_item',
-      description: 'Create a new content item using a template. The item will be placed under the specified parent.',
+      description: 'Create a new content item using a template. The item will be placed under the specified parent. Includes automatic best practices validation: folder structure checks, naming conventions, and automatic icon assignment based on item type.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -344,6 +397,122 @@ export async function handleItemTool(
         };
       }
 
+      case 'sitecore_suggest_folder_structure': {
+        const siteName = args.siteName || 'MySite';
+        const contentType = args.contentType || 'content';
+        
+        const suggestedPath = suggestFolderStructure(siteName, contentType);
+        
+        let responseText = `📁 **Recommended Folder Structure**\n\n`;
+        responseText += `**Site Name:** ${siteName}\n`;
+        responseText += `**Content Type:** ${contentType}\n\n`;
+        responseText += `---\n\n`;
+        responseText += `### Suggested Path\n`;
+        responseText += `\`${suggestedPath}\`\n\n`;
+        responseText += `### Recommended Hierarchy\n\n`;
+        responseText += `\`\`\`\n`;
+        responseText += `/sitecore/content/\n`;
+        responseText += `└── ${siteName}/\n`;
+        responseText += `    └── ${contentType.charAt(0).toUpperCase() + contentType.slice(1)}/\n`;
+        responseText += `        └── [Category]/\n`;
+        responseText += `            └── [SubCategory]/\n`;
+        responseText += `                └── [Your Item]\n`;
+        responseText += `\`\`\`\n\n`;
+        
+        responseText += `### Best Practices\n\n`;
+        responseText += `1. **Always create content in proper folders** - Never create items directly under \`/sitecore/content\`\n`;
+        responseText += `2. **Use meaningful folder names** - Organize by category, date, or logical grouping\n`;
+        responseText += `3. **Keep hierarchy manageable** - Aim for 3-6 levels deep maximum\n`;
+        responseText += `4. **Consistent naming** - Use the same naming convention across all folders\n\n`;
+        
+        responseText += `### Example Structures by Content Type\n\n`;
+        responseText += `| Content Type | Suggested Path |\n`;
+        responseText += `|-------------|----------------|\n`;
+        responseText += `| Articles | \`/sitecore/content/${siteName}/Articles/[Year]/[Month]\` |\n`;
+        responseText += `| Products | \`/sitecore/content/${siteName}/Products/[Category]/[SubCategory]\` |\n`;
+        responseText += `| Locations | \`/sitecore/content/${siteName}/Locations/[Region]/[Country]\` |\n`;
+        responseText += `| Events | \`/sitecore/content/${siteName}/Events/[Year]/[Type]\` |\n`;
+        responseText += `| Data Sources | \`/sitecore/content/${siteName}/Data/[ComponentName]\` |\n`;
+        responseText += `| Pages | \`/sitecore/content/${siteName}/Home/[Section]\` |\n\n`;
+        
+        responseText += `### Next Steps\n\n`;
+        responseText += `1. Create the folder structure first using \`sitecore_create_item\` with a Folder template\n`;
+        responseText += `2. Then create your content items within the appropriate folders\n`;
+        responseText += `3. Use \`sitecore_validate_item_creation\` to check your item before creating\n`;
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: responseText,
+            },
+          ],
+          isError: false,
+        };
+      }
+
+      case 'sitecore_validate_item_creation': {
+        // Validate item creation against best practices without actually creating
+        let templateName: string | undefined;
+        let parentPath = args.parentPath;
+
+        // Try to get template name for better recommendations
+        if (args.templateId) {
+          try {
+            const template = await client.getTemplate(args.templateId);
+            templateName = template?.name;
+          } catch {
+            console.log('[VALIDATION] Could not fetch template info');
+          }
+        }
+
+        // If parent ID provided but no path, try to get the path
+        if (args.parent && !parentPath) {
+          try {
+            const parentItem = await client.getItem(args.parent);
+            parentPath = parentItem?.path;
+          } catch {
+            console.log('[VALIDATION] Could not fetch parent item info');
+          }
+        }
+
+        const validationContext: ItemCreationContext = {
+          name: args.name || '',
+          templateId: args.templateId,
+          templateName: templateName,
+          parentPath: parentPath,
+          parentId: args.parent,
+        };
+
+        const validationResult = validateItemCreation(validationContext);
+        const formattedResult = formatValidationResult(validationResult);
+
+        let responseText = `📋 **Item Creation Validation Results**\n\n`;
+        responseText += `**Item Name:** ${args.name || '(not provided)'}\n`;
+        responseText += `**Template:** ${templateName || args.templateId || '(not provided)'}\n`;
+        responseText += `**Parent Path:** ${parentPath || args.parent || '(not provided)'}\n\n`;
+        responseText += `---\n\n`;
+        responseText += formattedResult;
+        
+        if (validationResult.isValid) {
+          responseText += `\n\n✅ **Ready to Create**\n`;
+          responseText += `This item passes all validation checks. You can proceed with creation using \`sitecore_create_item\`.`;
+        } else {
+          responseText += `\n\n❌ **Cannot Create**\n`;
+          responseText += `Please address the errors above before attempting to create this item.`;
+        }
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: responseText,
+            },
+          ],
+          isError: false,
+        };
+      }
+
       case 'sitecore_get_item': {
         if (!args.itemId && !args.path) {
           return {
@@ -393,8 +562,67 @@ export async function handleItemTool(
           throw new Error('Either parent ID or parentPath must be provided');
         }
 
+        // Get template name for icon recommendation (if possible)
+        let templateName: string | undefined;
+        try {
+          const template = await client.getTemplate(args.templateId);
+          templateName = template?.name;
+        } catch {
+          // Template lookup failed, continue without it
+          console.log('[BEST PRACTICES] Could not fetch template info for icon recommendation');
+        }
+
+        // ============================================
+        // SITECORE BEST PRACTICES VALIDATION
+        // ============================================
+        const validationContext: ItemCreationContext = {
+          name: args.name,
+          templateId: args.templateId,
+          templateName: templateName,
+          parentPath: args.parentPath,
+          parentId: args.parent,
+          fields: args.fields,
+        };
+
+        const validationResult = validateItemCreation(validationContext);
+        
+        // If validation has critical errors, prevent item creation
+        if (!validationResult.isValid) {
+          const validationMessage = formatValidationResult(validationResult);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `🚫 **Item Creation Blocked - Best Practices Violation**\n\n` +
+                  `The item cannot be created due to the following issues:\n\n` +
+                  `${validationMessage}\n\n` +
+                  `Please address these issues and try again.`,
+              },
+            ],
+            isError: true,
+          };
+        }
+
+        // Log warnings and suggestions (but don't block creation)
+        if (validationResult.warnings.length > 0 || validationResult.suggestions.length > 0) {
+          console.log('[BEST PRACTICES] Validation warnings/suggestions:');
+          validationResult.warnings.forEach(w => console.log(`  ⚠️ ${w}`));
+          validationResult.suggestions.forEach(s => console.log(`  💡 ${s}`));
+        }
+
         // Prepare fields array
         const fields = args.fields || [];
+
+        // Add recommended icon if not already set and we have a recommendation
+        const recommendedIcon = getRecommendedIcon(templateName, args.name);
+        const hasIconField = fields.some(
+          (f: { name: string }) => f.name.toLowerCase() === '__icon' || f.name.toLowerCase() === 'icon'
+        );
+        
+        if (!hasIconField && recommendedIcon !== SITECORE_ICONS.DEFAULT) {
+          console.log(`[BEST PRACTICES] Adding recommended icon: ${recommendedIcon}`);
+          fields.push({ name: '__Icon', value: recommendedIcon });
+        }
 
         // Create the item (without owner - it's a protected field that must be set after creation)
         const item = await client.createItem({
@@ -432,11 +660,33 @@ export async function handleItemTool(
           `📝 Template: ${item.templateName}\n` +
           `👤 Owner: ${defaultOwner}\n`;
         
+        // Add icon info
+        if (recommendedIcon !== SITECORE_ICONS.DEFAULT) {
+          responseText += `🎨 Icon: ${recommendedIcon}\n`;
+        }
+        
         if (args.fields && args.fields.length > 0) {
           responseText += `\n📋 Fields set (${args.fields.length}):\n`;
           args.fields.forEach((field: { name: string; value: string }) => {
             responseText += `   - ${field.name}: ${field.value}\n`;
           });
+        }
+        
+        // Add best practices feedback
+        if (validationResult.warnings.length > 0 || validationResult.suggestions.length > 0) {
+          responseText += `\n📋 **Best Practices Feedback:**\n`;
+          if (validationResult.warnings.length > 0) {
+            responseText += `\n⚠️ Warnings:\n`;
+            validationResult.warnings.forEach(w => {
+              responseText += `   - ${w}\n`;
+            });
+          }
+          if (validationResult.suggestions.length > 0) {
+            responseText += `\n💡 Suggestions:\n`;
+            validationResult.suggestions.forEach(s => {
+              responseText += `   - ${s}\n`;
+            });
+          }
         }
         
         responseText += `\nNext steps:\n` +

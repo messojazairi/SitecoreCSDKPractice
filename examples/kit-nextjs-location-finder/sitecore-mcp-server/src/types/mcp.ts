@@ -66,6 +66,7 @@ export enum ToolCategory {
   SYSTEM = 'system',
   REFERENCES = 'references',
   RENDERING = 'rendering',
+  DESIGN = 'design',
 }
 
 /**
@@ -342,5 +343,36 @@ export interface RenderingToolArgs {
   datasourcePath?: string;
   renderingParameters?: Record<string, string>;
   device?: string;
+}
+
+/**
+ * Design Analyzer Tool Arguments
+ */
+export interface DesignAnalyzerToolArgs {
+  // For analyze_component_design
+  imageData?: string;
+  imagePath?: string;
+  componentName?: string;
+  componentDescription?: string;
+  additionalContext?: string;
+  // For get_field_types
+  category?: 'text' | 'media' | 'link' | 'selection' | 'number' | 'date' | 'all';
+  // For suggest_fields_for_element
+  elementDescription?: string;
+  isRequired?: boolean;
+  allowMultiple?: boolean;
+  // For generate_template_from_fields
+  fields?: Array<{
+    name: string;
+    displayName?: string;
+    type: string;
+    section?: string;
+    required?: boolean;
+    description?: string;
+    source?: string;
+    defaultValue?: string;
+  }>;
+  parentPath?: string;
+  baseTemplates?: string[];
 }
 

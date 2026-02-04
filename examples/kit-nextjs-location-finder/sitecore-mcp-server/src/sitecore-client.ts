@@ -511,7 +511,7 @@ export class SitecoreClient {
 
       // If sections are provided, create them
       if (request.sections && request.sections.length > 0) {
-        const templateSectionTemplateId = '269150A9-F9E3-4FC0-8B3A-EE0E03F0DD1B'; // Template Section
+        const templateSectionTemplateId = 'E269FBB5-3750-427A-9149-7AA950B49301'; // Template Section
         const templateFieldTemplateId = '455A3E98-A627-4B40-8035-E683A0331AC7'; // Template Field
         
         for (const section of request.sections) {
@@ -1039,8 +1039,12 @@ export class SitecoreClient {
               name
             }
             fields {
-              name
-              value
+              edges {
+                node {
+                  name
+                  value
+                }
+              }
             }
           }
         }
@@ -1180,6 +1184,63 @@ export class SitecoreClient {
   }
 
   /**
+   * Get available databases
+   */
+  async getDatabases(): Promise<string[]> {
+    const query = `
+      query GetDatabases {
+        databases {
+          name
+        }
+      }
+    `;
+
+    try {
+      const result = await this.executeGraphQL<{ databases: Array<{ name: string }> }>(query);
+      return result.databases?.map(db => db.name) || [];
+    } catch (error) {
+      logger.warn('Failed to fetch databases, defaulting to web', { error: (error as Error).message });
+      // Return default databases if query fails
+      return ['web'];
+    }
+  }
+
+  /**
+   * Get default target database for publishing
+   * In XM Cloud, uses 'edge' database. In traditional Sitecore, uses 'web' database.
+   */
+  async getDefaultTargetDatabase(): Promise<string> {
+    try {
+      const databases = await this.getDatabases();
+      
+      // Check if edge database exists (XM Cloud)
+      if (databases.includes('edge')) {
+        logger.debug('Edge database detected, using edge as default target');
+        return 'edge';
+      }
+      
+      // Check if web database exists (traditional Sitecore)
+      if (databases.includes('web')) {
+        logger.debug('Web database detected, using web as default target');
+        return 'web';
+      }
+      
+      // Fallback to first available database or 'web'
+      if (databases.length > 0) {
+        logger.warn(`Neither edge nor web database found, using first available: ${databases[0]}`);
+        return databases[0];
+      }
+      
+      // Ultimate fallback
+      logger.warn('No databases found, defaulting to web');
+      return 'web';
+    } catch (error) {
+      logger.warn('Error determining default database, defaulting to web', { error: (error as Error).message });
+      return 'web';
+    }
+  }
+
+  /**
    * Publish an item
    */
   async publishItem(request: PublishItemRequest): Promise<any> {
@@ -1199,12 +1260,20 @@ export class SitecoreClient {
         itemId = `${itemId.substring(0, 8)}-${itemId.substring(8, 12)}-${itemId.substring(12, 16)}-${itemId.substring(16, 20)}-${itemId.substring(20)}`;
       }
       
+      // Determine target databases - use provided targets or detect default
+      let targetDatabases = request.targets;
+      if (!targetDatabases || targetDatabases.length === 0) {
+        const defaultTarget = await this.getDefaultTargetDatabase();
+        targetDatabases = [defaultTarget];
+        logger.info('Using default target database', { database: defaultTarget });
+      }
+
       const variables = {
         input: {
           rootItemId: itemId,
           languages: [request.language || 'en'],
           publishItemMode: request.deep ? 'FULL' : 'SMART',
-          targetDatabases: request.targets || ['web'],
+          targetDatabases: targetDatabases,
         },
       };
 
@@ -1239,12 +1308,20 @@ export class SitecoreClient {
         rootItemId = `${rootItemId.substring(0, 8)}-${rootItemId.substring(8, 12)}-${rootItemId.substring(12, 16)}-${rootItemId.substring(16, 20)}-${rootItemId.substring(20)}`;
       }
       
+      // Determine target databases - use provided targets or detect default
+      let targetDatabases = request.targets;
+      if (!targetDatabases || targetDatabases.length === 0) {
+        const defaultTarget = await this.getDefaultTargetDatabase();
+        targetDatabases = [defaultTarget];
+        logger.info('Using default target database', { database: defaultTarget });
+      }
+
       const variables = {
         input: {
           rootItemId: rootItemId,
           languages: [request.language || 'en'],
           publishItemMode: 'FULL',
-          targetDatabases: request.targets || ['web'],
+          targetDatabases: targetDatabases,
         },
       };
 

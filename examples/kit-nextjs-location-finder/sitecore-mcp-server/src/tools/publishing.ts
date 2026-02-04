@@ -9,7 +9,7 @@ export function createPublishingTools(client: SitecoreClient): Tool[] {
   return [
     {
       name: 'sitecore_publish_item',
-      description: 'Publish a single content item to the target database (typically "web"). Optionally publish descendants. You can provide either an itemId (GUID) or a path (e.g., "/sitecore/content/MySite/Home/Data/Item"). Paths are preferred when you have the full Sitecore content path.',
+      description: 'Publish a single content item to the target database. For XM Cloud, automatically uses "edge" database. For traditional Sitecore, uses "web" database. Optionally publish descendants. You can provide either an itemId (GUID) or a path (e.g., "/sitecore/content/MySite/Home/Data/Item"). Paths are preferred when you have the full Sitecore content path.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -27,7 +27,7 @@ export function createPublishingTools(client: SitecoreClient): Tool[] {
           },
           targets: {
             type: 'array',
-            description: 'Target databases (default: ["web"])',
+            description: 'Target databases. If not provided, automatically detects and uses "edge" for XM Cloud or "web" for traditional Sitecore.',
             items: {
               type: 'string',
             },
@@ -41,7 +41,7 @@ export function createPublishingTools(client: SitecoreClient): Tool[] {
     },
     {
       name: 'sitecore_publish_tree',
-      description: 'Publish an entire content tree starting from a root item. Publishes all descendants. You can provide either a rootItemId (GUID) or a rootPath (e.g., "/sitecore/content/MySite"). Paths are preferred when you have the full Sitecore content path.',
+      description: 'Publish an entire content tree starting from a root item. Publishes all descendants. For XM Cloud, automatically uses "edge" database. For traditional Sitecore, uses "web" database. You can provide either a rootItemId (GUID) or a rootPath (e.g., "/sitecore/content/MySite"). Paths are preferred when you have the full Sitecore content path.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -59,7 +59,7 @@ export function createPublishingTools(client: SitecoreClient): Tool[] {
           },
           targets: {
             type: 'array',
-            description: 'Target databases (default: ["web"])',
+            description: 'Target databases. If not provided, automatically detects and uses "edge" for XM Cloud or "web" for traditional Sitecore.',
             items: {
               type: 'string',
             },
@@ -117,12 +117,20 @@ export async function handlePublishingTool(
           itemId = args.itemId;
         }
 
+        // Determine target databases - will auto-detect if not provided
+        const targetDatabases = args.targets || [];
+        
         const result = await client.publishItem({
           itemId,
           language: args.language || 'en',
-          targets: args.targets || ['web'],
+          targets: targetDatabases.length > 0 ? targetDatabases : undefined,
           deep: args.deep || false,
         });
+
+        // Get the actual target database used (for display)
+        const actualTargets = args.targets && args.targets.length > 0 
+          ? args.targets 
+          : [await client.getDefaultTargetDatabase()];
 
         return {
           content: [
@@ -132,7 +140,7 @@ export async function handlePublishingTool(
                 `${args.path ? `📁 Path: ${args.path}\n` : ''}` +
                 `📄 Item ID: ${itemId}\n` +
                 `🌐 Language: ${args.language || 'en'}\n` +
-                `🎯 Targets: ${(args.targets || ['web']).join(', ')}\n` +
+                `🎯 Target Database(s): ${actualTargets.join(', ')}${targetDatabases.length === 0 ? ' (auto-detected)' : ''}\n` +
                 `🔄 Mode: ${args.deep ? 'Deep (with descendants)' : 'Single item'}\n\n` +
                 `${result.operationId ? `Operation ID: ${result.operationId}\n` : ''}` +
                 `${result.jobId ? `Job ID: ${result.jobId}\n` : ''}` +
@@ -171,11 +179,19 @@ export async function handlePublishingTool(
           rootItemId = args.rootItemId;
         }
 
+        // Determine target databases - will auto-detect if not provided
+        const targetDatabases = args.targets || [];
+        
         const result = await client.publishTree({
           rootItemId,
           language: args.language || 'en',
-          targets: args.targets || ['web'],
+          targets: targetDatabases.length > 0 ? targetDatabases : undefined,
         });
+
+        // Get the actual target database used (for display)
+        const actualTargets = args.targets && args.targets.length > 0 
+          ? args.targets 
+          : [await client.getDefaultTargetDatabase()];
 
         return {
           content: [
@@ -185,7 +201,7 @@ export async function handlePublishingTool(
                 `${args.rootPath ? `📁 Root Path: ${args.rootPath}\n` : ''}` +
                 `🌳 Root Item ID: ${rootItemId}\n` +
                 `🌐 Language: ${args.language || 'en'}\n` +
-                `🎯 Targets: ${(args.targets || ['web']).join(', ')}\n\n` +
+                `🎯 Target Database(s): ${actualTargets.join(', ')}${targetDatabases.length === 0 ? ' (auto-detected)' : ''}\n\n` +
                 `${result.operationId ? `Operation ID: ${result.operationId}\n` : ''}` +
                 `${result.jobId ? `Job ID: ${result.jobId}\n` : ''}` +
                 `Status: ${result.status || 'Queued'}\n\n` +
