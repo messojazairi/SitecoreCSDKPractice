@@ -44,6 +44,11 @@ const nextConfig: NextConfig = {
         destination: '/api/robots',
         locale: false,
       },
+      {
+        source: '/faq.json',
+        destination: '/api/faq',
+        locale: false,
+      },
     ];
   },
 };
