@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
   },
   
-  // use this configuration to serve the sitemap.xml and robots.txt files from the API route handlers
+  // use this configuration to serve the sitemap.xml, robots.txt and AI JSON endpoints from API route handlers
   rewrites: async () => {
     return [
       {
@@ -42,6 +42,11 @@ const nextConfig: NextConfig = {
       {
         source: '/robots.txt',
         destination: '/api/robots',
+        locale: false,
+      },
+      {
+        source: '/ai/summary.json',
+        destination: '/api/ai/summary',
         locale: false,
       },
     ];
