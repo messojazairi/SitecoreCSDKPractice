@@ -46,7 +46,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/faq.json',
-        destination: '/api/faq',
+        destination: '/ai/faq.json',
         locale: false,
       },
     ];
