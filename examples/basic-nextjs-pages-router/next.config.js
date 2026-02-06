@@ -58,7 +58,12 @@ const nextConfig = {
       // sitemap route
       {
         source: '/sitemap:id([\\w-]{0,}).xml',
-        destination: '/api/sitemap'
+        destination: '/api/sitemap',
+      },
+      // ai.txt route for AI crawlers
+      {
+        source: '/.well-known/ai.txt',
+        destination: '/api/well-known/ai-txt',
       },
       // feaas api route
       {
