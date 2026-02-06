@@ -44,6 +44,11 @@ const nextConfig: NextConfig = {
         destination: '/api/robots',
         locale: false,
       },
+      {
+        source: '/.well-known/ai.txt',
+        destination: '/api/well-known/ai-txt',
+        locale: false,
+      },
     ];
   },
 };
