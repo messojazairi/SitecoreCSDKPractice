@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
   },
   
-  // use this configuration to serve the sitemap.xml, robots.txt and AI JSON endpoints from API route handlers
+  // Sitemap, robots, and AI JSON endpoints via rewrites; handlers live under app/api/
   rewrites: async () => {
     return [
       {
@@ -53,17 +53,28 @@ const nextConfig: NextConfig = {
         locale: false,
       },
       {
+        source: '/ai/summary.json',
+        destination: '/api/ai/summary',
+        locale: false,
+      },
+      {
+        source: '/ai/faq.json',
+        destination: '/api/ai/faq',
+        locale: false,
+      },
+      {
+        source: '/ai/service.json',
+        destination: '/api/ai/service',
+        locale: false,
+      },
+      {
         source: '/faq.json',
-        destination: '/ai/faq.json',
+        destination: '/api/ai/faq',
+        locale: false,
       },
       {
         source: '/.well-known/ai.txt',
         destination: '/api/well-known/ai-txt',
-        locale: false,
-      },
-      {
-        source: '/ai/summary.json',
-        destination: '/api/ai/summary',
         locale: false,
       },
     ];

@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import faqData from '@/data/faq.json';
+import { aiJsonResponse } from '@/lib/ai-json-response';
 
 const MIN_ITEMS = 3;
 const MAX_ITEMS = 10;
@@ -10,9 +10,9 @@ interface FaqItem {
 }
 
 /**
- * Serves FAQ data at /ai/faq.json for AI crawlers and answer engines (GEO/AEO).
- * Response: array of { question, answer } objects, 3–10 items, application/json,
- * Cache-Control max-age=86400, publicly accessible.
+ * Serves /ai/faq.json (via rewrite) for AI crawlers and answer engines (GEO/AEO).
+ * Response: array of { question, answer } objects, 3–10 items. Application/json,
+ * Cache-Control 24h. Publicly accessible.
  *
  * @returns JSON array of FAQ items with question and answer only
  */
@@ -27,10 +27,5 @@ export async function GET() {
     .filter((item) => item.question && item.answer);
 
   const payload = items.length >= MIN_ITEMS ? items : [];
-  return NextResponse.json(payload, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=86400',
-    },
-  });
+  return aiJsonResponse(payload);
 }

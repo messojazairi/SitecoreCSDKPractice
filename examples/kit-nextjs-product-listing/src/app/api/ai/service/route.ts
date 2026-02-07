@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { aiJsonResponse } from '@/lib/ai-json-response';
 
 /**
- * Revalidation period for the service.json endpoint (1 hour)
- * Uses Incremental Static Regeneration for optimal caching
+ * Revalidation period for the service endpoint (1 hour).
+ * Uses Incremental Static Regeneration for optimal caching.
  */
 export const revalidate = 3600;
 
@@ -19,7 +19,7 @@ interface Service {
 }
 
 /**
- * Response structure for the service.json endpoint
+ * Response structure for the service endpoint
  */
 interface ServiceResponse {
   /** Array of services offered by the site */
@@ -29,23 +29,29 @@ interface ServiceResponse {
 }
 
 /**
- * Services and capabilities for the Solterra & Co. Article Starter Kit
+ * Services and capabilities for the SYNC Product Listing Starter Kit
  *
- * This starter is an editorial-style template designed for lifestyle brands,
- * featuring article publishing, content management, and multi-locale support.
+ * This starter is a product-focused template designed for audio gear companies,
+ * featuring product catalogs, filtering, and e-commerce-ready components.
  */
 const services: Service[] = [
   {
-    name: 'Editorial Content Publishing',
+    name: 'Product Catalog Display',
     description:
-      'Publish and manage editorial articles with rich text, images, and multimedia content for lifestyle and brand storytelling.',
-    category: 'Content Management',
+      'Display and browse product catalogs with rich product information, images, and specifications.',
+    category: 'E-Commerce',
   },
   {
-    name: 'Article Category Organization',
+    name: 'Product Filtering and Search',
     description:
-      'Organize articles into categories and topics for improved content discovery and navigation.',
-    category: 'Content Management',
+      'Filter and search products by category, features, price range, and other product attributes.',
+    category: 'E-Commerce',
+  },
+  {
+    name: 'Product Detail Pages',
+    description:
+      'View comprehensive product details including specifications, features, images, and related products.',
+    category: 'E-Commerce',
   },
   {
     name: 'Multi-Locale Content Delivery',
@@ -66,6 +72,12 @@ const services: Service[] = [
     category: 'Development',
   },
   {
+    name: 'Image Gallery and Carousel',
+    description:
+      'Showcase products with interactive image galleries, carousels, and zoom functionality.',
+    category: 'Media',
+  },
+  {
     name: 'Responsive Image Optimization',
     description:
       'Automatically optimize and serve images in modern formats with responsive sizing for optimal performance.',
@@ -78,6 +90,12 @@ const services: Service[] = [
     category: 'SEO',
   },
   {
+    name: 'Theme Customization',
+    description:
+      'Customize site appearance with dark/light mode toggle and configurable design tokens.',
+    category: 'Design',
+  },
+  {
     name: 'Content Preview and Editing',
     description:
       'Preview content changes in real-time with integrated XM Cloud editing experience support.',
@@ -86,35 +104,23 @@ const services: Service[] = [
 ];
 
 /**
- * API route handler for serving AI service metadata
+ * Serves /ai/service.json (via rewrite) – site services and capabilities for AI assistants (GEO).
  *
  * Exposes structured information about the site's services and capabilities
- * for AI assistants and search engines following GEO (Generative Engine Optimization) best practices.
+ * for AI assistants and search engines. Application/json, Cache-Control 1h with
+ * stale-while-revalidate. Publicly accessible.
  *
- * @returns {Promise<NextResponse<ServiceResponse>>} JSON response with services array and lastModified timestamp
- *
- * @example
- * // Response format:
- * {
- *   "services": [
- *     {
- *       "name": "Editorial Content Publishing",
- *       "description": "Publish and manage editorial articles...",
- *       "category": "Content Management"
- *     }
- *   ],
- *   "lastModified": "2026-02-03T10:00:00.000Z"
- * }
+ * @returns JSON response with services array and lastModified timestamp
  */
-export async function GET(): Promise<NextResponse<ServiceResponse>> {
+export async function GET() {
   const response: ServiceResponse = {
     services,
     lastModified: new Date().toISOString(),
   };
 
-  return NextResponse.json(response, {
-    headers: {
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
-    },
+  return aiJsonResponse(response, {
+    maxAge: 3600,
+    sMaxAge: 3600,
+    staleWhileRevalidate: 86400,
   });
 }

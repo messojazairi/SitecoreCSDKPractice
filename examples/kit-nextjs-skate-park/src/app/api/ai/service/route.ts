@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { aiJsonResponse } from '@/lib/ai-json-response';
 
 /**
- * Revalidation period for the service.json endpoint (1 hour)
- * Uses Incremental Static Regeneration for optimal caching
+ * Revalidation period for the service endpoint (1 hour).
+ * Uses Incremental Static Regeneration for optimal caching.
  */
 export const revalidate = 3600;
 
@@ -19,7 +19,7 @@ interface Service {
 }
 
 /**
- * Response structure for the service.json endpoint
+ * Response structure for the service endpoint
  */
 interface ServiceResponse {
   /** Array of services offered by the site */
@@ -86,35 +86,23 @@ const services: Service[] = [
 ];
 
 /**
- * API route handler for serving AI service metadata
+ * Serves /ai/service.json (via rewrite) – site services and capabilities for AI assistants (GEO).
  *
  * Exposes structured information about the site's services and capabilities
- * for AI assistants and search engines following GEO (Generative Engine Optimization) best practices.
+ * for AI assistants and search engines. Application/json, Cache-Control 1h with
+ * stale-while-revalidate. Publicly accessible.
  *
- * @returns {Promise<NextResponse<ServiceResponse>>} JSON response with services array and lastModified timestamp
- *
- * @example
- * // Response format:
- * {
- *   "services": [
- *     {
- *       "name": "Component Showcase",
- *       "description": "Explore and learn from a variety of pre-built components...",
- *       "category": "Development"
- *     }
- *   ],
- *   "lastModified": "2026-02-03T10:00:00.000Z"
- * }
+ * @returns JSON response with services array and lastModified timestamp
  */
-export async function GET(): Promise<NextResponse<ServiceResponse>> {
+export async function GET() {
   const response: ServiceResponse = {
     services,
     lastModified: new Date().toISOString(),
   };
 
-  return NextResponse.json(response, {
-    headers: {
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
-    },
+  return aiJsonResponse(response, {
+    maxAge: 3600,
+    sMaxAge: 3600,
+    staleWhileRevalidate: 86400,
   });
 }

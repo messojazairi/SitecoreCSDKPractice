@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { aiJsonResponse } from '@/lib/ai-json-response';
 
 /**
- * Revalidation period for the service.json endpoint (1 hour)
- * Uses Incremental Static Regeneration for optimal caching
+ * Revalidation period for the service endpoint (1 hour).
+ * Uses Incremental Static Regeneration for optimal caching.
  */
 export const revalidate = 3600;
 
@@ -19,7 +19,7 @@ interface Service {
 }
 
 /**
- * Response structure for the service.json endpoint
+ * Response structure for the service endpoint
  */
 interface ServiceResponse {
   /** Array of services offered by the site */
@@ -29,35 +29,23 @@ interface ServiceResponse {
 }
 
 /**
- * Services and capabilities for the Alaris Location Finder Starter Kit
+ * Services and capabilities for the Solterra & Co. Article Starter Kit
  *
- * This starter is a car brand template designed with location finder functionality,
- * featuring dealer locators, geo-targeting, and location-based services.
+ * This starter is an editorial-style template designed for lifestyle brands,
+ * featuring article publishing, content management, and multi-locale support.
  */
 const services: Service[] = [
   {
-    name: 'Location Finder',
+    name: 'Editorial Content Publishing',
     description:
-      'Find nearby locations, dealers, or service centers using address search, zip code lookup, or geolocation.',
-    category: 'Location Services',
+      'Publish and manage editorial articles with rich text, images, and multimedia content for lifestyle and brand storytelling.',
+    category: 'Content Management',
   },
   {
-    name: 'Dealer Locator',
+    name: 'Article Category Organization',
     description:
-      'Locate authorized dealers and service centers with detailed contact information, hours, and directions.',
-    category: 'Location Services',
-  },
-  {
-    name: 'Distance-Based Search',
-    description:
-      'Search for locations within a specified radius with distance calculations and sorted results.',
-    category: 'Location Services',
-  },
-  {
-    name: 'Location Details',
-    description:
-      'View comprehensive location information including address, phone, hours of operation, and available services.',
-    category: 'Location Services',
+      'Organize articles into categories and topics for improved content discovery and navigation.',
+    category: 'Content Management',
   },
   {
     name: 'Multi-Locale Content Delivery',
@@ -98,35 +86,23 @@ const services: Service[] = [
 ];
 
 /**
- * API route handler for serving AI service metadata
+ * Serves /ai/service.json (via rewrite) – site services and capabilities for AI assistants (GEO).
  *
  * Exposes structured information about the site's services and capabilities
- * for AI assistants and search engines following GEO (Generative Engine Optimization) best practices.
+ * for AI assistants and search engines. Application/json, Cache-Control 1h with
+ * stale-while-revalidate. Publicly accessible.
  *
- * @returns {Promise<NextResponse<ServiceResponse>>} JSON response with services array and lastModified timestamp
- *
- * @example
- * // Response format:
- * {
- *   "services": [
- *     {
- *       "name": "Location Finder",
- *       "description": "Find nearby locations, dealers, or service centers...",
- *       "category": "Location Services"
- *     }
- *   ],
- *   "lastModified": "2026-02-03T10:00:00.000Z"
- * }
+ * @returns JSON response with services array and lastModified timestamp
  */
-export async function GET(): Promise<NextResponse<ServiceResponse>> {
+export async function GET() {
   const response: ServiceResponse = {
     services,
     lastModified: new Date().toISOString(),
   };
 
-  return NextResponse.json(response, {
-    headers: {
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
-    },
+  return aiJsonResponse(response, {
+    maxAge: 3600,
+    sMaxAge: 3600,
+    staleWhileRevalidate: 86400,
   });
 }

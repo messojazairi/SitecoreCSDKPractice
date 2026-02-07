@@ -1,9 +1,11 @@
 /**
- * API route for /ai/summary.json – authoritative summary for AI crawlers.
+ * Serves /ai/summary.json (via rewrite) – authoritative summary for AI crawlers.
  *
  * Provides a short (<800 characters) summary so AI systems can understand what the site
- * is about. Served as application/json with Cache-Control. Publicly accessible.
+ * is about. Application/json, Cache-Control 24h. Publicly accessible.
  */
+
+import { aiJsonResponse } from '@/lib/ai-json-response';
 
 const MAX_DESCRIPTION_LENGTH = 800;
 
@@ -31,11 +33,5 @@ export async function GET() {
     lastModified: new Date().toISOString(),
   };
 
-  return new Response(JSON.stringify(payload, null, 2), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=86400',
-    },
-  });
+  return aiJsonResponse(payload);
 }
