@@ -18,10 +18,6 @@ import { generateWebPageSchema } from '@/lib/structured-data/schema';
 // This ensures all pages are rendered on-demand rather than pre-rendered at build time
 export const dynamic = 'force-dynamic';
 
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
-
 type PageProps = {
   params: Promise<{
     site: string;
