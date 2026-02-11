@@ -15,7 +15,7 @@ import {
   generateProductSchema,
 } from 'src/lib/structured-data/schema';
 import { StructuredData } from '@/components/structured-data/StructuredData';
-import { getBaseUrl, getFullUrl } from '@/lib/utils';
+import { getFullUrl } from '@/lib/utils';
 
 type PageProps = {
   params: Promise<{
@@ -64,12 +64,12 @@ export default async function Page({ params, searchParams }: PageProps) {
   const isProductPage = path && path[0] === 'Products';
   const productSchema = isProductPage
     ? generateProductSchema(
-        pageTitle,
-        fields?.pageSummary?.value?.toString() || pageDescription,
-        fields?.thumbnailImage?.value?.src || fields?.ogImage?.value?.src,
-        fullUrl,
-        undefined // Price not available on detail pages by default
-      )
+      pageTitle,
+      fields?.pageSummary?.value?.toString() || pageDescription,
+      fields?.thumbnailImage?.value?.src || fields?.ogImage?.value?.src,
+      fullUrl,
+      undefined // Price not available on detail pages by default
+    )
     : null;
 
   return (
@@ -97,8 +97,8 @@ export const generateStaticParams = async () => {
     const defaultSite = scConfig.defaultSite;
     const allowedSites = defaultSite
       ? sites
-          .filter((site: SiteInfo) => site.name === defaultSite)
-          .map((site: SiteInfo) => site.name)
+        .filter((site: SiteInfo) => site.name === defaultSite)
+        .map((site: SiteInfo) => site.name)
       : sites.map((site: SiteInfo) => site.name);
     return await client.getAppRouterStaticParams(
       allowedSites,
@@ -117,11 +117,15 @@ export const generateStaticParams = async () => {
  */
 export const generateMetadata = async ({ params }: PageProps) => {
   const headersList = await headers();
-  const host = headersList.get('host');
+  const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl = `${protocol}://${host}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
 
   const { site, locale, path } = await params;
+
+  // Canonical URL: base URL + content path only (no site/locale segments)
+  const pathSegment = path?.length ? `/${path.join('/')}` : '';
+  const canonicalUrl = baseUrl ? `${baseUrl}${pathSegment}` : undefined;
 
   // The same call as for rendering the page. Should be cached by default react behavior
   const page = await client.getPage(path ?? [], { site, locale });
@@ -163,13 +167,23 @@ export const generateMetadata = async ({ params }: PageProps) => {
       : `${baseUrl}${imageSource.startsWith('/') ? '' : '/'}${imageSource}`
     : undefined;
 
-  // Construct the full page URL
-  const pagePath = path ? `/${path.join('/')}` : '';
-  const pageUrl = `${baseUrl}${pagePath}`;
+  const pageUrl = canonicalUrl;
+
+  // Parse keywords from comma-separated string to array (for <meta name="keywords">)
+  const keywordsString = routeFields?.metadataKeywords?.value?.toString() || '';
+  const keywords = keywordsString
+    ? keywordsString.split(',').map((k: string) => k.trim())
+    : [];
 
   return {
     title: metadataTitle,
     description: metadataDescription,
+    ...(keywords.length > 0 && { keywords }),
+    ...(canonicalUrl && {
+      alternates: {
+        canonical: canonicalUrl,
+      },
+    }),
     openGraph: {
       title: ogTitle,
       description: ogDescription,
@@ -179,13 +193,13 @@ export const generateMetadata = async ({ params }: PageProps) => {
       locale: locale || 'en',
       images: ogImageUrl
         ? [
-            {
-              url: ogImageUrl,
-              width: 1200,
-              height: 630,
-              alt: ogTitle,
-            },
-          ]
+          {
+            url: ogImageUrl,
+            width: 1200,
+            height: 630,
+            alt: ogTitle,
+          },
+        ]
         : undefined,
     },
     twitter: {
