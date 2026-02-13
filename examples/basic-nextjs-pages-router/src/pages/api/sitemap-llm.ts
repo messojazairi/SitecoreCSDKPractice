@@ -5,12 +5,7 @@ import type { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import scClient from 'lib/sitecore-client';
 import sites from '.sitecore/sites.json';
 
-// Allowed URL patterns for LLM sitemap (only these paths from Sitecore data are included)
-const ALLOWED_PATTERNS: RegExp[] = [
-  /^\/$/i, // Home page
-];
-
-// Excluded URL patterns (api, sitemap, robots, errors, assets)
+// Excluded URL patterns only (all other pages from Sitecore are included)
 const EXCLUDED_PATTERNS: RegExp[] = [
   /\/404/i,
   /\/api\//i,
@@ -24,12 +19,11 @@ const EXCLUDED_PATTERNS: RegExp[] = [
   /\?/i,
 ];
 
-/** Include URL only if it matches an allowed pattern and does not match any excluded pattern. */
+/** Include URL if it does not match any excluded pattern. */
 function shouldIncludeUrl(url: string): boolean {
   try {
     const urlPath = new URL(url).pathname;
-    if (EXCLUDED_PATTERNS.some((pattern) => pattern.test(urlPath))) return false;
-    return ALLOWED_PATTERNS.some((pattern) => pattern.test(urlPath));
+    return !EXCLUDED_PATTERNS.some((pattern) => pattern.test(urlPath));
   } catch {
     return false;
   }
