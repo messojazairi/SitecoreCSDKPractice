@@ -26,9 +26,18 @@ interface PromoContentProps extends PromoProps {
   renderText: (fields: Fields) => JSX.Element;
 }
 
+function getBaseUrl(): string {
+  return (
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    'http://localhost:3000'
+  );
+}
+
 const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { fields, params, renderText } = props;
   const { styles, RenderingIdentifier: id } = params;
+  const baseUrl = getBaseUrl();
 
   const Wrapper = ({ children }: { children: JSX.Element }): JSX.Element => (
     <article
@@ -49,6 +58,21 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
     );
   }
 
+  const linkValue =
+    fields.PromoLink?.value ??
+    (fields.PromoLink as { jsonValue?: { value?: { href?: string; title?: string; text?: string } } })
+      ?.jsonValue?.value;
+  const linkHref = linkValue?.href;
+  const productUrl =
+    linkHref && typeof linkHref === 'string'
+      ? linkHref.startsWith('http')
+        ? linkHref
+        : baseUrl + (linkHref.startsWith('/') ? linkHref : `/${linkHref}`)
+      : baseUrl;
+
+  const nameFromLink = linkValue?.title ?? linkValue?.text;
+  const nameFromRichText = fields.PromoText?.value ? String(fields.PromoText.value) : undefined;
+
   return (
     <Wrapper>
       <>
@@ -61,11 +85,10 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
         <StructuredData
           id={`jsonld-product-${id ?? 'promo'}`}
           data={buildProductJsonLd({
-            name:
-              fields.PromoLink?.value?.title ||
-              (fields.PromoText?.value ? String(fields.PromoText.value) : undefined),
-            descriptionHtml: fields.PromoText?.value ? String(fields.PromoText.value) : undefined,
-            url: fields.PromoLink?.value?.href,
+            name: nameFromLink ?? undefined,
+            nameHtml: nameFromLink ? undefined : nameFromRichText,
+            descriptionHtml: nameFromRichText,
+            url: productUrl,
             image: (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src,
           })}
         />
