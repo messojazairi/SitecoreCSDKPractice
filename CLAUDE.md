@@ -1,6 +1,20 @@
 # Project Context
 
-### Repository Overview
+## Table of Contents
+
+- [Repository Overview](#repository-overview)
+- [Technology Stack](#technology-stack)
+- [Development Principles](#development-principles)
+- [Constraints and Guidelines](#constraints-and-guidelines)
+- [Code Style](#code-style)
+- [General Coding Principles](#general-coding-principles)
+- [JavaScript/TypeScript Rules](#javascripttypescript-rules)
+- [Sitecore XM Cloud Rules](#sitecore-xm-cloud-rules)
+- [Next.js Development Patterns](#nextjs-development-patterns)
+- [Testing Patterns](#testing-patterns)
+- [Safety Rules](#safety-rules)
+
+## Repository Overview
 
 This is the **XM Cloud Front End Application Starter Kits** repository containing multiple Next.js starter applications and SPA examples for Sitecore XM Cloud development.
 
@@ -24,7 +38,7 @@ Each starter demonstrates:
 - Modular component architecture with variants
 - Localization support for English (en) and Canadian English (en-CA)
 
-### Technology Stack
+## Technology Stack
 
 **Core Technologies:**
 - **Next.js 14+** - React framework with App Router and Pages Router support
@@ -45,7 +59,7 @@ Each starter demonstrates:
 - **Node.js LTS** - JavaScript runtime environment
 - **npm** - Package management across all starter applications
 
-### Development Principles
+## Development Principles
 
 **Multi-Starter Architecture:**
 - Each example is a standalone application
@@ -59,7 +73,7 @@ Each starter demonstrates:
 - Support for both connected and disconnected development modes
 - Proper handling of content authoring scenarios
 
-### Constraints and Guidelines
+## Constraints and Guidelines
 
 **File Organization:**
 - Each starter maintains its own `src/` directory structure

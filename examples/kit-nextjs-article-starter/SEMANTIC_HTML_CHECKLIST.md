@@ -2,9 +2,18 @@
 
 Quick checklist for semantic HTML and structured data implementation.
 
+## Table of Contents
+
+- [Quick Implementation Examples](#quick-implementation-examples)
+- [Component Checklist](#component-checklist)
+- [Quick Validation](#quick-validation)
+- [Best Practices](#best-practices)
+- [Maintenance](#maintenance)
+
 ## Quick Implementation Examples
 
 ### Article with Schema
+
 ```tsx
 <article itemScope itemType="https://schema.org/Article">
   <header>
@@ -14,6 +23,7 @@ Quick checklist for semantic HTML and structured data implementation.
 ```
 
 ### Figure with Caption
+
 ```tsx
 <figure>
   <ImageWrapper image={image} />
@@ -22,6 +32,7 @@ Quick checklist for semantic HTML and structured data implementation.
 ```
 
 ### Navigation
+
 ```tsx
 <nav aria-label="Breadcrumb">
   {/* Navigation links */}
@@ -50,6 +61,7 @@ Quick checklist for semantic HTML and structured data implementation.
 ## Best Practices
 
 ✅ **Do:**
+
 - Use semantic HTML instead of `<div>` where appropriate
 - Include `dateTime` attribute in ISO 8601 format for `<time>`
 - Add `aria-label` to `<nav>` elements
@@ -57,6 +69,7 @@ Quick checklist for semantic HTML and structured data implementation.
 - Only one `<main>` per page
 
 ❌ **Don't:**
+
 - Use generic divs for semantic content
 - Skip headings in `<section>` elements
 - Forget `dateTime` on `<time>` elements
@@ -65,6 +78,7 @@ Quick checklist for semantic HTML and structured data implementation.
 ## Maintenance
 
 Review this checklist when:
+
 - Adding new components
 - Updating semantic standards
 - During code reviews
