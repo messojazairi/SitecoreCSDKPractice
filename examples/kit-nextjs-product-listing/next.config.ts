@@ -59,6 +59,11 @@ const nextConfig: NextConfig = {
         locale: false,
       },
       {
+        source: '/llms.txt',
+        destination: '/api/llms-txt',
+        locale: false,
+      },
+      {
         source: '/ai/summary.json',
         destination: '/api/ai/summary',
         locale: false,
