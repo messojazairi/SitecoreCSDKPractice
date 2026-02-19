@@ -20,9 +20,9 @@ The site showcases audio products, speaker lineups, and video content in a comme
 - [Home](${baseUrl}/): Brand landing and featured products
 - [Speakers](${baseUrl}/Speakers): Speaker product listing and catalog
 - [Video](${baseUrl}/Video): Video content and product demos
-- [Heritage-10](${baseUrl}/Heritage-10): Heritage-10 product and details
-- [Heritage-30](${baseUrl}/Heritage-30): Heritage-30 product and details
-- [Heritage-50](${baseUrl}/Heritage-50): Heritage-50 product and details
+- [Heritage-10](${baseUrl}/Speakers/Heritage-10): Heritage-10 product and details
+- [Heritage-30](${baseUrl}/Speakers/Heritage-30): Heritage-30 product and details
+- [Heritage-50](${baseUrl}/Speakers/Heritage-50): Heritage-50 product and details
 
 ## Optional
 
