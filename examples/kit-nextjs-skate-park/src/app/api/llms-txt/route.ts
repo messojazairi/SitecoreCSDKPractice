@@ -9,20 +9,16 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const baseUrl = new URL(request.url).origin;
 
-  const content = `# SYNC
+  const content = `# Skate Park Demo Site
 
-> SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.
+> A demo site showcasing Sitecore XM Cloud component examples, patterns, and Next.js integration for developers and content authors.
 
-The site showcases audio products, speaker lineups, and video content in a commerce-oriented layout. Content is managed in Sitecore and delivered headlessly.
+This site demonstrates reusable components, layout variants, and content authoring workflows. It includes an About section and serves as a reference for building XM Cloud front-end applications.
 
 ## Key pages
 
-- [Home](${baseUrl}/): Brand landing and featured products
-- [Speakers](${baseUrl}/Speakers): Speaker product listing and catalog
-- [Video](${baseUrl}/Video): Video content and product demos
-- [Heritage-10](${baseUrl}/Heritage-10): Heritage-10 product and details
-- [Heritage-30](${baseUrl}/Heritage-30): Heritage-30 product and details
-- [Heritage-50](${baseUrl}/Heritage-50): Heritage-50 product and details
+- [Home](${baseUrl}/): Demo landing and component overview
+- [About](${baseUrl}/About): Site and component library overview
 
 ## Optional
 

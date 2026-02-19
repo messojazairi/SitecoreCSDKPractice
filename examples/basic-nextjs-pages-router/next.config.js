@@ -55,6 +55,10 @@ const nextConfig = {
         source: '/robots.txt',
         destination: '/api/robots',
       },
+      {
+        source: '/llms.txt',
+        destination: '/api/llms-txt',
+      },
       // sitemap route
       {
         source: '/sitemap:id([\\w-]{0,}).xml',

@@ -9,20 +9,19 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const baseUrl = new URL(request.url).origin;
 
-  const content = `# SYNC
+  const content = `# Alaris
 
-> SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.
+> Alaris is a car brand template with a location finder, showcasing vehicle lineups and helping visitors find dealers and test drive options.
 
-The site showcases audio products, speaker lineups, and video content in a commerce-oriented layout. Content is managed in Sitecore and delivered headlessly.
+The site highlights product models (Aero, Terra, Nexa), supports test drive discovery, and provides dealer locator functionality. Built with Next.js and Sitecore XM Cloud.
 
 ## Key pages
 
-- [Home](${baseUrl}/): Brand landing and featured products
-- [Speakers](${baseUrl}/Speakers): Speaker product listing and catalog
-- [Video](${baseUrl}/Video): Video content and product demos
-- [Heritage-10](${baseUrl}/Heritage-10): Heritage-10 product and details
-- [Heritage-30](${baseUrl}/Heritage-30): Heritage-30 product and details
-- [Heritage-50](${baseUrl}/Heritage-50): Heritage-50 product and details
+- [Home](${baseUrl}/): Brand overview and featured vehicles
+- [Products - Aero](${baseUrl}/Products/Aero): Aero model information
+- [Products - Terra](${baseUrl}/Products/Terra): Terra model information
+- [Products - Nexa](${baseUrl}/Products/Nexa): Nexa model information
+- [Test Drive](${baseUrl}/Test-Drive): Test drive and dealer locator
 
 ## Optional
 

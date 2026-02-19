@@ -9,20 +9,18 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const baseUrl = new URL(request.url).origin;
 
-  const content = `# SYNC
+  const content = `# Solterra & Co.
 
-> SYNC is a product-focused template for audio gear companies, featuring speaker and product listings plus video content, built with Next.js and Sitecore XM Cloud.
+> Solterra & Co. is an editorial-style lifestyle brand site built with Next.js and Sitecore XM Cloud, featuring articles, storytelling, and content-driven experiences.
 
-The site showcases audio products, speaker lineups, and video content in a commerce-oriented layout. Content is managed in Sitecore and delivered headlessly.
+The site offers a curated reading experience with hero sections, article listings, and full article pages. Content is managed in Sitecore and delivered headlessly. Supports English and Canadian English.
 
 ## Key pages
 
-- [Home](${baseUrl}/): Brand landing and featured products
-- [Speakers](${baseUrl}/Speakers): Speaker product listing and catalog
-- [Video](${baseUrl}/Video): Video content and product demos
-- [Heritage-10](${baseUrl}/Heritage-10): Heritage-10 product and details
-- [Heritage-30](${baseUrl}/Heritage-30): Heritage-30 product and details
-- [Heritage-50](${baseUrl}/Heritage-50): Heritage-50 product and details
+- [Home](${baseUrl}/): Brand landing and featured content
+- [Articles](${baseUrl}/Articles): Article listing and editorial index
+- [Article page](${baseUrl}/Article-Page): Full article layout and reading experience
+- [Landing page](${baseUrl}/Landing-Page): Full landing page layout and experience
 
 ## Optional
 
