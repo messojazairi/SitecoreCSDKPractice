@@ -32,6 +32,11 @@ function getBaseUrl(): string {
     return envBaseUrl;
   }
 
+  // On preview deployments, prefer the stable production project URL for canonical schema URLs.
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+
   // Preview deployments expose a host at runtime.
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
