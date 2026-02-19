@@ -27,11 +27,45 @@ interface PromoContentProps extends PromoProps {
 }
 
 function getBaseUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.NEXT_PUBLIC_BASE_URL ||
-    'http://localhost:3000'
-  );
+  const envBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL;
+  if (envBaseUrl) {
+    return envBaseUrl;
+  }
+
+  // Preview deployments expose a host at runtime.
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // Local development fallback.
+  if (process.env.NODE_ENV === 'development') {
+    const port = process.env.PORT || '3000';
+    return `http://localhost:${port}`;
+  }
+
+  // In non-dev environments without a configured site URL, avoid producing incorrect absolute URLs.
+  return '';
+}
+
+function buildAbsoluteUrl(baseUrl: string, href?: string): string | undefined {
+  if (!href || typeof href !== 'string') {
+    return baseUrl || undefined;
+  }
+
+  if (href.startsWith('http://') || href.startsWith('https://')) {
+    return href;
+  }
+
+  if (!baseUrl) {
+    return undefined;
+  }
+
+  return `${baseUrl}${href.startsWith('/') ? href : `/${href}`}`;
+}
+
+function getJsonLdProductUrl(baseUrl: string, linkHref?: string): string | undefined {
+  // Prefer the linked destination when available; otherwise fall back to the site root.
+  return buildAbsoluteUrl(baseUrl, linkHref);
 }
 
 const PromoContent = (props: PromoContentProps): JSX.Element => {
@@ -63,12 +97,8 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
     (fields.PromoLink as { jsonValue?: { value?: { href?: string; title?: string; text?: string } } })
       ?.jsonValue?.value;
   const linkHref = linkValue?.href;
-  const productUrl =
-    linkHref && typeof linkHref === 'string'
-      ? linkHref.startsWith('http')
-        ? linkHref
-        : baseUrl + (linkHref.startsWith('/') ? linkHref : `/${linkHref}`)
-      : baseUrl;
+  const productUrl = getJsonLdProductUrl(baseUrl, linkHref);
+  const imageSource = (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src;
 
   const nameFromLink = linkValue?.title ?? linkValue?.text;
   const nameFromRichText = fields.PromoText?.value ? String(fields.PromoText.value) : undefined;
@@ -89,13 +119,13 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
             nameHtml: nameFromLink ? undefined : nameFromRichText,
             descriptionHtml: nameFromRichText,
             url: productUrl,
-            image: (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src,
+            image: imageSource,
           })}
         />
       </>
     </Wrapper>
   );
-};
+}
 
 export const Default = (props: PromoProps): JSX.Element => {
   const renderText = (fields: Fields) => (
