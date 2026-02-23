@@ -89,10 +89,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const options = getSitemapOptions(req);
     let urls: { loc: string; lastmod?: string; changefreq?: string; priority?: string }[] = [];
 
     try {
-      const options = getSitemapOptions(req);
       const xml = await scClient.getSiteMap(options);
       if (xml) {
         urls = parseUrlEntriesFromXml(xml);
@@ -116,15 +116,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const today = new Date().toISOString().split('T')[0];
-    const entries = urls
+    let baseUrl = `${options.reqProtocol}://${options.reqHost}`;
+    if (urls.length > 0) {
+      try {
+        baseUrl = new URL(urls[0].loc).origin;
+      } catch {
+        // keep request-based baseUrl
+      }
+    }
+
+    const pageEntries = urls
       .filter((u) => shouldIncludeUrl(u.loc))
       .map((u) => `  <url>
     <loc>${escapeXml(u.loc)}</loc>
     <lastmod>${u.lastmod || today}</lastmod>
     <changefreq>${u.changefreq || 'weekly'}</changefreq>
     <priority>${u.priority || '0.5'}</priority>
-  </url>`)
-      .join('\n');
+  </url>`);
+
+    const aiEndpoints = ['/ai/faq.json', '/ai/summary.json', '/ai/service.json'] as const;
+    const aiEntries = aiEndpoints.map(
+      (path) => `  <url>
+    <loc>${escapeXml(`${baseUrl}${path}`)}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`
+    );
+
+    const entries =
+      pageEntries.length > 0 ? [...pageEntries, ...aiEntries].join('\n') : '';
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
