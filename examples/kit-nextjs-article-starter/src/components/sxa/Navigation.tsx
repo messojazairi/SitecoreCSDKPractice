@@ -1,14 +1,12 @@
-'use client'
-
 import React, { type JSX } from 'react';
 import {
   LinkField,
   Text,
   TextField,
-  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { NavigationMenuToggle } from './NavigationMenuToggle.client';
 import { NavigationList } from './NavigationList.client';
+import { ComponentProps } from 'lib/component-props';
 
 export interface Fields {
   Id: string;
@@ -21,7 +19,7 @@ export interface Fields {
   Styles: string[];
 }
 
-export type NavigationProps = {
+export type NavigationProps = ComponentProps & {
   params?: { [key: string]: string };
   fields: Fields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
@@ -68,7 +66,8 @@ const getLinkTitle = (props: { fields: Fields }): string | undefined => {
  * Pass isEditing as prop from parent when rendering in editing context.
  */
 export const Default = (props: NavigationProps): JSX.Element => {
-  const { page } = useSitecore()
+  const { page } = props;
+
   const styles =
     props.params != null
       ? `${props.params.GridParameters ?? ''} ${props.params.Styles ?? ''}`.trimEnd()

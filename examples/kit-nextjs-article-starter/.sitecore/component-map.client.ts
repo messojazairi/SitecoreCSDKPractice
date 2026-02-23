@@ -7,7 +7,6 @@ import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
 import * as VideoModaldev from 'src/components/video/VideoModal.dev';
 import * as Video from 'src/components/video/Video';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
-import * as TopicItemdev from 'src/components/topic-listing/TopicItem.dev';
 import * as themeproviderdev from 'src/components/theme-provider/theme-provider.dev';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
 import * as Title from 'src/components/sxa/Title';
@@ -51,7 +50,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['VideoModal', { ...VideoModaldev }],
   ['Video', { ...Video }],
   ['VerticalImageAccordion', { ...VerticalImageAccordion }],
-  ['TopicItem', { ...TopicItemdev }],
   ['theme-provider', { ...themeproviderdev }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
   ['Title', { ...Title }],
