@@ -12,7 +12,8 @@ import * as themeproviderdev from 'src/components/theme-provider/theme-provider.
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
 import * as Title from 'src/components/sxa/Title';
 import * as PageContent from 'src/components/sxa/PageContent';
-import * as Navigation from 'src/components/sxa/Navigation';
+import * as NavigationMenuToggleclient from 'src/components/sxa/NavigationMenuToggle.client';
+import * as NavigationListclient from 'src/components/sxa/NavigationList.client';
 import * as Image from 'src/components/sxa/Image';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
@@ -28,7 +29,7 @@ import * as MediaSectiondev from 'src/components/media-section/MediaSection.dev'
 import * as meteors from 'src/components/magicui/meteors';
 import * as LogoTabs from 'src/components/logo-tabs/LogoTabs';
 import * as nextImageSrcdev from 'src/components/image/nextImageSrc.dev';
-import * as ImageWrapperdev from 'src/components/image/ImageWrapper.dev';
+import * as ImageWrapperclient from 'src/components/image/ImageWrapper.client';
 import * as imageoptimizationcontext from 'src/components/image/image-optimization.context';
 import * as Icon from 'src/components/icon/Icon';
 import * as Hero from 'src/components/hero/Hero';
@@ -55,7 +56,8 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TestimonialCarousel', { ...TestimonialCarousel }],
   ['Title', { ...Title }],
   ['PageContent', { ...PageContent }],
-  ['Navigation', { ...Navigation }],
+  ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
+  ['NavigationList', { ...NavigationListclient }],
   ['Image', { ...Image }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
   ['SecondaryNavigation', { ...SecondaryNavigation }],
@@ -71,7 +73,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['meteors', { ...meteors }],
   ['LogoTabs', { ...LogoTabs }],
   ['nextImageSrc', { ...nextImageSrcdev }],
-  ['ImageWrapper', { ...ImageWrapperdev }],
+  ['ImageWrapper', { ...ImageWrapperclient }],
   ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...Icon }],
   ['Hero', { ...Hero }],
