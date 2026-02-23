@@ -26,57 +26,9 @@ interface PromoContentProps extends PromoProps {
   renderText: (fields: Fields) => JSX.Element;
 }
 
-function getBaseUrl(): string {
-  const envBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL;
-  if (envBaseUrl) {
-    return envBaseUrl;
-  }
-
-  // On preview deployments, prefer the stable production project URL for canonical schema URLs.
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-
-  // Preview deployments expose a host at runtime.
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  // Local development fallback.
-  if (process.env.NODE_ENV === 'development') {
-    const port = process.env.PORT || '3000';
-    return `http://localhost:${port}`;
-  }
-
-  // In non-dev environments without a configured site URL, avoid producing incorrect absolute URLs.
-  return '';
-}
-
-function buildAbsoluteUrl(baseUrl: string, href?: string): string | undefined {
-  if (!href || typeof href !== 'string') {
-    return baseUrl || undefined;
-  }
-
-  if (href.startsWith('http://') || href.startsWith('https://')) {
-    return href;
-  }
-
-  if (!baseUrl) {
-    return undefined;
-  }
-
-  return `${baseUrl}${href.startsWith('/') ? href : `/${href}`}`;
-}
-
-function getJsonLdProductUrl(baseUrl: string, linkHref?: string): string | undefined {
-  // Prefer the linked destination when available; otherwise fall back to the site root.
-  return buildAbsoluteUrl(baseUrl, linkHref);
-}
-
 const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { fields, params, renderText } = props;
   const { styles, RenderingIdentifier: id } = params;
-  const baseUrl = getBaseUrl();
 
   const Wrapper = ({ children }: { children: JSX.Element }): JSX.Element => (
     <article
@@ -97,17 +49,6 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
     );
   }
 
-  const linkValue =
-    fields.PromoLink?.value ??
-    (fields.PromoLink as { jsonValue?: { value?: { href?: string; title?: string; text?: string } } })
-      ?.jsonValue?.value;
-  const linkHref = linkValue?.href;
-  const productUrl = getJsonLdProductUrl(baseUrl, linkHref);
-  const imageSource = (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src;
-
-  const nameFromLink = linkValue?.title ?? linkValue?.text;
-  const nameFromRichText = fields.PromoText?.value ? String(fields.PromoText.value) : undefined;
-
   return (
     <Wrapper>
       <>
@@ -120,17 +61,18 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
         <StructuredData
           id={`jsonld-product-${id ?? 'promo'}`}
           data={buildProductJsonLd({
-            name: nameFromLink ?? undefined,
-            nameHtml: nameFromLink ? undefined : nameFromRichText,
-            descriptionHtml: nameFromRichText,
-            url: productUrl,
-            image: imageSource,
+            name:
+              fields.PromoLink?.value?.title ||
+              (fields.PromoText?.value ? String(fields.PromoText.value) : undefined),
+            descriptionHtml: fields.PromoText?.value ? String(fields.PromoText.value) : undefined,
+            url: fields.PromoLink?.value?.href,
+            image: (fields.PromoIcon as unknown as { value?: { src?: string } })?.value?.src,
           })}
         />
       </>
     </Wrapper>
   );
-}
+};
 
 export const Default = (props: PromoProps): JSX.Element => {
   const renderText = (fields: Fields) => (

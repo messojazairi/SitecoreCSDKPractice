@@ -1,5 +1,89 @@
 import type { JsonLdValue } from 'src/lib/structured-data/jsonld';
 
+export interface WebSiteSchema {
+  '@context': 'https://schema.org';
+  '@type': 'WebSite';
+  name: string;
+  url: string;
+  description?: string;
+  potentialAction?: {
+    '@type': 'SearchAction';
+    target: string;
+    'query-input': string;
+  };
+}
+
+export interface OrganizationSchema {
+  '@context': 'https://schema.org';
+  '@type': 'Organization';
+  name: string;
+  url: string;
+  logo?: string;
+  description?: string;
+}
+
+/**
+ * Generate WebSite JSON-LD structured data for the site
+ * @param siteName - Name of the website
+ * @param siteUrl - Base URL of the website
+ * @param description - Optional description
+ * @returns JSON-LD value for WebSite schema
+ */
+export function generateWebSiteSchema(
+  siteName: string,
+  siteUrl: string,
+  description?: string
+): JsonLdValue {
+  const schema: { [key: string]: JsonLdValue } = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${siteUrl}/search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    } as JsonLdValue,
+  };
+
+  if (description) {
+    schema.description = description as JsonLdValue;
+  }
+
+  return schema as JsonLdValue;
+}
+
+/**
+ * Generate Organization JSON-LD structured data
+ * @param name - Organization name
+ * @param url - Organization URL
+ * @param logo - Optional logo URL
+ * @param description - Optional description
+ * @returns JSON-LD value for Organization schema
+ */
+export function generateOrganizationSchema(
+  name: string,
+  url: string,
+  logo?: string,
+  description?: string
+): JsonLdValue {
+  const schema: { [key: string]: JsonLdValue } = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name,
+    url,
+  };
+
+  if (logo) {
+    schema.logo = logo as JsonLdValue;
+  }
+  if (description) {
+    schema.description = description as JsonLdValue;
+  }
+
+  return schema as JsonLdValue;
+}
+
 export type ArticleJsonLd = {
   '@context': 'https://schema.org';
   '@type': 'Article';
@@ -95,20 +179,16 @@ export function buildArticleJsonLd(input: {
 
 export function buildProductJsonLd(input: {
   name?: string;
-  /** When name is from rich text (e.g. PromoText), pass HTML here to get plain-text name */
-  nameHtml?: string;
   descriptionHtml?: string;
   image?: string | string[];
   url?: string;
 }): ProductJsonLd {
   const description = input.descriptionHtml ? stripHtml(input.descriptionHtml) : undefined;
-  const name =
-    input.name ?? (input.nameHtml ? stripHtml(input.nameHtml) : undefined);
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name,
+    name: input.name,
     description,
     image: input.image,
     url: input.url,
@@ -162,4 +242,4 @@ export function buildFaqPageJsonLd(input: {
     })),
   };
 }
-
+ 
