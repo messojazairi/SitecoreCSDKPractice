@@ -9,9 +9,6 @@ export interface SummaryItem {
   description: string;
 }
 
-/**
- * Experience Edge returns jsonValue as a JSON scalar — either { value: "..." } or a plain string.
- */
 interface EdgeFieldValue {
   jsonValue?: { value?: string } | string;
 }
@@ -23,11 +20,6 @@ interface SummaryQueryResult {
   };
 }
 
-/**
- * Extracts the string value from an Experience Edge field's jsonValue scalar.
- * @param field - Edge field containing a jsonValue property
- * @returns trimmed string value, or empty string if not available
- */
 function extractFieldValue(field?: EdgeFieldValue): string {
   if (!field || field.jsonValue == null) return '';
   const jv = field.jsonValue;
@@ -38,12 +30,6 @@ function extractFieldValue(field?: EdgeFieldValue): string {
   return '';
 }
 
-/**
- * Builds a GraphQL query to fetch the Summary item from Experience Edge.
- * Unlike FAQ/Service queries, this fetches a single item's fields directly (no children).
- * @param fragmentType - GraphQL type name for the summary item (e.g. AISummary)
- * @returns GraphQL query string
- */
 function buildSummaryQuery(fragmentType: string): string {
   return `
     query SummaryQuery($path: String!, $language: String!) {
@@ -57,22 +43,12 @@ function buildSummaryQuery(fragmentType: string): string {
   `;
 }
 
-/**
- * Builds the Summary content path from the default site name.
- * Pattern: /sitecore/content/solterra/{siteName}/Data/AI Config/Summary
- */
 function buildSummaryPath(): string {
   const siteName = scConfig.defaultSite || process.env.NEXT_PUBLIC_DEFAULT_SITE_NAME || '';
   if (!siteName) return '';
   return `/sitecore/content/solterra/${siteName}${SUMMARY_DATA_PATH_SUFFIX}`;
 }
 
-/**
- * Fetches the summary item from Experience Edge via GraphQL using SitecoreClient.getData.
- * Derives the content path from the configured site name (NEXT_PUBLIC_DEFAULT_SITE_NAME).
- *
- * @returns { title, description } if found; null on failure or missing data
- */
 export async function fetchSummaryFromEdge(): Promise<SummaryItem | null> {
   const path = buildSummaryPath();
   if (!path) return null;

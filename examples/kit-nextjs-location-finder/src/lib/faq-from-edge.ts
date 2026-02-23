@@ -10,9 +10,6 @@ export interface FaqItem {
   answer: string;
 }
 
-/**
- * Experience Edge returns jsonValue as a JSON scalar — either { value: "..." } or a plain string.
- */
 interface EdgeFieldValue {
   jsonValue?: { value?: string } | string;
 }
@@ -30,11 +27,6 @@ interface FaqQueryResult {
   };
 }
 
-/**
- * Extracts the string value from an Experience Edge field's jsonValue scalar.
- * @param field - Edge field containing a jsonValue property
- * @returns trimmed string value, or empty string if not available
- */
 function extractFieldValue(field?: EdgeFieldValue): string {
   if (!field || field.jsonValue == null) return '';
   const jv = field.jsonValue;
@@ -45,11 +37,6 @@ function extractFieldValue(field?: EdgeFieldValue): string {
   return '';
 }
 
-/**
- * Builds a GraphQL query to fetch FAQ children from Experience Edge.
- * @param fragmentType - GraphQL type name for FAQ items (e.g. AIFAQItem)
- * @returns GraphQL query string
- */
 function buildFaqQuery(fragmentType: string): string {
   return `
     query FaqQuery($path: String!, $language: String!) {
@@ -67,22 +54,12 @@ function buildFaqQuery(fragmentType: string): string {
   `;
 }
 
-/**
- * Builds the FAQ content path from the default site name.
- * Pattern: /sitecore/content/alaris/{siteName}/Data/AI Config/FAQ
- */
 function buildFaqPath(): string {
   const siteName = scConfig.defaultSite || process.env.NEXT_PUBLIC_DEFAULT_SITE_NAME || '';
   if (!siteName) return '';
   return `/sitecore/content/alaris/${siteName}${FAQ_DATA_PATH_SUFFIX}`;
 }
 
-/**
- * Fetches FAQ items from Experience Edge via GraphQL using SitecoreClient.getData.
- * Derives the content path from the configured site name (NEXT_PUBLIC_DEFAULT_SITE_NAME).
- *
- * @returns Array of { question, answer } with non-empty values; empty array on failure
- */
 export async function fetchFaqFromEdge(): Promise<FaqItem[]> {
   const path = buildFaqPath();
   if (!path) return [];

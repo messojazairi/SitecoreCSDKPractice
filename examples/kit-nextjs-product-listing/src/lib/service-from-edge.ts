@@ -11,9 +11,6 @@ export interface ServiceItem {
   category: string;
 }
 
-/**
- * Experience Edge returns jsonValue as a JSON scalar — either { value: "..." } or a plain string.
- */
 interface EdgeFieldValue {
   jsonValue?: { value?: string } | string;
 }
@@ -32,11 +29,6 @@ interface ServiceQueryResult {
   };
 }
 
-/**
- * Extracts the string value from an Experience Edge field's jsonValue scalar.
- * @param field - Edge field containing a jsonValue property
- * @returns trimmed string value, or empty string if not available
- */
 function extractFieldValue(field?: EdgeFieldValue): string {
   if (!field || field.jsonValue == null) return '';
   const jv = field.jsonValue;
@@ -47,11 +39,6 @@ function extractFieldValue(field?: EdgeFieldValue): string {
   return '';
 }
 
-/**
- * Builds a GraphQL query to fetch Service children from Experience Edge.
- * @param fragmentType - GraphQL type name for service items (e.g. AIService)
- * @returns GraphQL query string
- */
 function buildServiceQuery(fragmentType: string): string {
   return `
     query ServiceQuery($path: String!, $language: String!) {
@@ -70,22 +57,12 @@ function buildServiceQuery(fragmentType: string): string {
   `;
 }
 
-/**
- * Builds the Services content path from the default site name.
- * Pattern: /sitecore/content/sync/{siteName}/Data/AI Config/Services
- */
 function buildServicePath(): string {
   const siteName = scConfig.defaultSite || process.env.NEXT_PUBLIC_DEFAULT_SITE_NAME || '';
   if (!siteName) return '';
   return `/sitecore/content/sync/${siteName}${SERVICE_DATA_PATH_SUFFIX}`;
 }
 
-/**
- * Fetches service items from Experience Edge via GraphQL using SitecoreClient.getData.
- * Derives the content path from the configured site name (NEXT_PUBLIC_DEFAULT_SITE_NAME).
- *
- * @returns Array of { name, description, category } with non-empty values; empty array on failure
- */
 export async function fetchServicesFromEdge(): Promise<ServiceItem[]> {
   const path = buildServicePath();
   if (!path) return [];
