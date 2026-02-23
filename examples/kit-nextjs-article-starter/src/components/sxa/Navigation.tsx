@@ -1,8 +1,11 @@
+'use client'
+
 import React, { type JSX } from 'react';
 import {
   LinkField,
   Text,
   TextField,
+  useSitecore,
 } from '@sitecore-content-sdk/nextjs';
 import { NavigationMenuToggle } from './NavigationMenuToggle.client';
 import { NavigationList } from './NavigationList.client';
@@ -23,7 +26,6 @@ export type NavigationProps = {
   fields: Fields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
-  isEditing?: boolean;
 };
 
 const getNavigationText = function (props: { fields: Fields }): JSX.Element | string {
@@ -66,7 +68,7 @@ const getLinkTitle = (props: { fields: Fields }): string | undefined => {
  * Pass isEditing as prop from parent when rendering in editing context.
  */
 export const Default = (props: NavigationProps): JSX.Element => {
-  const { isEditing = false } = props;
+  const { page } = useSitecore()
   const styles =
     props.params != null
       ? `${props.params.GridParameters ?? ''} ${props.params.Styles ?? ''}`.trimEnd()
@@ -94,7 +96,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
         fields={element}
         handleClick={(event: React.MouseEvent<HTMLElement>) => handleToggleMenu(event, false)}
         relativeLevel={1}
-        isEditing={isEditing}
+        isEditing={page.mode.isEditing}
         getLinkField={getLinkField}
         getNavigationText={getNavigationText}
       />
@@ -103,7 +105,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
   return (
     <div className={`component navigation ${styles}`} id={id ? id : undefined}>
       <label className="menu-mobile-navigate-wrapper">
-        <NavigationMenuToggle isEditing={isEditing} onToggle={handleToggleMenu}>
+        <NavigationMenuToggle isEditing={page.mode.isEditing} onToggle={handleToggleMenu}>
           <div className="menu-humburger" />
           <div className="component-content">
             <nav>
