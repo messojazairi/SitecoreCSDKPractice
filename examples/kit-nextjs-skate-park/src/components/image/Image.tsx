@@ -45,19 +45,26 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
     },
   };
 
-  // Get the image src for background-image style
-  const backgroundImageUrl = fields?.Image?.value?.src;
-  const backgroundStyle = backgroundImageUrl 
-    ? { backgroundImage: `url('${backgroundImageUrl}')` }
-    : {};
+  const altText =
+    typeof fields?.Image?.value?.alt === "string"
+      ? fields.Image.value.alt
+      : "Hero banner";
+
+  // Sizes tuned for mobile-first: cap requested width by viewport so small devices
+  // get smaller images (better LCP and bandwidth). 100vw on mobile, then viewport-
+  // bounded up to 1920px on desktop.
+  const bannerSizes =
+    "(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1920px) 100vw, 1920px";
 
   return (
-    <figure className={`component hero-banner ${styles}`.trim()} id={id}>
+    <figure className={`component hero-banner ${styles}`.trim()} id={typeof id === "string" ? id : undefined}>
       <div className="component-content sc-sxa-image-hero-banner">
         <ContentSdkImage
           field={imageField}
           loading="eager"
           fetchPriority="high"
+          sizes={bannerSizes}
+          alt={altText}
         />
       </div>
     </figure>
@@ -72,12 +79,22 @@ export const Default: React.FC<ImageProps> = (props) => {
     return <ImageDefault {...props} />;
   }
 
-  const Image = () => <ContentSdkImage field={fields.Image} />;
+  const Image = () => (
+    <ContentSdkImage
+      field={fields.Image}
+      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1200px"
+      alt={
+        typeof fields?.Image?.value?.alt === "string"
+          ? fields.Image.value.alt
+          : ""
+      }
+    />
+  );
   const shouldWrapWithLink =
     !page?.mode?.isEditing && fields.TargetUrl?.value?.href;
 
   return (
-    <ImageWrapper className={`component image ${styles}`} id={id}>
+    <ImageWrapper className={`component image ${styles}`} id={typeof id === "string" ? id : undefined}>
       {shouldWrapWithLink ? (
         <ContentSdkLink field={fields.TargetUrl}>
           <Image />

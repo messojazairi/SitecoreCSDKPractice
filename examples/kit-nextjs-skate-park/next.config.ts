@@ -27,6 +27,9 @@ const nextConfig: NextConfig = {
         port: '',
       },
     ],
+    // Include mobile and tablet widths so responsive images are served at appropriate sizes
+    deviceSizes: [360, 414, 640, 768, 1024, 1280, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     // Disable image optimization in development to avoid upstream timeouts
     unoptimized: process.env.NODE_ENV === 'development',
   },
