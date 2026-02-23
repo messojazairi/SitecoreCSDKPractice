@@ -15,7 +15,6 @@ import * as PageContent from 'src/components/sxa/PageContent';
 import * as Navigation from 'src/components/sxa/Navigation';
 import * as Image from 'src/components/sxa/Image';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
-import * as StructuredData from 'src/components/structured-data/StructuredData';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
 import * as PromoAnimatedImageRightdev from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
 import * as PromoAnimatedDefaultdev from 'src/components/promo-animated/PromoAnimatedDefault.dev';
@@ -59,7 +58,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['Navigation', { ...Navigation }],
   ['Image', { ...Image }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
-  ['StructuredData', { ...StructuredData }],
   ['SecondaryNavigation', { ...SecondaryNavigation }],
   ['PromoAnimatedImageRight', { ...PromoAnimatedImageRightdev }],
   ['PromoAnimatedDefault', { ...PromoAnimatedDefaultdev }],
