@@ -50,11 +50,11 @@ export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
       ? fields.Image.value.alt
       : "Hero banner";
 
-  // Sizes tuned for mobile-first: cap requested width by viewport so small devices
-  // get smaller images (better LCP and bandwidth). 100vw on mobile, then viewport-
-  // bounded up to 1920px on desktop.
+  // Use pixel caps per breakpoint so the browser picks the next-lowest srcset width
+  // instead of 100vw (which with DPR can still request 1920px on ~1319px viewport).
+  // This fixes mobile/tablet overserving (e.g. 1920px image when displayed at 1319px).
   const bannerSizes =
-    "(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1920px) 100vw, 1920px";
+    "(max-width: 640px) 100vw, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (max-width: 1440px) 1280px, 1920px";
 
   return (
     <figure className={`component hero-banner ${styles}`.trim()} id={typeof id === "string" ? id : undefined}>
