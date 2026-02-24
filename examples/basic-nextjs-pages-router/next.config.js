@@ -55,7 +55,11 @@ const nextConfig = {
         source: '/robots.txt',
         destination: '/api/robots',
       },
-      // sitemap.xml serves the main sitemap
+      {
+        source: '/llms.txt',
+        destination: '/api/llms-txt',
+      },
+      // sitemap route
       {
         source: '/sitemap.xml',
         destination: '/api/sitemap',

@@ -1,11 +1,13 @@
 /**
  * Serves /ai/summary.json (via rewrite) – authoritative summary for AI crawlers.
  *
- * Provides a short (<800 characters) summary so AI systems can understand what the site
- * is about. Application/json, Cache-Control 24h. Publicly accessible.
+ * Fetches the summary from Experience Edge via GraphQL. Provides a short (<800 characters)
+ * summary so AI systems can understand what the site is about. Application/json,
+ * Cache-Control 24h. Publicly accessible.
  */
 
 import { aiJsonResponse } from '@/lib/ai-json-response';
+import { fetchSummaryFromEdge } from '@/lib/summary-from-edge';
 
 const MAX_DESCRIPTION_LENGTH = 800;
 
@@ -25,11 +27,11 @@ function ensureDescriptionLength(description: string, maxLength: number): string
 }
 
 export async function GET() {
-  const description = `SYNC is a product-focused site for audio gear companies. It showcases product listings, categories, and commerce-oriented experiences built with Sitecore XM Cloud and Next.js. The template delivers performance, personalization, and AI-ready content for product discovery and e-commerce.`;
+  const summary = await fetchSummaryFromEdge();
 
   const payload: SummaryJsonPayload = {
-    title: 'SYNC',
-    description: ensureDescriptionLength(description, MAX_DESCRIPTION_LENGTH),
+    title: summary?.title || '',
+    description: ensureDescriptionLength(summary?.description || '', MAX_DESCRIPTION_LENGTH),
     lastModified: new Date().toISOString(),
   };
 

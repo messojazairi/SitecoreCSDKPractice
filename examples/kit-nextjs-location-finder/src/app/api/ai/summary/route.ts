@@ -1,11 +1,13 @@
 /**
  * Serves /ai/summary.json (via rewrite) – authoritative summary for AI crawlers.
  *
- * Provides a short (<800 characters) summary so AI systems can understand what the site
- * is about. Application/json, Cache-Control 24h. Publicly accessible.
+ * Fetches the summary from Experience Edge via GraphQL. Provides a short (<800 characters)
+ * summary so AI systems can understand what the site is about. Application/json,
+ * Cache-Control 24h. Publicly accessible.
  */
 
 import { aiJsonResponse } from '@/lib/ai-json-response';
+import { fetchSummaryFromEdge } from '@/lib/summary-from-edge';
 
 const MAX_DESCRIPTION_LENGTH = 800;
 
@@ -25,11 +27,11 @@ function ensureDescriptionLength(description: string, maxLength: number): string
 }
 
 export async function GET() {
-  const description = `Alaris is a car brand site with location finder functionality. It helps users discover dealers, service centers, and test drive locations. Built with Sitecore XM Cloud and Next.js, the template delivers performance, personalization, and AI-ready content for automotive and location-based experiences.`;
+  const summary = await fetchSummaryFromEdge();
 
   const payload: SummaryJsonPayload = {
-    title: 'Alaris',
-    description: ensureDescriptionLength(description, MAX_DESCRIPTION_LENGTH),
+    title: summary?.title || '',
+    description: ensureDescriptionLength(summary?.description || '', MAX_DESCRIPTION_LENGTH),
     lastModified: new Date().toISOString(),
   };
 

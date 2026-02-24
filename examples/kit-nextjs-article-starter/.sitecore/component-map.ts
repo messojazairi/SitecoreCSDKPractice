@@ -132,7 +132,7 @@ import * as accordionblockprops from 'src/components/accordion-block/accordion-b
 export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCServerWrapper],
   ['FEaaSWrapper', FEaaSServerWrapper],
-  ['Form', Form],
+  ['Form', { ...Form, componentType: 'client' }],
   ['VideoPlayer', { ...VideoPlayerdev }],
   ['VideoModal', { ...VideoModaldev }],
   ['Video', { ...Video, componentType: 'client' }],
@@ -165,7 +165,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ColumnSplitter', { ...ColumnSplitter }],
   ['SubscriptionBanner', { ...SubscriptionBanner, componentType: 'client' }],
   ['subscription-banner', { ...subscriptionbannerprops, ...subscriptionbannerdictionary }],
-  ['StructuredData', { ...StructuredData, componentType: 'client' }],
+  ['StructuredData', { ...StructuredData }],
   ['SiteMetadata', { ...SiteMetadata }],
   ['site-metadata', { ...sitemetadataprops }],
   ['SecondaryNavigation', { ...SecondaryNavigation, componentType: 'client' }],
