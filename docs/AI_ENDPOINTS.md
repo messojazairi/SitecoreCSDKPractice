@@ -2,41 +2,71 @@
 
 ## Table of Contents
 
-- [What is GEO?](#what-is-geo)
-- [Endpoint Overview](#endpoint-overview)
-- [/.well-known/ai.txt](#well-knownaitxt)
-  - [Purpose and Specification](#purpose-and-specification)
-  - [Example Output](#example-output)
-  - [Implementation Details](#implementation-details)
-  - [Starter Coverage](#starter-coverage)
-  - [AI Crawlers Covered](#ai-crawlers-covered)
-  - [Directives Reference](#directives-reference)
-- [/ai/summary.json](#aisummaryjson)
-  - [Purpose and Specification](#purpose-and-specification-1)
-  - [Example Payload](#example-payload)
-  - [JSON Schema](#json-schema)
-  - [Implementation Details](#implementation-details-1)
-  - [Starter Coverage](#starter-coverage-1)
-- [/ai/faq.json](#aifaqjson)
-  - [Purpose and Specification](#purpose-and-specification-2)
-  - [Example Payload](#example-payload-1)
-  - [JSON Schema](#json-schema-1)
-  - [Implementation Details](#implementation-details-2)
-  - [Starter Coverage](#starter-coverage-2)
-- [/ai/service.json](#aiservicejson)
-  - [Purpose and Specification](#purpose-and-specification-3)
-  - [Example Payload](#example-payload-2)
-  - [JSON Schema](#json-schema-2)
-  - [Implementation Details](#implementation-details-3)
-  - [Starter Coverage](#starter-coverage-3)
-- [/sitemap-llm.xml](#sitemap-llmxml)
-  - [Purpose and Specification](#purpose-and-specification-4)
-  - [Example Output](#example-output-1)
-  - [Implementation Details](#implementation-details-4)
-  - [URL Filtering](#url-filtering)
-  - [Starter Coverage](#starter-coverage-4)
-- [Maintenance Rules](#maintenance-rules)
-- [Deployment Considerations](#deployment-considerations)
+- [GEO Endpoints Documentation](#geo-endpoints-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [What is GEO?](#what-is-geo)
+    - [Why does this matter?](#why-does-this-matter)
+    - [GEO Endpoints in This Repository](#geo-endpoints-in-this-repository)
+  - [/.well-known/ai.txt](#well-knownaitxt)
+    - [Purpose and Specification](#purpose-and-specification)
+    - [Example Output](#example-output)
+    - [Implementation Details](#implementation-details)
+      - [App Router (5 starters)](#app-router-5-starters)
+      - [Pages Router (1 starter)](#pages-router-1-starter)
+      - [Next.js Rewrite Rule](#nextjs-rewrite-rule)
+    - [Starter Coverage](#starter-coverage)
+    - [AI Crawlers Covered](#ai-crawlers-covered)
+  - [/ai/summary.json](#aisummaryjson)
+    - [Purpose and Specification](#purpose-and-specification-1)
+    - [Example Payload](#example-payload)
+    - [JSON Schema](#json-schema)
+    - [Implementation Details](#implementation-details-1)
+      - [Two-File Architecture (3 kit starters)](#two-file-architecture-3-kit-starters)
+      - [Hardcoded Content (skate-park)](#hardcoded-content-skate-park)
+      - [Route Handler](#route-handler)
+      - [Next.js Rewrite Rule](#nextjs-rewrite-rule-1)
+    - [Starter Coverage](#starter-coverage-1)
+  - [/ai/faq.json](#aifaqjson)
+    - [Purpose and Specification](#purpose-and-specification-2)
+    - [Example Payload](#example-payload-1)
+    - [Implementation Details](#implementation-details-2)
+      - [Two-File Architecture (3 kit starters)](#two-file-architecture-3-kit-starters-1)
+      - [Static Data File (skate-park)](#static-data-file-skate-park)
+      - [Route Handler](#route-handler-1)
+      - [Next.js Rewrite Rule](#nextjs-rewrite-rule-2)
+    - [Starter Coverage](#starter-coverage-2)
+  - [/ai/service.json](#aiservicejson)
+    - [Purpose and Specification](#purpose-and-specification-3)
+    - [Example Payload](#example-payload-2)
+    - [Implementation Details](#implementation-details-3)
+      - [Two-File Architecture (3 kit starters)](#two-file-architecture-3-kit-starters-2)
+      - [Hardcoded Content (skate-park, basic-nextjs)](#hardcoded-content-skate-park-basic-nextjs)
+      - [Route Handler](#route-handler-2)
+      - [Next.js Rewrite Rule](#nextjs-rewrite-rule-3)
+    - [Starter Coverage](#starter-coverage-3)
+  - [/sitemap-llm.xml](#sitemap-llmxml)
+    - [Purpose and Specification](#purpose-and-specification-4)
+    - [Example Output](#example-output-1)
+    - [Implementation Details](#implementation-details-4)
+      - [How It Works](#how-it-works)
+      - [App Router (5 starters)](#app-router-5-starters-1)
+      - [Pages Router (1 starter)](#pages-router-1-starter-1)
+      - [Next.js Rewrite Rule](#nextjs-rewrite-rule-4)
+    - [URL Filtering](#url-filtering)
+      - [Excluded Patterns (shared across all starters)](#excluded-patterns-shared-across-all-starters)
+      - [Allowed Patterns (site-specific)](#allowed-patterns-site-specific)
+    - [Starter Coverage](#starter-coverage-4)
+      - [Cross-References](#cross-references)
+  - [Maintenance Rules](#maintenance-rules)
+    - [When to Update](#when-to-update)
+    - [Keeping Starters in Sync](#keeping-starters-in-sync)
+    - [Adding the Endpoints to a New Starter](#adding-the-endpoints-to-a-new-starter)
+  - [Deployment Considerations](#deployment-considerations)
+    - [Locale-Independent Routing](#locale-independent-routing)
+    - [Dynamic Generation](#dynamic-generation)
+    - [CDN and Edge Caching](#cdn-and-edge-caching)
+    - [No Authentication Required](#no-authentication-required)
+    - [Verification After Deployment](#verification-after-deployment)
 
 ---
 
@@ -227,7 +257,7 @@ The description field is capped at **800 characters** to ensure it remains conci
 | **Content-Type** | `application/json; charset=utf-8` |
 | **Cache-Control** | `public, max-age=86400` (24 hours) |
 | **Authentication** | None required -- publicly accessible |
-| **Generation** | Dynamic (generated per-request) |
+| **Generation** | Dynamic -- 3 kit starters fetch from Experience Edge via GraphQL; skate-park uses hardcoded content |
 | **Description Limit** | 800 characters maximum |
 
 ### Example Payload
@@ -265,6 +295,27 @@ export interface SummaryJsonPayload {
 
 ### Implementation Details
 
+#### Two-File Architecture (3 kit starters)
+
+Three kit starters (article-starter, product-listing, location-finder) use a **two-file pattern** to fetch summary data from Experience Edge:
+
+1. **Library file** (`src/lib/summary-from-edge.ts`) -- Contains `fetchSummaryFromEdge()`, which queries Experience Edge via `SitecoreClient.getData` for a single item at the content path `/Data/AI Config/Summary`. Returns `{ title, description }` or `null` if the item is not found.
+2. **Route handler** (`src/app/api/ai/summary/route.ts`) -- Calls `fetchSummaryFromEdge()`, applies `ensureDescriptionLength()` to enforce the 800-character limit, and returns the JSON response. If Edge returns nothing, the fields default to empty strings.
+
+The content path is dynamically constructed from the configured site name (`NEXT_PUBLIC_DEFAULT_SITE_NAME`):
+
+| Starter | Content Path Pattern |
+|---|---|
+| article-starter | `/sitecore/content/solterra/{siteName}/Data/AI Config/Summary` |
+| product-listing | `/sitecore/content/sync/{siteName}/Data/AI Config/Summary` |
+| location-finder | `/sitecore/content/alaris/{siteName}/Data/AI Config/Summary` |
+
+The GraphQL query uses the `AISummary` fragment type to access custom template fields (`title` and `description`), both returned as `jsonValue` scalars.
+
+#### Hardcoded Content (skate-park)
+
+The skate-park starter still uses the original single-file pattern with hardcoded `title` and `description` strings directly in the route handler.
+
 #### Route Handler
 
 The endpoint is implemented as a Next.js App Router API route at:
@@ -277,7 +328,7 @@ Key aspects of the implementation:
 
 - **`MAX_DESCRIPTION_LENGTH = 800`** -- Constant defining the maximum allowed description length per the GEO contract.
 - **`ensureDescriptionLength(description, maxLength)`** -- Utility function that trims whitespace and truncates descriptions exceeding the limit, appending `...` to indicate truncation.
-- **`GET()` handler** -- Returns a JSON response with the `SummaryJsonPayload`. Unlike the `ai.txt` endpoint, this handler does not need to resolve the site URL since the payload contains only site metadata.
+- **`GET()` handler** -- Calls `fetchSummaryFromEdge()` (in the 3 refactored starters) and returns a JSON response with the `SummaryJsonPayload`.
 - **Response headers** -- Sets `Content-Type: application/json; charset=utf-8` and `Cache-Control: public, max-age=86400`.
 
 #### Next.js Rewrite Rule
@@ -294,20 +345,16 @@ In each kit starter's `next.config.ts`, a rewrite maps the public-facing path to
 
 The `locale: false` setting ensures the path works without any i18n locale prefix.
 
-#### Site-Specific Content
-
-Unlike the `ai.txt` endpoint (which is identical across starters), each starter's `summary/route.ts` contains **unique** `title` and `description` values tailored to that specific site. The implementation structure (interface, helper function, handler) is identical -- only the content strings differ.
-
 ### Starter Coverage
 
 The `/ai/summary.json` endpoint is implemented in **4 kit starters** only:
 
-| Starter | Route File | Title |
-|---|---|---|
-| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/api/ai/summary/route.ts` | Solterra & Co. |
-| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/api/ai/summary/route.ts` | Alaris |
-| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/api/ai/summary/route.ts` | SYNC |
-| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/api/ai/summary/route.ts` | Skate Park |
+| Starter | Route File | Library File | Data Source |
+|---|---|---|---|
+| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/api/ai/summary/route.ts` | `src/lib/summary-from-edge.ts` | Experience Edge |
+| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/api/ai/summary/route.ts` | `src/lib/summary-from-edge.ts` | Experience Edge |
+| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/api/ai/summary/route.ts` | `src/lib/summary-from-edge.ts` | Experience Edge |
+| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/api/ai/summary/route.ts` | -- | Hardcoded in route |
 
 ---
 
@@ -327,7 +374,7 @@ The endpoint enforces a **minimum of 3** and **maximum of 10** FAQ items per res
 | **Content-Type** | `application/json` |
 | **Cache-Control** | `public, max-age=86400` (24 hours) |
 | **Authentication** | None required -- publicly accessible |
-| **Generation** | Dynamic route handler reading from a static data file |
+| **Generation** | Dynamic -- 3 kit starters fetch from Experience Edge via GraphQL; skate-park reads from a static data file |
 | **Item Count** | Minimum 3, maximum 10 |
 
 ### Example Payload
@@ -360,18 +407,12 @@ Each starter returns its own site-specific FAQ content:
 | kit-nextjs-product-listing (SYNC) | 7 | VIP access, manufacturing, shipping/returns, warranty, product categories, support, offers |
 | kit-nextjs-skate-park (Skate Park) | 6 | About, who can buy, offerings, contact, location, learn more |
 
-> **Note:** If the data file contains fewer than 3 valid items, the endpoint returns an empty array `[]` rather than incomplete data.
+> **Note:** If the data source yields fewer than 3 valid items, the endpoint returns an empty array `[]` rather than incomplete data.
 
-**The data source file** (`src/data/faq.json`) uses a wrapper object:
+**Data sources** differ by starter:
 
-```typescript
-interface FaqDataFile {
-  items: FaqItem[];   // Array of FAQ question/answer pairs
-  lastModified: string; // ISO 8601 timestamp indicating when the FAQ data was last updated
-}
-```
-
-> **Note:** The `lastModified` field in the data file is metadata for maintainers -- it is **not** included in the API response. Only the `question` and `answer` fields are returned to callers.
+- **3 kit starters** (article-starter, product-listing, location-finder) -- FAQ items are fetched from Experience Edge via the `fetchFaqFromEdge()` function in `src/lib/faq-from-edge.ts`. Content is managed in Sitecore at `/Data/AI Config/FAQ` using the `AIFAQItem` template.
+- **skate-park** -- FAQ items are read from a static data file (`src/data/faq.json`) using a wrapper object with an `items` array and a `lastModified` timestamp for maintainers.
 
 **Validation rules enforced by the route handler:**
 
@@ -382,52 +423,59 @@ interface FaqDataFile {
 
 ### Implementation Details
 
-#### Two-File Architecture
+#### Two-File Architecture (3 kit starters)
 
-Unlike the `ai.txt` and `summary.json` endpoints (single route file each), the FAQ endpoint uses a **two-file pattern**:
+Three kit starters (article-starter, product-listing, location-finder) use a **two-file pattern** to fetch FAQ data from Experience Edge:
 
-1. **Data file** (`src/data/faq.json`) -- Static JSON containing site-specific FAQ content. Each starter has its own unique questions and answers.
-2. **Route handler** (`src/app/ai/faq.json/route.ts`) -- Identical across all 4 starters. Imports the data file via `@/data/faq.json`, validates and slices the items, and returns the JSON response.
+1. **Library file** (`src/lib/faq-from-edge.ts`) -- Contains `fetchFaqFromEdge()`, which queries Experience Edge via `SitecoreClient.getData` for children of the `/Data/AI Config/FAQ` item. Uses the `AIFAQItem` GraphQL fragment type to access `question` and `answer` fields (both returned as `jsonValue` scalars).
+2. **Route handler** (`src/app/api/ai/faq/route.ts`) -- Calls `fetchFaqFromEdge()`, slices to `MAX_ITEMS`, and applies the minimum-3-items rule.
 
-This separation means FAQ content can be updated by editing only the data file, without modifying the route handler logic.
+The content path is dynamically constructed from the configured site name (`NEXT_PUBLIC_DEFAULT_SITE_NAME`):
+
+| Starter | Content Path Pattern |
+|---|---|
+| article-starter | `/sitecore/content/solterra/{siteName}/Data/AI Config/FAQ` |
+| product-listing | `/sitecore/content/sync/{siteName}/Data/AI Config/FAQ` |
+| location-finder | `/sitecore/content/alaris/{siteName}/Data/AI Config/FAQ` |
+
+This means FAQ content is managed entirely in Sitecore -- no code changes are needed to update questions and answers.
+
+#### Static Data File (skate-park)
+
+The skate-park starter still uses the original pattern with a static data file (`src/data/faq.json`) imported by the route handler. The data file uses a wrapper object with an `items` array.
 
 #### Route Handler
 
 The route handler is located at:
 
 ```
-src/app/ai/faq.json/route.ts
+src/app/api/ai/faq/route.ts
 ```
-
-> **Note:** The directory is named `faq.json/` (with the `.json` extension as part of the folder name). This is an App Router convention that makes the route serve at `/ai/faq.json` directly.
 
 #### Next.js Rewrite Rule
 
-In each kit starter's `next.config.ts`, a rewrite provides an additional convenience path:
+In each kit starter's `next.config.ts`, a rewrite maps the public-facing path to the API route:
 
 ```typescript
 {
-  source: '/faq.json',
-  destination: '/ai/faq.json',
+  source: '/ai/faq.json',
+  destination: '/api/ai/faq',
+  locale: false,
 }
 ```
 
-This means the FAQ data is accessible at **two** paths:
-- `/ai/faq.json` -- Primary path (served directly by the App Router route handler)
-- `/faq.json` -- Convenience path (rewritten to `/ai/faq.json`)
-
-> **Note:** Unlike other rewrites, this rule does **not** set `locale: false`. This means locale-prefixed paths like `/en/faq.json` may also be rewritten depending on the i18n configuration.
+The `locale: false` setting ensures the path works without any i18n locale prefix.
 
 ### Starter Coverage
 
 The `/ai/faq.json` endpoint is implemented in **4 kit starters** only:
 
-| Starter | Route File | Data File |
-|---|---|---|
-| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/ai/faq.json/route.ts` | `examples/kit-nextjs-article-starter/src/data/faq.json` |
-| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/ai/faq.json/route.ts` | `examples/kit-nextjs-location-finder/src/data/faq.json` |
-| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/ai/faq.json/route.ts` | `examples/kit-nextjs-product-listing/src/data/faq.json` |
-| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/ai/faq.json/route.ts` | `examples/kit-nextjs-skate-park/src/data/faq.json` |
+| Starter | Route File | Library / Data File | Data Source |
+|---|---|---|---|
+| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/api/ai/faq/route.ts` | `src/lib/faq-from-edge.ts` | Experience Edge |
+| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/api/ai/faq/route.ts` | `src/lib/faq-from-edge.ts` | Experience Edge |
+| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/api/ai/faq/route.ts` | `src/lib/faq-from-edge.ts` | Experience Edge |
+| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/api/ai/faq/route.ts` | `src/data/faq.json` | Static data file |
 
 ---
 
@@ -447,8 +495,8 @@ This endpoint supports GEO by providing AI systems with a categorized inventory 
 | **Content-Type** | `application/json` |
 | **Cache-Control** | `public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400` |
 | **Authentication** | None required -- publicly accessible |
-| **Generation** | ISR (Incremental Static Regeneration), revalidated every 1 hour |
-| **Rewrite** | None -- served directly by the App Router |
+| **Generation** | ISR (revalidated every 1 hour) -- 3 kit starters fetch from Experience Edge via GraphQL; skate-park and basic-nextjs use hardcoded content |
+| **Rewrite** | `/ai/service.json` -> `/api/ai/service` (kit starters); none for `basic-nextjs` (served directly via App Router directory convention) |
 
 > **Note:** The caching strategy for `service.json` differs from the other AI endpoints. It uses a **1-hour cache** with a **24-hour stale-while-revalidate** window (via ISR), rather than the 24-hour static cache used by `summary.json` and `faq.json`. This allows service data to refresh more frequently while still serving stale content during revalidation.
 
@@ -489,49 +537,71 @@ Each starter returns its own site-specific services:
 | kit-nextjs-skate-park (Skate Park) | 8 | Development (3), plus shared categories |
 | basic-nextjs | 7 | Development (2), Content Delivery, plus shared categories |
 
-**Shared services** across all starters include: Multi-Locale Content Delivery, Component-Based Page Building, Responsive Image Optimization, SEO Metadata Management, and Content Preview and Editing. Each kit starter adds its own domain-specific services on top of these.
+**Shared services** across starters with hardcoded content include: Multi-Locale Content Delivery, Component-Based Page Building, Responsive Image Optimization, SEO Metadata Management, and Content Preview and Editing. For the 3 refactored starters, the service list is fully managed in Sitecore.
 
 ### Implementation Details
 
-#### Single-File Architecture
+#### Two-File Architecture (3 kit starters)
 
-Unlike the `faq.json` endpoint (which separates data from handler), `service.json` uses a **single-file pattern** -- the services array is defined inline in the route handler alongside the interfaces and the `GET()` function. This keeps each starter's service definitions self-contained.
+Three kit starters (article-starter, product-listing, location-finder) use a **two-file pattern** to fetch service data from Experience Edge:
+
+1. **Library file** (`src/lib/service-from-edge.ts`) -- Contains `fetchServicesFromEdge()`, which queries Experience Edge via `SitecoreClient.getData` for children of the `/Data/AI Config/Services` item. Uses the `AIService` GraphQL fragment type.
+2. **Route handler** (`src/app/api/ai/service/route.ts`) -- Calls `fetchServicesFromEdge()` and returns the JSON response with a `lastModified` timestamp.
+
+The content path is dynamically constructed from the configured site name (`NEXT_PUBLIC_DEFAULT_SITE_NAME`):
+
+| Starter | Content Path Pattern |
+|---|---|
+| article-starter | `/sitecore/content/solterra/{siteName}/Data/AI Config/Services` |
+| product-listing | `/sitecore/content/sync/{siteName}/Data/AI Config/Services` |
+| location-finder | `/sitecore/content/alaris/{siteName}/Data/AI Config/Services` |
+
+> **Note:** The `name` field on service items is a built-in Sitecore item property (`String!` scalar in GraphQL), so it is queried directly without `{ jsonValue }`. The `description` and `category` fields are custom template fields returned as `jsonValue` scalars.
+
+#### Hardcoded Content (skate-park, basic-nextjs)
+
+The skate-park and basic-nextjs starters still use the original single-file pattern with the `services` array defined inline in the route handler.
 
 #### Route Handler
 
 The route handler is located at:
 
-```
-src/app/ai/service.json/route.ts
-```
-
-> **Note:** As with `faq.json`, the directory is named `service.json/` (with the `.json` extension as part of the folder name). This App Router convention makes the route serve at `/ai/service.json` directly.
+- **Kit starters (4):** `src/app/api/ai/service/route.ts`
+- **basic-nextjs:** `src/app/ai/service.json/route.ts` (original App Router directory convention)
 
 Key aspects of the implementation:
 
 - **`export const revalidate = 3600`** -- Enables ISR with a 1-hour revalidation period. Next.js statically generates the page at build time and revalidates it in the background after 1 hour, unlike the `force-dynamic` approach used by `ai.txt`.
-- **`services` array** -- Defined as a module-level constant containing site-specific `Service` objects. Each starter has its own unique set.
-- **`GET()` handler** -- Returns a typed `Promise<NextResponse<ServiceResponse>>` wrapping the services array and an auto-generated `lastModified` timestamp.
+- **`GET()` handler** -- In the 3 refactored starters, calls `fetchServicesFromEdge()` and wraps the result in a `ServiceResponse`. In skate-park and basic-nextjs, uses an inline `services` array.
 - **Cache-Control header** -- `public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400` provides:
   - **1-hour fresh cache** for both browser and shared caches
   - **24-hour stale-while-revalidate** window so CDNs can serve stale content while fetching fresh data in the background
-- **No rewrite rule needed** -- The App Router serves `/ai/service.json` directly from the directory-based route.
 
-#### No Rewrite Required
+#### Next.js Rewrite Rule
 
-Unlike `ai.txt` (which uses a rewrite from `/.well-known/ai.txt` to `/api/well-known/ai-txt`) and `summary.json` (which uses a rewrite from `/ai/summary.json` to `/api/ai/summary`), the `service.json` endpoint requires **no rewrite rule** in `next.config.ts`. The file at `src/app/ai/service.json/route.ts` directly maps to the `/ai/service.json` URL via App Router conventions.
+In each kit starter's `next.config.ts`, a rewrite maps the public-facing path to the API route:
+
+```typescript
+{
+  source: '/ai/service.json',
+  destination: '/api/ai/service',
+  locale: false,
+}
+```
+
+The `basic-nextjs` starter does **not** need a rewrite -- the file at `src/app/ai/service.json/route.ts` directly maps to the `/ai/service.json` URL via App Router conventions.
 
 ### Starter Coverage
 
 The `/ai/service.json` endpoint is implemented in **5 starters** (all App Router starters):
 
-| Starter | Route File | # of Services |
-|---|---|---|
-| `basic-nextjs` | `examples/basic-nextjs/src/app/ai/service.json/route.ts` | 7 |
-| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/ai/service.json/route.ts` | 8 |
-| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/ai/service.json/route.ts` | 10 |
-| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/ai/service.json/route.ts` | 11 |
-| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/ai/service.json/route.ts` | 8 |
+| Starter | Route File | Library File | Data Source |
+|---|---|---|---|
+| `kit-nextjs-article-starter` | `examples/kit-nextjs-article-starter/src/app/api/ai/service/route.ts` | `src/lib/service-from-edge.ts` | Experience Edge |
+| `kit-nextjs-location-finder` | `examples/kit-nextjs-location-finder/src/app/api/ai/service/route.ts` | `src/lib/service-from-edge.ts` | Experience Edge |
+| `kit-nextjs-product-listing` | `examples/kit-nextjs-product-listing/src/app/api/ai/service/route.ts` | `src/lib/service-from-edge.ts` | Experience Edge |
+| `kit-nextjs-skate-park` | `examples/kit-nextjs-skate-park/src/app/api/ai/service/route.ts` | -- | Hardcoded in route |
+| `basic-nextjs` | `examples/basic-nextjs/src/app/ai/service.json/route.ts` | -- | Hardcoded in route |
 
 **Not present in:**
 
@@ -720,21 +790,22 @@ The GEO endpoint route handlers should be updated when:
 - **Adding a new sitemap** -- Add a new `Sitemap` line.
 
 **`summary.json`:**
-- **Changing the site name or brand** -- Update the `title` value in the starter's `route.ts`.
-- **Updating the site description** -- Update the `description` string. Ensure it remains under 800 characters; the `ensureDescriptionLength()` helper will truncate if it exceeds the limit, but explicit control is preferred.
-- **Changing the description limit** -- Modify the `MAX_DESCRIPTION_LENGTH` constant (must be coordinated with the GEO contract requirements).
+- **Changing the site name or description** (3 kit starters) -- Update the content in Sitecore content editor at `/sitecore/content/{templateName}/{siteName}/Data/AI Config/Summary`. The `title` and `description` fields are fetched from Experience Edge at runtime. No code changes needed.
+- **Changing the site name or description** (skate-park) -- Update the hardcoded `title` and `description` values in the starter's `route.ts`.
+- **Changing the description limit** -- Modify the `MAX_DESCRIPTION_LENGTH` constant in the route handler (must be coordinated with the GEO contract requirements).
+- **Changing the content path or GraphQL type** -- Update the `SUMMARY_DATA_PATH_SUFFIX` or `SUMMARY_GRAPHQL_TYPE` constants in `src/lib/summary-from-edge.ts`.
 
 **`faq.json`:**
-- **Adding or removing FAQ items** -- Edit the `src/data/faq.json` file in the relevant starter. No changes to the route handler are needed.
-- **Updating FAQ content** -- Modify the `question` and/or `answer` strings in the data file. Update the `lastModified` field in the data file to reflect the edit date.
+- **Adding or removing FAQ items** (3 kit starters) -- Update the content in Sitecore content editor under `/sitecore/content/{templateName}/{siteName}/Data/AI Config/FAQ`. Items are fetched from Experience Edge at runtime using the `AIFAQItem` template. No code changes needed.
+- **Adding or removing FAQ items** (skate-park) -- Edit the `src/data/faq.json` file. No changes to the route handler are needed.
 - **Changing item count limits** -- Modify the `MIN_ITEMS` or `MAX_ITEMS` constants in the route handler (must be coordinated with the GEO contract requirements).
+- **Changing the content path or GraphQL type** -- Update the `FAQ_DATA_PATH_SUFFIX` or `FAQ_GRAPHQL_TYPE` constants in `src/lib/faq-from-edge.ts`.
 
 **`service.json`:**
-- **Adding a new service** -- Add a new `Service` object to the `services` array in the starter's `route.ts`. Include `name`, `description`, and `category`.
-- **Removing a service** -- Remove the corresponding object from the `services` array.
-- **Updating service descriptions** -- Modify the `name`, `description`, or `category` fields. Descriptions should reflect real, functional capabilities -- avoid marketing language.
-- **Adding a new category** -- Simply use the new category string in a service object. Categories are free-form strings; no central registry is needed, but reusing existing categories is preferred for consistency.
+- **Adding or removing services** (3 kit starters) -- Update the content in Sitecore content editor under `/sitecore/content/{templateName}/{siteName}/Data/AI Config/Services`. Items are fetched from Experience Edge at runtime using the `AIService` template. No code changes needed.
+- **Adding or removing services** (skate-park, basic-nextjs) -- Modify the inline `services` array in the starter's `route.ts`.
 - **Changing the revalidation period** -- Modify the `revalidate` constant (currently 3600 seconds / 1 hour).
+- **Changing the content path or GraphQL type** -- Update the `SERVICE_DATA_PATH_SUFFIX` or `SERVICE_GRAPHQL_TYPE` constants in `src/lib/service-from-edge.ts`.
 
 **`sitemap-llm.xml`:**
 - **Adding new content pages** -- Add a new regex to the `ALLOWED_PATTERNS` array in the starter's route handler. Also add corresponding fallback URLs in the empty-sitemap fallback block.
@@ -746,20 +817,30 @@ The GEO endpoint route handlers should be updated when:
 
 All 6 starters contain their own copy of the `ai.txt` and `sitemap-llm` route handlers, 4 kit starters contain the `summary.json` and `faq.json` route handlers, and 5 App Router starters contain the `service.json` route handler. When making changes:
 
-1. Update the route handler in one starter.
-2. Copy the same change to all other starters.
+1. Update the route handler (and library file, if applicable) in one starter.
+2. Copy the same change to all other starters, adjusting the content path root (`solterra`, `sync`, `alaris`) in the library file as needed.
 3. For the Pages Router starter (`basic-nextjs-pages-router`), adapt the change to the Pages Router API conventions (`NextApiRequest`/`NextApiResponse`, explicit method check, array header handling).
 
-**Files to update across starters:**
+**Route handler files to update across starters:**
 
 - `src/app/api/well-known/ai-txt/route.ts` (App Router starters x5)
 - `src/pages/api/well-known/ai-txt.ts` (Pages Router starter x1)
-- `src/app/api/ai/summary/route.ts` (Kit starters x4 -- note: `title` and `description` are site-specific)
-- `src/app/ai/faq.json/route.ts` (Kit starters x4 -- identical across starters)
-- `src/data/faq.json` (Kit starters x4 -- FAQ content is site-specific)
-- `src/app/ai/service.json/route.ts` (App Router starters x5 -- services data is site-specific)
+- `src/app/api/ai/summary/route.ts` (Kit starters x4)
+- `src/app/api/ai/faq/route.ts` (Kit starters x4)
+- `src/app/api/ai/service/route.ts` (Kit starters x4)
+- `src/app/ai/service.json/route.ts` (`basic-nextjs` only -- still uses old App Router directory convention)
 - `src/app/api/sitemap-llm/route.ts` (App Router starters x5 -- allowed patterns are site-specific)
 - `src/pages/api/sitemap-llm.ts` (Pages Router starter x1)
+
+**Experience Edge library files** (3 kit starters only -- article-starter, product-listing, location-finder):
+
+- `src/lib/faq-from-edge.ts` -- content path root is site-specific
+- `src/lib/service-from-edge.ts` -- content path root is site-specific
+- `src/lib/summary-from-edge.ts` -- content path root is site-specific
+
+**Static data files** (skate-park only):
+
+- `src/data/faq.json` -- FAQ content is site-specific
 
 ### Adding the Endpoints to a New Starter
 
@@ -781,8 +862,10 @@ If a new starter application is added to the repository:
 **For `summary.json`:**
 
 1. Copy `src/app/api/ai/summary/route.ts` from an existing kit starter into the new starter's API directory.
-2. Update the `title` and `description` values to match the new starter's site identity.
-3. Add the rewrite rule to the new starter's `next.config.ts`:
+2. Copy `src/lib/summary-from-edge.ts` from an existing kit starter.
+3. Update the content path root in `buildSummaryPath()` to match the new starter's Sitecore content root (e.g., replace `solterra` with the new site's content root name).
+4. Ensure a `Summary` item exists in Sitecore content editor at `/sitecore/content/{templateName}/{siteName}/Data/AI Config/Summary`, using the `AISummary` template with `title` and `description` fields.
+5. Add the rewrite rule to the new starter's `next.config.ts`:
    ```typescript
    {
      source: '/ai/summary.json',
@@ -793,21 +876,33 @@ If a new starter application is added to the repository:
 
 **For `faq.json`:**
 
-1. Copy `src/app/ai/faq.json/route.ts` from an existing kit starter into the new starter's `src/app/ai/faq.json/` directory.
-2. Create a `src/data/faq.json` file with site-specific FAQ content following the data file schema (see [JSON Schema](#json-schema-1)). Include at least 3 items.
-3. Add the convenience rewrite rule to the new starter's `next.config.ts`:
+1. Copy `src/app/api/ai/faq/route.ts` from an existing kit starter into the new starter's `src/app/api/ai/faq/` directory.
+2. Copy `src/lib/faq-from-edge.ts` from an existing kit starter.
+3. Update the content path root in `buildFaqPath()` to match the new starter's Sitecore content root.
+4. Ensure FAQ items exist in Sitecore content editor under `/sitecore/content/{templateName}/{siteName}/Data/AI Config/FAQ`, using the `AIFAQItem` template with `question` and `answer` fields. Include at least 3 items.
+5. Add the rewrite rule to the new starter's `next.config.ts`:
    ```typescript
    {
-     source: '/faq.json',
-     destination: '/ai/faq.json',
+     source: '/ai/faq.json',
+     destination: '/api/ai/faq',
+     locale: false,
    }
    ```
 
 **For `service.json`:**
 
-1. Copy `src/app/ai/service.json/route.ts` from an existing starter into the new starter's `src/app/ai/service.json/` directory.
-2. Replace the `services` array with service objects that reflect the new starter's actual capabilities. Reuse shared categories where applicable.
-3. No rewrite rule is needed -- the App Router serves `/ai/service.json` directly from the directory structure.
+1. Copy `src/app/api/ai/service/route.ts` from an existing kit starter into the new starter's `src/app/api/ai/service/` directory.
+2. Copy `src/lib/service-from-edge.ts` from an existing kit starter.
+3. Update the content path root in `buildServicePath()` to match the new starter's Sitecore content root.
+4. Ensure service items exist in Sitecore content editor under `/sitecore/content/{templateName}/{siteName}/Data/AI Config/Services`, using the `AIService` template with `description` and `category` fields. The `name` field is the built-in Sitecore item name.
+5. Add the rewrite rule to the new starter's `next.config.ts`:
+   ```typescript
+   {
+     source: '/ai/service.json',
+     destination: '/api/ai/service',
+     locale: false,
+   }
+   ```
 
 **For `sitemap-llm.xml`:**
 
