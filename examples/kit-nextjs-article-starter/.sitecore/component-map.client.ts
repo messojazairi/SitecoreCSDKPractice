@@ -10,7 +10,6 @@ import * as VerticalImageAccordion from 'src/components/vertical-image-accordion
 import * as themeproviderdev from 'src/components/theme-provider/theme-provider.dev';
 import * as TestimonialCarousel from 'src/components/testimonial-carousel/TestimonialCarousel';
 import * as Title from 'src/components/sxa/Title';
-import * as PageContent from 'src/components/sxa/PageContent';
 import * as NavigationMenuToggleclient from 'src/components/sxa/NavigationMenuToggle.client';
 import * as NavigationListclient from 'src/components/sxa/NavigationList.client';
 import * as Image from 'src/components/sxa/Image';
@@ -35,7 +34,6 @@ import * as Hero from 'src/components/hero/Hero';
 import * as GlobalHeader from 'src/components/global-header/GlobalHeader';
 import * as FooterNavigationColumn from 'src/components/global-footer/FooterNavigationColumn';
 import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev';
-import * as BackgroundThumbnaildev from 'src/components/background-thumbnail/BackgroundThumbnail.dev';
 import * as ArticleListing from 'src/components/article-listing/ArticleListing';
 import * as ArticleHeader from 'src/components/article-header/ArticleHeader';
 import * as AnimatedSectiondev from 'src/components/animated-section/AnimatedSection.dev';
@@ -53,7 +51,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['theme-provider', { ...themeproviderdev }],
   ['TestimonialCarousel', { ...TestimonialCarousel }],
   ['Title', { ...Title }],
-  ['PageContent', { ...PageContent }],
   ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
   ['NavigationList', { ...NavigationListclient }],
   ['Image', { ...Image }],
@@ -78,7 +75,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['GlobalHeader', { ...GlobalHeader }],
   ['FooterNavigationColumn', { ...FooterNavigationColumn }],
   ['floating-dock', { ...floatingdockdev }],
-  ['BackgroundThumbnail', { ...BackgroundThumbnaildev }],
   ['ArticleListing', { ...ArticleListing }],
   ['ArticleHeader', { ...ArticleHeader }],
   ['AnimatedSection', { ...AnimatedSectiondev }],

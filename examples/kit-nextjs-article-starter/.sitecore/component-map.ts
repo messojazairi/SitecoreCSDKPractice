@@ -158,7 +158,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['RichText', { ...RichText }],
   ['Promo', { ...Promo }],
   ['PartialDesignDynamicPlaceholder', { ...PartialDesignDynamicPlaceholder }],
-  ['PageContent', { ...PageContent, componentType: 'client' }],
+  ['PageContent', { ...PageContent }],
   ['NavigationMenuToggle', { ...NavigationMenuToggleclient }],
   ['NavigationList', { ...NavigationListclient }],
   ['Navigation', { ...Navigation }],
