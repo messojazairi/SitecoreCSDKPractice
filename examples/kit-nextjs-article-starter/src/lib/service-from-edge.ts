@@ -16,7 +16,7 @@ interface EdgeFieldValue {
 }
 
 interface ServiceChildResult {
-  name?: string;
+  serviceName?: EdgeFieldValue;
   description?: EdgeFieldValue;
   category?: EdgeFieldValue;
 }
@@ -46,7 +46,7 @@ function buildServiceQuery(fragmentType: string): string {
         children(first: ${MAX_CHILDREN}) {
           results {
             ... on ${fragmentType} {
-              name
+              serviceName: field(name: "name") { jsonValue }
               description { jsonValue }
               category { jsonValue }
             }
@@ -77,7 +77,7 @@ export async function fetchServicesFromEdge(): Promise<ServiceItem[]> {
 
     return (result?.item?.children?.results ?? [])
       .map((child) => ({
-        name: (child?.name ?? '').trim(),
+        name: extractFieldValue(child?.serviceName),
         description: extractFieldValue(child?.description),
         category: extractFieldValue(child?.category),
       }))
