@@ -50,7 +50,13 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
   const inView = useInView(ref, { once: true });
 
   const src = image?.value?.src ?? '';
-  const isSvg = src.endsWith('.svg');
+  const isSvg = (() => {
+    try {
+      return new URL(src).pathname.toLowerCase().endsWith('.svg');
+    } catch {
+      return src.includes('.svg');
+    }
+  })();
   const isPicsum = src.includes('picsum.photos');
 
   if (!isEditing && !isPreview && !src) {
@@ -68,7 +74,7 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
   const imageFetchPriority: 'high' | 'low' | 'auto' = shouldPrioritize ? 'high' : 'auto';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { priority: _rp, loading: _rl, fetchPriority: _rf, ...restProps } = rest;
+  const { priority: _rp, loading: _rl, fetchPriority: _rf, wrapperClass: _wc, ...restProps } = rest;
   const imageValueProps = (image?.value as ImageProps) || {};
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { priority: _ivp, loading: _ivl, fetchPriority: _ivf, ...imageValueRest } = imageValueProps;
@@ -83,7 +89,7 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
       placeholder="blur"
       blurDataURL={src}
       sizes={sizes}
-      {...(!image?.value?.width && isSvg ? { width: 16, height: 16 } : {})}
+      {...(!image?.value?.width ? { width: 16, height: 16 } : {})}
       {...restProps}
       priority={imagePriority}
       fetchPriority={imageFetchPriority}
