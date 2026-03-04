@@ -252,8 +252,8 @@ SharedFields:
             $articleListing.Editing.BeginEdit()
             $articleListing._.featuredContent = "$($article1.ID)|$($article2.ID)|$($article3.ID)|$($articleQa2.ID)|$($articleQa2.ID)"
             $articleListing.Editing.EndEdit()
-            
-            # Set all pages and content to Approved workflow state so they are ready to publish
+
+            # Set all pages and content to Approved workflow state
             Write-Verbose "Set all site content workflow state to Approved"
             $basicWorkflowApprovedStateId = "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
             $basicDatasourceWorkflowApprovedStateId = "{4460E76C-87E9-4859-9DE6-DE122774937F}"
