@@ -250,7 +250,20 @@ jobs:
             fi
           done
 
-      - name: Build all starters
+      - name: Check if running in upstream repo
+        id: repo-check
+        run: |
+          # Check if this is the upstream Sitecore repo or a fork
+          if [ "${{ github.repository_owner }}" = "sitecore" ] || [ "${{ github.event.pull_request.head.repo.full_name }}" = "${{ github.repository }}" ]; then
+            echo "is-upstream=true" >> $GITHUB_OUTPUT
+            echo "✅ Running in upstream repo or same-repo PR - full build will run"
+          else
+            echo "is-upstream=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ Running in fork - Sitecore build will be skipped (no XM Cloud credentials)"
+          fi
+
+      - name: Build all starters (Full - Upstream Only)
+        if: steps.repo-check.outputs.is-upstream == 'true'
         env:
           # Sitecore Edge API Configuration
           SITECORE_EDGE_URL: ${{ secrets.SITECORE_EDGE_URL }}
@@ -270,7 +283,7 @@ jobs:
           PERSONALIZE_MIDDLEWARE_EDGE_TIMEOUT: ${{ vars.PERSONALIZE_MIDDLEWARE_EDGE_TIMEOUT || '1000' }}
         run: |
           set -e  # Exit immediately if any command fails
-          echo "Building all starters..."
+          echo "Building all starters with full Sitecore integration..."
           echo "Sitecore Environment Variables:"
           echo "  SITECORE_EDGE_URL: ${SITECORE_EDGE_URL:+[SET]}"
           echo "  SITECORE_EDGE_CONTEXT_ID: ${SITECORE_EDGE_CONTEXT_ID:+[SET]}"
@@ -296,6 +309,44 @@ jobs:
               cd ../..
             fi
           done
+
+      - name: Build all starters (Fork - Skip Sitecore Tools)
+        if: steps.repo-check.outputs.is-upstream != 'true'
+        run: |
+          set -e  # Exit immediately if any command fails
+          echo "⚠️ Running in fork - skipping sitecore-tools:build (requires XM Cloud credentials)"
+          echo "ℹ️ The full build with Sitecore integration will run when PR is created to upstream repo"
+          echo ""
+          echo "Building starters with Next.js only (no Sitecore Edge calls)..."
+
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+            if [ -d "examples/$starter" ]; then
+              echo "=================================="
+              echo "Building $starter (Next.js only)"
+              echo "=================================="
+              cd "examples/$starter"
+              
+              # Run component map generation (doesn't require credentials)
+              echo "Generating component map..."
+              npm run sitecore-tools:generate-map || echo "⚠️ Component map generation skipped"
+              
+              # Run Next.js build directly, skipping sitecore-tools:build
+              echo "Running Next.js build..."
+              if npm run next:build; then
+                echo "✅ Next.js build successful for $starter"
+              else
+                echo "❌ Next.js build failed for $starter"
+                echo "::error::Next.js build failed for $starter"
+                exit 1
+              fi
+              
+              cd ../..
+            fi
+          done
+          
+          echo ""
+          echo "✅ Fork CI validation complete"
+          echo "ℹ️ Note: Full Sitecore build validation will occur in upstream repo CI"
 
       - name: Run tests with coverage for all starters
         run: |
@@ -349,23 +400,31 @@ jobs:
               const status = '${{ job.status }}' === 'success' ? '✅ **PASSED**' : '❌ **FAILED**';
               const emoji = '${{ job.status }}' === 'success' ? '✅' : '❌';
 
+              const isUpstream = '${{ steps.repo-check.outputs.is-upstream }}' === 'true';
+              const buildType = isUpstream ? '✅ Full build (with Sitecore integration)' : '⚠️ Next.js-only build (fork - no XM Cloud credentials)';
+              
               const body = `## 🔍 PR Validation Results
 
               ${emoji} **Status:** ${status}
 
               **Base Branch Check:** ${'${{ steps.base-check.outputs.base-check-passed }}' === 'true' ? '✅ Based on latest main' : '❌ Not based on latest main - rebase required'}
 
+              **Build Type:** ${buildType}
+
               **Validated Starters:** kit-nextjs-skate-park, kit-nextjs-article-starter, kit-nextjs-location-finder, kit-nextjs-product-listing
 
               **Checks Performed:**
               - ✅ Linting and formatting
               - ✅ TypeScript type checking
-              - ✅ Build verification
+              - ${isUpstream ? '✅ Full build verification (Sitecore + Next.js)' : '⚠️ Next.js build only (Sitecore build runs in upstream)'}
               - ✅ Test execution with coverage
 
               **Next Steps:**
               ${'${{ job.status }}' === 'success' ? 
-                '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, dmz can be manually merged to main using a merge commit' : 
+                (isUpstream ? 
+                  '- ✅ PR is ready for review and merge to dmz branch\n- After merge, the DMZ validation workflow will run as final gate\n- If DMZ validation passes, dmz can be manually merged to main using a merge commit' :
+                  '- ✅ Fork CI passed - PR is ready for review\n- ⚠️ Full Sitecore build validation will run when PR is created to upstream repo\n- After upstream CI passes, PR can be merged to dmz branch'
+                ) : 
                 '- ❌ Please fix the issues above before merging\n- If not based on latest main: `git fetch origin main && git rebase origin/main && git push --force-with-lease`\n- If formatting issues: Run `npm run prettier`\n- Check the build logs for specific errors'
               }
 
