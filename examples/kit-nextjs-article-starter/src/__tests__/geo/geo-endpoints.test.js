@@ -31,22 +31,27 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
     expect(resp.data.lastModified).toBeDefined();
 });
 
-test('GET /ai/faq.json returns 200 and valid JSON',async()=> {     
-    const resp =await axios.get(`${BASE_URL}/ai/faq.json`, {
+test('GET /ai/faq.json returns 200 and valid JSON', async () => {
+    const resp = await axios.get(`${BASE_URL}/ai/faq.json`, {
         validateStatus: () => true,
         timeout: 10000,
-      });    
-    expectValidJson(resp);    
-    expect(Array.isArray(resp.data)).toBe(true);
-    expect(resp.data.length).toBeGreaterThan(0);
+    });
+    expectValidJson(resp);
+    expect(resp.data).toHaveProperty('faq');
+    expect(Array.isArray(resp.data.faq)).toBe(true);
+    expect(resp.data.faq.length).toBeGreaterThan(0);
 
-    const first = resp.data[0];
+    const first = resp.data.faq[0];
     expect(first).toBeDefined();
     expect(typeof first.question).toBe('string');
     expect(first.question.length).toBeGreaterThan(0);
     expect(typeof first.answer).toBe('string');
     expect(first.answer.length).toBeGreaterThan(0);
-    
+
+    expect(resp.data).toHaveProperty('lastModified');
+    expect(resp.data.lastModified).toHaveProperty('value');
+    expect(resp.data.lastModified.value).toMatch(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/);
+
     const cacheControl = resp.headers['cache-control'];
     expect(cacheControl).toBeTruthy();
 });
