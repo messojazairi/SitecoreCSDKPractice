@@ -62,7 +62,15 @@ const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
           <ContentSdkText field={description?.jsonValue} />
         </p>
         {hasValidLink(linkValue) ? (
-          <ContentSdkLink field={linkValue} className="btn btn-ghost" />
+          <ContentSdkLink
+            field={linkValue}
+            className="btn btn-ghost"
+            aria-label={
+              heading?.jsonValue?.value
+                ? `Learn more about ${heading.jsonValue.value}`
+                : undefined
+            }
+          />
         ) : (
           <span className="btn btn-ghost inline-block">{linkValue?.value?.text || ''}</span>
         )}
