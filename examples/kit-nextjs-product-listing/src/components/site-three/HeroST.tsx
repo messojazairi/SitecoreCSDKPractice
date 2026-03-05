@@ -38,17 +38,21 @@ const HeroLink = ({
   field: LinkField | undefined;
   className: string;
   ariaLabel?: string;
-}) =>
-  hasValidLink(field) && field ? (
-    <ContentSdkLink
-      field={field}
-      prefetch={false}
-      className={className}
-      {...(ariaLabel && { 'aria-label': ariaLabel })}
-    />
-  ) : (
-    <span className={className}>{field?.value?.text || ''}</span>
-  );
+}) => {
+  if (hasValidLink(field) && field) {
+    return (
+      <ContentSdkLink
+        field={field}
+        prefetch={false}
+        className={className}
+        {...(ariaLabel && { 'aria-label': ariaLabel })}
+      />
+    );
+  }
+  const text = field?.value?.text?.trim();
+  if (!text) return null;
+  return <span className={className}>{text}</span>;
+};
 
 export const Default = (props: PageHeaderSTProps) => {
   const { containerRef, rightOffset } = useContainerOffsets();
