@@ -171,16 +171,14 @@ test('GET /sitemap-llm.xml returns 200 and valid XML', async () => {
     const join = (origin, path) => `${origin.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
 
     const requiredPaths = [
-    '/',                    
+    '/',  
+    '/Test-Drive',                  
+    '/Products/Aero',
+    '/Products/Nexa',
+    '/Products/Terra',
     '/ai/faq.json',
     '/ai/summary.json',
     '/ai/service.json',
-    '/Article-Page',
-    '/Articles/Article-1',
-    '/Articles/Article-2',
-    '/Articles/Article-3',
-    '/Articles/QA-Article-1',
-    '/Articles/QA-Article-2',
     ];
 
     const expectedUrls = requiredPaths.map(p => {
@@ -238,13 +236,10 @@ test('GET /sitemap.xml returns 200 and valid XML', async () => {
 
     const requiredPaths = [
         '/',
-        '/Article-Page',
-        '/Landing-Page',
-        '/Articles/Article-1',
-        '/Articles/Article-2',
-        '/Articles/Article-3',
-        '/Articles/QA-Article-1',
-        '/Articles/QA-Article-2',
+        '/Test-Drive',                  
+        '/Products/Aero',
+        '/Products/Nexa',
+        '/Products/Terra',
     ];
     const expectedUrls = requiredPaths.map((p) => (p === '/' ? `${derivedOrigin}/` : join(derivedOrigin, p)));
     expect(locs).toEqual(expect.arrayContaining(expectedUrls));

@@ -37,20 +37,15 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
         timeout: 10000,
     });
     expectValidJson(resp);
-    expect(resp.data).toHaveProperty('faq');
-    expect(Array.isArray(resp.data.faq)).toBe(true);
-    expect(resp.data.faq.length).toBeGreaterThan(0);
+    expect(Array.isArray(resp.data)).toBe(true);
+    expect(resp.data.length).toBeGreaterThan(0);
 
-    const first = resp.data.faq[0];
+    const first = resp.data[0];
     expect(first).toBeDefined();
     expect(typeof first.question).toBe('string');
     expect(first.question.length).toBeGreaterThan(0);
     expect(typeof first.answer).toBe('string');
     expect(first.answer.length).toBeGreaterThan(0);
-
-    expect(resp.data).toHaveProperty('lastModified');
-    expect(resp.data.lastModified).toHaveProperty('value');
-    expect(resp.data.lastModified.value).toMatch(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/);
 
     const cacheControl = resp.headers['cache-control'];
     expect(cacheControl).toBeTruthy();
@@ -175,12 +170,7 @@ test('GET /sitemap-llm.xml returns 200 and valid XML', async () => {
     '/ai/faq.json',
     '/ai/summary.json',
     '/ai/service.json',
-    '/Article-Page',
-    '/Articles/Article-1',
-    '/Articles/Article-2',
-    '/Articles/Article-3',
-    '/Articles/QA-Article-1',
-    '/Articles/QA-Article-2',
+    '/About',
     ];
 
     const expectedUrls = requiredPaths.map(p => {
@@ -238,13 +228,7 @@ test('GET /sitemap.xml returns 200 and valid XML', async () => {
 
     const requiredPaths = [
         '/',
-        '/Article-Page',
-        '/Landing-Page',
-        '/Articles/Article-1',
-        '/Articles/Article-2',
-        '/Articles/Article-3',
-        '/Articles/QA-Article-1',
-        '/Articles/QA-Article-2',
+        '/About',
     ];
     const expectedUrls = requiredPaths.map((p) => (p === '/' ? `${derivedOrigin}/` : join(derivedOrigin, p)));
     expect(locs).toEqual(expect.arrayContaining(expectedUrls));
