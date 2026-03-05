@@ -42,7 +42,7 @@ const SocialLinks = ({ fields }: { fields: Fields }) => (
         <FontAwesomeIcon icon={faFacebook} width={20} height={20} />
       </ContentSdkLink>
     ) : (
-      <span aria-label="Facebook">
+      <span role="img" aria-label="Facebook">
         <FontAwesomeIcon icon={faFacebook} width={20} height={20} />
       </span>
     )}
@@ -55,7 +55,7 @@ const SocialLinks = ({ fields }: { fields: Fields }) => (
         <FontAwesomeIcon icon={faInstagram} width={22} height={22} />
       </ContentSdkLink>
     ) : (
-      <span aria-label="Instagram">
+      <span role="img" aria-label="Instagram">
         <FontAwesomeIcon icon={faInstagram} width={22} height={22} />
       </span>
     )}
@@ -68,7 +68,7 @@ const SocialLinks = ({ fields }: { fields: Fields }) => (
         <FontAwesomeIcon icon={faLinkedinIn} width={24} height={24} />
       </ContentSdkLink>
     ) : (
-      <span aria-label="LinkedIn">
+      <span role="img" aria-label="LinkedIn">
         <FontAwesomeIcon icon={faLinkedinIn} width={24} height={24} />
       </span>
     )}

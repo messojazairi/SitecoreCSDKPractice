@@ -140,7 +140,7 @@ const SocialIcon = ({
       {icon}
     </ContentSdkLink>
   ) : (
-    <span aria-label={ariaLabel}>{icon}</span>
+    <span role="img" aria-label={ariaLabel}>{icon}</span>
   );
 
 const TeamMemberCard = (props: TeamMemberCardProps) => {
