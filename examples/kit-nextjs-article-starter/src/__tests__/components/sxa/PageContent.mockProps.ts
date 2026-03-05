@@ -1,4 +1,4 @@
-import { RichTextField } from '@sitecore-content-sdk/nextjs';
+import { RichTextField, Page } from '@sitecore-content-sdk/nextjs';
 
 // Mock rich text field with content
 export const mockContentField: RichTextField = {
@@ -9,45 +9,47 @@ export const mockEmptyContentField: RichTextField = {
   value: '',
 };
 
-// Mock useSitecore context
-export const mockSitecoreContext = {
-  page: {
+// Mock page object with route content
+const createMockPage = (hasContent: boolean = true): Page =>
+  ({
     layout: {
       sitecore: {
         route: {
-          fields: {
-            Content: {
-              value: '<p>Content from route</p>',
-            },
-          },
+          fields: hasContent
+            ? {
+                Content: {
+                  value: '<p>Content from route</p>',
+                },
+              }
+            : {},
         },
       },
     },
     mode: {
       isEditing: false,
       isPreview: false,
+      isNormal: true,
     },
-  },
+  }) as unknown as Page;
+
+// Mock useSitecore context
+export const mockSitecoreContext = {
+  page: createMockPage(true),
 };
 
 export const mockSitecoreContextWithoutContent = {
-  page: {
-    layout: {
-      sitecore: {
-        route: {
-          fields: {},
-        },
-      },
-    },
-    mode: {
-      isEditing: false,
-      isPreview: false,
-    },
-  },
+  page: createMockPage(false),
+};
+
+// Mock rendering object
+const mockRendering = {
+  uid: 'test-uid',
+  componentName: 'PageContent',
 };
 
 // Default props with content field
 export const defaultProps = {
+  rendering: mockRendering,
   params: {
     Styles: 'custom-page-content-style',
     RenderingIdentifier: 'page-content-id',
@@ -55,10 +57,12 @@ export const defaultProps = {
   fields: {
     Content: mockContentField,
   },
+  page: createMockPage(true),
 };
 
 // Props with empty content
 export const propsWithEmptyContent = {
+  rendering: mockRendering,
   params: {
     Styles: 'empty-content-style',
     RenderingIdentifier: 'empty-content-id',
@@ -66,10 +70,12 @@ export const propsWithEmptyContent = {
   fields: {
     Content: mockEmptyContentField,
   },
+  page: createMockPage(true),
 };
 
 // Props without styles
 export const propsWithoutStyles = {
+  rendering: mockRendering,
   params: {
     Styles: '',
     RenderingIdentifier: 'no-style-id',
@@ -77,10 +83,12 @@ export const propsWithoutStyles = {
   fields: {
     Content: mockContentField,
   },
+  page: createMockPage(true),
 };
 
 // Props without RenderingIdentifier
 export const propsWithoutId = {
+  rendering: mockRendering,
   params: {
     Styles: 'custom-style',
     RenderingIdentifier: '',
@@ -88,36 +96,44 @@ export const propsWithoutId = {
   fields: {
     Content: mockContentField,
   },
+  page: createMockPage(true),
 };
 
 // Props without fields
 export const propsWithoutFields = {
+  rendering: mockRendering,
   params: {
     Styles: 'no-fields-style',
     RenderingIdentifier: 'no-fields-id',
   },
   fields: undefined as unknown as typeof defaultProps.fields,
+  page: createMockPage(false),
 };
 
 // Props without Content field
 export const propsWithoutContentField = {
+  rendering: mockRendering,
   params: {
     Styles: 'no-content-field',
     RenderingIdentifier: 'no-content-field-id',
   },
   fields: {} as unknown as typeof defaultProps.fields,
+  page: createMockPage(true),
 };
 
 // Props with undefined params
 export const propsWithUndefinedParams = {
+  rendering: mockRendering,
   params: {} as typeof defaultProps.params,
   fields: {
     Content: mockContentField,
   },
+  page: createMockPage(true),
 };
 
 // Props with null content field
 export const propsWithNullContent = {
+  rendering: mockRendering,
   params: {
     Styles: 'null-content',
     RenderingIdentifier: 'null-content-id',
@@ -125,5 +141,6 @@ export const propsWithNullContent = {
   fields: {
     Content: null as unknown as RichTextField,
   },
+  page: createMockPage(false),
 };
 

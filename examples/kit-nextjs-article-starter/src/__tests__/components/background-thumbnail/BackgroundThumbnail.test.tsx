@@ -1,12 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as BackgroundThumbnail } from '@/components/background-thumbnail/BackgroundThumbnail.dev';
-
-// Mock useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-}));
+import type { BackgroundThumbailProps } from '@/components/background-thumbnail/BackgroundThumbnail.dev';
 
 // Mock Badge component
 jest.mock('@/components/ui/badge', () => ({
@@ -20,103 +15,97 @@ jest.mock('@/components/ui/badge', () => ({
 describe('BackgroundThumbnail Component', () => {
   const mockChildren = <div data-testid="child-element">Child Content</div>;
 
+  const createMockProps = (isEditing: boolean, children: React.ReactElement): BackgroundThumbailProps => ({
+    rendering: { uid: 'test-uid', componentName: 'BackgroundThumbnail' },
+    params: {},
+    page: {
+      mode: {
+        isEditing,
+        isPreview: false,
+        isNormal: !isEditing,
+      },
+    } as BackgroundThumbailProps['page'],
+    children,
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('Normal mode (not editing)', () => {
-    beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      });
-    });
-
     it('should render null when not in editing mode', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(false, mockChildren);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       expect(container.firstChild).toBeNull();
     });
 
     it('should not render children when not in editing mode', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(false, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.queryByTestId('child-element')).not.toBeInTheDocument();
     });
 
     it('should not render badge when not in editing mode', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(false, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.queryByTestId('badge')).not.toBeInTheDocument();
     });
   });
 
   describe('Editing mode', () => {
-    beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-    });
-
     it('should render when in editing mode', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       expect(container.firstChild).toBeInTheDocument();
     });
 
     it('should render children when in editing mode', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.getByTestId('child-element')).toBeInTheDocument();
     });
 
     it('should render "Update Background" badge', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.getByText('Update Background')).toBeInTheDocument();
     });
 
     it('should apply correct container classes', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       const wrapper = container.firstChild as HTMLElement;
       expect(wrapper).toHaveClass('bg-primary', 'absolute', 'bottom-4', 'right-4', 'rounded-md');
     });
 
     it('should apply opacity and ring classes', () => {
-      const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       const wrapper = container.firstChild as HTMLElement;
       expect(wrapper).toHaveClass('opacity-50', 'ring-4', 'ring-offset-2', 'hover:opacity-100');
     });
 
     it('should position badge correctly', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('absolute', 'bottom-4', 'left-2/4', '-translate-x-2/4');
     });
 
     it('should apply nowrap and whitespace classes to badge', () => {
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, mockChildren);
+      render(<BackgroundThumbnail {...props} />);
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('nowrap', 'whitespace-nowrap');
     });
   });
 
   describe('Different children types', () => {
-    beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-    });
-
     it('should render with image children', () => {
       // eslint-disable-next-line @next/next/no-img-element
       const imageChild = <img src="/test.jpg" alt="Test" data-testid="image-child" />;
-      render(<BackgroundThumbnail>{imageChild}</BackgroundThumbnail>);
+      const props = createMockProps(true, imageChild);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.getByTestId('image-child')).toBeInTheDocument();
     });
 
@@ -127,7 +116,8 @@ describe('BackgroundThumbnail Component', () => {
           <p>Description</p>
         </div>
       );
-      render(<BackgroundThumbnail>{complexChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, complexChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.getByText('Title')).toBeInTheDocument();
       expect(screen.getByText('Description')).toBeInTheDocument();
     });
@@ -139,7 +129,8 @@ describe('BackgroundThumbnail Component', () => {
           <div data-testid="child-2">Child 2</div>
         </>
       );
-      render(<BackgroundThumbnail>{multipleChildren}</BackgroundThumbnail>);
+      const props = createMockProps(true, multipleChildren);
+      render(<BackgroundThumbnail {...props} />);
       expect(screen.getByTestId('child-1')).toBeInTheDocument();
       expect(screen.getByTestId('child-2')).toBeInTheDocument();
     });
@@ -147,69 +138,28 @@ describe('BackgroundThumbnail Component', () => {
 
   describe('Edge cases', () => {
     it('should handle undefined children gracefully in editing mode', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-
-      const { container } = render(<BackgroundThumbnail>{undefined as unknown as React.ReactElement}</BackgroundThumbnail>);
+      const props = createMockProps(true, undefined as unknown as React.ReactElement);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       expect(container.firstChild).toBeInTheDocument();
       expect(screen.getByText('Update Background')).toBeInTheDocument();
     });
 
     it('should handle null children gracefully in editing mode', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-
-      const { container } = render(<BackgroundThumbnail>{null as unknown as React.ReactElement}</BackgroundThumbnail>);
+      const props = createMockProps(true, null as unknown as React.ReactElement);
+      const { container } = render(<BackgroundThumbnail {...props} />);
       expect(container.firstChild).toBeInTheDocument();
       expect(screen.getByText('Update Background')).toBeInTheDocument();
     });
   });
 
-  describe('useSitecore integration', () => {
-    it('should call useSitecore hook', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      });
-
-      render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
-      expect(mockUseSitecore).toHaveBeenCalled();
-    });
-
+  describe('Page mode integration', () => {
     it('should react to editing mode changes', () => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      });
-
-      const { container, rerender } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const propsNotEditing = createMockProps(false, mockChildren);
+      const { container, rerender } = render(<BackgroundThumbnail {...propsNotEditing} />);
       expect(container.firstChild).toBeNull();
 
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: true,
-          },
-        },
-      });
-
-      rerender(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
+      const propsEditing = createMockProps(true, mockChildren);
+      rerender(<BackgroundThumbnail {...propsEditing} />);
       expect(container.firstChild).toBeInTheDocument();
     });
   });
