@@ -24,6 +24,25 @@ type PageHeaderSTProps = {
   fields: Fields;
 };
 
+/** Returns true if the link field has a valid href (not a placeholder like # or http://#). */
+function hasValidLink(field: LinkField | undefined): boolean {
+  const href = field?.value?.href;
+  return !!(href && href !== '#' && !href.startsWith('http://#'));
+}
+
+const HeroLink = ({
+  field,
+  className,
+}: {
+  field: LinkField | undefined;
+  className: string;
+}) =>
+  hasValidLink(field) ? (
+    <ContentSdkLink field={field} prefetch={false} className={className} />
+  ) : (
+    <span className={className}>{field?.value?.text || ''}</span>
+  );
+
 export const Default = (props: PageHeaderSTProps) => {
   const { containerRef, rightOffset } = useContainerOffsets();
 
@@ -50,16 +69,8 @@ export const Default = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <ContentSdkLink
-                field={props?.fields?.Link1}
-                prefetch={false}
-                className="btn btn-primary mr-4"
-              />
-              <ContentSdkLink
-                field={props?.fields?.Link2}
-                prefetch={false}
-                className="btn btn-secondary"
-              />
+              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
+              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
             </div>
           </div>
         </div>
@@ -109,16 +120,8 @@ export const Right = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <ContentSdkLink
-                field={props?.fields?.Link1}
-                prefetch={false}
-                className="btn btn-primary mr-4"
-              />
-              <ContentSdkLink
-                field={props?.fields?.Link2}
-                prefetch={false}
-                className="btn btn-secondary"
-              />
+              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
+              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
             </div>
           </div>
         </div>
@@ -164,16 +167,8 @@ export const Centered = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <ContentSdkLink
-                field={props?.fields?.Link1}
-                prefetch={false}
-                className="btn btn-primary mr-4"
-              />
-              <ContentSdkLink
-                field={props?.fields?.Link2}
-                prefetch={false}
-                className="btn btn-secondary"
-              />
+              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
+              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
             </div>
           </div>
         </div>
@@ -208,16 +203,8 @@ export const SplitScreen = (props: PageHeaderSTProps) => {
             <ContentSdkText field={props?.fields?.Title} />
           </h1>
           <div className="mt-8">
-            <ContentSdkLink
-              field={props?.fields?.Link1}
-              prefetch={false}
-              className="btn btn-secondary mr-4"
-            />
-            <ContentSdkLink
-              field={props?.fields?.Link2}
-              prefetch={false}
-              className="btn btn-secondary"
-            />
+            <HeroLink field={props?.fields?.Link1} className="btn btn-secondary mr-4" />
+            <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
           </div>
         </div>
         <div className="relative aspect-3/2 lg:basis-full lg:aspect-auto">
@@ -258,16 +245,8 @@ export const Stacked = (props: PageHeaderSTProps) => {
             <ContentSdkText field={props?.fields?.Title} />
           </h1>
           <div className="mt-8">
-            <ContentSdkLink
-              field={props?.fields?.Link1}
-              prefetch={false}
-              className="btn btn-secondary mr-4"
-            />
-            <ContentSdkLink
-              field={props?.fields?.Link2}
-              prefetch={false}
-              className="btn btn-secondary"
-            />
+            <HeroLink field={props?.fields?.Link1} className="btn btn-secondary mr-4" />
+            <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
           </div>
         </div>
       </div>
