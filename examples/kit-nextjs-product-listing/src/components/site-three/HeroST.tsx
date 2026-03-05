@@ -39,7 +39,7 @@ const HeroLink = ({
   className: string;
   ariaLabel?: string;
 }) =>
-  hasValidLink(field) ? (
+  hasValidLink(field) && field ? (
     <ContentSdkLink
       field={field}
       prefetch={false}
