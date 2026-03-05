@@ -1,6 +1,7 @@
 import {
   NextImage as ContentSdkImage,
   Link as ContentSdkLink,
+  LinkField,
   RichText as ContentSdkRichText,
   Text as ContentSdkText,
 } from '@sitecore-content-sdk/nextjs';
@@ -130,8 +131,12 @@ const SocialIcon = ({
   ariaLabel: string;
   icon: JSX.Element;
 }) =>
-  hasValidLink(field) ? (
-    <ContentSdkLink field={field} prefetch={false} aria-label={ariaLabel}>
+  hasValidLink(field) && field ? (
+    <ContentSdkLink
+      field={field as LinkField}
+      prefetch={false}
+      aria-label={ariaLabel}
+    >
       {icon}
     </ContentSdkLink>
   ) : (
