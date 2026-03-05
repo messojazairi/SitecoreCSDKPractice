@@ -227,7 +227,7 @@ const TeamSectionTemplateVertical = (props: TeamSectionTemplateVerticalProps) =>
     <section className={`py-24 px-4 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto">
         <div className={`${props.centered ? 'max-w-3xl mx-auto text-center' : ''}`}>
-          <p className="font-semibold mb-4" role="text">
+          <p className="font-semibold mb-4">
             <ContentSdkText field={datasource.tagLine?.jsonValue} />
           </p>
           <h2 className="text-5xl font-bold mb-6">
@@ -272,7 +272,7 @@ const TeamSectionTemplateHorizontal = (props: TeamSectionTemplateHorizontalProps
       <div className="container mx-auto">
         <div className={`grid md:grid-cols-${props.columns + 1} gap-x-16 gap-y-12`}>
           <div>
-            <p className="font-semibold mb-4" role="text">
+            <p className="font-semibold mb-4">
               <ContentSdkText field={datasource.tagLine?.jsonValue} />
             </p>
             <h2 className="text-5xl font-bold mb-6">
