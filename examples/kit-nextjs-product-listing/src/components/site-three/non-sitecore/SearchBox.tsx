@@ -8,9 +8,12 @@ import { useTranslations } from 'next-intl';
 
 const DICTIONARY_KEYS = {
   SEARCH_GO_LABEL: 'Go',
+  SEARCH_GO_DESCRIPTIVE: 'Go_To_Search_Results',
   SEARCH_LABEL: 'Search',
   SEARCH_INPUT_PLACEHOLDER: 'Search_Input_Placeholder',
 };
+
+const SEARCH_GO_ARIA_LABEL = 'Go to search results';
 
 /** Returns true if href is a valid URL (not a placeholder like # or http://#). */
 function hasValidHref(href: string | undefined): boolean {
@@ -96,13 +99,19 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
               }}
             />
             {searchUrl ? (
-              <Link href={searchUrl} prefetch={false} className="btn btn-primary btn-sharp">
-                {t(DICTIONARY_KEYS.SEARCH_GO_LABEL) || 'Go'}
+              <Link
+                href={searchUrl}
+                prefetch={false}
+                className="btn btn-primary btn-sharp"
+                aria-label={t(DICTIONARY_KEYS.SEARCH_GO_DESCRIPTIVE) || SEARCH_GO_ARIA_LABEL}
+              >
+                {t(DICTIONARY_KEYS.SEARCH_GO_DESCRIPTIVE) || t(DICTIONARY_KEYS.SEARCH_GO_LABEL) || SEARCH_GO_ARIA_LABEL}
               </Link>
             ) : (
               <button
                 type="button"
                 className="btn btn-primary btn-sharp"
+                aria-label={t(DICTIONARY_KEYS.SEARCH_GO_DESCRIPTIVE) || SEARCH_GO_ARIA_LABEL}
                 onClick={() => {
                   if (searchTerm.trim() && searchBaseHref) {
                     try {
@@ -115,7 +124,7 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
                   }
                 }}
               >
-                {t(DICTIONARY_KEYS.SEARCH_GO_LABEL) || 'Go'}
+                {t(DICTIONARY_KEYS.SEARCH_GO_DESCRIPTIVE) || t(DICTIONARY_KEYS.SEARCH_GO_LABEL) || SEARCH_GO_ARIA_LABEL}
               </button>
             )}
           </div>
