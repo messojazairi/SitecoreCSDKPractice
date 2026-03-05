@@ -33,18 +33,27 @@ function hasValidLink(field: LinkField | undefined): boolean {
 const HeroLink = ({
   field,
   className,
+  ariaLabel,
 }: {
   field: LinkField | undefined;
   className: string;
+  ariaLabel?: string;
 }) =>
   hasValidLink(field) ? (
-    <ContentSdkLink field={field} prefetch={false} className={className} />
+    <ContentSdkLink
+      field={field}
+      prefetch={false}
+      className={className}
+      {...(ariaLabel && { 'aria-label': ariaLabel })}
+    />
   ) : (
     <span className={className}>{field?.value?.text || ''}</span>
   );
 
 export const Default = (props: PageHeaderSTProps) => {
   const { containerRef, rightOffset } = useContainerOffsets();
+  const titleValue = (props?.fields?.Title as { value?: string } | undefined)?.value;
+  const linkAriaLabel = titleValue ? `Learn more about ${titleValue}` : undefined;
 
   return (
     <section
@@ -69,8 +78,16 @@ export const Default = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
-              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
+              <HeroLink
+                field={props?.fields?.Link1}
+                className="btn btn-primary mr-4"
+                ariaLabel={linkAriaLabel}
+              />
+              <HeroLink
+                field={props?.fields?.Link2}
+                className="btn btn-secondary"
+                ariaLabel={linkAriaLabel}
+              />
             </div>
           </div>
         </div>
@@ -93,6 +110,8 @@ export const Default = (props: PageHeaderSTProps) => {
 
 export const Right = (props: PageHeaderSTProps) => {
   const { containerRef, leftOffset } = useContainerOffsets();
+  const titleValue = (props?.fields?.Title as { value?: string } | undefined)?.value;
+  const linkAriaLabel = titleValue ? `Learn more about ${titleValue}` : undefined;
 
   return (
     <section
@@ -120,8 +139,16 @@ export const Right = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
-              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
+              <HeroLink
+                field={props?.fields?.Link1}
+                className="btn btn-primary mr-4"
+                ariaLabel={linkAriaLabel}
+              />
+              <HeroLink
+                field={props?.fields?.Link2}
+                className="btn btn-secondary"
+                ariaLabel={linkAriaLabel}
+              />
             </div>
           </div>
         </div>
@@ -143,6 +170,8 @@ export const Right = (props: PageHeaderSTProps) => {
 
 export const Centered = (props: PageHeaderSTProps) => {
   const { containerRef, rightOffset } = useContainerOffsets();
+  const titleValue = (props?.fields?.Title as { value?: string } | undefined)?.value;
+  const linkAriaLabel = titleValue ? `Learn more about ${titleValue}` : undefined;
 
   return (
     <section
@@ -167,8 +196,16 @@ export const Centered = (props: PageHeaderSTProps) => {
               <ContentSdkText field={props?.fields?.Title} />
             </h1>
             <div className="mt-8">
-              <HeroLink field={props?.fields?.Link1} className="btn btn-primary mr-4" />
-              <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
+              <HeroLink
+                field={props?.fields?.Link1}
+                className="btn btn-primary mr-4"
+                ariaLabel={linkAriaLabel}
+              />
+              <HeroLink
+                field={props?.fields?.Link2}
+                className="btn btn-secondary"
+                ariaLabel={linkAriaLabel}
+              />
             </div>
           </div>
         </div>
@@ -189,6 +226,9 @@ export const Centered = (props: PageHeaderSTProps) => {
 };
 
 export const SplitScreen = (props: PageHeaderSTProps) => {
+  const titleValue = (props?.fields?.Title as { value?: string } | undefined)?.value;
+  const linkAriaLabel = titleValue ? `Learn more about ${titleValue}` : undefined;
+
   return (
     <section
       className={`relative bg-primary border-8 lg:border-16 border-background ${props?.params?.styles || ''}`}
@@ -203,8 +243,16 @@ export const SplitScreen = (props: PageHeaderSTProps) => {
             <ContentSdkText field={props?.fields?.Title} />
           </h1>
           <div className="mt-8">
-            <HeroLink field={props?.fields?.Link1} className="btn btn-secondary mr-4" />
-            <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
+            <HeroLink
+              field={props?.fields?.Link1}
+              className="btn btn-secondary mr-4"
+              ariaLabel={linkAriaLabel}
+            />
+            <HeroLink
+              field={props?.fields?.Link2}
+              className="btn btn-secondary"
+              ariaLabel={linkAriaLabel}
+            />
           </div>
         </div>
         <div className="relative aspect-3/2 lg:basis-full lg:aspect-auto">
@@ -231,6 +279,9 @@ export const SplitScreen = (props: PageHeaderSTProps) => {
 };
 
 export const Stacked = (props: PageHeaderSTProps) => {
+  const titleValue = (props?.fields?.Title as { value?: string } | undefined)?.value;
+  const linkAriaLabel = titleValue ? `Learn more about ${titleValue}` : undefined;
+
   return (
     <section
       className={`relative flex flex-col bg-primary lg:flex-row lg:items-center lg:min-h-[50rem] lg:bg-transparent ${props?.params?.styles || ''}`}
@@ -245,8 +296,16 @@ export const Stacked = (props: PageHeaderSTProps) => {
             <ContentSdkText field={props?.fields?.Title} />
           </h1>
           <div className="mt-8">
-            <HeroLink field={props?.fields?.Link1} className="btn btn-secondary mr-4" />
-            <HeroLink field={props?.fields?.Link2} className="btn btn-secondary" />
+            <HeroLink
+              field={props?.fields?.Link1}
+              className="btn btn-secondary mr-4"
+              ariaLabel={linkAriaLabel}
+            />
+            <HeroLink
+              field={props?.fields?.Link2}
+              className="btn btn-secondary"
+              ariaLabel={linkAriaLabel}
+            />
           </div>
         </div>
       </div>
