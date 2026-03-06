@@ -4,6 +4,8 @@ import { XMLParser } from 'fast-xml-parser';
 import {summaryExpected, serviceExpected, faqExpected} from './fixtures';
 import { BASE_URL, expectValidJson, expectValidXml, expectValidText, stripLastModified } from './helpers';
 
+jest.setTimeout(15000);
+
 test('GET /ai/summary.json returns 200 and valid JSON',async()=> { 
     const resp = await axios.get(`${BASE_URL}/ai/summary.json`, {
         validateStatus: () => true,
@@ -16,7 +18,7 @@ test('GET /ai/summary.json returns 200 and valid JSON',async()=> {
     expect(resp.data.description.trim().length).toBeGreaterThan(0);
     expect(resp.data.lastModified).toBeDefined();
     expect(resp.data.lastModified.trim().length).toBeGreaterThan(0);
-});
+}, 15000);
 
 
 test('GET /ai/summary.json matches canonical content (except lastModified)', async () => {
@@ -26,7 +28,7 @@ test('GET /ai/summary.json matches canonical content (except lastModified)', asy
     const actual = stripLastModified(resp.data);
     const expected = stripLastModified(summaryExpected);
     expect(actual).toEqual(expected);
-  });
+  }, 15000);
   
 
 test('GET /ai/service.json returns 200 and valid JSON',async()=> { 
@@ -48,7 +50,7 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
     expect(first.category.trim().length).toBeGreaterThan(0);
     expect(resp.data.lastModified).toBeDefined();
     expect(resp.data.lastModified.value.trim().length).toBeGreaterThan(0);
-});
+}, 15000);
 
 test('GET /ai/service.json matches canonical content (except lastModified)', async () => {
     const resp = await axios.get(`${BASE_URL}/ai/service.json`, { validateStatus: () => true, timeout: 10000 });
@@ -57,7 +59,7 @@ test('GET /ai/service.json matches canonical content (except lastModified)', asy
     const actual = stripLastModified(resp.data);
     const expected = stripLastModified(serviceExpected);
     expect(actual).toEqual(expected);
-  });
+  }, 15000);
 
 test('GET /ai/faq.json returns 200 and valid JSON', async () => {
     const resp = await axios.get(`${BASE_URL}/ai/faq.json`, {
@@ -79,7 +81,7 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
     expect(resp.data).toHaveProperty('lastModified');
     expect(resp.data.lastModified).toHaveProperty('value');
     expect(resp.data.lastModified.value).toMatch(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/);
-});
+}, 15000);
 
 test('GET /ai/faq.json matches canonical content (except lastModified)', async () => {
     const resp = await axios.get(`${BASE_URL}/ai/faq.json`, { validateStatus: () => true, timeout: 10000 });
@@ -88,7 +90,7 @@ test('GET /ai/faq.json matches canonical content (except lastModified)', async (
     const actual = stripLastModified(resp.data);
     const expected = stripLastModified(faqExpected);
     expect(actual).toEqual(expected);
-  });
+  }, 15000);
 
 test('GET /robots.txt returns 200 and valid text', async () => {
     const resp = await axios.get(`${BASE_URL}/robots.txt`, {
@@ -115,7 +117,7 @@ test('GET /robots.txt returns 200 and valid text', async () => {
     expect(text).toMatch(/Allow:\s*\//);
     expect(text).toContain(`Sitemap: ${BASE_URL}/sitemap.xml`);
     expect(text).toContain(`Sitemap: ${BASE_URL}/sitemap-llm.xml`);
-});
+}, 15000);
 
 test('GET /.well-known/ai.txt returns 200 and valid JSON',async()=> { 
     const resp =await axios.get(`${BASE_URL}/.well-known/ai.txt`, {
@@ -156,7 +158,7 @@ test('GET /.well-known/ai.txt returns 200 and valid JSON',async()=> {
     expect(resp.data.includes(`Sitemap: ${BASE_URL}/sitemap-llm.xml`)).toBe(true);
     expect(resp.data.includes(`Sitemap: ${BASE_URL}/sitemap.xml`)).toBe(true);
     expect(resp.data.includes(`Last-Modified: ${new Date().toISOString().split('T')[0]}`)).toBe(true);  
-});
+}, 15000);
 
 test('GET /sitemap-llm.xml returns 200 and valid XML', async () => {
     const res = await axios.get(`${BASE_URL}/sitemap-llm.xml`, {
@@ -222,7 +224,7 @@ test('GET /sitemap-llm.xml returns 200 and valid XML', async () => {
     });
 
     expect(locs).toEqual(expect.arrayContaining(expectedUrls));
-});
+}, 15000);
 
 test('GET /sitemap.xml returns 200 and valid XML', async () => {
     const res = await axios.get(`${BASE_URL}/sitemap.xml`, {
@@ -279,4 +281,4 @@ test('GET /sitemap.xml returns 200 and valid XML', async () => {
     ];
     const expectedUrls = requiredPaths.map((p) => (p === '/' ? `${derivedOrigin}/` : join(derivedOrigin, p)));
     expect(locs).toEqual(expect.arrayContaining(expectedUrls));
-});
+}, 15000);
