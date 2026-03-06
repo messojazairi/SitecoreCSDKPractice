@@ -9,6 +9,24 @@ import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
 import placeholderImageLoader from '@/utils/placeholderImageLoader';
 
+/**
+ * Returns true if the URL is from a host allowed by Next.js remotePatterns (see next.config).
+ * These hosts can be optimized by the Next.js Image Optimization API.
+ */
+function isAllowedRemoteImageHost(url: string): boolean {
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    return (
+      /^edge/.test(hostname) ||
+      /^xmc-/.test(hostname) ||
+      hostname.endsWith('.sitecore-staging.cloud') ||
+      hostname.endsWith('.sitecorecloud.io')
+    );
+  } catch {
+    return false;
+  }
+}
+
 type ImageWrapperProps = {
   image?: ImageField;
   className?: string;
@@ -45,15 +63,15 @@ export const Default: React.FC<ImageWrapperProps> = (props) => {
 
   const imageSrc = image?.value?.src ? image?.value?.src : '';
   const isSvg = imageSrc.includes('.svg');
-  
-  // if  unoptimized || svg || external
-  // Check if image is from external domain (not current hostname)
-  // Only check window.location after hydration is complete to avoid hydration mismatch
-  const isUnoptimized =
-    unoptimized ||
-    isSvg ||
-    (imageSrc.startsWith('https://') &&
-      (isClient ? !imageSrc.includes(window.location.hostname) : false));
+  // Only disable optimization for: context override, SVG, or external URLs not in remotePatterns.
+  // Sitecore/XM Cloud URLs (edge*, xmc-*, *.sitecore-staging.cloud, *.sitecorecloud.io) are
+  // allowed in next.config and should be optimized to fix Lighthouse "Improve image delivery".
+  const isExternalNotAllowed =
+    imageSrc.startsWith('https://') &&
+    isClient &&
+    !imageSrc.includes(window.location.hostname) &&
+    !isAllowedRemoteImageHost(imageSrc);
+  const isUnoptimized = unoptimized || isSvg || isExternalNotAllowed;
 
   const isPicsumImage = imageSrc.includes('picsum.photos');
 
