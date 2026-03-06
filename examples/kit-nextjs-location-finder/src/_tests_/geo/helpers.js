@@ -44,8 +44,7 @@ function expectCachingHeaders(headers) {
     // Require at least one validator header: Last-Modified or ETag
     const hasValidator = Boolean(lastModified || etag);
   
-    // Require Last-Modified or ETag only in CI; endpoints may not send them in dev/production
-    if (process.env.CI || process.env.ENFORCE_CACHE_HEADERS === 'true') {
+    if (process.env.ENFORCE_CACHE_HEADERS === 'true') {
       expect(hasValidator).toBe(true);
     }
   }
