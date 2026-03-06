@@ -41,6 +41,11 @@ const CdpPageView = (): JSX.Element => {
       return;
     }
 
+    // Skip page view tracking when Edge API is not configured
+    if (!config.api.edge?.clientContextId) {
+      return;
+    }
+
     const language = route.itemLanguage || config.defaultLanguage;
     const scope = config.personalize?.scope;
 
