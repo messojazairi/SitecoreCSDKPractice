@@ -30,7 +30,6 @@ export function useZipcode(defaultZipcode: string) {
   const showFallbackModal = useCallback(() => {
     // Only show the modal if geolocation hasn't completed yet
     if (!geolocationCompletedRef.current) {
-      console.log('Geolocation timeout - showing fallback modal');
       setState((prev) => ({
         ...prev,
         loading: false,
@@ -42,7 +41,6 @@ export function useZipcode(defaultZipcode: string) {
 
   // Function to fetch zipcode using geolocation
   const fetchZipcode = useCallback(async () => {
-    console.log('Fetching zipcode using geolocation...');
     setState((prev) => ({ ...prev, loading: true, error: null, showModal: false }));
 
     // Reset the geolocation completed flag
@@ -58,7 +56,6 @@ export function useZipcode(defaultZipcode: string) {
 
     // Check if geolocation is supported by the browser
     if (!navigator.geolocation) {
-      console.log('Geolocation not supported');
       clearTimeout(timeoutRef.current);
       geolocationCompletedRef.current = true;
       setState((prev) => ({
@@ -73,15 +70,12 @@ export function useZipcode(defaultZipcode: string) {
     // Try IP-based geolocation as a fallback if browser geolocation fails
     const tryIpBasedGeolocation = async () => {
       try {
-        console.log('Trying IP-based geolocation as fallback');
         const response = await fetch('https://ipapi.co/json/');
         if (!response.ok) throw new Error('IP geolocation failed');
 
         const data = await response.json();
-        console.log('IP geolocation response:', data);
 
         if (data.postal) {
-          console.log('IP geolocation found zipcode:', data.postal);
           sessionStorage.setItem(STORAGE_KEY, data.postal);
 
           setState((prev) => ({
@@ -113,7 +107,6 @@ export function useZipcode(defaultZipcode: string) {
             timeoutRef.current = null;
           }
 
-          console.log('Got position:', position.coords);
           const { latitude, longitude } = position.coords;
 
           // Use OpenStreetMap's Nominatim service for reverse geocoding
@@ -133,19 +126,15 @@ export function useZipcode(defaultZipcode: string) {
           }
 
           const data = await response.json();
-          console.log('Geocoding response:', data);
 
           // Extract postal code (zipcode)
           const zipcode = data.address?.postcode || null;
-          console.log('Extracted zipcode:', zipcode);
 
           if (zipcode) {
             // Save to sessionStorage
             sessionStorage.setItem(STORAGE_KEY, zipcode);
-            console.log('Saved zipcode to sessionStorage:', zipcode);
 
             setState((prev) => {
-              console.log('Updating state with zipcode:', zipcode);
               return {
                 ...prev,
                 zipcode,
@@ -155,7 +144,6 @@ export function useZipcode(defaultZipcode: string) {
               };
             });
           } else {
-            console.log('No zipcode found in geocoding response, trying IP fallback');
             // If no zipcode found in geocoding response, try IP-based geolocation
             const ipGeoSuccess = await tryIpBasedGeolocation();
 
