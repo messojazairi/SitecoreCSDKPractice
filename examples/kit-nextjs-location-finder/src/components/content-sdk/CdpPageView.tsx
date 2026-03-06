@@ -57,7 +57,7 @@ const CdpPageView = (): JSX.Element => {
       page: route.name,
       pageVariantId,
       language,
-    }).catch((e) => console.debug(e));
+    }).catch(() => {});
   }, [mode, route, context.variantId, siteName]);
 
   return <></>;

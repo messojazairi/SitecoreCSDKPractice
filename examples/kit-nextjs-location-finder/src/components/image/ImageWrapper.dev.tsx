@@ -44,7 +44,6 @@ export const Default: React.FC<ImageWrapperProps> = (props) => {
   const unoptimized = process.env.NEXT_PUBLIC_NEXT_IMAGE_UNOPTIMIZED === 'true';
 
   if (!isEditing && !image?.value?.src) {
-    console.debug('image not found', image);
     return <></>;
   }
 
