@@ -17,7 +17,7 @@ const GEOLOCATION_TIMEOUT = 8000; // 8 seconds timeout before showing modal
 export function useZipcode(defaultZipcode: string) {
   const [state, setState] = useState<ZipcodeState>({
     zipcode: null,
-    loading: true, // Start as true since we'll check on mount
+    loading: false, // Start as false — defer geolocation until after LCP
     error: null,
     showModal: false,
   });
@@ -273,7 +273,7 @@ export function useZipcode(defaultZipcode: string) {
       return;
     }
 
-    // Try to get zipcode from sessionStorage first
+    // Try to get zipcode from sessionStorage first (synchronous & fast)
     const storedZipcode = sessionStorage.getItem(STORAGE_KEY);
 
     if (storedZipcode) {
@@ -283,8 +283,25 @@ export function useZipcode(defaultZipcode: string) {
         loading: false,
       }));
     } else {
-      // If not in sessionStorage, automatically try to fetch using geolocation
-      fetchZipcode();
+      // Defer geolocation until after the page has had time to render the LCP image.
+      // requestIdleCallback lets the browser finish painting first; the 3 s timeout
+      // acts as a ceiling so users still get a prompt in a reasonable time frame.
+      const scheduleGeo =
+        typeof window.requestIdleCallback === 'function'
+          ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 3000 })
+          : (cb: () => void) => setTimeout(cb, 2000);
+
+      const idleId = scheduleGeo(() => fetchZipcode());
+
+      return () => {
+        // Clean up: cancel the pending idle/timeout callback
+        if (typeof window.cancelIdleCallback === 'function' && typeof idleId === 'number') {
+          window.cancelIdleCallback(idleId);
+        } else {
+          clearTimeout(idleId as unknown as NodeJS.Timeout);
+        }
+        cleanup();
+      };
     }
 
     // Cleanup timeouts when component unmounts
