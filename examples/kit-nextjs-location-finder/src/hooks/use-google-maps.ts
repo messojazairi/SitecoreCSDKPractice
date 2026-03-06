@@ -59,6 +59,12 @@ export const useGoogleMaps = (apiKey: string) => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    // Skip loading when no API key is configured
+    if (!apiKey) {
+      setError(new Error('Google Maps API key is not configured'));
+      return;
+    }
+
     // If already loaded, update state immediately
     if (isGoogleMapsLoaded || window.google) {
       isGoogleMapsLoaded = true;
