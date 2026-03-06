@@ -282,27 +282,11 @@ export function useZipcode(defaultZipcode: string) {
         zipcode: storedZipcode,
         loading: false,
       }));
-    } else {
-      // Defer geolocation until after the page has had time to render the LCP image.
-      // requestIdleCallback lets the browser finish painting first; the 3 s timeout
-      // acts as a ceiling so users still get a prompt in a reasonable time frame.
-      const scheduleGeo =
-        typeof window.requestIdleCallback === 'function'
-          ? (cb: () => void) => window.requestIdleCallback(cb, { timeout: 3000 })
-          : (cb: () => void) => setTimeout(cb, 2000);
-
-      const idleId = scheduleGeo(() => fetchZipcode());
-
-      return () => {
-        // Clean up: cancel the pending idle/timeout callback
-        if (typeof window.cancelIdleCallback === 'function' && typeof idleId === 'number') {
-          window.cancelIdleCallback(idleId);
-        } else {
-          clearTimeout(idleId as unknown as NodeJS.Timeout);
-        }
-        cleanup();
-      };
     }
+    // If no stored zipcode, do NOT auto-trigger geolocation.
+    // The consumer component calls fetchZipcode() explicitly on user interaction
+    // (e.g. "Use my location" button) to avoid a disruptive permission prompt
+    // that blocks LCP and degrades page load performance.
 
     // Cleanup timeouts when component unmounts
     return cleanup;
