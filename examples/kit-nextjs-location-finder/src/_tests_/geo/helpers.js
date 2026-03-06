@@ -24,6 +24,15 @@ function expectValidText(response) {
     expect(typeof response.data).toBe('string');
 }
 
+
+function stripLastModified(obj) {
+  if (obj && typeof obj === 'object') {
+    const { lastModified, ...rest } = obj;
+    return rest;
+  }
+  return obj;
+}
+
 function expectCachingHeaders(headers) {
     const cacheControl = headers['cache-control'];
     const lastModified = headers['last-modified'];
@@ -41,4 +50,4 @@ function expectCachingHeaders(headers) {
     }
   }
 
-export { BASE_URL, expectCachingHeaders, expectValidJson, expectValidXml, expectValidText }
+export { BASE_URL, expectCachingHeaders, expectValidJson, expectValidXml, expectValidText, stripLastModified }

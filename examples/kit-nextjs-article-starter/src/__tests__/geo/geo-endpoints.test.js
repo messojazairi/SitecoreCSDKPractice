@@ -1,7 +1,8 @@
 /** @jest-environment node */
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
-import { BASE_URL, expectValidJson, expectValidXml, expectValidText } from './helpers';
+import { BASE_URL, expectValidJson, expectValidXml, expectValidText, stripLastModified } from './helpers';
+import { faqExpected, summaryExpected, serviceExpected } from './fixtures';
 
 test('GET /ai/summary.json returns 200 and valid JSON',async()=> { 
     const resp = await axios.get(`${BASE_URL}/ai/summary.json`, {
@@ -14,6 +15,16 @@ test('GET /ai/summary.json returns 200 and valid JSON',async()=> {
     expect(resp.data.lastModified).toBeDefined();
 });
 
+test('GET /ai/summary.json matches canonical content (except lastModified)', async () => {
+    const resp = await axios.get(`${BASE_URL}/ai/summary.json`, { validateStatus: () => true, timeout: 10000 });
+    expectValidJson(resp);
+  
+    const actual = stripLastModified(resp.data);
+    const expected = stripLastModified(summaryExpected);
+  
+    expect(actual).toEqual(expected);
+  });
+  
 test('GET /ai/service.json returns 200 and valid JSON',async()=> { 
     const resp = await axios.get(`${BASE_URL}/ai/service.json`, {
         validateStatus: () => true,
@@ -30,6 +41,16 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
     expect(first.category).toBeDefined();
     expect(resp.data.lastModified).toBeDefined();
 });
+
+test('GET /ai/service.json matches canonical content (except lastModified)', async () => {
+    const resp = await axios.get(`${BASE_URL}/ai/service.json`, { validateStatus: () => true, timeout: 10000 });
+    expectValidJson(resp);
+  
+    const actual = stripLastModified(resp.data);
+    const expected = stripLastModified(serviceExpected);
+  
+    expect(actual).toEqual(expected);
+  });
 
 test('GET /ai/faq.json returns 200 and valid JSON', async () => {
     const resp = await axios.get(`${BASE_URL}/ai/faq.json`, {
@@ -55,6 +76,16 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
     const cacheControl = resp.headers['cache-control'];
     expect(cacheControl).toBeTruthy();
 });
+
+test('GET /ai/faq.json matches canonical content (except lastModified)', async () => {
+    const resp = await axios.get(`${BASE_URL}/ai/faq.json`, { validateStatus: () => true, timeout: 10000 });
+    expectValidJson(resp);
+  
+    const actual = stripLastModified(resp.data);
+    const expected = stripLastModified(faqExpected);
+  
+    expect(actual).toEqual(expected);
+  });
 
 test('GET /robots.txt returns 200 and valid text', async () => {
     const resp = await axios.get(`${BASE_URL}/robots.txt`, {
