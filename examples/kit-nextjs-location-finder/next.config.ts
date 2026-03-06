@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   // Allow specifying a distinct distDir when concurrently running app in a container
@@ -7,6 +8,21 @@ const nextConfig: NextConfig = {
   
   // Enable React Strict Mode
   reactStrictMode: true,
+
+  // Tree-shake barrel exports — rewrite named imports into direct file imports at build time
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      'framer-motion',
+      'recharts',
+      '@radix-ui/react-icons',
+      'react-day-picker',
+      'embla-carousel-react',
+      'react-hook-form',
+      '@fortawesome/free-solid-svg-icons',
+      '@fortawesome/free-brands-svg-icons',
+    ],
+  },
 
   // Disable the X-Powered-By header. Follows security best practices.
   poweredByHeader: false,
@@ -100,4 +116,8 @@ const nextConfig: NextConfig = {
 };
 
 const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(nextConfig);
+
+// Wrap with bundle analyzer — run `ANALYZE=true npm run build` to inspect bundle
+const analyzeBundles = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+
+export default analyzeBundles(withNextIntl(nextConfig));
