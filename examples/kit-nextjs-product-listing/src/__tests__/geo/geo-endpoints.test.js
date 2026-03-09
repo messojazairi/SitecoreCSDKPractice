@@ -37,11 +37,11 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
         timeout: 10000,
       });
     expectValidJson(resp);
-    expect(resp.data.services).toBeDefined();
-    expect(Array.isArray(resp.data.services)).toBe(true);
-    expect(resp.data.services.length).toBeGreaterThan(0);
+    expect(resp.data.items).toBeDefined();
+    expect(Array.isArray(resp.data.items)).toBe(true);
+    expect(resp.data.items.length).toBeGreaterThan(0);
     
-    const first = resp.data.services[0];
+    const first = resp.data.items[0];
     expect(first.name).toBeDefined();
     expect(first.name.trim().length).toBeGreaterThan(0);
     expect(first.description).toBeDefined();
@@ -49,7 +49,6 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
     expect(first.category).toBeDefined();
     expect(first.category.trim().length).toBeGreaterThan(0);
     expect(resp.data.lastModified).toBeDefined();
-    expect(resp.data.lastModified.value.trim().length).toBeGreaterThan(0);
 }, 15000);
 
 test('GET /ai/service.json matches canonical content (except lastModified)', async () => {
@@ -67,11 +66,11 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
         timeout: 10000,
     });
     expectValidJson(resp);
-    expect(resp.data).toHaveProperty('faq');
-    expect(Array.isArray(resp.data.faq)).toBe(true);
-    expect(resp.data.faq.length).toBeGreaterThan(0);
+    expect(resp.data).toHaveProperty('items');
+    expect(Array.isArray(resp.data.items)).toBe(true);
+    expect(resp.data.items.length).toBeGreaterThan(0);
 
-    const first = resp.data.faq[0];
+    const first = resp.data.items[0];
     expect(first).toBeDefined();
     expect(typeof first.question).toBe('string');
     expect(first.question.length).toBeGreaterThan(0);
@@ -79,8 +78,7 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
     expect(first.answer.length).toBeGreaterThan(0);
 
     expect(resp.data).toHaveProperty('lastModified');
-    expect(resp.data.lastModified).toHaveProperty('value');
-    expect(resp.data.lastModified.value).toMatch(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/);
+    expect(resp.data.lastModified).toMatch(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z$/);
 }, 15000);
 
 test('GET /ai/faq.json matches canonical content (except lastModified)', async () => {

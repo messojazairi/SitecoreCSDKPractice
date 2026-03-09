@@ -27,7 +27,8 @@ function expectValidText(response) {
 
 function stripLastModified(obj) {
   if (obj && typeof obj === 'object') {
-    const { lastModified, ...rest } = obj;
+    const rest = { ...obj };
+    delete rest.lastModified;    
     return rest;
   }
   return obj;

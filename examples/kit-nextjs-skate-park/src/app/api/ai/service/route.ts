@@ -9,7 +9,7 @@ interface Service {
 }
 
 interface ServiceResponse {
-  services: Service[];
+  items: Service[];
   lastModified: string;
 }
 
@@ -66,7 +66,7 @@ const services: Service[] = [
 
 export async function GET() {
   const response: ServiceResponse = {
-    services,
+    items: services,
     lastModified: new Date().toISOString(),
   };
 

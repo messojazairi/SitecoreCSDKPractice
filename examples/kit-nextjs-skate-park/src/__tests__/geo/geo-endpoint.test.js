@@ -22,11 +22,11 @@ test('GET /ai/service.json returns 200 and valid JSON',async()=> {
         timeout: 10000,
       });
     expectValidJson(resp);
-    expect(resp.data.services).toBeDefined();
-    expect(Array.isArray(resp.data.services)).toBe(true);
-    expect(resp.data.services.length).toBeGreaterThan(0);
+    expect(resp.data.items).toBeDefined();
+    expect(Array.isArray(resp.data.items)).toBe(true);
+    expect(resp.data.items.length).toBeGreaterThan(0);
     
-    const first = resp.data.services[0];
+    const first = resp.data.items[0];
     expect(first.name).toBeDefined();
     expect(first.description).toBeDefined();
     expect(first.category).toBeDefined();
@@ -39,10 +39,10 @@ test('GET /ai/faq.json returns 200 and valid JSON', async () => {
         timeout: 10000,
     });
     expectValidJson(resp);
-    expect(Array.isArray(resp.data)).toBe(true);
-    expect(resp.data.length).toBeGreaterThan(0);
+    expect(Array.isArray(resp.data.items)).toBe(true);
+    expect(resp.data.items.length).toBeGreaterThan(0);
 
-    const first = resp.data[0];
+    const first = resp.data.items[0];
     expect(first).toBeDefined();
     expect(typeof first.question).toBe('string');
     expect(first.question.length).toBeGreaterThan(0);
