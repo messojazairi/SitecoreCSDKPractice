@@ -9,26 +9,6 @@ const nextConfig: NextConfig = {
   // Enable React Strict Mode
   reactStrictMode: true,
 
-  // Tree-shake barrel exports — rewrite named imports into direct file imports at build time
-  experimental: {
-    optimizePackageImports: [
-      'lucide-react',
-      'framer-motion',
-      'recharts',
-      '@radix-ui/react-icons',
-      'react-day-picker',
-      'embla-carousel-react',
-      'react-hook-form',
-      '@fortawesome/free-solid-svg-icons',
-      '@fortawesome/free-brands-svg-icons',
-      '@fortawesome/free-regular-svg-icons',
-      '@fortawesome/fontawesome-svg-core',
-      '@fortawesome/react-fontawesome',
-      'react-resizable-panels',
-      'ramda',
-    ],
-  },
-
   // Disable the X-Powered-By header. Follows security best practices.
   poweredByHeader: false,
 
