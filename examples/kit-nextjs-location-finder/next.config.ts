@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
       'react-hook-form',
       '@fortawesome/free-solid-svg-icons',
       '@fortawesome/free-brands-svg-icons',
+      '@fortawesome/free-regular-svg-icons',
+      '@fortawesome/fontawesome-svg-core',
+      '@fortawesome/react-fontawesome',
+      'react-resizable-panels',
+      'ramda',
     ],
   },
 
