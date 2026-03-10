@@ -18,10 +18,6 @@ import {
 import { StructuredData } from '@/components/structured-data/StructuredData';
 import { getFullUrl, getBaseUrl } from '@/lib/utils';
 
-/**
- * Walk Sitecore route placeholders (recursively) to find the first Hero component's image src.
- * Used to preload the LCP image from the server-rendered <head>.
- */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function findHeroImageSrc(page: any): string | undefined {
   const placeholders = page?.layout?.sitecore?.route?.placeholders;
@@ -93,7 +89,6 @@ export default async function Page({ params, searchParams }: PageProps) {
     notFound();
   }
 
-  // Preload the Hero LCP image — walks placeholder data to find the Hero component's image
   const heroImageSrc = findHeroImageSrc(page);
   if (heroImageSrc) {
     preload(heroImageSrc, { as: 'image', fetchPriority: 'high' });

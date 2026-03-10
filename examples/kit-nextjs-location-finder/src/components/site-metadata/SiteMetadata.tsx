@@ -25,16 +25,12 @@ export const Default: React.FC<SiteMetadataProps> = (props) => {
     return <NoDataFallback componentName="Site Metadata" />;
   }
 
-  const title = fields.metadataTitle?.value || fields.title?.value;
-  const keywords = fields.metadataKeywords?.value || '';
-  const description = fields.metadataDescription?.value || '';
-
   return (
     <>
       {/*
        * SEO metadata (title, description, keywords, viewport) is managed by
        * generateMetadata() in page.tsx. Rendering them here would create
-       * duplicate <title> / <meta> tags that hurt Lighthouse SEO score.
+       * duplicate <title> / <meta> tags.
        *
        * This component now only renders supplementary <head> elements that
        * are NOT handled by generateMetadata().
