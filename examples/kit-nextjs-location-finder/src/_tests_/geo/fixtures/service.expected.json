@@ -1,5 +1,5 @@
 {
-  "items": [
+  "services": [
     {
       "name": "Dealer Location Finder",
       "description": "Find authorized Alaris dealerships, service centers, and test drive locations by zip code or postal code.",
