@@ -15,8 +15,6 @@ const eslintConfig = [
     rules: {
       // Don't force alt for <Image/> (sourced from Sitecore media)
       "jsx-a11y/alt-text": "off",
-      // Prevent console.log/debug/warn from shipping to production.
-      // console.error is allowed for genuine error handling in catch blocks.
       "no-console": ["warn", { allow: ["error"] }],
     },
     ignores: [
