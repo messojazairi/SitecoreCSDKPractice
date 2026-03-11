@@ -26,7 +26,9 @@ const shouldOptimize = (src: string): boolean => {
     const url = new URL(src);
 
     const convertToRegex = (pattern: string) => {
-      return pattern.replace(/\./g, '\\.').replace(/\*/g, '.*');
+      // Escape all regex metacharacters, then convert glob-style '*' to '.*'
+      const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return escapeRegex(pattern).replace(/\\\*/g, '.*');
     };
 
     return IMAGE_REMOTE_PATTERNS.some((pattern) => {
