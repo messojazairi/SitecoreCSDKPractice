@@ -125,7 +125,7 @@ Run these from **inside a starter directory** (e.g. `examples/kit-nextjs-skate-p
 | `npm run lint` | Lint `src/**/*.{ts,tsx}` with ESLint |
 | `npm run format:check` | Check formatting with Prettier |
 | `npm run type-check` | TypeScript check without emit |
-| `npm run test` | Run tests (Jest; not all starters have this script) |
+| `npm run test` | Run tests |
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run test:coverage` | Run tests with coverage report |
 | `npm run sitecore-tools:generate-map` | Generate `.sitecore/component-map` from `src/components` |
@@ -449,6 +449,32 @@ This repository uses **DMZ git workflow**:
 - Add `'use client'` directive
 - Keep component focused on interactivity
 - Pass server-fetched data as props
+
+## Example Agent Tasks
+
+### 1. Add a utility in a starter
+
+**Example:** Add a constant or helper in a starter (e.g. `examples/kit-nextjs-skate-park/src/lib/constants.ts` or `src/utils/date-utils.ts`):
+
+- Export from the module (or from `src/lib/index.ts` / barrel if the starter has one) if it is shared
+- Add JSDoc: use `@param` and `@returns` for public helpers; mark internal-only with `@internal` if needed
+- Add or update tests (e.g. `*.test.ts` or `*.test.tsx` in the same area or under `__tests__/`) if the starter has a test script
+- Run `npm run build` and `npm run lint` in that starter directory before completing
+
+### 2. Fix a failing test
+
+- From the starter directory (e.g. `examples/kit-nextjs-skate-park`): `npm run test`
+- Or run a single package: `cd examples/kit-nextjs-skate-park && npm run test`
+- Locate the failing `*.test.ts` or `*.test.tsx` file from the output
+- Preserve intended behavior; fix assertions or implementation so the test passes
+- Re-run `npm run test` (and `npm run build` if you changed implementation) before completing
+
+### 3. Add or change a component
+
+- Edit under the starter’s `src/components/` (e.g. `examples/kit-nextjs-skate-park/src/components/my-block/MyBlock.tsx`)
+- Follow Locality of Behavior: main component file with variants and props; use `NoDataFallback`, validate `fields?.data?.datasource`, use Sitecore field components (`Text`, `RichText`, `Image`)
+- Use `.env.remote.example` (or `.env.example`) when documenting env vars in the starter; never edit or commit `.env.local`
+- Verify: run `npm install && npm run build` (or `npm run dev`) in that starter; the component map (`.sitecore/component-map.ts`) is generated automatically—do not edit it by hand
 
 ## Additional Resources
 
