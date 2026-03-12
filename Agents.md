@@ -5,11 +5,40 @@
 This repository contains **XM Cloud Front End Application Starter Kits** - a collection of production-ready Next.js starter applications for Sitecore XM Cloud development. Each starter demonstrates modern headless CMS patterns with Sitecore Content SDK integration.
 
 **Repository Structure:**
-- `/examples/` - Contains 6 starter front-end applications (Next.js and SPA)
+- `/examples/` - Contains starter front-end applications (Next.js and SPA)
 - `/authoring/` - Sitecore content items, templates, and deployment configurations
 - `/local-containers/` - Docker setup for local development environments
 - `xmcloud.build.json` - Primary configuration for XM Cloud deployment
 - `.cursor/rules/` - Detailed coding standards and patterns (see below)
+
+### Project structure (per Next.js starter)
+
+Each Next.js starter under `examples/*` uses this layout under `src/`. All of these exist in the repository.
+
+| Path | Purpose | Exists |
+|------|---------|--------|
+| **`src/app/`** | **Routes and layouts.** App Router: `layout.tsx`, `page.tsx`, `[site]/[locale]/[[...path]]/` for Sitecore pages, `loading.tsx`, `error.tsx`, `not-found.tsx`. | ✅ |
+| **`src/app/api/`** | **API routes.** e.g. `editing/render`, `editing/config`, `robots`, `sitemap`. | ✅ |
+| **`src/components/`** | **React components.** Feature folders (e.g. `hero/`, `article-header/`), `ui/` for Shadcn, `content-sdk/`, BYOC. | ✅ |
+| **`src/lib/`** | **APIs and helpers.** `sitecore-client.ts` (Content SDK client), `component-props/`, `utils.ts`, constants. | ✅ |
+| **Styles** | **Global and feature styles.** Location varies by starter: `src/app/globals.css` and/or `src/assets/` (e.g. `main.scss`, `styles/globals.css`, `base/`, `components/`). No single `src/styles/` folder. | ✅ (in app + assets) |
+| **`src/utils/`** | Shared utilities (e.g. `NoDataFallback.tsx`). Present in kit starters. | ✅ (kit starters) |
+| **`src/i18n/`** | Internationalization (routing, request). Present in App Router starters. | ✅ |
+| **`src/middleware.ts`** | Next.js middleware (locale, editing). | ✅ |
+
+**Where environment variables are handled**
+
+- **Defined:** In `.env.remote.example` (or `.env.example`) at the root of each starter. Developers copy to `.env.local` for local development.
+- **Loaded:** Next.js loads `.env.local` automatically; **do not edit** `.env.local` or any `.env.*.local` in agent workflows.
+- **Consumed:** `sitecore.config.ts` and app code read `process.env.*` (e.g. `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `SITECORE_EDITING_SECRET`, `NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID`).
+
+**Where Content SDK (or JSS) is initialized**
+
+- **`sitecore.config.ts`** (starter root) – SDK config: edge context, site name, editing secret (from env).
+- **`sitecore.cli.config.ts`** (starter root) – CLI: component map, build, deploy.
+- **`src/lib/sitecore-client.ts`** – Sitecore/GraphQL client used in Server Components for layout and route data.
+- **`src/Layout.tsx`** and **`src/Providers.tsx`** – Wrap the app with Sitecore providers and layout structure.
+- **`.sitecore/component-map.ts`** – Generated component map; safe to edit when registering new components.
 
 ## Starter Applications Guide
 
