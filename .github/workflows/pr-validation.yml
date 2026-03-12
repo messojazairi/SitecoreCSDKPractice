@@ -431,7 +431,7 @@ jobs:
               - ✅ Linting and formatting
               - ✅ TypeScript type checking
               - ${isUpstream ? '✅ Full build verification (Sitecore + Next.js)' : '✅ TypeScript compilation check (tsc --noEmit)'}
-              - ✅ Test execution with coverage
+              - ⏭️ Test execution with coverage (temporarily disabled for credential verification)
               ${!isUpstream ? '\n              **Note:** Full Next.js build requires XM Cloud credentials and will run in upstream CI.' : ''}
 
               **Next Steps:**
