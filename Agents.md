@@ -15,16 +15,16 @@ This repository contains **XM Cloud Front End Application Starter Kits** - a col
 
 Each Next.js starter under `examples/*` uses this layout under `src/`. All of these exist in the repository.
 
-| Path | Purpose | Exists |
-|------|---------|--------|
-| **`src/app/`** | **Routes and layouts.** App Router: `layout.tsx`, `page.tsx`, `[site]/[locale]/[[...path]]/` for Sitecore pages, `loading.tsx`, `error.tsx`, `not-found.tsx`. | ✅ |
-| **`src/app/api/`** | **API routes.** e.g. `editing/render`, `editing/config`, `robots`, `sitemap`. | ✅ |
-| **`src/components/`** | **React components.** Feature folders (e.g. `hero/`, `article-header/`), `ui/` for Shadcn, `content-sdk/`, BYOC. | ✅ |
-| **`src/lib/`** | **APIs and helpers.** `sitecore-client.ts` (Content SDK client), `component-props/`, `utils.ts`, constants. | ✅ |
-| **Styles** | **Global and feature styles.** Location varies by starter: `src/app/globals.css` and/or `src/assets/` (e.g. `main.scss`, `styles/globals.css`, `base/`, `components/`). No single `src/styles/` folder. | ✅ (in app + assets) |
-| **`src/utils/`** | Shared utilities (e.g. `NoDataFallback.tsx`). Present in kit starters. | ✅ (kit starters) |
-| **`src/i18n/`** | Internationalization (routing, request). Present in App Router starters. | ✅ |
-| **`src/middleware.ts`** | Next.js middleware (locale, editing). | ✅ |
+| Path | Purpose |
+|------|---------|
+| **`src/app/`** | **Routes and layouts.** App Router: `layout.tsx`, `page.tsx`, `[site]/[locale]/[[...path]]/` for Sitecore pages, `loading.tsx`, `error.tsx`, `not-found.tsx`. |
+| **`src/app/api/`** | **API routes.** e.g. `editing/render`, `editing/config`, `robots`, `sitemap`. |
+| **`src/components/`** | **React components.** Feature folders (e.g. `hero/`, `article-header/`), `ui/` for Shadcn, `content-sdk/`, BYOC. |
+| **`src/lib/`** | **APIs and helpers.** `sitecore-client.ts` (Content SDK client), `component-props/`, `utils.ts`, constants. |
+| **Styles** | **Global and feature styles.** Location varies by starter: `src/app/globals.css` and/or `src/assets/` (e.g. `main.scss`, `styles/globals.css`, `base/`, `components/`). No single `src/styles/` folder. |
+| **`src/utils/`** | Shared utilities (e.g. `NoDataFallback.tsx`). Present in kit starters. |
+| **`src/i18n/`** | Internationalization (routing, request). Present in App Router starters. |
+| **`src/middleware.ts`** | Next.js middleware (locale, editing). |
 
 **Where environment variables are handled**
 
