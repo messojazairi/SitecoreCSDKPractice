@@ -226,8 +226,10 @@ describe('PageContent Component', () => {
     it('should handle missing params gracefully', () => {
       const emptyParams = {} as typeof defaultProps.params;
       const propsWithoutParams = {
+        rendering: defaultProps.rendering,
         params: emptyParams,
         fields: defaultProps.fields,
+        page: defaultProps.page,
       };
 
       const { container } = render(<PageContent {...propsWithoutParams} />);
