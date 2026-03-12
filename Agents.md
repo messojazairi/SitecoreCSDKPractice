@@ -457,7 +457,6 @@ This repository uses **DMZ git workflow**:
 **Example:** Add a constant or helper in a starter (e.g. `examples/kit-nextjs-skate-park/src/lib/constants.ts` or `src/utils/date-utils.ts`):
 
 - Export from the module (or from `src/lib/index.ts` / barrel if the starter has one) if it is shared
-- Add JSDoc: use `@param` and `@returns` for public helpers; mark internal-only with `@internal` if needed
 - Add or update tests (e.g. `*.test.ts` or `*.test.tsx` in the same area or under `__tests__/`) if the starter has a test script
 - Run `npm run build` and `npm run lint` in that starter directory before completing
 
@@ -474,7 +473,7 @@ This repository uses **DMZ git workflow**:
 - Edit under the starter’s `src/components/` (e.g. `examples/kit-nextjs-skate-park/src/components/my-block/MyBlock.tsx`)
 - Follow Locality of Behavior: main component file with variants and props; use `NoDataFallback`, validate `fields?.data?.datasource`, use Sitecore field components (`Text`, `RichText`, `Image`)
 - Use `.env.remote.example` (or `.env.example`) when documenting env vars in the starter; never edit or commit `.env.local`
-- Verify: run `npm install && npm run build` (or `npm run dev`) in that starter; the component map (`.sitecore/component-map.ts`) is generated automatically—do not edit it by hand
+- Verify: run `npm install && npm run build` (or `npm run dev`) in that starter; the component map (`.sitecore/component-map.ts`) is generated automatically, do not edit it by hand
 
 ## Additional Resources
 
