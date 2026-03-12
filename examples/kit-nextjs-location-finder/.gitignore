@@ -28,4 +28,4 @@
 !.sitecore/component-map.client.ts
 !.sitecore/import-map.ts
 /coverage
-/.jest-cache 
+/.jest-cache
