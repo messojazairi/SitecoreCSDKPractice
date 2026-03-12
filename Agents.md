@@ -112,6 +112,27 @@ Each Next.js starter under `examples/*` uses this layout under `src/`. All of th
    npm run dev
    ```
 
+### Commands (starter scripts)
+
+Run these from **inside a starter directory** (e.g. `examples/kit-nextjs-skate-park`), not the repo root.
+
+| Command | Description |
+|---------|-------------|
+| `npm install` | Install dependencies for the starter |
+| `npm run dev` | Start dev server (generates component map, runs Sitecore tools build, starts Next.js with map watch) |
+| `npm run build` | Production build (generate map, Sitecore tools build, Next.js build) |
+| `npm run start` | Start production server (run after `npm run build`) |
+| `npm run lint` | Lint `src/**/*.{ts,tsx}` with ESLint |
+| `npm run format:check` | Check formatting with Prettier |
+| `npm run type-check` | TypeScript check without emit |
+| `npm run test` | Run tests (Jest; not all starters have this script) |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run sitecore-tools:generate-map` | Generate `.sitecore/component-map` from `src/components` |
+| `npm run sitecore-tools:build` | Run Sitecore CLI build (metadata, sites, import map) |
+
+**Typical workflow:** `npm install` → `npm run dev` for local development; `npm run build` then `npm run start` for production.
+
 ### Required Environment Variables
 
 All starters require these environment variables:
