@@ -183,7 +183,7 @@ If you see this error, it means `main` was updated after you created your branch
 # Fetch the latest main
 git fetch origin main
 
-# Rebase your branch onto the latest main
+# Rebase your branch onto the latest  main
 git checkout feature/my-feature
 git rebase origin/main
 
