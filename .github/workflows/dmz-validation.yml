@@ -248,12 +248,16 @@ jobs:
             fi
           done
 
-      - name: Check configured site names
+      - name: Check configured site names and extract default
+        id: site-check
         run: |
           echo "=========================================="
           echo "🔍 Checking Configured Site Names"
           echo "=========================================="
           echo ""
+          
+          CONFIGURED_SITE_NAME=""
+          FIRST_SITE_FOUND=""
           
           for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
             if [ -d "$starter" ]; then
@@ -262,16 +266,41 @@ jobs:
               
               if [ -f ".sitecore/sites.json" ]; then
                 echo "  Sites configured in .sitecore/sites.json:"
+                echo "  Full contents of sites.json:"
+                cat .sitecore/sites.json | head -20
+                echo ""
                 # Extract site names from sites.json (handles JSON format)
                 if command -v jq &> /dev/null; then
-                  jq -r '.[].name' .sitecore/sites.json 2>/dev/null | while read -r site_name; do
-                    echo "    - $site_name"
-                  done || echo "    (Could not parse sites.json)"
+                  FIRST_SITE=$(jq -r '.[0].name' .sitecore/sites.json 2>/dev/null)
+                  if [ -n "$FIRST_SITE" ] && [ "$FIRST_SITE" != "null" ]; then
+                    if [ -z "$FIRST_SITE_FOUND" ]; then
+                      FIRST_SITE_FOUND="$FIRST_SITE"
+                    fi
+                    echo "    - $FIRST_SITE (first site)"
+                    jq -r '.[].name' .sitecore/sites.json 2>/dev/null | while read -r site_name; do
+                      if [ "$site_name" != "$FIRST_SITE" ]; then
+                        echo "    - $site_name"
+                      fi
+                    done || true
+                  else
+                    echo "    (Could not parse sites.json - first site is null or empty)"
+                  fi
                 else
                   # Fallback: try to extract site names with grep/sed
-                  grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' .sitecore/sites.json 2>/dev/null | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' | while read -r site_name; do
-                    echo "    - $site_name"
-                  done || echo "    (Could not parse sites.json - install jq for better parsing)"
+                  FIRST_SITE=$(grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' .sitecore/sites.json 2>/dev/null | head -1 | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+                  if [ -n "$FIRST_SITE" ]; then
+                    if [ -z "$FIRST_SITE_FOUND" ]; then
+                      FIRST_SITE_FOUND="$FIRST_SITE"
+                    fi
+                    echo "    - $FIRST_SITE (first site)"
+                    grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' .sitecore/sites.json 2>/dev/null | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' | while read -r site_name; do
+                      if [ "$site_name" != "$FIRST_SITE" ]; then
+                        echo "    - $site_name"
+                      fi
+                    done || true
+                  else
+                    echo "    (Could not parse sites.json - install jq for better parsing)"
+                  fi
                 fi
               else
                 echo "  ⚠️ .sitecore/sites.json not found"
@@ -282,7 +311,29 @@ jobs:
           done
           
           echo ""
-          echo "Current NEXT_PUBLIC_DEFAULT_SITE_NAME: ${{ vars.NEXT_PUBLIC_DEFAULT_SITE_NAME || 'basic' }}"
+          CONFIGURED_VAR="${{ vars.NEXT_PUBLIC_DEFAULT_SITE_NAME || 'basic' }}"
+          echo "Current NEXT_PUBLIC_DEFAULT_SITE_NAME variable: $CONFIGURED_VAR"
+          
+          if [ -n "$FIRST_SITE_FOUND" ]; then
+            echo "First site found in sites.json: $FIRST_SITE_FOUND"
+            echo "site-name-from-config=$FIRST_SITE_FOUND" >> $GITHUB_OUTPUT
+            
+            if [ "$CONFIGURED_VAR" != "$FIRST_SITE_FOUND" ]; then
+              echo ""
+              echo "⚠️ WARNING: Site name mismatch detected!"
+              echo "   Variable value: '$CONFIGURED_VAR'"
+              echo "   Actual site in config: '$FIRST_SITE_FOUND'"
+              echo ""
+              echo "The build will use the site name from sites.json: '$FIRST_SITE_FOUND'"
+              echo "To fix permanently, update NEXT_PUBLIC_DEFAULT_SITE_NAME variable to: $FIRST_SITE_FOUND"
+            else
+              echo "✅ Site name matches!"
+            fi
+          else
+            echo "⚠️ Could not extract site name from sites.json"
+            echo "site-name-from-config=" >> $GITHUB_OUTPUT
+          fi
+          
           echo ""
           echo "ℹ️ If the build fails with 'Site does not exist', verify that"
           echo "   NEXT_PUBLIC_DEFAULT_SITE_NAME matches one of the sites listed above."
@@ -329,8 +380,52 @@ jobs:
               echo "=========================================="
               cd "$starter"
               
+              # Try to read site name from sites.json as fallback
+              ACTUAL_SITE_NAME="${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+              DETECTED_SITE=""
+              
+              echo "Checking for site name in .sitecore/sites.json..."
+              if [ -f ".sitecore/sites.json" ]; then
+                echo "  Found .sitecore/sites.json"
+                if command -v jq &> /dev/null; then
+                  DETECTED_SITE=$(jq -r '.[0].name' .sitecore/sites.json 2>/dev/null)
+                else
+                  DETECTED_SITE=$(grep -o '"name"[[:space:]]*:[[:space:]]*"[^"]*"' .sitecore/sites.json 2>/dev/null | head -1 | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+                fi
+                
+                echo "  Detected site name from sites.json: '${DETECTED_SITE:-<empty or null>}'"
+                echo "  Variable site name: '${NEXT_PUBLIC_DEFAULT_SITE_NAME}'"
+                
+                if [ -n "$DETECTED_SITE" ] && [ "$DETECTED_SITE" != "null" ] && [ "$DETECTED_SITE" != "$NEXT_PUBLIC_DEFAULT_SITE_NAME" ]; then
+                  echo "⚠️ Site name mismatch detected for $starter:"
+                  echo "   Variable: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                  echo "   sites.json: $DETECTED_SITE"
+                  echo "   Using site name from sites.json: $DETECTED_SITE"
+                  ACTUAL_SITE_NAME="$DETECTED_SITE"
+                  # Set environment variable for npm command
+                  export NEXT_PUBLIC_DEFAULT_SITE_NAME="$DETECTED_SITE"
+                elif [ -n "$DETECTED_SITE" ] && [ "$DETECTED_SITE" != "null" ]; then
+                  echo "✅ Site names match: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                  ACTUAL_SITE_NAME="${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                else
+                  echo "⚠️ Could not extract valid site name from sites.json, using variable: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                  ACTUAL_SITE_NAME="${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                fi
+              else
+                echo "  ⚠️ .sitecore/sites.json not found, using variable: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                ACTUAL_SITE_NAME="${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+              fi
+              
+              echo ""
+              echo "Final site name to be used: ${ACTUAL_SITE_NAME}"
+              echo "Environment variable NEXT_PUBLIC_DEFAULT_SITE_NAME: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+              echo ""
+              
               echo "Running build for $starter..."
-              BUILD_OUTPUT=$(npm run build 2>&1) || BUILD_EXIT_CODE=$?
+              # Ensure the environment variable is set for the npm command
+              NEXT_PUBLIC_DEFAULT_SITE_NAME="${ACTUAL_SITE_NAME}" npm run build 2>&1 | tee build_output.log || BUILD_EXIT_CODE=$?
+              BUILD_OUTPUT=$(cat build_output.log)
+              rm -f build_output.log
               
               if [ -n "$BUILD_EXIT_CODE" ]; then
                 echo "❌ Build failed for $starter"
@@ -343,20 +438,36 @@ jobs:
                 if echo "$BUILD_OUTPUT" | grep -qi "Site.*does not exist\|site.*missing\|site item tree is missing"; then
                   echo "🔴 SITE CONFIGURATION ERROR DETECTED"
                   echo ""
-                  echo "The build failed because the site '${NEXT_PUBLIC_DEFAULT_SITE_NAME}' does not exist in XM Cloud."
+                  echo "The build failed because the site '${ACTUAL_SITE_NAME}' does not exist in XM Cloud."
                   echo ""
-                  echo "Current configured site name: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                  echo "Site name used in build: ${ACTUAL_SITE_NAME}"
+                  echo "Variable value: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
                   echo ""
-                  echo "Please check the 'Check configured site names' step above to see what sites"
-                  echo "are actually configured in the .sitecore/sites.json files."
+                  echo "⚠️ IMPORTANT: This means the site '${ACTUAL_SITE_NAME}' needs to exist in your XM Cloud instance."
                   echo ""
-                  echo "To fix this issue:"
-                  echo "  1. A repository administrator needs to update the 'NEXT_PUBLIC_DEFAULT_SITE_NAME'"
+                  echo "Possible solutions:"
+                  echo ""
+                  echo "Option 1: Create the site in XM Cloud (if you have access)"
+                  echo "  1. Log into XM Cloud"
+                  echo "  2. Create a new site with the name: '${ACTUAL_SITE_NAME}'"
+                  echo "  3. Publish the site"
+                  echo ""
+                  echo "Option 2: Use an existing site name (recommended)"
+                  echo "  1. Check what site names actually exist in your XM Cloud instance"
+                  echo "  2. Check the 'Check configured site names' step above to see what's in sites.json"
+                  echo "  3. A repository administrator needs to update the 'NEXT_PUBLIC_DEFAULT_SITE_NAME'"
                   echo "     variable in: Settings > Secrets and variables > Actions > Variables"
-                  echo "  2. The variable should match one of the site names shown in the diagnostic step above"
-                  echo "  3. If you don't have admin access, please contact a repository maintainer"
+                  echo "  4. The variable should match an EXISTING site name in XM Cloud"
                   echo ""
-                  echo "::error::Build failed for $starter - Site '${NEXT_PUBLIC_DEFAULT_SITE_NAME}' does not exist in XM Cloud. Check 'Check configured site names' step for available sites."
+                  echo "Option 3: Update sites.json (if you have access to modify it)"
+                  echo "  1. Update .sitecore/sites.json to use a site name that exists in XM Cloud"
+                  echo "  2. The site name in sites.json should match what's actually in XM Cloud"
+                  echo ""
+                  echo "📝 Note: The site name MUST exist in XM Cloud for the build to succeed."
+                  echo "   The build process tries to fetch routes from XM Cloud, and if the site"
+                  echo "   doesn't exist, it will fail with this error."
+                  echo ""
+                  echo "::error::Build failed for $starter - Site '${ACTUAL_SITE_NAME}' does not exist in XM Cloud. Either create the site in XM Cloud or update NEXT_PUBLIC_DEFAULT_SITE_NAME to match an existing site."
                 # Detect credential-related errors
                 elif echo "$BUILD_OUTPUT" | grep -qi "edge.*context\|sitecore.*edge\|credential\|authentication\|unauthorized\|403\|401"; then
                   echo "🔐 CREDENTIAL ISSUE DETECTED"
