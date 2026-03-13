@@ -365,6 +365,14 @@ try {
 }
 ```
 
+## Testing
+
+- **Stack:** Jest + React Testing Library (`@testing-library/react`, `@testing-library/jest-dom`); coverage via Jest (`jest --coverage`). Used in kit starters.
+- **Run:** From a starter directory: `npm run test`. For watch mode: `npm run test:watch`.
+- **Coverage:** From a starter directory: `npm run test:coverage`.
+- **When to update:** Update or add tests when you change behavior (components, utils, API routes). Mock XM Cloud / Sitecore services and use test data that matches `fields.data.datasource`; test missing datasource and fallbacks (e.g. `NoDataFallback`).
+- **Before completing:** Ensure tests pass (`npm run test`) and, if you changed code, that the starter still builds (`npm run build`).
+
 ## DO & DON'T Rules
 
 | DO | DON'T |
