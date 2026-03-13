@@ -192,6 +192,7 @@ For testing and validation, see the [GEO Compliance Checklist](docs/GEO_COMPLIAN
 
 This repository includes comprehensive AI guidance files to help maintain consistent code quality and follow Sitecore XM Cloud best practices across all starter applications:
 
+- [**Agents.md**](Agents.md) - AI agent guidance: structure, commands, DOs/DON'Ts, boundaries, and quick reference
 - **Claude Code Guide** (`CLAUDE.md`) - Comprehensive guide for Claude Code and AI assistants with project architecture, coding standards, and best practices
 - **Cursor AI Rules** (`.cursor/rules/`) - Automatically provide context and enforce patterns when using Cursor AI
 - **Windsurf IDE Rules** (`.windsurfrules`) - Comprehensive coding standards, folder structure, and best practices for Windsurf's agentic IDE workflows
