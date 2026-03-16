@@ -38,10 +38,10 @@ type PromoItemProps = SimplePromoFields & {
   isHorizontal?: boolean;
 };
 
-/** Returns true if the link has a valid href (not a placeholder like # or http://#). */
+/** Returns true if the link has a valid href (not an invalid placeholder like http://#). */
 function hasValidLink(link: { value?: { href?: string } } | undefined): boolean {
   const href = link?.value?.href;
-  return !!(href && href !== '#' && !href.startsWith('http://#'));
+  return !!(href && !href.startsWith('http://#'));
 }
 
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {

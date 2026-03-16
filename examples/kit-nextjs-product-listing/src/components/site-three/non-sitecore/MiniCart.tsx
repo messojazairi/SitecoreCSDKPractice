@@ -12,10 +12,10 @@ const DICTIONARY_KEYS = {
   CART_EMPTY_LABEL: 'Cart_Empty',
 };
 
-/** Returns true if the link field has a valid href (not a placeholder like # or http://#). */
+/** Returns true if the link field has a valid href (not an invalid placeholder like http://#). */
 function hasValidLink(field: LinkField | undefined): boolean {
   const href = field?.value?.href;
-  return !!(href && href !== '#' && !href.startsWith('http://#'));
+  return !!(href && !href.startsWith('http://#'));
 }
 
 export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
