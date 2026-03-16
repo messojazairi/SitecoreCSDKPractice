@@ -25,7 +25,7 @@ This repository contains multiple Next.js Starter Kits, and the SPA Starters mon
 Here's a quick overview of the major folders and their purpose:
 
   - `/examples`:
-  Contains starter front-end applications. Each subfolder is a working app
+  Contains starter front-end applications. Each subfolder is a working app. Each starter is independent and self-contained
     * basic-nextjs: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-nextjs/README.md)
     * basic-spa: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/basic-spa/README.md)
     * kit-nextjs-article-starter: [README](https://github.com/Sitecore/xmcloud-starter-js/tree/main/examples/kit-nextjs-article-starter/README.md)
