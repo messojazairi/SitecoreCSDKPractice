@@ -124,11 +124,7 @@ export const Default = (props: HeaderSTProps) => {
               <li>
                 {props.params.showMiniCart ? (
                   <MiniCart cartLink={fields?.CartLink} />
-                ) : isPlaceholderHref(fields?.CartLink) ? (
-                  <a href="#" className="block p-4" aria-label="Shopping cart">
-                    <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
-                  </a>
-                ) : (
+                ) : fields?.CartLink && !isPlaceholderHref(fields?.CartLink) ? (
                   <ContentSdkLink
                     field={fields?.CartLink}
                     prefetch={false}
@@ -136,6 +132,10 @@ export const Default = (props: HeaderSTProps) => {
                   >
                     <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
                   </ContentSdkLink>
+                ) : (
+                  <span className="block p-4" aria-label="Shopping cart">
+                    <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
+                  </span>
                 )}
               </li>
             </ul>

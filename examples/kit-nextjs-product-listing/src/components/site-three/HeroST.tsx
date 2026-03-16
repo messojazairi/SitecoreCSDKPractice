@@ -24,6 +24,11 @@ type PageHeaderSTProps = {
   fields: Fields;
 };
 
+function isPlaceholderHref(field: LinkField | undefined): boolean {
+  const href = field?.value?.href;
+  return !href || href === '#' || href.startsWith('http://#');
+}
+
 const HeroLink = ({
   field,
   className,
@@ -35,8 +40,7 @@ const HeroLink = ({
 }) => {
   const text = field?.value?.text?.trim();
   if (!text) return null;
-  const href = field?.value?.href;
-  if (!href || href === '#' || href.startsWith('http://#')) {
+  if (isPlaceholderHref(field)) {
     return (
       <a href="#" className={className} {...(ariaLabel && { 'aria-label': ariaLabel })}>
         {text}
