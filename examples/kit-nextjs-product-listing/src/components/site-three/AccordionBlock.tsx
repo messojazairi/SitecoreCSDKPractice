@@ -15,10 +15,6 @@ import {
   AccordionTrigger,
 } from 'shadcd/components/ui/accordion';
 
-function isPlaceholderHref(field: { value?: { href?: string } } | undefined): boolean {
-  const href = field?.value?.href;
-  return !href || href === '#' || href.startsWith('http://#');
-}
 
 interface Fields {
   data: {
@@ -80,19 +76,11 @@ export const Default = (props: AccordionProps) => {
               <p className="text-sm">
                 <ContentSdkText field={datasource?.description?.jsonValue} />
               </p>
-              {datasource?.link?.jsonValue && (
-                isPlaceholderHref(datasource.link.jsonValue) ? (
-                  <a href="#" className="btn btn-secondary btn-sharp">
-                    {datasource.link.jsonValue?.value?.text || ''}
-                  </a>
-                ) : (
-                  <ContentSdkLink
-                    field={datasource.link.jsonValue}
-                    prefetch={false}
-                    className="btn btn-secondary btn-sharp"
-                  />
-                )
-              )}
+              <ContentSdkLink
+                  field={datasource?.link?.jsonValue}
+                  prefetch={false}
+                  className="btn btn-secondary btn-sharp"
+                />
             </div>
           </div>
         </div>
@@ -121,19 +109,11 @@ export const TwoColumn = (props: AccordionProps) => {
             <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
             </p>
-            {datasource?.link?.jsonValue && (
-              isPlaceholderHref(datasource.link.jsonValue) ? (
-                <a href="#" className="btn btn-secondary btn-sharp">
-                  {datasource.link.jsonValue?.value?.text || ''}
-                </a>
-              ) : (
-                <ContentSdkLink
-                  field={datasource.link.jsonValue}
+            <ContentSdkLink
+                  field={datasource?.link?.jsonValue}
                   prefetch={false}
                   className="btn btn-secondary btn-sharp"
                 />
-              )
-            )}
           </div>
         </div>
       </div>
@@ -161,19 +141,11 @@ export const Vertical = (props: AccordionProps) => {
             <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
             </p>
-            {datasource?.link?.jsonValue && (
-              isPlaceholderHref(datasource.link.jsonValue) ? (
-                <a href="#" className="btn btn-secondary btn-sharp">
-                  {datasource.link.jsonValue?.value?.text || ''}
-                </a>
-              ) : (
-                <ContentSdkLink
-                  field={datasource.link.jsonValue}
+            <ContentSdkLink
+                  field={datasource?.link?.jsonValue}
                   prefetch={false}
                   className="btn btn-secondary btn-sharp"
                 />
-              )
-            )}
           </div>
         </div>
       </div>
@@ -202,19 +174,11 @@ export const BoxedAccordion = (props: AccordionProps) => {
             <p className="text-sm">
               <ContentSdkText field={datasource?.description?.jsonValue} />
             </p>
-            {datasource?.link?.jsonValue && (
-              isPlaceholderHref(datasource.link.jsonValue) ? (
-                <a href="#" className="btn btn-secondary btn-sharp">
-                  {datasource.link.jsonValue?.value?.text || ''}
-                </a>
-              ) : (
-                <ContentSdkLink
-                  field={datasource.link.jsonValue}
+            <ContentSdkLink
+                  field={datasource?.link?.jsonValue}
                   prefetch={false}
                   className="btn btn-secondary btn-sharp"
                 />
-              )
-            )}
           </div>
         </div>
       </div>
@@ -242,19 +206,11 @@ export const BoxedContent = (props: AccordionProps) => {
               <p className="text-sm">
                 <ContentSdkText field={datasource?.description?.jsonValue} />
               </p>
-              {datasource?.link?.jsonValue && (
-                isPlaceholderHref(datasource.link.jsonValue) ? (
-                  <a href="#" className="btn btn-secondary btn-sharp">
-                    {datasource.link.jsonValue?.value?.text || ''}
-                  </a>
-                ) : (
-                  <ContentSdkLink
-                    field={datasource.link.jsonValue}
-                    prefetch={false}
-                    className="btn btn-secondary btn-sharp"
-                  />
-                )
-              )}
+              <ContentSdkLink
+                  field={datasource?.link?.jsonValue}
+                  prefetch={false}
+                  className="btn btn-secondary btn-sharp"
+                />
             </div>
           </div>
         </div>
@@ -262,3 +218,5 @@ export const BoxedContent = (props: AccordionProps) => {
     </section>
   );
 };
+
+

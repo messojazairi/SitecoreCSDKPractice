@@ -12,11 +12,6 @@ const DICTIONARY_KEYS = {
   CART_EMPTY_LABEL: 'Cart_Empty',
 };
 
-function isPlaceholderHref(field: LinkField | undefined): boolean {
-  const href = field?.value?.href;
-  return !href || href === '#' || href.startsWith('http://#');
-}
-
 export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
   const t = useTranslations();
   const { isVisible, setIsVisible, ref } = useToggleWithClickOutside<HTMLDivElement>(false);
@@ -25,29 +20,14 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
 
   return (
     <div ref={ref}>
-      {cartLink && !isPlaceholderHref(cartLink) ? (
-        <ContentSdkLink
-          field={cartLink}
-          prefetch={false}
-          className="block p-4"
-          aria-label="Shopping cart"
-          onClick={(e) => {
-            e.preventDefault();
-            setIsVisible(!isVisible);
-          }}
-        >
-          {cartTrigger}
-        </ContentSdkLink>
-      ) : (
-        <button
-          type="button"
-          className="block p-4"
-          aria-label="Shopping cart"
-          onClick={() => setIsVisible(!isVisible)}
-        >
-          {cartTrigger}
-        </button>
-      )}
+      <button
+        type="button"
+        className="block p-4"
+        aria-label="Shopping cart"
+        onClick={() => setIsVisible(!isVisible)}
+      >
+        {cartTrigger}
+      </button>
 
       <div
         className={`fixed lg:absolute top-14 left-0 right-0 lg:top-full lg:left-0 lg:right-0
@@ -65,17 +45,9 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
           <p className="mb-8">
             {t(DICTIONARY_KEYS.CART_EMPTY_LABEL) || 'Your cart is currently empty.'}
           </p>
-          {cartLink && (
-            isPlaceholderHref(cartLink) ? (
-              <a href="#" className="btn btn-primary btn-sharp">
-                {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
-              </a>
-            ) : (
-              <ContentSdkLink field={cartLink} className="btn btn-primary btn-sharp">
-                {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
-              </ContentSdkLink>
-            )
-          )}
+          <ContentSdkLink field={cartLink} className="btn btn-primary btn-sharp">
+            {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
+          </ContentSdkLink>
         </div>
       </div>
     </div>

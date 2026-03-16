@@ -38,17 +38,8 @@ type PromoItemProps = SimplePromoFields & {
   isHorizontal?: boolean;
 };
 
-function isPlaceholderHref(link: { value?: { href?: string } } | undefined): boolean {
-  const href = link?.value?.href;
-  return !href || href === '#' || href.startsWith('http://#');
-}
-
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
   const { image, heading, description, link } = promo ?? {};
-  const linkValue = link?.jsonValue;
-  const ariaLabel = heading?.jsonValue?.value
-    ? `Learn more about ${heading.jsonValue.value}`
-    : undefined;
 
   return (
     <div className={`grid gap-8 ${isHorizontal ? 'lg:grid-cols-[1fr_2fr]' : ''}`}>
@@ -63,19 +54,7 @@ const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
         <p className="lg:text-lg mb-2">
           <ContentSdkText field={description?.jsonValue} />
         </p>
-        {linkValue?.value?.text && (
-          isPlaceholderHref(linkValue) ? (
-            <a href="#" className="btn btn-ghost" aria-label={ariaLabel}>
-              {linkValue.value.text}
-            </a>
-          ) : (
-            <ContentSdkLink
-              field={linkValue}
-              className="btn btn-ghost"
-              aria-label={ariaLabel}
-            />
-          )
-        )}
+        <ContentSdkLink field={link?.jsonValue} className="btn btn-ghost" />
       </div>
     </div>
   );
