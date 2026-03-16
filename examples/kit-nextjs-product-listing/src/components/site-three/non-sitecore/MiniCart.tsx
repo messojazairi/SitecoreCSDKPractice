@@ -25,7 +25,7 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
 
   return (
     <div ref={ref}>
-      {cartLink ? (
+      {cartLink && !isPlaceholderHref(cartLink) ? (
         <ContentSdkLink
           field={cartLink}
           prefetch={false}

@@ -38,7 +38,8 @@ const HeroLink = ({
   className: string;
   ariaLabel?: string;
 }) => {
-  const text = field?.value?.text?.trim();
+  if (!field) return null;
+  const text = field.value?.text?.trim();
   if (!text) return null;
   if (isPlaceholderHref(field)) {
     return (
