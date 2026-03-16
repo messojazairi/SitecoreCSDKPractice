@@ -24,12 +24,6 @@ type PageHeaderSTProps = {
   fields: Fields;
 };
 
-/** Returns true if the link field has a valid href (not an invalid placeholder like http://#). */
-function hasValidLink(field: LinkField | undefined): boolean {
-  const href = field?.value?.href;
-  return !!(href && !href.startsWith('http://#'));
-}
-
 const HeroLink = ({
   field,
   className,
@@ -39,19 +33,24 @@ const HeroLink = ({
   className: string;
   ariaLabel?: string;
 }) => {
-  if (hasValidLink(field) && field) {
-    return (
-      <ContentSdkLink
-        field={field}
-        prefetch={false}
-        className={className}
-        {...(ariaLabel && { 'aria-label': ariaLabel })}
-      />
-    );
-  }
   const text = field?.value?.text?.trim();
   if (!text) return null;
-  return <span className={className}>{text}</span>;
+  const href = field?.value?.href;
+  if (!href || href === '#' || href.startsWith('http://#')) {
+    return (
+      <a href="#" className={className} {...(ariaLabel && { 'aria-label': ariaLabel })}>
+        {text}
+      </a>
+    );
+  }
+  return (
+    <ContentSdkLink
+      field={field}
+      prefetch={false}
+      className={className}
+      {...(ariaLabel && { 'aria-label': ariaLabel })}
+    />
+  );
 };
 
 export const Default = (props: PageHeaderSTProps) => {

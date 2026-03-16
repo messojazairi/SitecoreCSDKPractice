@@ -28,17 +28,13 @@ type HeaderSTProps = ComponentProps & {
 
 const navLinkClass = 'block p-4 font-[family-name:var(--font-accent)] font-medium';
 
-/** Returns true if the link field has a valid href (not an invalid placeholder like http://#). */
-function hasValidLink(field: LinkField | undefined): boolean {
+function isPlaceholderHref(field: LinkField | undefined): boolean {
   const href = field?.value?.href;
-  return !!(href && !href.startsWith('http://#'));
+  return !href || href === '#' || href.startsWith('http://#');
 }
 
 export const Default = (props: HeaderSTProps) => {
   const { fields } = props;
-  const hasValidSupportLink = hasValidLink(fields?.SupportLink);
-  const hasValidSearchLink = hasValidLink(fields?.SearchLink);
-  const hasValidCartLink = hasValidLink(fields?.CartLink);
 
   return (
     <section className={`${props.params?.styles}`} data-class-change>
@@ -66,29 +62,31 @@ export const Default = (props: HeaderSTProps) => {
           <div className="basis-full lg:basis-auto lg:ml-auto">
             <ul className="flex">
               <li className="hidden lg:block">
-                {hasValidSupportLink ? (
+                {isPlaceholderHref(fields?.SupportLink) ? (
+                  <a href="#" className={navLinkClass}>
+                    {fields?.SupportLink?.value?.text || 'Support'}
+                  </a>
+                ) : (
                   <ContentSdkLink
                     field={fields?.SupportLink}
                     prefetch={false}
                     className={navLinkClass}
                   />
-                ) : (
-                  <span className={navLinkClass}>{fields?.SupportLink?.value?.text || 'Support'}</span>
                 )}
               </li>
               <li className="mr-auto lg:mr-0">
                 {props.params.showSearchBox ? (
                   <SearchBox searchLink={fields?.SearchLink} />
-                ) : hasValidSearchLink ? (
+                ) : isPlaceholderHref(fields?.SearchLink) ? (
+                  <a href="#" className={navLinkClass}>
+                    {fields?.SearchLink?.value?.text || 'Search'}
+                  </a>
+                ) : (
                   <ContentSdkLink
                     field={fields?.SearchLink}
                     prefetch={false}
                     className={navLinkClass}
                   />
-                ) : (
-                  <span className={navLinkClass}>
-                    {fields?.SearchLink?.value?.text || 'Search'}
-                  </span>
                 )}
               </li>
               <MobileMenuWrapper>
@@ -107,16 +105,16 @@ export const Default = (props: HeaderSTProps) => {
                     <hr className="w-full border-border" />
                     <ul className="text-center">
                       <li>
-                        {hasValidSupportLink ? (
+                        {isPlaceholderHref(fields?.SupportLink) ? (
+                          <a href="#" className={navLinkClass}>
+                            {fields?.SupportLink?.value?.text || 'Support'}
+                          </a>
+                        ) : (
                           <ContentSdkLink
                             field={fields?.SupportLink}
                             prefetch={false}
                             className={navLinkClass}
                           />
-                        ) : (
-                          <span className={navLinkClass}>
-                            {fields?.SupportLink?.value?.text || 'Support'}
-                          </span>
                         )}
                       </li>
                     </ul>
@@ -126,7 +124,11 @@ export const Default = (props: HeaderSTProps) => {
               <li>
                 {props.params.showMiniCart ? (
                   <MiniCart cartLink={fields?.CartLink} />
-                ) : hasValidCartLink ? (
+                ) : isPlaceholderHref(fields?.CartLink) ? (
+                  <a href="#" className="block p-4" aria-label="Shopping cart">
+                    <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
+                  </a>
+                ) : (
                   <ContentSdkLink
                     field={fields?.CartLink}
                     prefetch={false}
@@ -134,10 +136,6 @@ export const Default = (props: HeaderSTProps) => {
                   >
                     <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
                   </ContentSdkLink>
-                ) : (
-                  <span className="block p-4" aria-label="Shopping cart">
-                    <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
-                  </span>
                 )}
               </li>
             </ul>

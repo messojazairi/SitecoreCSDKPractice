@@ -12,22 +12,20 @@ const DICTIONARY_KEYS = {
   CART_EMPTY_LABEL: 'Cart_Empty',
 };
 
-/** Returns true if the link field has a valid href (not an invalid placeholder like http://#). */
-function hasValidLink(field: LinkField | undefined): boolean {
+function isPlaceholderHref(field: LinkField | undefined): boolean {
   const href = field?.value?.href;
-  return !!(href && !href.startsWith('http://#'));
+  return !href || href === '#' || href.startsWith('http://#');
 }
 
 export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
   const t = useTranslations();
   const { isVisible, setIsVisible, ref } = useToggleWithClickOutside<HTMLDivElement>(false);
-  const hasValidCartLink = hasValidLink(cartLink);
 
   const cartTrigger = <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />;
 
   return (
     <div ref={ref}>
-      {hasValidCartLink ? (
+      {cartLink ? (
         <ContentSdkLink
           field={cartLink}
           prefetch={false}
@@ -67,14 +65,16 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
           <p className="mb-8">
             {t(DICTIONARY_KEYS.CART_EMPTY_LABEL) || 'Your cart is currently empty.'}
           </p>
-          {hasValidCartLink ? (
-            <ContentSdkLink field={cartLink} className="btn btn-primary btn-sharp">
-              {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
-            </ContentSdkLink>
-          ) : (
-            <span className="btn btn-primary btn-sharp inline-block">
-              {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
-            </span>
+          {cartLink && (
+            isPlaceholderHref(cartLink) ? (
+              <a href="#" className="btn btn-primary btn-sharp">
+                {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
+              </a>
+            ) : (
+              <ContentSdkLink field={cartLink} className="btn btn-primary btn-sharp">
+                {t(DICTIONARY_KEYS.GO_TO_CART_LABEL) || 'Go to Cart'}
+              </ContentSdkLink>
+            )
           )}
         </div>
       </div>
