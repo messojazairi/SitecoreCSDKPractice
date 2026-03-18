@@ -1,25 +1,10 @@
 # Skills: Capability-Style Grouping for the Starter Kits
 
-## Purpose
-
-This document introduces a **capability-style view** of the XM Cloud Front End Starter Kits repository. It groups related capabilities into simple, named **skill areas** so that both developers and AI coding assistants can quickly understand what the starters support and how to work with them.
-
-**This is not** an API reference or schema. It is a high-level map of **what the starter kits enable** and when to use each capability area. The goal is to help AI tools recognize patterns, improve suggestions, and provide better support when generating code or guiding developers.
+This document groups starter-kit capabilities into named **skill areas** so developers and AI tools can map tasks to the right guidance. It is a high-level map only—not an API or schema. For concrete APIs and file paths, use the codebase and README.
 
 ---
 
-## How to Use This Document
-
-- Use the **skill areas** below to see what the starters can do at a glance.
-- Each area has **When to Use**, **How to Perform**, **Hard Rules**, **Stop Conditions**, and **References** so both developers and AI get consistent, actionable guidance.
-- AI tools can use these groupings to interpret SDK and starter features more reliably and to guide answers without inferring APIs or schemas from this file.
-
----
-
-## For AI Tools
-
-- **When to use this document:** When the user asks about starter kit capabilities, how to add or extend components, how data flows, how to run or configure a starter, or how the Content SDK is used in this repo. Use it to match the question to a skill area before giving guidance.
-- **How to use it:** Map the user’s task to one or more skill areas. Use the intent and common tasks to shape your answer. Do **not** infer API names, schemas, or file paths from this document—refer to the codebase or README for those. Treat “Hard Rules” and “Stop Conditions” in the example below as the pattern for strict, actionable guidance when you generate or suggest code.
+- **How to use it:** Map the user’s task to one or more skill areas. Use the intent and common tasks to shape your answer. Do **not** infer API names, schemas, or file paths from this document—refer to the codebase or README for those. Treat “Hard Rules” and “Stop Conditions”.
 
 ---
 
