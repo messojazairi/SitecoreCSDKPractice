@@ -237,9 +237,9 @@ jobs:
           echo "Running GEO endpoint tests (site must be running)..."
 
           for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
-              if [ -d "examples/$starter" ]; then
+              if [ -d "$starter" ]; then
                 echo "GEO tests for $starter..."
-                cd "examples/$starter"
+                cd "$starter"
   
                 if grep -q '"test:geo"' package.json 2>/dev/null; then
                   # Start production server in background (build already done)
