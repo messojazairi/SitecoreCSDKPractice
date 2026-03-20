@@ -583,6 +583,13 @@ jobs:
           echo "Running GEO endpoint tests (site must be running)..."
           echo "Per-starter site names: skate-park | solterra | alaris | sync (must match build and exist in XM Cloud)"
 
+          # Why site names are hardcoded below: Each starter maps to the canonical Sitecore site name used by that
+          # kit in the All Things JSS / xmcloud-starter-js repo.
+          # GitHub Actions repository variables/secrets usually expose only ONE default NEXT_PUBLIC_DEFAULT_SITE_NAME;
+          # applying that single value to every starter would inline the wrong site into builds and break GEO tests.
+          # Whenever a site name changes in XM Cloud or in this repository, update the case arms to match — do not
+          # rely on the lone repo variable for per-kit site selection.
+
           # Fully stop the previous Next.js server and free :3000 before starting the next starter
           # (npm spawns child processes; killing only $! can leave node listening on the port)
           stop_geo_server() {
@@ -616,6 +623,7 @@ jobs:
                   stop_geo_server "$SERVER_PID"
                   SERVER_PID=""
 
+                  # sync | solterra | alaris | skate-park — must match XM Cloud + All Things JSS kit (see comment above).
                   case "$starter" in
                     examples/kit-nextjs-product-listing)
                       export NEXT_PUBLIC_DEFAULT_SITE_NAME="sync"
@@ -634,31 +642,24 @@ jobs:
                       ;;
                   esac
                   echo "NEXT_PUBLIC_DEFAULT_SITE_NAME=${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
-                  # Build this starter here so .next matches this site (NEXT_PUBLIC_* inlined per starter).
-                  # Avoids relying on an earlier global build / wrong baked-in site name.
-                  echo "Building $starter for GEO (same env as main build)..."
-                  if ! npm run build; then
-                    echo "❌ GEO pre-build failed for $starter"
-                    cd ../..
-                    exit 1
-                  fi
-                  echo "Starting production server for GEO..."
-                  npm run next:start &
+                  # npm run start runs build then next:start (kit package.json). Allow time below for build before :3000 is up.
+                  echo "Starting $starter for GEO (npm run start)..."
+                  npm run start &
                   SERVER_PID=$!
   
-                  # Wait for server to be ready (max 60s)
+                  # Wait for server (npm run start runs build first; large starters may need several minutes)
                   echo "Waiting for server on http://localhost:3000..."
-                  for i in $(seq 1 30); do
+                  for i in $(seq 1 120); do
                     if curl -sf -o /dev/null http://localhost:3000 2>/dev/null; then
                       echo "Server ready."
                       break
                     fi
-                    if [ "$i" -eq 30 ]; then
+                    if [ "$i" -eq 120 ]; then
                       echo "❌ Server did not become ready in time"
                       stop_geo_server "$SERVER_PID"
                       exit 1
                     fi
-                    sleep 2
+                    sleep 5
                   done
   
                   if GEO_BASE_URL=http://localhost:3000 npm run test:geo; then
