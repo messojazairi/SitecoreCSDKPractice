@@ -143,15 +143,22 @@ export const generateStaticParams = async () => {
       routing.locales.slice(),
     );
   }
-  return [];
+  
+  // Next.js 16 requires at least one result
+  // Return a default param for the root page
+  return [
+    {
+      site: sites[0]?.name || 'default',
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+  // Avoid headers() here: with cacheComponents, metadata runs outside a Suspense boundary.
+  // NEXT_PUBLIC_SITE_URL / getBaseUrl() cover build-time and normal deploys.
+  const baseUrl = getBaseUrl();
 
   const { site, locale, path } = await params;
 
