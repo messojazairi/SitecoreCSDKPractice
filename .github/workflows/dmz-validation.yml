@@ -627,8 +627,10 @@ jobs:
                       ;;
                   esac
                   echo "NEXT_PUBLIC_DEFAULT_SITE_NAME=${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
-                  # Start production server in background (build already done; site must match per-starter build)
-                  npm run start &
+                  # Use next:start only — kit starters' "start" script runs `build` then next:start, so `npm run start`
+                  # would rebuild (no listener on :3000 until build finishes) and often exceed the wait timeout;
+                  # the Build step above already produced .next for each starter.
+                  npm run next:start &
                   SERVER_PID=$!
   
                   # Wait for server to be ready (max 60s)
