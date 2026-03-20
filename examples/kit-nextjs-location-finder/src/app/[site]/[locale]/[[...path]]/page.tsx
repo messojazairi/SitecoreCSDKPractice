@@ -126,10 +126,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   );
 }
 
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
-
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
