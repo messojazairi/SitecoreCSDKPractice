@@ -574,6 +574,7 @@ jobs:
           NEXT_PUBLIC_DEFAULT_SITE_NAME: ${{ vars.NEXT_PUBLIC_DEFAULT_SITE_NAME || 'basic' }}
         run: |
           echo "Running GEO endpoint tests (site must be running)..."
+          echo "Per-starter site names: skate-park | solterra | alaris | sync (must match build and exist in XM Cloud)"
 
           for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
               if [ -d "$starter" ]; then
@@ -581,7 +582,25 @@ jobs:
                 cd "$starter"
   
                 if grep -q '"test:geo"' package.json 2>/dev/null; then
-                  # Start production server in background (build already done)
+                  case "$starter" in
+                    examples/kit-nextjs-product-listing)
+                      export NEXT_PUBLIC_DEFAULT_SITE_NAME="sync"
+                      ;;
+                    examples/kit-nextjs-article-starter)
+                      export NEXT_PUBLIC_DEFAULT_SITE_NAME="solterra"
+                      ;;
+                    examples/kit-nextjs-location-finder)
+                      export NEXT_PUBLIC_DEFAULT_SITE_NAME="alaris"
+                      ;;
+                    examples/kit-nextjs-skate-park)
+                      export NEXT_PUBLIC_DEFAULT_SITE_NAME="skate-park"
+                      ;;
+                    *)
+                      export NEXT_PUBLIC_DEFAULT_SITE_NAME="${NEXT_PUBLIC_DEFAULT_SITE_NAME:-basic}"
+                      ;;
+                  esac
+                  echo "NEXT_PUBLIC_DEFAULT_SITE_NAME=${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
+                  # Start production server in background (build already done; site must match per-starter build)
                   npm run start &
                   SERVER_PID=$!
   
