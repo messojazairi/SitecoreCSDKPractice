@@ -82,7 +82,14 @@ export const generateStaticParams = async () => {
 
     return await client.getAppRouterStaticParams(allowedSites, routing.locales.slice());
   }
-  return [];
+  // Next.js 16 requires at least one param set to avoid EmptyGenerateStaticParamsError
+  return [
+    {
+      site: (sites[0] as SiteInfo)?.name || 'default',
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
