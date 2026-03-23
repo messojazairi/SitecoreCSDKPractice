@@ -2,6 +2,9 @@
   "name": "kit-nextjs-location-starter",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "config": {
     "appName": "kit-nextjs-location-starter",
     "graphQLEndpointPath": "/sitecore/api/graph/edge",
@@ -27,7 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^5.1.1",
-    "@next/bundle-analyzer": "15.3.2",
+    "@next/bundle-analyzer": "16.2.1",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
