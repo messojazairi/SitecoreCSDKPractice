@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as BackgroundThumbnail } from '@/components/background-thumbnail/BackgroundThumbnail.dev';
-
 // Mock useSitecore hook
 const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
@@ -196,5 +195,4 @@ describe('BackgroundThumbnail Component', () => {
     });
   });
 });
-
 

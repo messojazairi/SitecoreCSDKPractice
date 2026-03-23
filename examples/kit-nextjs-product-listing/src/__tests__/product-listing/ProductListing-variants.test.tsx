@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, cleanup, screen } from '@testing-library/react';
 import * as ProductListing from '@/components/product-listing/ProductListing';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ProductListingProps } from '@/components/product-listing/product-listing.props';
 
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
@@ -36,8 +35,7 @@ jest.mock('@/components/product-listing/ProductListingSlider.dev', () => ({
 }));
 
 describe('ProductListing Variants', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const mockProps: any = {
+  const mockProps = {
     rendering: {
       uid: 'test-uid',
       componentName: 'ProductListing',
@@ -68,7 +66,7 @@ describe('ProductListing Variants', () => {
       },
     },
     isPageEditing: false,
-  };
+  } as ProductListingProps;
 
   beforeEach(() => {
     jest.clearAllMocks();
