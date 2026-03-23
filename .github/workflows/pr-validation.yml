@@ -352,47 +352,46 @@ jobs:
           echo "ℹ️ Note: Full Next.js build with Sitecore integration will run"
           echo "   when this PR is reviewed in the upstream repository."
 
-      # TODO: Uncomment this step after verifying TypeScript compilation fix works
-      # - name: Run tests with coverage for all starters
-      #   env:
-      #     # Provide mock values for tests (in case they need Sitecore config)
-      #     SITECORE_EDGE_CONTEXT_ID: "mock-context-id-for-ci-tests"
-      #     NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID: "mock-context-id-for-ci-tests"
-      #     SITECORE_EDGE_URL: "https://edge.sitecorecloud.io"
-      #     NEXT_PUBLIC_SITECORE_EDGE_URL: "https://edge.sitecorecloud.io"
-      #     NEXT_PUBLIC_DEFAULT_SITE_NAME: "basic"
-      #     NEXT_PUBLIC_DEFAULT_LANGUAGE: "en"
-      #     SITECORE_EDITING_SECRET: "mock-editing-secret-for-ci-tests"
-      #   run: |
-      #     set -e  # Exit immediately if any command fails
-      #     echo "Running tests with coverage for all starters..."
-      #
-      #     # Test all enabled starters
-      #     for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
-      #       if [ -d "examples/$starter" ]; then
-      #         echo "=================================="
-      #         echo "Testing $starter"
-      #         echo "=================================="
-      #         cd "examples/$starter"
-      #         
-      #         # Check if test:coverage script exists
-      #         if grep -q '"test:coverage"' package.json; then
-      #           echo "Running tests with coverage for $starter..."
-      #           if ! npm run test:coverage; then
-      #             echo "❌ Tests failed for $starter"
-      #             echo "::error::Tests failed for $starter"
-      #             exit 1
-      #           fi
-      #           echo "✅ Tests passed for $starter"
-      #         else
-      #           echo "❌ No test:coverage script found for $starter - tests are mandatory"
-      #           echo "::error::No test:coverage script found for $starter"
-      #           exit 1
-      #         fi
-      #         
-      #         cd ../..
-      #       fi
-      #     done
+      - name: Run tests with coverage for all starters
+        env:
+          # Provide mock values for tests (in case they need Sitecore config)
+          SITECORE_EDGE_CONTEXT_ID: "mock-context-id-for-ci-tests"
+          NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID: "mock-context-id-for-ci-tests"
+          SITECORE_EDGE_URL: "https://edge.sitecorecloud.io"
+          NEXT_PUBLIC_SITECORE_EDGE_URL: "https://edge.sitecorecloud.io"
+          NEXT_PUBLIC_DEFAULT_SITE_NAME: "basic"
+          NEXT_PUBLIC_DEFAULT_LANGUAGE: "en"
+          SITECORE_EDITING_SECRET: "mock-editing-secret-for-ci-tests"
+        run: |
+          set -e  # Exit immediately if any command fails
+          echo "Running tests with coverage for all starters..."
+
+          # Test all enabled starters
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+            if [ -d "examples/$starter" ]; then
+              echo "=================================="
+              echo "Testing $starter"
+              echo "=================================="
+              cd "examples/$starter"
+
+              # Check if test:coverage script exists
+              if grep -q '"test:coverage:unit"' package.json; then
+                echo "Running tests with coverage for $starter..."
+                if ! npm run test:coverage:unit; then
+                  echo "❌ Tests failed for $starter"
+                  echo "::error::Tests failed for $starter"
+                  exit 1
+                fi
+                echo "✅ Tests passed for $starter"
+              else
+                echo "❌ No test:coverage:unit script found for $starter - tests are mandatory"
+                echo "::error::No test:coverage:unit script found for $starter"
+                exit 1
+              fi
+
+              cd ../..
+            fi
+          done
 
       - name: Comment PR with results
         if: always()
@@ -431,7 +430,7 @@ jobs:
               - ✅ Linting and formatting
               - ✅ TypeScript type checking
               - ${isUpstream ? '✅ Full build verification (Sitecore + Next.js)' : '✅ TypeScript compilation check (tsc --noEmit)'}
-              - ⏭️ Test execution with coverage (temporarily disabled for credential verification)
+              - ✅ Unit tests with coverage (npm run test:coverage:unit)
               ${!isUpstream ? '\n              **Note:** Full Next.js build requires XM Cloud credentials and will run in upstream CI.' : ''}
 
               **Next Steps:**

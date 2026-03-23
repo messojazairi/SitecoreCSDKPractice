@@ -533,37 +533,36 @@ jobs:
           echo "::error::Build skipped - Missing required XM Cloud credentials in upstream repository"
           exit 1
 
-      # TODO: Uncomment this step after verifying credential issue is resolved
-      # - name: Run tests with coverage
-      #   if: steps.credential-check.outputs.credentials-valid == 'true'
-      #   run: |
-      #     set -e  # Exit immediately if any command fails
-      #     echo "Running tests with coverage for all starters..."
-      #
-      #     # Test each enabled starter
-      #     for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
-      #       if [ -d "$starter" ]; then
-      #         echo "Testing $starter..."
-      #         cd "$starter"
-      #         
-      #         # Check if test:coverage script exists, if not fail the workflow
-      #         if grep -q '"test:coverage"' package.json; then
-      #           echo "Running tests with coverage for $starter..."
-      #           if ! npm run test:coverage; then
-      #             echo "❌ Tests failed for $starter"
-      #             echo "::error::Tests failed for $starter"
-      #             exit 1
-      #           fi
-      #           echo "✅ Tests passed for $starter"
-      #         else
-      #           echo "❌ No test:coverage script found for $starter - tests are mandatory"
-      #           echo "::error::No test:coverage script found for $starter"
-      #           exit 1
-      #         fi
-      #
-      #         cd ../..
-      #       fi
-      #     done
+      - name: Run tests with coverage
+        if: steps.credential-check.outputs.credentials-valid == 'true'
+        run: |
+          set -e  # Exit immediately if any command fails
+          echo "Running tests with coverage for all starters..."
+
+          # Test each enabled starter
+          for starter in examples/kit-nextjs-skate-park examples/kit-nextjs-article-starter examples/kit-nextjs-location-finder examples/kit-nextjs-product-listing; do
+            if [ -d "$starter" ]; then
+              echo "Testing $starter..."
+              cd "$starter"
+
+              # Check if test:coverage script exists, if not fail the workflow
+              if grep -q '"test:coverage:unit"' package.json; then
+                echo "Running tests with coverage for $starter..."
+                if ! npm run test:coverage:unit; then
+                  echo "❌ Tests failed for $starter"
+                  echo "::error::Tests failed for $starter"
+                  exit 1
+                fi
+                echo "✅ Tests passed for $starter"
+              else
+                echo "❌ No test:coverage:unit script found for $starter - tests are mandatory"
+                echo "::error::No test:coverage:unit script found for $starter"
+                exit 1
+              fi
+
+              cd ../..
+            fi
+          done
 
       - name: Create success notification
         if: success()
@@ -573,7 +572,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Validation Results:**" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ All builds passed" >> $GITHUB_STEP_SUMMARY
-          echo "- ⏭️ Test execution with coverage (temporarily disabled for credential verification)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Unit tests with coverage (npm run test:coverage:unit)" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Linting and formatting checks passed" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Type checking passed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -599,7 +598,7 @@ jobs:
           echo "- 🔐 **Missing XM Cloud credentials in upstream repository** (check 'Validate XM Cloud credentials' step)" >> $GITHUB_STEP_SUMMARY
           echo "- Site configuration error: Site name mismatch (check 'Check configured site names' step)" >> $GITHUB_STEP_SUMMARY
           echo "- Build failures (check 'Build all starters' step)" >> $GITHUB_STEP_SUMMARY
-          echo "- ⏭️ Test execution (temporarily disabled for credential verification)" >> $GITHUB_STEP_SUMMARY
+          echo "- Unit tests with coverage (check 'Run tests with coverage:unit for all starters' step)" >> $GITHUB_STEP_SUMMARY
           echo "- Code quality issues (linting, formatting, type checking)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**⚠️ IMPORTANT - Credential Issue:**" >> $GITHUB_STEP_SUMMARY
