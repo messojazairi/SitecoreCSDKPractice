@@ -26,7 +26,11 @@ type HeaderSTProps = ComponentProps & {
   fields: Fields;
 };
 
+const navLinkClass = 'block p-4 font-[family-name:var(--font-accent)] font-medium';
+
 export const Default = (props: HeaderSTProps) => {
+  const { fields } = props;
+
   return (
     <section className={`${props.params?.styles}`} data-class-change>
       <div className="flex justify-between items-start">
@@ -54,19 +58,19 @@ export const Default = (props: HeaderSTProps) => {
             <ul className="flex">
               <li className="hidden lg:block">
                 <ContentSdkLink
-                  field={props.fields?.SupportLink}
+                  field={fields?.SupportLink}
                   prefetch={false}
-                  className="block p-4 font-(family-name:--font-accent) font-medium"
+                  className={navLinkClass}
                 />
               </li>
               <li className="mr-auto lg:mr-0">
                 {props.params.showSearchBox ? (
-                  <SearchBox searchLink={props.fields?.SearchLink} />
+                  <SearchBox searchLink={fields?.SearchLink} />
                 ) : (
                   <ContentSdkLink
-                    field={props.fields?.SearchLink}
+                    field={fields?.SearchLink}
                     prefetch={false}
-                    className="block p-4 font-(family-name:--font-accent) font-medium"
+                    className={navLinkClass}
                   />
                 )}
               </li>
@@ -87,9 +91,9 @@ export const Default = (props: HeaderSTProps) => {
                     <ul className="text-center">
                       <li>
                         <ContentSdkLink
-                          field={props.fields?.SupportLink}
+                          field={fields?.SupportLink}
                           prefetch={false}
-                          className="block p-4 font-(family-name:--font-accent) font-medium"
+                          className={navLinkClass}
                         />
                       </li>
                     </ul>
@@ -98,10 +102,10 @@ export const Default = (props: HeaderSTProps) => {
               </MobileMenuWrapper>
               <li>
                 {props.params.showMiniCart ? (
-                  <MiniCart cartLink={props.fields?.CartLink} />
+                  <MiniCart cartLink={fields?.CartLink} />
                 ) : (
                   <ContentSdkLink
-                    field={props.fields?.CartLink}
+                    field={fields?.CartLink}
                     prefetch={false}
                     className="block p-4"
                   >

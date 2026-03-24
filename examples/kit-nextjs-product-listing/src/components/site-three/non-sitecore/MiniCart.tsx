@@ -16,20 +16,18 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
   const t = useTranslations();
   const { isVisible, setIsVisible, ref } = useToggleWithClickOutside<HTMLDivElement>(false);
 
+  const cartTrigger = <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />;
+
   return (
     <div ref={ref}>
-      <ContentSdkLink
-        field={cartLink}
-        prefetch={false}
+      <button
+        type="button"
         className="block p-4"
         aria-label="Shopping cart"
-        onClick={(e) => {
-          e.preventDefault();
-          setIsVisible(!isVisible);
-        }}
+        onClick={() => setIsVisible(!isVisible)}
       >
-        <FontAwesomeIcon icon={faShoppingCart} width={24} height={24} />
-      </ContentSdkLink>
+        {cartTrigger}
+      </button>
 
       <div
         className={`fixed lg:absolute top-14 left-0 right-0 lg:top-full lg:left-0 lg:right-0
@@ -43,7 +41,7 @@ export const MiniCart = ({ cartLink }: { cartLink: LinkField }) => {
         `}
       >
         <div className="pt-18 p-8 lg:pt-8">
-          <h5 className="mb-4 uppercase">{t(DICTIONARY_KEYS.MINI_CART_LABEL) || 'Your Cart'}</h5>
+          <h2 className="mb-4 uppercase">{t(DICTIONARY_KEYS.MINI_CART_LABEL) || 'Your Cart'}</h2>
           <p className="mb-8">
             {t(DICTIONARY_KEYS.CART_EMPTY_LABEL) || 'Your cart is currently empty.'}
           </p>
