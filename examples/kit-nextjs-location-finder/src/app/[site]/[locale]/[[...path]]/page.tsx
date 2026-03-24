@@ -1,6 +1,6 @@
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import { notFound } from 'next/navigation';
-import { draftMode, headers } from 'next/headers';
+import { draftMode } from 'next/headers';
 import { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import { preload } from 'react-dom';
 import sites from '.sitecore/sites.json';
@@ -16,7 +16,7 @@ import {
   generateProductSchema,
 } from 'src/lib/structured-data/schema';
 import { StructuredData } from '@/components/structured-data/StructuredData';
-import { getFullUrl, getBaseUrl } from '@/lib/utils';
+import { getBaseUrl } from '@/lib/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function findHeroImageSrc(page: any): string | undefined {
@@ -64,11 +64,7 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+  const baseUrl = getBaseUrl();
 
   setRequestLocale(`${site}_${locale}`);
 
@@ -99,7 +95,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const pageTitle = fields?.Title?.value?.toString() || fields?.pageTitle?.value?.toString() || 'Page';
   const pageDescription = fields?.metadataDescription?.value?.toString() || fields?.ogDescription?.value?.toString();
   const currentPath = path?.length ? `/${path.join('/')}` : '/';
-  const fullUrl = baseUrl ? `${baseUrl}${currentPath}` : getFullUrl(currentPath, host || undefined);
+  const fullUrl = `${baseUrl}${currentPath}`;
   const webPageSchema = generateWebPageSchema(pageTitle, fullUrl, pageDescription, locale);
 
   // Detect if this is a product page and generate Product schema
@@ -126,10 +122,6 @@ export default async function Page({ params, searchParams }: PageProps) {
   );
 }
 
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
-
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
@@ -147,15 +139,20 @@ export const generateStaticParams = async () => {
       routing.locales.slice(),
     );
   }
-  return [];
+  
+  // Next.js 16 requires at least one result
+  // Return a default param for the root page
+  return [
+    {
+      site: sites[0]?.name || 'default',
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+  const baseUrl = getBaseUrl();
 
   const { site, locale, path } = await params;
 
