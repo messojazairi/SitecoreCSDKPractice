@@ -152,8 +152,6 @@ export const generateStaticParams = async () => {
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-  // Avoid headers() here: with cacheComponents, metadata runs outside a Suspense boundary.
-  // NEXT_PUBLIC_SITE_URL / getBaseUrl() cover build-time and normal deploys.
   const baseUrl = getBaseUrl();
 
   const { site, locale, path } = await params;
