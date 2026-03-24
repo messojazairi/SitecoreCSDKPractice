@@ -1,6 +1,6 @@
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import { notFound } from 'next/navigation';
-import { draftMode, headers } from 'next/headers';
+import { draftMode } from 'next/headers';
 import { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import { preload } from 'react-dom';
 import sites from '.sitecore/sites.json';
@@ -16,7 +16,7 @@ import {
   generateProductSchema,
 } from 'src/lib/structured-data/schema';
 import { StructuredData } from '@/components/structured-data/StructuredData';
-import { getFullUrl, getBaseUrl } from '@/lib/utils';
+import { getBaseUrl } from '@/lib/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function findHeroImageSrc(page: any): string | undefined {
@@ -64,11 +64,7 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+  const baseUrl = getBaseUrl();
 
   setRequestLocale(`${site}_${locale}`);
 
@@ -99,7 +95,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const pageTitle = fields?.Title?.value?.toString() || fields?.pageTitle?.value?.toString() || 'Page';
   const pageDescription = fields?.metadataDescription?.value?.toString() || fields?.ogDescription?.value?.toString();
   const currentPath = path?.length ? `/${path.join('/')}` : '/';
-  const fullUrl = baseUrl ? `${baseUrl}${currentPath}` : getFullUrl(currentPath, host || undefined);
+  const fullUrl = `${baseUrl}${currentPath}`;
   const webPageSchema = generateWebPageSchema(pageTitle, fullUrl, pageDescription, locale);
 
   // Detect if this is a product page and generate Product schema

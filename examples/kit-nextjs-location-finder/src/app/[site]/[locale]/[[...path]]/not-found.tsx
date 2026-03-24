@@ -22,7 +22,6 @@ export const metadata: Metadata = {
  * Used when URL has site/locale segments
  */
 export default async function NotFound() {
-
   const { site, locale } = getCachedPageParams();
 
   // Fetch Sitecore 404 page for the resolved site/locale
