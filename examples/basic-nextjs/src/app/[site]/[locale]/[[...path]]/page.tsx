@@ -1,20 +1,17 @@
 import { isDesignLibraryPreviewData } from "@sitecore-content-sdk/nextjs/editing";
 import { notFound } from "next/navigation";
-import { draftMode, headers } from "next/headers";
+import { draftMode } from "next/headers";
 import { SiteInfo } from "@sitecore-content-sdk/nextjs";
 import sites from ".sitecore/sites.json";
 import { routing } from "src/i18n/routing";
 import scConfig from "sitecore.config";
 import client from "src/lib/sitecore-client";
+import { getBaseUrl } from "src/lib/utils";
 import Layout, { RouteFields } from "src/Layout";
 import components from ".sitecore/component-map";
 import Providers from "src/Providers";
 import { NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
 
 type PageProps = {
   params: Promise<{
@@ -55,7 +52,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const componentProps = await client.getComponentData(
     page.layout,
     {},
-    components
+    components,
   );
 
   return (
@@ -81,18 +78,21 @@ export const generateStaticParams = async () => {
       : sites.map((site: SiteInfo) => site.name);
     return await client.getAppRouterStaticParams(
       allowedSites,
-      routing.locales.slice()
+      routing.locales.slice(),
     );
   }
-  return [];
+  return [
+    {
+      site: sites[0]?.name || "default",
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 // Metadata fields for the page.
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get("host") || "";
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : "");
+  const baseUrl = getBaseUrl();
 
   const { path, site, locale } = await params;
 
