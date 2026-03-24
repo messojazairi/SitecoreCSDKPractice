@@ -160,7 +160,7 @@
     "test:geo": "jest --testPathPatterns=geo --coverage=false",
     "test:watch": "jest --watch",
     "test:unit:watch": "jest --watch --testPathIgnorePatterns=geo",
-    "test:coverage:unit": "jest --coverage --testPathIgnorePatterns=geo"
+    "test:coverage:unit": "jest --coverage --testPathIgnorePatterns=geo",
     "test:geo:watch": "jest --watch --testPathPatterns=geo --coverage=false",
     "test:coverage": "jest --coverage"
   }
