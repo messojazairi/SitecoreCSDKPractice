@@ -8,7 +8,7 @@ import {
 import sites from '.sitecore/sites.json';
 import scConfig from 'sitecore.config';
 
-export default function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   // If no Edge server contextId, skip Edge middlewares entirely.
   // (SSR/API can still use Local creds; no crash in Edge runtime.)
   if (!scConfig.api?.edge?.contextId) {

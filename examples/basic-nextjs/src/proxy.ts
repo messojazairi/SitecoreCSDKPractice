@@ -67,7 +67,7 @@ const personalize = new PersonalizeProxy({
   skip: () => false,
 });
 
-export default function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   return defineProxy(locale, multisite, redirects, personalize).exec(req);
 }
 

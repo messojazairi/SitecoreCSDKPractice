@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import { notFound } from 'next/navigation';
 import { draftMode } from 'next/headers';
@@ -54,9 +55,11 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   return (
     <NextIntlClientProvider>
-      <Providers page={page} componentProps={componentProps}>
-        <Layout page={page} baseUrl={baseUrl || undefined} />
-      </Providers>
+      <Suspense fallback={null}>
+        <Providers page={page} componentProps={componentProps}>
+          <Layout page={page} baseUrl={baseUrl || undefined} />
+        </Providers>
+      </Suspense>
     </NextIntlClientProvider>
   );
 }
