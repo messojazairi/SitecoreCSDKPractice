@@ -13,10 +13,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { StructuredData } from '@/components/structured-data/StructuredData';
 import { generateWebPageSchema } from '@/lib/structured-data/schema';
-
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
+import { getBaseUrl } from 'lib/utils';
 
 type PageProps = {
   params: Promise<{
@@ -34,7 +31,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   const headersList = await headers();
   const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
 
   // Set site and locale to be available in src/i18n/request.ts for fetching the dictionary
   setRequestLocale(`${site}_${locale}`);
@@ -112,14 +110,17 @@ export const generateStaticParams = async () => {
       routing.locales.slice(),
     );
   }
-  return [];
+  return [
+    {
+      site: sites[0]?.name || 'default',
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '');
+  const baseUrl = getBaseUrl();
 
   const { path, site, locale } = await params;
 
@@ -131,7 +132,8 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const page = await client.getPage(path ?? [], { site, locale });
 
   // Cast route fields once to avoid repeated type assertions
-  const routeFields = (page?.layout.sitecore.route?.fields ?? {}) as RouteFields;
+  const routeFields = (page?.layout.sitecore.route?.fields ??
+    {}) as RouteFields;
 
   // Extract metadata values with fallback chain
   const metadataTitle =
@@ -145,18 +147,14 @@ export const generateMetadata = async ({ params }: PageProps) => {
     routeFields?.pageSummary?.value?.toString() ||
     'Solterra & Co. - Editorial-style content for lifestyle brands';
 
-  const ogTitle =
-    routeFields?.ogTitle?.value?.toString() ||
-    metadataTitle;
+  const ogTitle = routeFields?.ogTitle?.value?.toString() || metadataTitle;
 
   const ogDescription =
-    routeFields?.ogDescription?.value?.toString() ||
-    metadataDescription;
+    routeFields?.ogDescription?.value?.toString() || metadataDescription;
 
   // Ensure image URL is absolute (HTTPS preferred)
   const imageSource =
-    routeFields?.ogImage?.value?.src ||
-    routeFields?.thumbnailImage?.value?.src;
+    routeFields?.ogImage?.value?.src || routeFields?.thumbnailImage?.value?.src;
 
   const ogImageUrl = imageSource
     ? imageSource.startsWith('http')
@@ -172,7 +170,8 @@ export const generateMetadata = async ({ params }: PageProps) => {
     ? keywordsString.split(',').map((k: string) => k.trim())
     : [];
 
-  const metadataAuthor = routeFields?.metadataAuthor?.value?.toString() || 'Sitecore';
+  const metadataAuthor =
+    routeFields?.metadataAuthor?.value?.toString() || 'Sitecore';
 
   return {
     title: metadataTitle,
