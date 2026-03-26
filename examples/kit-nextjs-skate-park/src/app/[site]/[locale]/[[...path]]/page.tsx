@@ -59,7 +59,7 @@ export default async function Page({ params, searchParams }: PageProps) {
   const componentProps = await client.getComponentData(
     page.layout,
     {},
-    components
+    components,
   );
 
   return (
@@ -86,22 +86,22 @@ export const generateStaticParams = async () => {
 
     return await client.getAppRouterStaticParams(
       allowedSites,
-      routing.locales.slice()
+      routing.locales.slice(),
     );
   }
-  return [];
+  return [
+    {
+      site: sites[0]?.name || "default",
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 // Metadata fields for the page.
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get("host") ?? "";
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (host ? `${protocol}://${host}` : "") ||
-    getBaseUrl();
-
+  const baseUrl = getBaseUrl();
+  
   const { path, site, locale } = await params;
 
   // Canonical URL: base URL + content path only (no site/locale segments)
