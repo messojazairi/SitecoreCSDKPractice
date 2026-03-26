@@ -68,7 +68,9 @@ export default async function Page({ params, searchParams }: PageProps) {
   const host = headersList.get('host') || '';
   const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (host ? `${protocol}://${host}` : '') ||
+    getBaseUrl();
 
   setRequestLocale(`${site}_${locale}`);
 
@@ -96,22 +98,34 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   // Generate page-specific structured data
   const fields = page.layout.sitecore.route?.fields as RouteFields;
-  const pageTitle = fields?.Title?.value?.toString() || fields?.pageTitle?.value?.toString() || 'Page';
-  const pageDescription = fields?.metadataDescription?.value?.toString() || fields?.ogDescription?.value?.toString();
+  const pageTitle =
+    fields?.Title?.value?.toString() ||
+    fields?.pageTitle?.value?.toString() ||
+    'Page';
+  const pageDescription =
+    fields?.metadataDescription?.value?.toString() ||
+    fields?.ogDescription?.value?.toString();
   const currentPath = path?.length ? `/${path.join('/')}` : '/';
-  const fullUrl = baseUrl ? `${baseUrl}${currentPath}` : getFullUrl(currentPath, host || undefined);
-  const webPageSchema = generateWebPageSchema(pageTitle, fullUrl, pageDescription, locale);
+  const fullUrl = baseUrl
+    ? `${baseUrl}${currentPath}`
+    : getFullUrl(currentPath, host || undefined);
+  const webPageSchema = generateWebPageSchema(
+    pageTitle,
+    fullUrl,
+    pageDescription,
+    locale,
+  );
 
   // Detect if this is a product page and generate Product schema
   const isProductPage = path && path[0] === 'Products';
   const productSchema = isProductPage
     ? generateProductSchema(
-      pageTitle,
-      fields?.pageSummary?.value?.toString() || pageDescription,
-      fields?.thumbnailImage?.value?.src || fields?.ogImage?.value?.src,
-      fullUrl,
-      undefined // Price not available on detail pages by default
-    )
+        pageTitle,
+        fields?.pageSummary?.value?.toString() || pageDescription,
+        fields?.thumbnailImage?.value?.src || fields?.ogImage?.value?.src,
+        fullUrl,
+        undefined, // Price not available on detail pages by default
+      )
     : null;
 
   return (
@@ -119,16 +133,14 @@ export default async function Page({ params, searchParams }: PageProps) {
       <Providers page={page}>
         {/* Page-specific structured data */}
         <StructuredData id="webpage-schema" data={webPageSchema} />
-        {productSchema && <StructuredData id="product-schema-page" data={productSchema} />}
+        {productSchema && (
+          <StructuredData id="product-schema-page" data={productSchema} />
+        )}
         <Layout page={page} baseUrl={baseUrl || undefined} />
       </Providers>
     </NextIntlClientProvider>
   );
 }
-
-// Configure dynamic rendering to avoid SSR issues with client-side hooks
-// This ensures all pages are rendered on-demand rather than pre-rendered at build time
-export const dynamic = 'force-dynamic';
 
 // This function gets called at build and export time to determine
 // pages for SSG ("paths", as tokenized array).
@@ -139,23 +151,25 @@ export const generateStaticParams = async () => {
     const defaultSite = scConfig.defaultSite;
     const allowedSites = defaultSite
       ? sites
-        .filter((site: SiteInfo) => site.name === defaultSite)
-        .map((site: SiteInfo) => site.name)
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
       : sites.map((site: SiteInfo) => site.name);
     return await client.getAppRouterStaticParams(
       allowedSites,
       routing.locales.slice(),
     );
   }
-  return [];
+  return [
+    {
+      site: sites[0]?.name || 'default',
+      locale: routing.defaultLocale || scConfig.defaultLanguage,
+      path: [],
+    },
+  ];
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-  const headersList = await headers();
-  const host = headersList.get('host') || '';
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || (host ? `${protocol}://${host}` : '') || getBaseUrl();
+  const baseUrl = getBaseUrl();
 
   const { site, locale, path } = await params;
 
@@ -167,7 +181,8 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const page = await client.getPage(path ?? [], { site, locale });
 
   // Cast route fields once to avoid repeated type assertions
-  const routeFields = (page?.layout.sitecore.route?.fields ?? {}) as RouteFields;
+  const routeFields = (page?.layout.sitecore.route?.fields ??
+    {}) as RouteFields;
 
   // Extract metadata values with fallback chain
   const metadataTitle =
@@ -189,13 +204,11 @@ export const generateMetadata = async ({ params }: PageProps) => {
     metadataTitle;
 
   const ogDescription =
-    routeFields?.ogDescription?.value?.toString() ||
-    metadataDescription;
+    routeFields?.ogDescription?.value?.toString() || metadataDescription;
 
   // Ensure image URL is absolute (HTTPS preferred)
   const imageSource =
-    routeFields?.ogImage?.value?.src ||
-    routeFields?.thumbnailImage?.value?.src;
+    routeFields?.ogImage?.value?.src || routeFields?.thumbnailImage?.value?.src;
 
   const ogImageUrl = imageSource
     ? imageSource.startsWith('http')
@@ -211,7 +224,8 @@ export const generateMetadata = async ({ params }: PageProps) => {
     ? keywordsString.split(',').map((k: string) => k.trim())
     : [];
 
-  const metadataAuthor = routeFields?.metadataAuthor?.value?.toString() || 'Sitecore';
+  const metadataAuthor =
+    routeFields?.metadataAuthor?.value?.toString() || 'Sitecore';
 
   return {
     title: metadataTitle,
@@ -232,13 +246,13 @@ export const generateMetadata = async ({ params }: PageProps) => {
       locale: locale || 'en',
       images: ogImageUrl
         ? [
-          {
-            url: ogImageUrl,
-            width: 1200,
-            height: 630,
-            alt: ogTitle,
-          },
-        ]
+            {
+              url: ogImageUrl,
+              width: 1200,
+              height: 630,
+              alt: ogTitle,
+            },
+          ]
         : undefined,
     },
     twitter: {
