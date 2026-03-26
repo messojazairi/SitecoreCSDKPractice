@@ -20,7 +20,7 @@
     },
     "kit-nextjs-article-starter": {
       "path": "./examples/kit-nextjs-article-starter",
-      "nodeVersion": "22.22.0",
+      "nodeVersion": "24.14.1",
       "jssDeploymentSecret": "110F1C44A496B45478640DD36F80C18C9",
       "enabled": true,
       "type": "sxa",
@@ -47,7 +47,7 @@
     },
     "basic-nextjs": {
       "path": "./examples/basic-nextjs",
-      "nodeVersion": "22.22.0",
+      "nodeVersion": "24.14.1",
       "jssDeploymentSecret": "110F1C44A496B45478640DD36F80C18C9",
       "enabled": true,
       "type": "sxa",
