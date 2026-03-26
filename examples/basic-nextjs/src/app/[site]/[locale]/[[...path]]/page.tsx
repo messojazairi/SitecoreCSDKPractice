@@ -81,13 +81,7 @@ export const generateStaticParams = async () => {
       routing.locales.slice(),
     );
   }
-  return [
-    {
-      site: sites[0]?.name || "default",
-      locale: routing.defaultLocale || scConfig.defaultLanguage,
-      path: [],
-    },
-  ];
+  return [];
 };
 
 // Metadata fields for the page.
