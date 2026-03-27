@@ -13,19 +13,23 @@ export default async function NotFound() {
   // Set site and locale for dictionary fetching
   setRequestLocale(`${site || scConfig.defaultSite}_${locale || scConfig.defaultLanguage}`);
 
-  const page = await client.getErrorPage(ErrorPage.NotFound, {
-    site: site || scConfig.defaultSite,
-    locale: locale || scConfig.defaultLanguage,
-  });
+  try {
+    const page = await client.getErrorPage(ErrorPage.NotFound, {
+      site: site || scConfig.defaultSite,
+      locale: locale || scConfig.defaultLanguage,
+    });
 
-  if (page) {
-    return (
-      <NextIntlClientProvider>
-        <Providers page={page}>
-          <Layout page={page} />
-        </Providers>
-      </NextIntlClientProvider>
-    );
+    if (page) {
+      return (
+        <NextIntlClientProvider>
+          <Providers page={page}>
+            <Layout page={page} />
+          </Providers>
+        </NextIntlClientProvider>
+      );
+    }
+  } catch (error) {
+    console.error('Error fetching 404 page:', error);
   }
 
   return (
