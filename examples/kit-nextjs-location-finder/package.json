@@ -132,6 +132,11 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "~5.8.3"
   },
+  "overrides": {
+    "jshint": {
+      "minimatch": "^3.1.5"
+    }
+  },
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build next:build",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
