@@ -16,7 +16,9 @@
   },
   "pnpm": {
     "overrides": {
-      "qs": "6.14.1"
+      "qs": "6.14.2",
+      "@angular/compiler": "20.3.18",
+      "@angular/core": "20.3.18"
     }
   }
 }
