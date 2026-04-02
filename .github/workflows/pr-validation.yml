@@ -100,11 +100,15 @@ jobs:
             CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-product-listing"
           fi
 
+          if echo "$CHANGED_FILES" | grep -q "^examples/kit-nextjs-b2b-manu/"; then
+            CHANGED_STARTERS="$CHANGED_STARTERS kit-nextjs-b2b-manu"
+          fi
+
           # If no specific starter changes detected, check for global changes
           if [ -z "$CHANGED_STARTERS" ]; then
             if echo "$CHANGED_FILES" | grep -q "^xmcloud.build.json\|^\.github/\|^README.md\|^CONTRIBUTING.md"; then
               echo "Global changes detected, validating all starters"
-              CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing"
+              CHANGED_STARTERS="kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu"
             fi
           fi
 
@@ -116,7 +120,7 @@ jobs:
           echo "Installing dependencies for all starters..."
 
           # Install dependencies for all enabled starters
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "Installing dependencies for $starter..."
               cd "examples/$starter"
@@ -130,7 +134,7 @@ jobs:
           echo "Generating Sitecore configuration files..."
 
           # Generate files for all enabled starters
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "Generating files for $starter..."
               cd "examples/$starter"
@@ -186,7 +190,7 @@ jobs:
         run: |
           echo "Running linting and formatting checks for all starters..."
           
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "=================================="
               echo "Checking examples/$starter"
@@ -228,7 +232,7 @@ jobs:
           echo "Running TypeScript type checking for all starters..."
 
           # WARNING ONLY - does not fail the workflow
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "Type checking $starter..."
               cd "examples/$starter"
@@ -291,7 +295,7 @@ jobs:
           echo "  NEXT_PUBLIC_DEFAULT_SITE_NAME: ${NEXT_PUBLIC_DEFAULT_SITE_NAME}"
           echo "  SITECORE_EDITING_SECRET: ${SITECORE_EDITING_SECRET:+[SET]}"
 
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "=================================="
               echo "Building $starter"
@@ -324,7 +328,7 @@ jobs:
           echo "Running TypeScript compilation to validate code correctness..."
           echo ""
 
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "=================================="
               echo "TypeScript compile check: $starter"
@@ -367,7 +371,7 @@ jobs:
           echo "Running tests with coverage for all starters..."
 
           # Test all enabled starters
-          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing; do
+          for starter in kit-nextjs-skate-park kit-nextjs-article-starter kit-nextjs-location-finder kit-nextjs-product-listing kit-nextjs-b2b-manu; do
             if [ -d "examples/$starter" ]; then
               echo "=================================="
               echo "Testing $starter"
@@ -424,7 +428,7 @@ jobs:
 
               **Build Type:** ${buildType}
 
-              **Validated Starters:** kit-nextjs-skate-park, kit-nextjs-article-starter, kit-nextjs-location-finder, kit-nextjs-product-listing
+              **Validated Starters:** kit-nextjs-skate-park, kit-nextjs-article-starter, kit-nextjs-location-finder, kit-nextjs-product-listing, kit-nextjs-b2b-manu
 
               **Checks Performed:**
               - ✅ Linting and formatting
