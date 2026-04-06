@@ -16,6 +16,8 @@
   },
   "pnpm": {
     "overrides": {
+      "@angular/compiler": "20.3.18",
+      "@angular/core": "20.3.18",
       "picomatch": "4.0.4",
       "anymatch>picomatch": "2.3.2",
       "micromatch>picomatch": "2.3.2",
