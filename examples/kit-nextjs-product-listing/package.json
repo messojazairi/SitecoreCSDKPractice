@@ -142,8 +142,13 @@
     "typescript": "~5.8.3"
   },
   "overrides": {
-    "brace-expansion@^1.1.0": "1.1.13",
-    "brace-expansion@^2.0.0": "2.0.3",
+    "picomatch": "4.0.4",
+    "anymatch": {
+      "picomatch": "2.3.2"
+    },
+    "micromatch": {
+      "picomatch": "2.3.2"
+    },
     "brace-expansion@^5.0.0": "5.0.5"
   },
   "scripts": {
