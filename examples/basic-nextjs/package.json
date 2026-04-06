@@ -12,9 +12,6 @@
     "name": "Sitecore Corporation",
     "url": "https://doc.sitecore.com/xmc/en/developers/content-sdk/index.html"
   },
-  "overrides": {
-    "flatted": "3.4.2"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sitecore/content-sdk.git"
@@ -56,7 +53,8 @@
       "picomatch": "2.3.2"
     },
     "brace-expansion@^5.0.0": "5.0.5",
-    "lodash-es": "4.18.1"
+    "lodash-es": "4.18.1",
+    "flatted": "3.4.2"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:generate-map sitecore-tools:build next:build",
