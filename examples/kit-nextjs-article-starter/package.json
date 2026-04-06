@@ -145,6 +145,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "~5.8.3"
   },
+  "overrides": {
+    "lodash-es": "4.18.1"
+  },
   "scripts": {
     "build": "cross-env NODE_ENV=production npm-run-all --serial sitecore-tools:build next:build",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\"",
