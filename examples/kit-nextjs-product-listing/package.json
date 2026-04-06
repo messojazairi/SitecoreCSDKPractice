@@ -131,7 +131,6 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "15.5.14",
     "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "fast-xml-parser": "^5.5.9",
     "jest": "^30.2.0",
@@ -141,6 +140,11 @@
     "tailwindcss": "^4",
     "tsconfig-paths": "^4.2.0",
     "typescript": "~5.8.3"
+  },
+  "overrides": {
+    "brace-expansion@^1.1.0": "1.1.13",
+    "brace-expansion@^2.0.0": "2.0.3",
+    "brace-expansion@^5.0.0": "5.0.5"
   },
   "scripts": {
     "test": "jest",

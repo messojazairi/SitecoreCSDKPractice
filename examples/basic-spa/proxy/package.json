@@ -2,6 +2,9 @@
   "name": "node-xmcloud-sample",
   "version": "0.1.0",
   "description": "Node XM Cloud Proxy sample for running XM Cloud JSS SPA apps",
+  "overrides": {
+    "qs": "6.14.2"
+  },
   "author": {
     "name": "Sitecore Corporation",
     "url": "https://jss.sitecore.com"

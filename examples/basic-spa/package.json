@@ -15,7 +15,8 @@
     "pnpm": ">=9.11.0"
   },
   "pnpm": {
-    "overrides": {
+      "node-forge": "1.4.0",
+      "brace-expansion@^5.0.0": "5.0.5",
       "serialize-javascript": "7.0.5",
       "flatted": "3.4.2",
       "express>path-to-regexp": "0.1.13",
