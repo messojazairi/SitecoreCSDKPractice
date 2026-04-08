@@ -1,6 +1,6 @@
 ﻿'use client';
 import { useEffect, JSX } from 'react';
-import { SitecorePageProps, initContentSdk } from '@sitecore-content-sdk/nextjs'; 
+import { initContentSdk } from '@sitecore-content-sdk/nextjs'; 
 import { eventsPlugin } from '@sitecore-content-sdk/events'; 
 import { analyticsBrowserAdapter, analyticsPlugin } from '@sitecore-content-sdk/analytics-core';
 import config from 'sitecore.config';
