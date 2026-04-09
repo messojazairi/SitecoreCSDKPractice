@@ -42,7 +42,7 @@
     "esModuleInterop": true,
     "strictFunctionTypes": false,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

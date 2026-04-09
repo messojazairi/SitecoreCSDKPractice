@@ -15,7 +15,7 @@ import Image from 'next/image';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
 import { useEffect } from 'react';
-import { pageView } from '@sitecore-cloudsdk/events/browser';
+import { pageView } from '@sitecore-content-sdk/events';
 import config from 'sitecore.config';
 
 const importMap = [
@@ -71,7 +71,7 @@ const importMap = [
     ]
   },
   {
-    module: '@sitecore-cloudsdk/events/browser',
+    module: '@sitecore-content-sdk/events',
     exports: [
       { name: 'pageView', value: pageView },
     ]
