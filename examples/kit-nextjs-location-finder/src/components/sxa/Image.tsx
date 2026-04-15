@@ -10,9 +10,9 @@ import {
 import React, { CSSProperties, type JSX } from 'react';
 
 interface Fields {
-  Image: ImageField & { metadata?: { [key: string]: unknown } };
-  ImageCaption: Field<string>;
-  TargetUrl: LinkField;
+  Image?: ImageField & { metadata?: { [key: string]: unknown } };
+  ImageCaption?: Field<string>;
+  TargetUrl?: LinkField;
 }
 
 type ImageProps = {
@@ -32,16 +32,28 @@ const ImageDefault = (props: ImageProps): JSX.Element => (
 export const Banner = (props: ImageProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   const { isEditing } = props.page.mode;
+
+  if (!props.fields?.Image) {
+    return (
+      <div
+        className={`component hero-banner ${props.params.styles}`.trimEnd()}
+        id={id ? id : undefined}
+      >
+        <div className="component-content sc-sxa-image-hero-banner" />
+      </div>
+    );
+  }
+
   const classHeroBannerEmpty =
-    isEditing && props.fields?.Image?.value?.class === 'scEmptyImage' ? 'hero-banner-empty' : '';
-  const backgroundStyle = (props?.fields?.Image?.value?.src && {
+    isEditing && props.fields.Image.value?.class === 'scEmptyImage' ? 'hero-banner-empty' : '';
+  const backgroundStyle = (props.fields.Image.value?.src && {
     backgroundImage: `url('${props.fields.Image.value.src}')`,
   }) as CSSProperties;
 
   const altText = String(
-    props.fields?.ImageCaption?.value ||
-    props.fields?.Image?.value?.alt ||
-    props.fields?.Image?.value?.title ||
+    props.fields.ImageCaption?.value ||
+    props.fields.Image.value?.alt ||
+    props.fields.Image.value?.title ||
     'Hero banner image'
   );
 
@@ -69,7 +81,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
 export const Default = (props: ImageProps): JSX.Element => {
   const { isEditing } = props.page.mode;
 
-  if (props.fields) {
+  if (props.fields?.Image) {
     const altText = String(
       props.fields?.ImageCaption?.value ||
       props.fields?.Image?.value?.alt ||
