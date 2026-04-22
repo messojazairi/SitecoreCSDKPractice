@@ -30,7 +30,7 @@ Each Next.js starter under `examples/*` uses this layout under `src/`. All of th
 
 - **Defined:** In `.env.remote.example` (or `.env.example`) at the root of each starter. Developers copy to `.env.local` for local development.
 - **Loaded:** Next.js loads `.env.local` automatically; **do not edit** `.env.local` or any `.env.*.local` in agent workflows.
-- **Consumed:** `sitecore.config.ts` and app code read `process.env.*` (e.g. `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `SITECORE_EDITING_SECRET`, `NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID`).
+- **Consumed:** `sitecore.config.ts` and app code read `process.env.*` (e.g. `SITECORE_EDGE_CONTEXT_ID`, `NEXT_PUBLIC_DEFAULT_SITE_NAME`, `SITECORE_EDITING_SECRET`, `NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID`, optional `NEXT_PUBLIC_SITE_URL` / `NEXT_PUBLIC_BASE_URL` for absolute URLs when no request host is available).
 
 **Where Content SDK (or JSS) is initialized**
 
