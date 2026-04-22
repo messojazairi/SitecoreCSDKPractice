@@ -47,11 +47,6 @@
                 "name": "ccl.media.bp",
                 "path": "/sitecore/media library/Feature/SYNC",
                 "allowedPushOperations": "CreateUpdateAndDelete"
-            },
-            {
-                "name": "ccl.media.ccl",
-                "path": "/sitecore/media library/Feature/click-click-launch",
-                "allowedPushOperations": "CreateUpdateAndDelete"
             }
         ]
     }

@@ -39,7 +39,7 @@ Languages:
     - ID: "84a2a397-786e-43bd-85a0-bfbcc51fc3f3"
       Hint: image
       Value: |
-        <image mediaid="{D7E4A0F3-6C5F-4B8E-AE5B-4F3A2B1C0D9E}" alt="Animated promo image placeholder" />
+        <image mediaid="{0FA8E7E7-E14B-4992-9FC8-AFF70C25F214}" />
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
       Value: "9dcb454c-83dd-423d-907d-5a0e93b08eda"
