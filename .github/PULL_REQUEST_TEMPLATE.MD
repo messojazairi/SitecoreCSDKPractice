@@ -1,6 +1,8 @@
 <!--- ⚠️ IMPORTANT: This PR should target the `dmz` branch -->
 <!--- Please ensure the base branch is set to `dmz` before creating this PR -->
 
+> **New example sites:** This repository does **not** accept pull requests that add **new example sites**. If your change introduces a new top-level app under `examples/` (or equivalent), it will be out of scope. To publish your own app, use the repo as a [template](../README.md#github-template) or a fork. Details: [Contributing: what we do not accept](../CONTRIBUTING.md#what-we-do-not-accept).
+
 ## Description / Motivation
 <!--- Describe your changes in detail -->
 <!--- Why is this change required? What problem does it solve? -->

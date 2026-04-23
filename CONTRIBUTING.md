@@ -6,6 +6,7 @@ This guide will help you get started and ensure a smooth contribution process.
 ## Table of Contents
 
 - [Pre-requisites](#-pre-requisites)
+- [What we do not accept](#what-we-do-not-accept)
 - [FAQ for Contributors](#faq-for-contributors)
 - [Branching Strategy](#-branching-strategy)
 - [Development Setup](#-development-setup)
@@ -35,6 +36,12 @@ Ensure the following tools are installed on your system:
 
 - **npm**: Version `10` or above.  
   Check with: `npm -v`
+
+---
+
+## What we do not accept
+
+This repository does **not** accept pull requests that add **new example sites** (for example, a new top-level app under `examples/`, or an equivalent that introduces an additional starter site). To build and ship your own application, use this repository as a [GitHub template](README.md#github-template) or maintain your own fork, and make changes there.
 
 ---
 
@@ -131,7 +138,7 @@ Navigate to the relevant example (e.g., kit-nextjs-article-starter) and start th
 
 5. 🚀 Submitting a Pull Request
 Once your changes are ready:
-Make sure your branch is up-to-date with upstream/main and create your PR against the **dmz** branch.
+Make sure your branch is up-to-date with upstream/main and create your PR against the **dmz** branch. Pull requests that add [new example sites](#what-we-do-not-accept) are out of scope and will be closed.
 
     ✅ Before submitting:
       - Run code formatters or linters if configured.
