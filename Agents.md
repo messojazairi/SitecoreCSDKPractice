@@ -40,6 +40,16 @@ Each Next.js starter under `examples/*` uses this layout under `src/`. All of th
 - **`src/Layout.tsx`** and **`src/Providers.tsx`** – Wrap the app with Sitecore providers and layout structure.
 - **`.sitecore/component-map.ts`** – Generated component map; safe to edit when registering new components.
 
+## Upstream, forks, and pull request scope
+
+Before planning work that would become a **pull request to the official upstream** repository, confirm whether the user is targeting that upstream or their **own fork** or **template** copy of the repo.
+
+- **Official upstream** maintains a **limited** set of starters under `examples/` as best-practice **examples**. Appropriate contributions include **improvements, bug fixes, and generally useful features** in **existing** starters.
+- **Not appropriate as upstream pull requests:** **new example sites**, **additional** starters, or **bespoke** extensions for a **single** organization’s product or requirements. Those should live in a **user fork** or a repository created with **Use this template**.
+- In a **fork** or private copy, the user may add starters and extend freely; align the work to **that** repository, not upstream’s contribution model.
+
+Details: **[CONTRIBUTING.md – What we do not accept](CONTRIBUTING.md#what-we-do-not-accept)**. Related AI rules: **`.cursor/rules/project-context.mdc`**.
+
 ## Starter Applications Guide
 
 ### Quick Reference

@@ -7,6 +7,7 @@ This repository contains multiple Next.js Starter Kits, and the SPA Starters mon
 ## Table of Contents
 
 - [Repository Overview](#repository-overview)
+- [Contributing](#contributing)
 - [How to Run a Next.js Starter Locally](#how-to-run-a-nextjs-starter-locally)
 - [How to Add an Editing Host to XM Cloud](#how-to-add-an-editing-host-to-xm-cloud)
 - [GitHub Template](#github-template)
@@ -61,6 +62,12 @@ Here's a quick overview of the major folders and their purpose:
       * postActions: Actions that run after a successful deployment, such as warming up the CM server or triggering reindexing.
 
       * authoringPath: Path to the folder containing Sitecore item definitions (default is ./authoring).
+
+## Contributing
+
+**Pull requests to the official repository** are welcome for **improvements, bug fixes, and generally useful features** in the **existing** starters under `examples/`, plus documentation and tooling that support that goal. The maintainers keep a **limited** set of examples that follow shared best practices.
+
+This repository does **not** accept pull requests that add **new example sites** (for example, a new app under `examples/`, or an additional starter). For your own app, extra starters, or heavy product-specific customization, use this repo as a **[GitHub template](#github-template)** or work in your **own fork**. See **[CONTRIBUTING.md](CONTRIBUTING.md)** and **[What we do not accept](CONTRIBUTING.md#what-we-do-not-accept)** for the full policy, branching (`dmz`), and how to submit changes.
 
 ## How to Run a Next.js Starter Locally
 
@@ -161,6 +168,7 @@ This repository uses a **DMZ git workflow** to ensure the `main` branch is alway
 
 ### For Contributors
 
+Read **[Contributing](#contributing)** (including that we do not accept **new example sites** via PR to this repo) and **[CONTRIBUTING.md](CONTRIBUTING.md)**.  
 📖 **[Read the full DMZ Workflow Guide](.github/DMZ-WORKFLOW.md)** for detailed instructions, common issues, and best practices.
 
 ### For Repository Maintainers
@@ -207,6 +215,10 @@ These files ensure consistent development patterns whether you're using Claude C
 ### Do I need to create rendering host items in XM Cloud?
 
 No. Rendering host items are created automatically when you create a rendering host. Site-to-editing-host mapping is also automatic.
+
+### Can I add a new example site or starter via pull request?
+
+No. This repository does **not** accept pull requests that add **new example sites**. Use a **[GitHub template](#github-template)** or a **fork** for additional starters or your own app. You can still contribute **improvements and fixes** to **existing** starters. See [Contributing](#contributing) and [CONTRIBUTING.md - What we do not accept](CONTRIBUTING.md#what-we-do-not-accept).
 
 ### Which branch do I create my PR against?
 

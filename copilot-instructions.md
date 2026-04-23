@@ -25,6 +25,13 @@ This repository contains **XM Cloud Front End Application Starter Kits** - multi
 - Modular component architecture with variants
 - Localization support for English (en) and Canadian English (en-CA)
 
+### Upstream, forks, and pull request scope
+
+Before work is framed as a **pull request to the official upstream** repository, confirm the user’s target: **upstream** (public, maintained examples) or a **fork** / **Use this template** copy.
+
+- **Upstream** welcomes **improvements, bug fixes, and broadly useful features** in **existing** starters. The set of starters in `examples/` is intentionally **limited** as best-practice references.
+- **Not for upstream PRs:** **new example sites**, **additional** starter apps, or **bespoke** extensions for a **single** customer or product. Those belong in a **user fork** or a separate repo; see **[CONTRIBUTING.md - What we do not accept](CONTRIBUTING.md#what-we-do-not-accept)** and **`.cursor/rules/project-context.mdc`**.
+
 ## Technology Stack
 
 ### Core Technologies

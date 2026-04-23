@@ -52,6 +52,11 @@ This is the **XM Cloud Front End Application Starter Kits** repository containin
 - Configuration files specific to each starter application
 - Independent package.json for each example
 
+**Contribution and pull request scope (upstream vs fork):**
+- Before planning a **pull request to the official upstream** repository, confirm whether work targets **upstream** (the public, maintained example set) or a **user fork** / **template** copy. Upstream keeps a **small** set of starters in `examples/` on purpose.
+- **Appropriate for upstream PRs:** **improvements, bug fixes, and generally useful features** in **existing** starters; documentation and shared tooling that match the repo’s policy in **CONTRIBUTING.md**.
+- **Not for upstream PRs:** **new example sites**, **extra** starter applications, or **one-off** / **bespoke** product extensions; use a **fork** or a repo from **Use this template**. See **CONTRIBUTING.md#what-we-do-not-accept** and **`.cursor/rules/project-context.mdc`**.
+
 **DMZ git flow (planned for future):**
 
 DMZ git flow will be implemented in the future to support better development practices, scaling, efficiency and developer productivity. Below is an outline of the planned workflow and processes that will be followed:

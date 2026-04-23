@@ -53,6 +53,9 @@ Testing:
 
 ## Development Standards
 
+Pull request scope (upstream vs fork):
+- If work may become a **PR** to the **official upstream** repository, read **Upstream repository, forks, and pull request scope** in `project-context` rules. Upstream welcomes **improvements, bug fixes, and broadly useful features** in **existing** starters; it does **not** accept **new example sites**, **additional** starters, or **bespoke extensions** meant for a single org—those belong in the user’s **own fork** or **template** copy. Always confirm which repository the user is targeting before planning those kinds of changes.
+
 Version Control:
 - Write descriptive commit messages
 - Keep commits focused and atomic

@@ -5,6 +5,7 @@
 - [Repository Overview](#repository-overview)
 - [Technology Stack](#technology-stack)
 - [Development Principles](#development-principles)
+- [Upstream, forks, and pull request scope](#upstream-forks-and-pull-request-scope)
 - [Constraints and Guidelines](#constraints-and-guidelines)
 - [Code Style](#code-style)
 - [General Coding Principles](#general-coding-principles)
@@ -72,6 +73,16 @@ Each starter demonstrates:
 - Field-driven rendering with proper fallbacks
 - Support for both connected and disconnected development modes
 - Proper handling of content authoring scenarios
+
+## Upstream, forks, and pull request scope
+
+The official **upstream** repository (this project’s public GitHub home) keeps a **small, fixed** set of starters in `examples/` as **reference examples**, not a catalog of every vertical. Before treating work as an **upstream pull request**, confirm whether the target is **upstream** or a **user fork** / **template** copy.
+
+- **Fits upstream PRs:** **Improvements, bug fixes, and broadly useful features** in **existing** starters; **documentation** and **tooling** aligned with the repo’s contribution policy.
+- **Not for upstream PRs:** **New example sites**, **additional** starters, or **product-specific** extensions for one org that should live in a **fork** or separate repo. Use **Use this template** or maintain a **fork** for that work.
+- **Fork or standalone copy:** Add starters and customize freely; do not frame that work as an official upstream change unless maintainers have agreed otherwise.
+
+Authoritative human policy: **[CONTRIBUTING.md](CONTRIBUTING.md)** — especially **[What we do not accept](CONTRIBUTING.md#what-we-do-not-accept)**. For Cursor, see **`.cursor/rules/project-context.mdc`**.
 
 ## Constraints and Guidelines
 
