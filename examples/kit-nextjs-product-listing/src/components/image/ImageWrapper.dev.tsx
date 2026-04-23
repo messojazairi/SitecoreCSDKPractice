@@ -18,10 +18,12 @@ type ImageWrapperProps = {
 export const Default: React.FC<ImageWrapperProps> = (props) => {
   const { image, wrapperClass } = props;
 
-  if (!image?.value?.src) {
+  if (image == null) {
     return null;
   }
 
+  // Mount without `src` so Content SDK `Image` can render its empty-field editing UI.
+  // `ClientImage` still returns null on the live site when there is no src and not editing/preview.
   return (
     <div className={cn('image-container', wrapperClass)}>
       <ClientImage {...props} />
