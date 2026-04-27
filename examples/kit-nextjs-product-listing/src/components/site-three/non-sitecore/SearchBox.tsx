@@ -5,6 +5,7 @@ import { useToggleWithClickOutside } from '@/hooks/useToggleWithClickOutside';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { buildSearchResultHref } from './searchBoxUtils';
 
 const DICTIONARY_KEYS = {
   SEARCH_GO_LABEL: 'Go',
@@ -29,24 +30,8 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
   const searchBaseHref = searchLink?.value?.href;
   const hasValidSearchLink = hasValidHref(searchBaseHref);
 
-  const buildSearchUrl = (): string | null => {
-    if (!hasValidSearchLink) return null;
-    try {
-      const url = new URL(searchBaseHref!, window.location.origin);
-      if (searchTerm.trim()) {
-        url.searchParams.set('q', searchTerm.trim());
-      } else {
-        url.searchParams.delete('q');
-      }
-      return url.toString();
-    } catch {
-      return searchTerm.trim()
-        ? `${searchBaseHref}?q=${encodeURIComponent(searchTerm.trim())}`
-        : searchBaseHref ?? null;
-    }
-  };
-
-  const searchUrl = buildSearchUrl();
+  const searchUrl =
+    hasValidSearchLink && searchBaseHref ? buildSearchResultHref(searchBaseHref, searchTerm) : null;
 
   return (
     <div ref={ref}>
@@ -114,13 +99,7 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
                 aria-label={t(DICTIONARY_KEYS.SEARCH_GO_DESCRIPTIVE) || SEARCH_GO_ARIA_LABEL}
                 onClick={() => {
                   if (searchTerm.trim() && searchBaseHref) {
-                    try {
-                      const url = new URL(searchBaseHref, window.location.origin);
-                      url.searchParams.set('q', searchTerm.trim());
-                      window.location.href = url.toString();
-                    } catch {
-                      // no-op if URL invalid
-                    }
+                    window.location.href = buildSearchResultHref(searchBaseHref, searchTerm);
                   }
                 }}
               >
