@@ -7,16 +7,6 @@ updates:
     open-pull-requests-limit: 10
     commit-message:
       prefix: "ci"
-version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    target-branch: "dmz"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    commit-message:
-      prefix: "ci"
 
   - package-ecosystem: "npm"
     directory: "/examples/basic-nextjs"
