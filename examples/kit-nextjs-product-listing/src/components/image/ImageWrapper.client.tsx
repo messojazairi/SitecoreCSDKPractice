@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { useContext, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
@@ -12,11 +13,19 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  emptyFieldEditingComponent?: React.ComponentType;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
-export default function ClientImage({ image, className, sizes, priority, ...rest }: Props) {
+export default function ClientImage({
+  image,
+  className,
+  sizes,
+  priority,
+  emptyFieldEditingComponent,
+  ...rest
+}: Props) {
   const { page } = useSitecore();
   const { isEditing, isPreview } = page.mode;
 
@@ -42,7 +51,13 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
       !src.includes(window.location.hostname));
 
   if (isEditing || isPreview || isSvg) {
-    return <ContentSdkImage field={image} className={className} />;
+    return (
+      <ContentSdkImage
+        field={image}
+        className={className}
+        emptyFieldEditingComponent={emptyFieldEditingComponent}
+      />
+    );
   }
 
   // For priority images (LCP), use priority prop, otherwise use inView for lazy loading
