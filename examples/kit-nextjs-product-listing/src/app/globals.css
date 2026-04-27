@@ -224,6 +224,33 @@ main {
   }
 }
 
+/* Animated Promo: empty image field (Experience Editor) must fill the circular frame.
+   Sitecore adds inline min/max dimensions on .scEmptyImage that break the 50/50 split with the clipped sprite. */
+.promo-animated .image-container {
+  position: relative;
+  min-height: 0;
+}
+
+.promo-animated .image-container code[type='text/sitecore'] {
+  position: relative;
+  z-index: 2;
+}
+
+.promo-animated .image-container img.scEmptyImage {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 9999px;
+  z-index: 0;
+}
+
 /* HEADER STYLES */
 
 .partial-editing-mode header {
