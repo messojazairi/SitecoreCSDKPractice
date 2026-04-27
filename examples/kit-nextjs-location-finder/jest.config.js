@@ -38,14 +38,13 @@ const customJestConfig = {
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   testMatch: [
-    '<rootDir>/src/_tests_/**/*.test.{js,ts,tsx}',
-    '<rootDir>/src/**/*.test.{js,ts,tsx}',
+    '<rootDir>/src/__tests__/**/*.test.{js,ts,tsx}',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
     '!src/**/*.mock.{ts,tsx}',
-    '!src/_tests_/**/*',
+    '!src/__tests__/**/*',
   ],
 };
 
