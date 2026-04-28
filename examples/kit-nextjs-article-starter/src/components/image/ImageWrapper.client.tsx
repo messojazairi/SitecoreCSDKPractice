@@ -61,6 +61,7 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
   const isPreview = page?.mode.isPreview;
+  const isDesignLibrary = page.mode.isDesignLibrary;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -74,7 +75,7 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
     setIsClient(true);
   }, []);
 
-  if (!isPageEditing && !image?.value?.src) {
+  if (!isPageEditing && !isPreview && !isDesignLibrary && !image?.value?.src) {
     return <></>;
   }
 
@@ -94,7 +95,7 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
 
   return (
     <div className={cn('image-container', wrapperClass)}>
-      {isPageEditing || isPreview || isSvg ? (
+      {isPageEditing || isPreview || isSvg || isDesignLibrary ? (
         <ContentSdkImage
           field={emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image}
           className={className}

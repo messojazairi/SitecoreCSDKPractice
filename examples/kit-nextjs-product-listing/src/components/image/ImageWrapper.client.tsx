@@ -18,6 +18,21 @@ type Props = {
   [key: string]: any;
 };
 
+function isRealAuthorMediaSrc(src: string | undefined | null): boolean {
+  if (src == null || typeof src !== 'string') return false;
+  const s = src.trim();
+  if (!s) return false;
+  if (s.startsWith('data:')) return false;
+  if (s.startsWith('blob:')) return false;
+  return true;
+}
+
+function fieldForSdkWithCustomEmpty(field: ImageField | undefined): ImageField | undefined {
+  if (!field) return field;
+  if (isRealAuthorMediaSrc(field.value?.src)) return field;
+  return { ...field, value: {} as ImageField['value'] };
+}
+
 export default function ClientImage({
   image,
   className,
@@ -27,7 +42,7 @@ export default function ClientImage({
   ...rest
 }: Props) {
   const { page } = useSitecore();
-  const { isEditing, isPreview } = page.mode;
+  const { isEditing, isPreview, isDesignLibrary } = page.mode;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -38,8 +53,8 @@ export default function ClientImage({
   const isSvg = src.endsWith('.svg');
   const isPicsum = src.includes('picsum.photos');
 
-  // Return null if not in editing/preview mode and no image source
-  if (!isEditing && !isPreview && !src) {
+  // Return null if not in editing/preview/design library and no image source
+  if (!isEditing && !isPreview && !isDesignLibrary && !src) {
     return null;
   }
 
@@ -50,10 +65,11 @@ export default function ClientImage({
       typeof window !== 'undefined' &&
       !src.includes(window.location.hostname));
 
-  if (isEditing || isPreview || isSvg) {
+  if (isEditing || isPreview || isSvg || isDesignLibrary) {
+    const fieldForSdk = emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image;
     return (
       <ContentSdkImage
-        field={image}
+        field={fieldForSdk}
         className={className}
         emptyFieldEditingComponent={emptyFieldEditingComponent}
       />

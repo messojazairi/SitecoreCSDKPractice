@@ -62,7 +62,7 @@ export default function ClientImage({
   ...rest
 }: Props) {
   const { page } = useSitecore();
-  const { isEditing, isPreview } = page.mode;
+  const { isEditing, isPreview, isDesignLibrary } = page.mode;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -78,13 +78,13 @@ export default function ClientImage({
   })();
   const isPicsum = src.includes('picsum.photos');
 
-  if (!isEditing && !isPreview && !src) {
+  if (!isEditing && !isPreview && !isDesignLibrary && !src) {
     return null;
   }
 
   const isUnoptimized = unoptimized || isSvg || (src.startsWith('http') && !shouldOptimize(src));
 
-  if (isEditing || isPreview || isSvg) {
+  if (isEditing || isPreview || isSvg || isDesignLibrary) {
     const fieldForSdk = emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image;
     return (
       <ContentSdkImage
