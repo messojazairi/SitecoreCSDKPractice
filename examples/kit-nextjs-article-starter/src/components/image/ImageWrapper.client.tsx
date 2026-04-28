@@ -36,12 +36,28 @@ export type ImageWrapperProps = {
   blurDataURL?: string;
   alt?: string;
   wrapperClass?: string;
+  emptyFieldEditingComponent?: React.ComponentType;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
+function isRealAuthorMediaSrc(src: string | undefined | null): boolean {
+  if (src == null || typeof src !== 'string') return false;
+  const s = src.trim();
+  if (!s) return false;
+  if (s.startsWith('data:')) return false;
+  if (s.startsWith('blob:')) return false;
+  return true;
+}
+
+function fieldForSdkWithCustomEmpty(field: ImageField | undefined): ImageField | undefined {
+  if (!field) return field;
+  if (isRealAuthorMediaSrc(field.value?.src)) return field;
+  return { ...field, value: {} as ImageField['value'] };
+}
+
 export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
-  const { image, className, wrapperClass, sizes, ...rest } = props;
+  const { image, className, wrapperClass, sizes, emptyFieldEditingComponent, ...rest } = props;
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
   const isPreview = page?.mode.isPreview;
@@ -79,7 +95,11 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
   return (
     <div className={cn('image-container', wrapperClass)}>
       {isPageEditing || isPreview || isSvg ? (
-        <ContentSdkImage field={image} className={className} />
+        <ContentSdkImage
+          field={emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image}
+          className={className}
+          emptyFieldEditingComponent={emptyFieldEditingComponent}
+        />
       ) : (
         <NextImage
           loader={isPicsumImage ? placeholderImageLoader : undefined}

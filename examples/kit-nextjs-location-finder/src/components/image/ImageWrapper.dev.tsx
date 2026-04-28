@@ -22,7 +22,7 @@ type ImageWrapperProps = {
 export const Default: React.FC<ImageWrapperProps> = (props) => {
   const { image, wrapperClass } = props;
 
-  if (!image?.value?.src) {
+  if (image == null) {
     return null;
   }
 
