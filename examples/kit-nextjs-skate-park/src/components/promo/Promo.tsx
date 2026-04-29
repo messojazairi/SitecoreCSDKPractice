@@ -1,13 +1,13 @@
 import React, { JSX } from 'react';
 import {
   NextImage as ContentSdkImage,
-  Link as ContentSdkLink,
   RichText as ContentSdkRichText,
   ImageField,
   Field,
   LinkField,
 } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
+import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import StructuredData from 'components/structured-data/StructuredData';
 import { buildProductJsonLd } from 'src/lib/structured-data/schema';
 
@@ -81,7 +81,7 @@ export const Default = (props: PromoProps): JSX.Element => {
         <ContentSdkRichText field={fields.PromoText} />
       </div>
       <div className="field-promolink">
-        <ContentSdkLink field={fields.PromoLink} />
+        <CompatibleLink field={fields.PromoLink} />
       </div>
     </>
   );

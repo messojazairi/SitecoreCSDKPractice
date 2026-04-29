@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, JSX } from 'react';
-import { Link, LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { ComponentProps } from 'lib/component-props';
 
 interface Fields {
@@ -71,9 +72,9 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
         className={`navigation-title ${hasChildren ? 'child' : ''}`}
         onClick={() => setIsActive(!isActive)}
       >
-        <Link field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
+        <CompatibleLink field={getLinkField(fields)} editable={page.mode.isEditing} onClick={handleClick}>
           {getTextContent(fields)}
-        </Link>
+        </CompatibleLink>
       </div>
       {hasChildren && <ul className="clearfix">{children}</ul>}
     </li>

@@ -1,5 +1,6 @@
 import React, { JSX } from 'react';
-import { Link, LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { ComponentProps } from 'lib/component-props';
 
 interface Item {
@@ -61,9 +62,9 @@ export const Default = ({ params, fields, page }: TitleProps): JSX.Element => {
       {page?.mode?.isEditing ? (
         <Text field={titleField} />
       ) : (
-        <Link field={link}>
+        <CompatibleLink field={link}>
           <Text field={titleField} />
-        </Link>
+        </CompatibleLink>
       )}
     </ComponentContent>
   );
