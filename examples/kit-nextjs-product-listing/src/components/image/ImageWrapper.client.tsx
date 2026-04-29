@@ -13,7 +13,7 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
-  emptyFieldEditingComponent?: React.ComponentType;
+  emptyFieldEditingComponent?: React.ComponentType<{ className?: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
@@ -52,6 +52,8 @@ export default function ClientImage({
   const src = image?.value?.src ?? '';
   const isSvg = src.endsWith('.svg');
   const isPicsum = src.includes('picsum.photos');
+  const shouldRenderCustomEmptyEditingImage =
+    Boolean(emptyFieldEditingComponent) && !isRealAuthorMediaSrc(src);
 
   // Return null if not in editing/preview/design library and no image source
   if (!isEditing && !isPreview && !isDesignLibrary && !src) {
@@ -67,11 +69,16 @@ export default function ClientImage({
 
   if (isEditing || isPreview || isSvg || isDesignLibrary) {
     const fieldForSdk = emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image;
+
+    if (shouldRenderCustomEmptyEditingImage && emptyFieldEditingComponent) {
+      const EmptyFieldEditingComponent = emptyFieldEditingComponent;
+      return <EmptyFieldEditingComponent className={className} />;
+    }
+
     return (
       <ContentSdkImage
         field={fieldForSdk}
         className={className}
-        emptyFieldEditingComponent={emptyFieldEditingComponent}
       />
     );
   }

@@ -61,6 +61,11 @@ jest.mock('@/utils/NoDataFallback', () => ({
     ),
 }));
 
+// Avoid loading lucide-react ESM directly in Jest.
+jest.mock('lucide-react', () => ({
+  Image: (props) => React.createElement('svg', { ...props, 'data-testid': 'lucide-image-icon' }),
+}));
+
 // Suppress expected console errors in tests
 const originalError = console.error;
 const originalWarn = console.warn;

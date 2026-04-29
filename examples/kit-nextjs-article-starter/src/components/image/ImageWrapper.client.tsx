@@ -36,7 +36,7 @@ export type ImageWrapperProps = {
   blurDataURL?: string;
   alt?: string;
   wrapperClass?: string;
-  emptyFieldEditingComponent?: React.ComponentType;
+  emptyFieldEditingComponent?: React.ComponentType<{ className?: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
@@ -81,6 +81,8 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
 
   const imageSrc = image?.value?.src ? image?.value?.src : '';
   const isSvg = imageSrc.includes('.svg');
+  const shouldRenderCustomEmptyEditingImage =
+    Boolean(emptyFieldEditingComponent) && !isRealAuthorMediaSrc(imageSrc);
   // Only disable optimization for: context override, SVG, or external URLs not in remotePatterns.
   // Sitecore/XM Cloud URLs (edge*, xmc-*, *.sitecore-staging.cloud, *.sitecorecloud.io) are
   // allowed in next.config and should be optimized to fix Lighthouse "Improve image delivery".
@@ -92,15 +94,19 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
   const isUnoptimized = unoptimized || isSvg || isExternalNotAllowed;
 
   const isPicsumImage = imageSrc.includes('picsum.photos');
+  const EmptyFieldEditingComponent = emptyFieldEditingComponent;
 
   return (
     <div className={cn('image-container', wrapperClass)}>
       {isPageEditing || isPreview || isSvg || isDesignLibrary ? (
-        <ContentSdkImage
-          field={emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image}
-          className={className}
-          emptyFieldEditingComponent={emptyFieldEditingComponent}
-        />
+        shouldRenderCustomEmptyEditingImage && EmptyFieldEditingComponent ? (
+          <EmptyFieldEditingComponent className={className} />
+        ) : (
+          <ContentSdkImage
+            field={emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image}
+            className={className}
+          />
+        )
       ) : (
         <NextImage
           loader={isPicsumImage ? placeholderImageLoader : undefined}

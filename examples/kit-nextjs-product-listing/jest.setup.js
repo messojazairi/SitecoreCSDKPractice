@@ -1,4 +1,4 @@
-﻿import '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 import React from 'react';
 
 // Mock ResizeObserver for tests
@@ -27,4 +27,9 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   },
   AppPlaceholder: ({ name }) => React.createElement('div', { 'data-testid': 'app-placeholder', 'data-name': name }),
   withDatasourceCheck: () => (component) => component,
+}));
+
+// Avoid loading lucide-react ESM in Jest runtime.
+jest.mock('lucide-react', () => ({
+  Image: (props) => React.createElement('svg', { ...props, 'data-testid': 'lucide-image-icon' }),
 }));
