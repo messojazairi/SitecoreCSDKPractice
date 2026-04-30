@@ -31,19 +31,21 @@ export const SearchBox = ({ searchLink }: { searchLink: LinkField }) => {
 
   const buildSearchUrl = (): string | null => {
     if (!hasValidSearchLink) return null;
-    try {
-      const url = new URL(searchBaseHref!, window.location.origin);
-      if (searchTerm.trim()) {
-        url.searchParams.set('q', searchTerm.trim());
-      } else {
-        url.searchParams.delete('q');
-      }
-      return url.toString();
-    } catch {
-      return searchTerm.trim()
-        ? `${searchBaseHref}?q=${encodeURIComponent(searchTerm.trim())}`
-        : searchBaseHref ?? null;
+
+    // Keep href relative so server and client render identical markup.
+    const [pathWithQuery = '', hash = ''] = (searchBaseHref ?? '').split('#');
+    const [pathname = '', initialQuery = ''] = pathWithQuery.split('?');
+    const params = new URLSearchParams(initialQuery);
+
+    if (searchTerm.trim()) {
+      params.set('q', searchTerm.trim());
+    } else {
+      params.delete('q');
     }
+
+    const query = params.toString();
+    const hashPart = hash ? `#${hash}` : '';
+    return `${pathname}${query ? `?${query}` : ''}${hashPart}`;
   };
 
   const searchUrl = buildSearchUrl();
