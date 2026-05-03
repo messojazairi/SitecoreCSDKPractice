@@ -4,9 +4,11 @@ import {
   MultisiteProxy,
   PersonalizeProxy,
   RedirectsProxy,
+  PreviewProxy,
 } from '@sitecore-content-sdk/nextjs/proxy';
 import sites from '.sitecore/sites.json';
 import scConfig from 'sitecore.config';
+import client from 'lib/sitecore-client';
 
 export default function proxy(req: NextRequest) {
   // If no Edge server contextId, skip Edge middlewares entirely.
@@ -16,6 +18,11 @@ export default function proxy(req: NextRequest) {
   }
 
   // Instantiate AFTER the guard so constructors don’t run in local-only mode
+  const preview = new PreviewProxy({
+    client,
+    ...scConfig.api.edge,
+  });
+
   const multisite = new MultisiteProxy({
     /**
      * List of sites for site resolver to work with
@@ -57,7 +64,7 @@ export default function proxy(req: NextRequest) {
     skip: () => false,
   });
 
-  return defineProxy(multisite, redirects, personalize).exec(req);
+  return defineProxy(preview, multisite, redirects, personalize).exec(req);
 }
 
 export const config = {
