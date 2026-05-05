@@ -1,4 +1,4 @@
-import { type NextFetchEvent, type NextRequest } from 'next/server';
+import { type NextRequest } from 'next/server';
 import {
   defineProxy,
   PreviewProxy,
@@ -75,8 +75,10 @@ const personalize = new PersonalizeProxy({
   skip: () => false,
 });
 
-export default function proxy(req: NextRequest, _event: NextFetchEvent) {
-  return defineProxy(preview, locale, multisite, redirects, personalize).exec(req);
+export default function proxy(req: NextRequest) {
+  return defineProxy(preview, locale, multisite, redirects, personalize).exec(
+    req,
+  );
 }
 
 export const config = {

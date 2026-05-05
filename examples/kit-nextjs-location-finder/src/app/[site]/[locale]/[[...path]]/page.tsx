@@ -58,10 +58,9 @@ type PageProps = {
     path?: string[];
     [key: string]: string | string[] | undefined;
   }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function Page({ params, searchParams: _searchParams }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
   const baseUrl = getBaseUrl();
