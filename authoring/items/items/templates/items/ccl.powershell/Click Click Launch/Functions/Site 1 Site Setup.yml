@@ -267,6 +267,24 @@ SharedFields:
                 New-Item -Parent $dataFolder -Name "AI" -ItemType $addAiConfigBranchTemplate.ID | Out-Null
             }
             
+            Write-Verbose "Enforce Default variant for Image Block renderings"
+            $renderingImageBlock = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Media/Image Block' -ErrorAction SilentlyContinue
+            if ($renderingImageBlock) {
+                $imageBlockVariants = $service.GetAvailableRenderingVariants($Site, $renderingImageBlock.Name, $renderingImageBlock.ID, $item.TemplateID)
+                $imageBlockDefaultVariant = $imageBlockVariants | Where-Object { $_.Name -eq "Default" }
+                if ($imageBlockDefaultVariant) {
+                    $allSiteItems = Get-ChildItem -Path $sitePath -Recurse -Language $Site.Language
+                    foreach ($siteItem in $allSiteItems) {
+                        $imageBlockRenderingInstances = Get-Rendering -Item $siteItem -Rendering $renderingImageBlock -FinalLayout -ErrorAction SilentlyContinue
+                        if ($imageBlockRenderingInstances) {
+                            foreach ($rendering in @($imageBlockRenderingInstances)) {
+                                $rendering | Set-RenderingParameter -Parameter @{ "FieldNames" = $imageBlockDefaultVariant.ID } | Set-Rendering -Item $siteItem -FinalLayout
+                            }
+                        }
+                    }
+                }
+            }
+
             # Set all pages and content to Approved workflow state
             Write-Verbose "Set all site content workflow state to Approved"
             $basicWorkflowApprovedStateId = "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
@@ -303,7 +321,7 @@ SharedFields:
     #Invoke-ModuleScriptBody -Site $site -Verbose
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "cd07ef7c-91f1-42a4-8f81-d060eedab3c7"
+  Value: "a3f5d8b2-7c1e-4f90-b6d4-e2a9c0f1b3d7"
 Languages:
 - Language: en
   Versions:
@@ -322,11 +340,11 @@ Languages:
         sitecore\richard.seal@sitecore.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "2eff325a-e4d9-4d4a-82bf-1d798bf3ec18"
+      Value: "f7d2c4a1-8b3e-4519-a7f6-3c0d9e2b5a18"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\richard.seal@sitecore.com
+        sitecore\shakya.wijerathne@sitecore.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250724T020223Z
+      Value: 20260514T090000Z
