@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { isDesignLibraryPreviewData } from '@sitecore-content-sdk/nextjs/editing';
 import { notFound } from 'next/navigation';
 import { draftMode } from 'next/headers';
@@ -61,6 +62,11 @@ type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+const getPageForRoute = cache(
+  async (path: string[] | undefined, site: string, locale: string) =>
+    client.getPage(path ?? [], { site, locale }),
+);
+
 export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
@@ -78,7 +84,7 @@ export default async function Page({ params, searchParams }: PageProps) {
       page = await client.getPreview(editingParams);
     }
   } else {
-    page = await client.getPage(path ?? [], { site, locale });
+    page = await getPageForRoute(path, site, locale);
   }
 
   if (!page) {
@@ -166,7 +172,7 @@ export const generateMetadata = async ({ params }: PageProps) => {
   const canonicalUrl = baseUrl ? `${baseUrl}${pathSegment}` : undefined;
 
   // The same call as for rendering the page. Should be cached by default react behavior
-  const page = await client.getPage(path ?? [], { site, locale });
+  const page = await getPageForRoute(path, site, locale);
 
   // Cast route fields once to avoid repeated type assertions
   const routeFields = (page?.layout.sitecore.route?.fields ??
