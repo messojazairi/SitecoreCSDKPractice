@@ -331,18 +331,18 @@ SharedFields:
                 New-Item -Parent $dataFolder -Name "AI" -ItemType $addAiConfigBranchTemplate.ID | Out-Null
             }
             
-            Write-Verbose "Enforce Default variant for Image Block renderings"
-            $renderingImageBlock = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Media/Image Block' -ErrorAction SilentlyContinue
-            if ($renderingImageBlock) {
-                $imageBlockVariants = $service.GetAvailableRenderingVariants($Site, $renderingImageBlock.Name, $renderingImageBlock.ID, $item.TemplateID)
-                $imageBlockDefaultVariant = $imageBlockVariants | Where-Object { $_.Name -eq "Default" }
-                if ($imageBlockDefaultVariant) {
+            Write-Verbose "Enforce Default variant for Image renderings"
+            $renderingImage = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Media/Image' -ErrorAction SilentlyContinue
+            if ($renderingImage) {
+                $imageVariants = $service.GetAvailableRenderingVariants($Site, $renderingImage.Name, $renderingImage.ID, $item.TemplateID)
+                $imageDefaultVariant = $imageVariants | Where-Object { $_.Name -eq "Default" }
+                if ($imageDefaultVariant) {
                     $allSiteItems = Get-ChildItem -Path $sitePath -Recurse -Language $Site.Language
                     foreach ($siteItem in $allSiteItems) {
-                        $imageBlockRenderingInstances = Get-Rendering -Item $siteItem -Rendering $renderingImageBlock -FinalLayout -ErrorAction SilentlyContinue
-                        if ($imageBlockRenderingInstances) {
-                            foreach ($rendering in @($imageBlockRenderingInstances)) {
-                                $rendering | Set-RenderingParameter -Parameter @{ "FieldNames" = $imageBlockDefaultVariant.ID } | Set-Rendering -Item $siteItem -FinalLayout
+                        $imageRenderingInstances = Get-Rendering -Item $siteItem -Rendering $renderingImage -FinalLayout -ErrorAction SilentlyContinue
+                        if ($imageRenderingInstances) {
+                            foreach ($rendering in @($imageRenderingInstances)) {
+                                $rendering | Set-RenderingParameter -Parameter @{ "FieldNames" = $imageDefaultVariant.ID } | Set-Rendering -Item $siteItem -FinalLayout
                             }
                         }
                     }
