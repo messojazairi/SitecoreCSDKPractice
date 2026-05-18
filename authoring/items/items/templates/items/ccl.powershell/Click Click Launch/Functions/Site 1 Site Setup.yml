@@ -115,10 +115,7 @@ SharedFields:
             Set-ItemTemplate -Path "$sitePath/Home/Article Page" -Template $articlePageTemplate.ID
             Set-ItemTemplate -Path "$sitePath/Home/Articles" -Template $pageFolderTemplate.ID
             Set-ItemTemplate -Path "$sitePath/Home/Articles/Article 1" -Template $articlePageTemplate.ID
-            Set-ItemTemplate -Path "$sitePath/Home/Articles/Article 2" -Template $articlePageTemplate.ID
-            Set-ItemTemplate -Path "$sitePath/Home/Articles/Article 3" -Template $articlePageTemplate.ID
             Set-ItemTemplate -Path "$sitePath/Home/Articles/QA Article 1" -Template $articlePageTemplate.ID
-            Set-ItemTemplate -Path "$sitePath/Home/Articles/QA Article 2" -Template $articlePageTemplate.ID
             Set-ItemTemplate -Path "$sitePath/Home/Landing Page" -Template $landingPageTemplate.ID
     
             Write-Verbose "Update the home page renderings"
@@ -217,10 +214,7 @@ SharedFields:
             $homePage = Get-Item -Path "$sitePath/Home"
             
             $article1 = Get-Item -Path "$sitePath/Home/Articles/Article 1"
-            $article2 = Get-Item -Path "$sitePath/Home/Articles/Article 2"
-            $article3 = Get-Item -Path "$sitePath/Home/Articles/Article 3"
             $articleQa1 = Get-Item -Path "$sitePath/Home/Articles/QA Article 1"
-            $articleQa2 = Get-Item -Path "$sitePath/Home/Articles/QA Article 2"
     
             $siteItems = Get-ChildItem -Path $sitePath -Recurse
             foreach($siteItem in $siteItems)
@@ -235,8 +229,6 @@ SharedFields:
                         "{0e8032b7-e017-42e5-84db-61fda4e1b92f}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $articlePage }
                         "{900f400b-3ba6-45ba-a77b-7f79e118c64c}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $landingPage }
                         "{3185BA20-8242-4976-AAB6-B4FC7BB4D10F}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $article1 }
-                        "{F849AF70-2A4B-42D8-83C3-2C25492832DA}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $article2 }
-                        "{6A955BC8-1E90-40A4-932C-07C0190368B9}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $article3 }
                         "{44C2E7E7-4ED1-4786-B7A9-FE1B13B8D7DA}" { Update-LinkField -Item $siteItem -FieldName "$($field.Name)" -TargetItem $articleQa1 }
                     }
                 }
@@ -251,7 +243,7 @@ SharedFields:
             
             $articleListing = Get-Item -Path "$sitePath/Home/Landing Page/Data/Article Listing"
             $articleListing.Editing.BeginEdit()
-            $articleListing._.featuredContent = "$($article1.ID)|$($article2.ID)|$($article3.ID)|$($articleQa2.ID)|$($articleQa2.ID)"
+            $articleListing._.featuredContent = "$($article1.ID)|$($articleQa1.ID)"
             $articleListing.Editing.EndEdit()
             
             Write-Verbose "Create AI config at $sitePath/Data/AI"
