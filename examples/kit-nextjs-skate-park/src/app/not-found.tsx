@@ -25,7 +25,10 @@ export default async function NotFound() {
     const page = await client.getErrorPage(ErrorPage.NotFound, {
       site: scConfig.defaultSite,
       locale: scConfig.defaultLanguage,
-    });
+    },{
+      fetch: globalThis.fetch,
+    }
+  );
 
     if (page) {
       return (
