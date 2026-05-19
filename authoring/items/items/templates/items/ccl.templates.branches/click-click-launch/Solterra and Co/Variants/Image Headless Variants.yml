@@ -1,12 +1,8 @@
-﻿---
-ID: "0e5f271f-2253-4207-ac81-4cc7707aa618"
-Parent: "cc5b5a58-1df9-4b5f-8e35-560d8c82d4bd"
-Template: "49c111d0-6867-4798-a724-1f103166e6e9"
-Path: "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Variants/Image Headless Variants/Image"
-SharedFields:
-- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
-  Hint: __Icon
-  Value: Office/32x32/photo_landscape.png
+---
+ID: "acc8ff35-197f-4a1a-bdfe-dcff80c200e0"
+Parent: "abc0959f-fe5b-42b2-bee1-b88e5542131b"
+Template: "35e75c72-4985-4e09-88c3-0eac6cd1e64f"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Variants/Image Headless Variants"
 Languages:
 - Language: en
   Versions:
@@ -17,7 +13,7 @@ Languages:
       Value: 20260515T120000Z
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "0e5f271f-2253-4207-ac81-4cc7707aa618"
+      Value: "acc8ff35-197f-4a1a-bdfe-dcff80c200e0"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
