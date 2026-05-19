@@ -2,10 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ModeToggle } from '../../../components/mode-toggle/mode-toggle.dev';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/components/theme-provider/theme-provider.dev';
 
-// Mock next-themes
-jest.mock('next-themes', () => ({
+jest.mock('@/components/theme-provider/theme-provider.dev', () => ({
   useTheme: jest.fn(),
 }));
 

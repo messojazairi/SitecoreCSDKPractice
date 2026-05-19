@@ -3,8 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ThemeProvider } from '@/components/theme-provider/theme-provider.dev';
 
-// Mock next-themes
-jest.mock('next-themes', () => ({
+jest.mock('@/lib/next-themes', () => ({
   ThemeProvider: ({
     children,
     attribute,
