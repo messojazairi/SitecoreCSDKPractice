@@ -3,6 +3,8 @@
 @import '../assets/styles/column-splitter.css';
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* bootstrap grid to tailwind plugin */
 @plugin 'tailwind-bootstrap-grid' {
   container_max_widths:
@@ -13,13 +15,38 @@
 @source inline("col-{1..12}");
 @source inline("offset-{1..12}");
 
+.dark {
+  color-scheme: dark;
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: #111111;
+  --color-card-foreground: #ffffff;
+  --color-popover: #111111;
+  --color-popover-foreground: #ffffff;
+  --color-secondary: #171717;
+  --color-secondary-foreground: #e5e5e5;
+  --color-muted: #262626;
+  --color-muted-foreground: #a3a3a3;
+  --color-border: #404040;
+  --color-input: #404040;
+  --color-ring: #c8ff00;
+  --color-light: #171717;
+  --color-light-hover: #262626;
+  --color-light-foreground: #ffffff;
+  --color-dark: #000000;
+  --color-dark-hover: #171717;
+  --color-dark-foreground: #ffffff;
+  --color-overlay: #000000b3;
+}
+
 @layer base {
   html {
     font-family: 'Open Sans', 'Segoe UI', SegueUI, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
     font-weight: 400;
-    color: var(--color-brand-black);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   * {
@@ -72,6 +99,8 @@
   }
 
   body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-feature-settings:
       'rlig' 1,
       'calt' 1;
