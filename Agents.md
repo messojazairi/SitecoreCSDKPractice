@@ -24,7 +24,7 @@ Each Next.js starter under `examples/*` uses this layout under `src/`. All of th
 | **Styles** | **Global and feature styles.** Location varies by starter: `src/app/globals.css` and/or `src/assets/` (e.g. `main.scss`, `styles/globals.css`, `base/`, `components/`). No single `src/styles/` folder. |
 | **`src/utils/`** | Shared utilities (e.g. `NoDataFallback.tsx`). Present in kit starters. |
 | **`src/i18n/`** | Internationalization (routing, request). Present in App Router starters. |
-| **`src/middleware.ts`** | Next.js middleware (locale, editing). |
+| **`src/proxy.ts`** | Next.js proxy (locale, multisite, redirects, personalization). |
 
 **Where environment variables are handled**
 
@@ -230,7 +230,7 @@ if (!fields?.data?.datasource) {
 - Pass server-fetched data as props
 
 **Routing:**
-- Use `[...path].tsx` for Sitecore catch-all routes
+- Use `src/app/[site]/[locale]/[[...path]]/page.tsx` for Sitecore catch-all routes
 - Implement `layout.tsx` for shared page structure
 - Use `loading.tsx` for loading states
 - Create `error.tsx` for error boundaries
@@ -238,7 +238,7 @@ if (!fields?.data?.datasource) {
 ## Technology Stack
 
 ### Core Technologies
-- **Next.js 14+** - App Router and Pages Router support
+- **Next.js 14+** - App Router (default); `basic-nextjs-pages-router` uses Pages Router
 - **TypeScript** - Strict mode enabled
 - **Sitecore XM Cloud** - Headless CMS platform
 - **Sitecore Content SDK** - `@sitecore-content-sdk/nextjs`
