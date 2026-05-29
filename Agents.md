@@ -475,7 +475,7 @@ This repository uses **DMZ git workflow**:
 **Example:** Add a constant or helper in a starter (e.g. `examples/kit-nextjs-skate-park/src/lib/constants.ts` or `src/utils/date-utils.ts`):
 
 - Export from the module (or from `src/lib/index.ts` / barrel if the starter has one) if it is shared
-- Add or update tests (e.g. `*.test.ts` or `*.test.tsx` in the same area or under `__tests__/`) if the starter has a test script
+- Add or update tests (e.g. `*.test.ts` or `*.test.tsx` in the same area or under `src/tests/`) if the starter has a test script
 - Run `npm run build` and `npm run lint` in that starter directory before completing
 
 ### 2. Fix a failing test

@@ -34,7 +34,7 @@ const config = {
   collectCoverageFrom: [
     'src/components/**/*.{js,jsx,ts,tsx}',
     '!src/components/**/*.stories.{js,jsx,ts,tsx}',
-    '!src/components/**/__tests__/**',
+    '!src/components/**/tests/**',
     '!src/**/*.d.ts',
     '!src/**/*.props.{ts,tsx}', // Exclude type-only props files
     '!src/components/ui/**', // Exclude third-party Shadcn/ui components
@@ -180,7 +180,7 @@ const config = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "<rootDir>/src/__tests__/**/*.test.[jt]s?(x)",
+    "<rootDir>/src/tests/**/*.test.[jt]s?(x)",
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

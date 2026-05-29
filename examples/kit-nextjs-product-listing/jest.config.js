@@ -19,7 +19,7 @@ const customJestConfig = {
     '^(\\.\\./)*\\.sitecore/component-map$': '<rootDir>/src/__mocks__/component-map.ts',
   },
   testMatch: [
-    '<rootDir>/src/__tests__/**/*.test.[jt]s?(x)',
+    '<rootDir>/src/tests/**/*.test.[jt]s?(x)',
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(?:@sitecore-content-sdk|@sitecore-feaas|lucide-react|change-case)/)',
@@ -27,7 +27,7 @@ const customJestConfig = {
   collectCoverageFrom: [
     'src/components/**/*.{js,jsx,ts,tsx}',
     '!src/components/**/*.stories.{js,jsx,ts,tsx}',
-    '!src/components/**/__tests__/**',
+    '!src/components/**/tests/**',
     '!src/**/*.d.ts',
   ],
   coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
