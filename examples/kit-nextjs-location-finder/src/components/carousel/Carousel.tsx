@@ -12,10 +12,11 @@ import { Button } from '@/components/ui/button';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { AnimatePresence, m } from 'framer-motion';
 import { cn } from 'lib/utils';
+import { getDatasource, getFieldValue } from '@/lib/component-props';
 import type { CarouselProps } from './carousel.props';
 
 export const Default = (props: CarouselProps): JSX.Element => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(() => getDatasource(props.fields), [props.fields]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
@@ -24,7 +25,7 @@ export const Default = (props: CarouselProps): JSX.Element => {
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
 
-  const slides = useMemo(() => datasource.children.results, [datasource.children.results]);
+  const slides = useMemo(() => datasource?.children?.results ?? [], [datasource?.children?.results]);
 
   useEffect(() => {
     if (!isPlaying || isFocused) {
@@ -119,6 +120,8 @@ export const Default = (props: CarouselProps): JSX.Element => {
 
   // Use appropriate animation based on user preference
   const variants = prefersReducedMotion ? fadeVariants : slideVariants;
+  const currentSlideData = slides[currentSlide];
+  const currentSlideLink = getFieldValue(currentSlideData?.callToAction);
 
   return (
     <div
@@ -153,7 +156,7 @@ export const Default = (props: CarouselProps): JSX.Element => {
               className="relative h-full w-full"
               aria-roledescription="slide"
               aria-label={`Slide ${currentSlide + 1} of ${slides.length}: ${
-                slides[currentSlide].title
+                getFieldValue(currentSlideData?.title)?.value || ''
               }`}
               tabIndex={0}
               role="group"
@@ -161,7 +164,7 @@ export const Default = (props: CarouselProps): JSX.Element => {
               {/* Full-size background image */}
               <div className="absolute inset-0 h-full w-full">
                 <ContentSdkImage
-                  field={slides[currentSlide].slideImage?.jsonValue}
+                  field={getFieldValue(currentSlideData?.slideImage)}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -181,18 +184,20 @@ export const Default = (props: CarouselProps): JSX.Element => {
                   className="p-8 md:p-10"
                 >
                   <h2 className="mb-4 text-3xl font-bold">
-                    <ContentSdkText field={slides[currentSlide].title?.jsonValue} />
+                    <ContentSdkText field={getFieldValue(currentSlideData?.title)} />
                   </h2>
                   <p className="mb-6">
-                    <ContentSdkText field={slides[currentSlide].bodyText?.jsonValue} />
+                    <ContentSdkText field={getFieldValue(currentSlideData?.bodyText)} />
                   </p>
-                  <Button size="lg" className="bold py-3 text-lg" asChild>
-                    <ContentSdkLink
-                      field={slides[currentSlide].callToAction?.jsonValue}
-                      className="inline-flex items-center py-2 text-lg"
-                      prefetch={false}
-                    />
-                  </Button>
+                  {currentSlideLink && (
+                    <Button size="lg" className="bold py-3 text-lg" asChild>
+                      <ContentSdkLink
+                        field={currentSlideLink}
+                        className="inline-flex items-center py-2 text-lg"
+                        prefetch={false}
+                      />
+                    </Button>
+                  )}
                 </m.div>
               </div>
             </div>
