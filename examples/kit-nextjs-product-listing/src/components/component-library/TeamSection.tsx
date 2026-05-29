@@ -28,6 +28,7 @@ import type {
   TeamSectionTemplateHorizontalProps,
   TeamSectionTemplateVerticalProps,
 } from './team-section.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 const TeamMemberImage = (props: TeamMemberImageProps) => {
   switch (props.type) {

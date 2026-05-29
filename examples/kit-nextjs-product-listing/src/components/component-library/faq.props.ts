@@ -1,35 +1,30 @@
 import type {
-  IGQLImageField,
-  IGQLLinkField,
-  IGQLRichTextField,
-  IGQLTextField,
+  CompatibleDatasource,
+  CompatibleField,
 } from '@/lib/component-props';
+import type { ImageField, LinkField, RichTextField, Field } from '@sitecore-content-sdk/nextjs';
 
 export interface QuestionFields {
   id: string;
-  question: IGQLTextField;
-  answer: IGQLRichTextField;
-  image: IGQLImageField;
+  question: CompatibleField<Field<string>>;
+  answer: CompatibleField<RichTextField>;
+  image: CompatibleField<ImageField>;
 }
 
 export interface FAQDatasourceFields {
-  data: {
-    datasource: {
-      children: {
-        results: QuestionFields[];
-      };
-      heading: IGQLTextField;
-      text: IGQLRichTextField;
-      heading2: IGQLTextField;
-      text2: IGQLRichTextField;
-      link: IGQLLinkField;
-    };
+  children: {
+    results: QuestionFields[];
   };
+  heading: CompatibleField<Field<string>>;
+  text: CompatibleField<RichTextField>;
+  heading2: CompatibleField<Field<string>>;
+  text2: CompatibleField<RichTextField>;
+  link: CompatibleField<LinkField>;
 }
 
 export type FAQProps = {
   params: { [key: string]: string };
-  fields: FAQDatasourceFields;
+  fields: CompatibleDatasource<FAQDatasourceFields>;
 };
 
 export type QuestionAccordionItemProps = {

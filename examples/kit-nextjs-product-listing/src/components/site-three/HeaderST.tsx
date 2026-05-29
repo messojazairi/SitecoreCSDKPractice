@@ -11,11 +11,12 @@ import { SearchBox } from './non-sitecore/SearchBox';
 import componentMap from '.sitecore/component-map';
 import { MobileMenuWrapper } from './MobileMenuWrapper';
 import type { HeaderSTProps } from './header-st.props';
+import { getDatasource, getFieldValue } from '@/lib/component-props';
 
 const navLinkClass = 'block p-4 font-[family-name:var(--font-accent)] font-medium';
 
 export const Default = (props: HeaderSTProps) => {
-  const { fields } = props;
+  const fields = getDatasource(props.fields);
 
   return (
     <section className={`${props.params?.styles}`} data-class-change>
@@ -25,7 +26,7 @@ export const Default = (props: HeaderSTProps) => {
           className="relative flex justify-center items-center grow-0 shrink-0 w-24 lg:w-32 h-24 lg:h-32 p-4 lg:p-6 bg-primary z-100"
           prefetch={false}
         >
-          <ContentSdkImage field={props.fields?.Logo} className="w-full h-full object-contain" />
+          <ContentSdkImage field={getFieldValue(fields?.Logo)} className="w-full h-full object-contain" />
         </Link>
 
         <div
@@ -44,17 +45,17 @@ export const Default = (props: HeaderSTProps) => {
             <ul className="flex">
               <li className="hidden lg:block">
                 <ContentSdkLink
-                  field={fields?.SupportLink}
+                    field={getFieldValue(fields?.SupportLink)!}
                   prefetch={false}
                   className={navLinkClass}
                 />
               </li>
               <li className="mr-auto lg:mr-0">
                 {props.params.showSearchBox ? (
-                  <SearchBox searchLink={fields?.SearchLink} />
+                  <SearchBox searchLink={getFieldValue(fields?.SearchLink)!} />
                 ) : (
                   <ContentSdkLink
-                    field={fields?.SearchLink}
+                    field={getFieldValue(fields?.SearchLink)!}
                     prefetch={false}
                     className={navLinkClass}
                   />
@@ -77,7 +78,7 @@ export const Default = (props: HeaderSTProps) => {
                     <ul className="text-center">
                       <li>
                         <ContentSdkLink
-                          field={fields?.SupportLink}
+                          field={getFieldValue(fields?.SupportLink)!}
                           prefetch={false}
                           className={navLinkClass}
                         />
@@ -88,10 +89,10 @@ export const Default = (props: HeaderSTProps) => {
               </MobileMenuWrapper>
               <li>
                 {props.params.showMiniCart ? (
-                  <MiniCart cartLink={fields?.CartLink} />
+                  <MiniCart cartLink={getFieldValue(fields?.CartLink)!} />
                 ) : (
                   <ContentSdkLink
-                    field={fields?.CartLink}
+                    field={getFieldValue(fields?.CartLink)!}
                     prefetch={false}
                     className="block p-4"
                   >

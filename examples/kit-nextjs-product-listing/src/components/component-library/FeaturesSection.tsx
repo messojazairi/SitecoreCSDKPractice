@@ -32,6 +32,7 @@ import type {
   FeatureSectionButtonsProps,
   FeatureSectionProps,
 } from './features-section.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 const FeatureSectionButtons = (props: FeatureSectionButtonsProps): JSX.Element => (
   <div className="flex flex-wrap gap-6 mt-4">

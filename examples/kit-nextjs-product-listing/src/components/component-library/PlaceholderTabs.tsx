@@ -3,12 +3,16 @@ import { useMemo, type JSX } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from 'shadcd/components/ui/tabs';
 import componentMap from '.sitecore/component-map';
 import type { PlaceholderTabsProps } from './placeholder-tabs.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 export const Default = (props: PlaceholderTabsProps): JSX.Element => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(
+    () => normalizeFieldShape(getDatasource(props.fields)),
+    [props.fields]
+  );
   const phSuffixes = ['one', 'two', 'three', 'four', 'five'];
 
-  const tabs = datasource.children.results.slice(0, phSuffixes.length);
+  const tabs = datasource?.children.results.slice(0, phSuffixes.length) ?? [];
 
   const tabsTriggerActiveStyles =
     'data-[state=active]:pt-3 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-b-white data-[state=active]:z-20';

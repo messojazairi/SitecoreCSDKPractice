@@ -15,6 +15,7 @@ import type {
   ContactCardProps,
   ContactSectionProps,
 } from './contact-section.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 const ContactCardImage = (props: ContactCardImageProps) => {
   switch (props.size) {

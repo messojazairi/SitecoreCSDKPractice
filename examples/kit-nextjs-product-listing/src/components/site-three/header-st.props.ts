@@ -1,14 +1,14 @@
 import type { ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
-import type { ComponentProps } from '@/lib/component-props';
+import type { CompatibleDatasource, CompatibleField, ComponentProps } from '@/lib/component-props';
 
 export interface HeaderSTFields {
-  Logo: ImageField;
-  SupportLink: LinkField;
-  SearchLink: LinkField;
-  CartLink: LinkField;
+  Logo: CompatibleField<ImageField>;
+  SupportLink: CompatibleField<LinkField>;
+  SearchLink: CompatibleField<LinkField>;
+  CartLink: CompatibleField<LinkField>;
 }
 
 export type HeaderSTProps = ComponentProps & {
   params: { [key: string]: string };
-  fields: HeaderSTFields;
+  fields: CompatibleDatasource<HeaderSTFields>;
 };

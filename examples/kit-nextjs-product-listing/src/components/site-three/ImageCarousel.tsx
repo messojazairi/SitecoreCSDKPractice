@@ -6,9 +6,11 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { Image as ContentSdkImage } from '@sitecore-content-sdk/nextjs';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { ImageCarouselProps } from './image-carousel.props';
+import { getDatasource, getFieldValue, normalizeFieldShape } from '@/lib/component-props';
 
 export const Default = (props: ImageCarouselProps) => {
-  const images = props.fields?.data?.datasource?.imageItems?.results || [];
+  const datasource = normalizeFieldShape(getDatasource(props.fields));
+  const images = datasource?.imageItems?.results || [];
 
   const [mainRef, mainApi] = useEmblaCarousel({ loop: false });
   const [thumbRef, thumbApi] = useEmblaCarousel({
@@ -50,7 +52,7 @@ export const Default = (props: ImageCarouselProps) => {
     <section
       className={`relative bg-cover ${props.params.styles}`}
       style={{
-        backgroundImage: `linear-gradient(136deg, #ffffff14 2.61%, #ffffff26 73.95%), url(${images?.[0]?.image?.jsonValue?.value?.src || ''})`,
+        backgroundImage: `linear-gradient(136deg, #ffffff14 2.61%, #ffffff26 73.95%), url(${getFieldValue(images?.[0]?.image)?.value?.src || ''})`,
       }}
       data-class-change
     >
@@ -62,7 +64,7 @@ export const Default = (props: ImageCarouselProps) => {
                 {images.map((item) => (
                   <div key={item.id} className="w-full relative aspect-2/1 flex-shrink-0">
                     <ContentSdkImage
-                      field={item.image?.jsonValue}
+                      field={getFieldValue(item.image)}
                       className="w-full h-full object-cover object-center"
                     />
                   </div>
@@ -99,7 +101,7 @@ export const Default = (props: ImageCarouselProps) => {
                   onClick={() => scrollTo(index)}
                 >
                   <ContentSdkImage
-                    field={item.image?.jsonValue}
+                    field={getFieldValue(item.image)}
                     className="w-full h-full aspect-2/1 object-cover"
                   />
                 </div>

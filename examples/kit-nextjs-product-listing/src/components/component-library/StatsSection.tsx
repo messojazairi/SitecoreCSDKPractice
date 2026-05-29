@@ -7,6 +7,7 @@ import {
 import { Button } from 'shadcd/components/ui/button';
 import { useMemo, type JSX } from 'react';
 import type { StatBoxProps, StatSectionButtonsProps, StatsProps } from './stats-section.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 const StatBox = (props: StatBoxProps): JSX.Element => {
   switch (props.type) {

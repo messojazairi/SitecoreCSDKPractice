@@ -3,13 +3,15 @@ import { Text } from '@sitecore-content-sdk/nextjs';
 import { TopicListingProps } from './topic-listing.props';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { TopicItem } from './TopicItem.dev';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 export const Default: React.FC<TopicListingProps> = (props) => {
   const {
     fields,
     params: { backgroundTheme },
   } = props;
-  const { title, children } = fields?.data?.datasource ?? {};
+  const datasource = normalizeFieldShape(getDatasource(fields));
+  const { title, children } = datasource ?? {};
 
   if (fields) {
     return (

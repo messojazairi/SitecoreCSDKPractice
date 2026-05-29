@@ -14,6 +14,7 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 import { useMemo, type JSX } from 'react';
 import { Button } from 'shadcd/components/ui/button';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarOutline } from '@fortawesome/free-regular-svg-icons';

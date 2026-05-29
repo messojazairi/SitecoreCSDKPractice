@@ -6,7 +6,13 @@ import {
   RichText as ContentSdkRichText,
 } from '@sitecore-content-sdk/nextjs';
 import { useMemo } from 'react';
-import { IGQLLinkField, IGQLRichTextField, IGQLTextField } from '@/lib/component-props';
+import {
+  getDatasource,
+  IGQLLinkField,
+  IGQLRichTextField,
+  IGQLTextField,
+  normalizeFieldShape,
+} from '@/lib/component-props';
 
 import {
   Accordion,

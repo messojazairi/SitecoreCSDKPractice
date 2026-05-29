@@ -1,26 +1,23 @@
-import type { IGQLImageField, IGQLLinkField, IGQLTextField } from '@/lib/component-props';
+import type { CompatibleDatasource, CompatibleField } from '@/lib/component-props';
+import type { ImageField, LinkField, Field } from '@sitecore-content-sdk/nextjs';
 
 export interface CarouselFields {
   id: string;
-  callToAction: IGQLLinkField;
-  title: IGQLTextField;
-  bodyText: IGQLTextField;
-  slideImage: IGQLImageField;
+  callToAction: CompatibleField<LinkField>;
+  title: CompatibleField<Field<string>>;
+  bodyText: CompatibleField<Field<string>>;
+  slideImage: CompatibleField<ImageField>;
 }
 
 export interface CarouselDatasourceFields {
-  data: {
-    datasource: {
-      children: {
-        results: CarouselFields[];
-      };
-      title: IGQLTextField;
-      tagLine: IGQLTextField;
-    };
+  children: {
+    results: CarouselFields[];
   };
+  title: CompatibleField<Field<string>>;
+  tagLine: CompatibleField<Field<string>>;
 }
 
 export type CarouselsProps = {
   params: { [key: string]: string };
-  fields: CarouselDatasourceFields;
+  fields: CompatibleDatasource<CarouselDatasourceFields>;
 };

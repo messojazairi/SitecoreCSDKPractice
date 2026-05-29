@@ -2,6 +2,8 @@ import React, { JSX } from 'react';
 import { RichText as ContentSdkRichText } from '@sitecore-content-sdk/nextjs';
 import type { RichTextProps } from './sxa-rich-text.props';
 
+export type { RichTextProps };
+
 export const Default = ({ params, fields }: RichTextProps): JSX.Element => {
   const { RenderingIdentifier, styles } = params;
 

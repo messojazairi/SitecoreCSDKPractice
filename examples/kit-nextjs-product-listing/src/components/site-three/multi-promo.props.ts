@@ -1,28 +1,27 @@
-import type { IGQLImageField, IGQLLinkField, IGQLTextField } from '@/lib/component-props';
+import type { CompatibleDatasource, CompatibleField, GraphQLDatasource } from '@/lib/component-props';
+import type { ImageField, LinkField, Field } from '@sitecore-content-sdk/nextjs';
 
 export interface SimplePromoFields {
   id: string;
-  heading: IGQLTextField;
-  description: IGQLTextField;
-  image: IGQLImageField;
-  link: IGQLLinkField;
+  heading: CompatibleField<Field<string>>;
+  description: CompatibleField<Field<string>>;
+  image: CompatibleField<ImageField>;
+  link: CompatibleField<LinkField>;
 }
 
-export interface MultiPromoDatasourceFields {
-  data: {
-    datasource: {
-      title?: IGQLTextField;
-      description?: IGQLTextField;
-      children: {
-        results: SimplePromoFields[];
-      };
-    };
+export interface MultiPromoFields {
+  title?: CompatibleField<Field<string>>;
+  description?: CompatibleField<Field<string>>;
+  children: {
+    results: SimplePromoFields[];
   };
 }
 
+export type MultiPromoDatasourceFields = GraphQLDatasource<MultiPromoFields>;
+
 export type MultiPromoProps = {
   params: { [key: string]: string };
-  fields: MultiPromoDatasourceFields;
+  fields: CompatibleDatasource<MultiPromoFields>;
 };
 
 export type PromoItemProps = SimplePromoFields & {

@@ -17,6 +17,7 @@ import {
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { ProductSectionProps } from './products-section.props';
+import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
 
 function useSlidesToScroll() {
   const [slidesToScroll, setSlidesToScroll] = useState(1);
@@ -42,7 +43,10 @@ function useSlidesToScroll() {
 }
 
 export const Default = (props: ProductSectionProps): JSX.Element => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(
+    () => normalizeFieldShape(getDatasource(props.fields)),
+    [props.fields]
+  );
   const id = props.params.RenderingIdentifier;
 
   const slidesToScroll = useSlidesToScroll();
@@ -65,7 +69,7 @@ export const Default = (props: ProductSectionProps): JSX.Element => {
     };
   }, [carouselApi]);
 
-  const productItems = useMemo(() => datasource.children?.results, [datasource.children?.results]);
+  const productItems = useMemo(() => datasource?.children?.results ?? [], [datasource?.children?.results]);
   const start = useMemo(() => currentSlide * slidesToScroll + 1, [currentSlide, slidesToScroll]);
 
   const end = useMemo(
@@ -85,6 +89,10 @@ export const Default = (props: ProductSectionProps): JSX.Element => {
     const paddedItems = [...productItems, ...Array(paddingNeeded).fill(null)];
     return paddedItems;
   }, [productItems, slidesToScroll]);
+
+  if (!datasource) {
+    return <></>;
+  }
 
   return (
     <section className={`py-24 ${props.params.styles}`} id={id ? id : undefined} data-class-change>

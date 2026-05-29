@@ -1,24 +1,23 @@
-import type { IGQLImageField, IGQLLinkField, IGQLTextField } from '@/lib/component-props';
+import type { CompatibleDatasource, CompatibleField, GraphQLDatasource } from '@/lib/component-props';
+import type { ImageField, LinkField, Field } from '@sitecore-content-sdk/nextjs';
 
 export interface FeatureItemFields {
   id: string;
-  image: IGQLImageField;
-  heading: IGQLTextField;
+  image: CompatibleField<ImageField>;
+  heading: CompatibleField<Field<string>>;
 }
 
-export interface FeatureBannerDatasourceFields {
-  data: {
-    datasource: {
-      title: IGQLTextField;
-      link: IGQLLinkField;
-      children: {
-        results: FeatureItemFields[];
-      };
-    };
+export interface FeatureBannerFields {
+  title: CompatibleField<Field<string>>;
+  link: CompatibleField<LinkField>;
+  children: {
+    results: FeatureItemFields[];
   };
 }
 
+export type FeatureBannerDatasourceFields = GraphQLDatasource<FeatureBannerFields>;
+
 export type FeatureBannerProps = {
   params: { [key: string]: string };
-  fields: FeatureBannerDatasourceFields;
+  fields: CompatibleDatasource<FeatureBannerFields>;
 };

@@ -1,10 +1,11 @@
 import type { Field } from '@sitecore-content-sdk/nextjs';
+import type { CompatibleDatasource, CompatibleField } from '@/lib/component-props';
 
 export interface TextSliderFields {
-  Text: Field<string>;
+  Text: CompatibleField<Field<string>>;
 }
 
 export type TextSliderProps = {
   params: { [key: string]: string };
-  fields: TextSliderFields;
+  fields: CompatibleDatasource<TextSliderFields>;
 };
