@@ -15,7 +15,7 @@ import {
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { MultiPromoTabsProps } from './multi-promo-tabs.props';
 import { Default as PromoTab } from './MultiPromoTab.dev';
-import { getDatasource, getFieldValue, normalizeFieldShape } from '@/lib/component-props';
+import { getDatasource, getFieldValue } from '@/lib/component-props';
 
 export const Default: React.FC<MultiPromoTabsProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
@@ -27,7 +27,7 @@ export const Default: React.FC<MultiPromoTabsProps> = (props) => {
   const id = useId();
 
   if (fields) {
-    const datasource = normalizeFieldShape(getDatasource(fields));
+    const datasource = getDatasource(fields);
     const tabItems = datasource?.children?.results ?? [];
 
     return (

@@ -3,16 +3,13 @@ import { useMemo, type JSX } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from 'shadcd/components/ui/tabs';
 import componentMap from '.sitecore/component-map';
 import type { PlaceholderTabsProps } from './placeholder-tabs.props';
-import { getDatasource, normalizeFieldShape } from '@/lib/component-props';
+import { getDatasource, getFieldValue } from '@/lib/component-props';
 
 export const Default = (props: PlaceholderTabsProps): JSX.Element => {
-  const datasource = useMemo(
-    () => normalizeFieldShape(getDatasource(props.fields)),
-    [props.fields]
-  );
+  const datasource = useMemo(() => getDatasource(props.fields), [props.fields]);
   const phSuffixes = ['one', 'two', 'three', 'four', 'five'];
 
-  const tabs = datasource?.children.results.slice(0, phSuffixes.length) ?? [];
+  const tabs = datasource?.children?.results?.slice(0, phSuffixes.length) ?? [];
 
   const tabsTriggerActiveStyles =
     'data-[state=active]:pt-3 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-b-white data-[state=active]:z-20';
@@ -32,7 +29,7 @@ export const Default = (props: PlaceholderTabsProps): JSX.Element => {
                     value={tab.id}
                     className={`relative basis-auto px-4 py-2 -ml-[2px] first:ml-0 border-2 !border-e-2 rounded-tr-sm rounded-tl-sm text-base transition-all hover:pt-3 ${tabsTriggerActiveStyles} ${tabsTriggerInactiveStyles}`}
                   >
-                    <ContentSdkText field={tab.title.jsonValue} />
+                    <ContentSdkText field={getFieldValue(tab.title)} />
                   </TabsTrigger>
                 ))}
               </TabsList>

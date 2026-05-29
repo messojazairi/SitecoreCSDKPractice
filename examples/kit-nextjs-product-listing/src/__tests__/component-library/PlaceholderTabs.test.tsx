@@ -118,8 +118,6 @@ jest.mock('shadcd/components/ui/tabs', () => ({
   ),
 }));
 
-jest.mock('../../lib/component-props', () => ({}), { virtual: true });
-
 const defaultProps = {
   params: {
     styles: '',
