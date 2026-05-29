@@ -39,13 +39,13 @@ const customJestConfig = {
     'node_modules/(?!(?:@sitecore-content-sdk|@sitecore-feaas|lucide-react|change-case)/)',
   ],
   testMatch: [
-    '<rootDir>/src/tests/**/*.test.{js,ts,tsx}',
+    '<rootDir>/src/__tests__/**/*.test.{js,ts,tsx}',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
     '!src/**/*.d.ts',
     '!src/**/*.mock.{ts,tsx}',
-    '!src/tests/**/*',
+    '!src/__tests__/**/*',
   ],
 };
 
