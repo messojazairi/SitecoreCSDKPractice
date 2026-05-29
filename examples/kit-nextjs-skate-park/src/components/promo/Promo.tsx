@@ -2,29 +2,11 @@ import React, { JSX } from 'react';
 import {
   NextImage as ContentSdkImage,
   RichText as ContentSdkRichText,
-  ImageField,
-  Field,
-  LinkField,
 } from '@sitecore-content-sdk/nextjs';
-import { ComponentProps } from 'lib/component-props';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import StructuredData from 'components/structured-data/StructuredData';
 import { buildProductJsonLd } from 'src/lib/structured-data/schema';
-
-interface Fields {
-  PromoIcon: ImageField;
-  PromoText: Field<string>;
-  PromoLink: LinkField;
-  PromoText2: Field<string>;
-}
-
-type PromoProps = ComponentProps & {
-  fields: Fields;
-};
-
-interface PromoContentProps extends PromoProps {
-  renderText: (fields: Fields) => JSX.Element;
-}
+import { PromoContentProps, PromoFields as Fields, PromoProps } from './promo.props';
 
 const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { fields, params, renderText } = props;

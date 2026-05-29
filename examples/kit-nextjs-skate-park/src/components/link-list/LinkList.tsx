@@ -1,39 +1,9 @@
 import React from 'react';
 import { Text, LinkField, TextField } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
-import { ComponentProps } from 'lib/component-props';
+import { LinkListItemProps, LinkListProps } from './link-list.props';
 
-interface LinkListProps extends ComponentProps {
-  fields: {
-    /**
-     * The Integrated graphQL query result. This illustrates the way to access the datasource children.
-     */
-    data: {
-      datasource: {
-        children: {
-          results: Array<{
-            field: {
-              link: LinkField;
-            };
-          }>;
-        };
-        field: {
-          title: TextField;
-        };
-      };
-    };
-  };
-}
-
-const LinkListItem = ({
-  index,
-  total,
-  field,
-}: {
-  index: number;
-  total: number;
-  field: LinkField;
-}) => {
+const LinkListItem = ({ index, total, field }: LinkListItemProps) => {
   const classNames = [
     `item${index}`,
     index % 2 === 0 ? 'odd' : 'even',

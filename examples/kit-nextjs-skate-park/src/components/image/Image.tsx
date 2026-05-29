@@ -1,29 +1,12 @@
 import {
-  Field,
-  ImageField,
   NextImage as ContentSdkImage,
-  LinkField,
   Text,
 } from "@sitecore-content-sdk/nextjs";
 import React from "react";
-import { ComponentProps } from "lib/component-props";
 import { CompatibleLink } from "components/content-sdk/CompatibleLink";
+import { ImageProps, ImageWrapperProps } from './image.props';
 
-interface ImageFields {
-  Image: ImageField;
-  ImageCaption: Field<string>;
-  TargetUrl: LinkField;
-}
-
-interface ImageProps extends ComponentProps {
-  fields: ImageFields;
-}
-
-const ImageWrapper: React.FC<{
-  className: string;
-  id?: string;
-  children: React.ReactNode;
-}> = ({ className, id, children }) => (
+const ImageWrapper: React.FC<ImageWrapperProps> = ({ className, id, children }) => (
   <figure className={className.trim()} id={id}>
     <div className="component-content">{children}</div>
   </figure>

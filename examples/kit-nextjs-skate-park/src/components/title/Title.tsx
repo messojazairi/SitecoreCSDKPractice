@@ -1,39 +1,9 @@
 import React, { JSX } from 'react';
 import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
-import { ComponentProps } from 'lib/component-props';
+import { TitleComponentContentProps, TitleProps } from './title.props';
 
-interface Item {
-  url: {
-    path: string;
-    siteName: string;
-  };
-  field: {
-    jsonValue: {
-      value: string;
-    };
-  };
-}
-
-interface TitleProps extends ComponentProps {
-  fields: {
-    /**
-     * The Integrated graphQL query result. This illustrates the way to access the context item datasource information.
-     */
-    data?: {
-      datasource?: Item;
-      contextItem?: Item;
-    };
-  };
-}
-
-interface ComponentContentProps {
-  id?: string;
-  styles?: string;
-  children: React.ReactNode;
-}
-
-const ComponentContent = ({ id, styles = '', children }: ComponentContentProps): JSX.Element => (
+const ComponentContent = ({ id, styles = '', children }: TitleComponentContentProps): JSX.Element => (
   <div className={`component title ${styles.trim()}`} id={id}>
     <div className="component-content">
       <div className="field-title">{children}</div>

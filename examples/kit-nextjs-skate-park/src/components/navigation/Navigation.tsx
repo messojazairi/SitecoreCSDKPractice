@@ -2,28 +2,7 @@
 import React, { useState, JSX } from 'react';
 import { LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
-import { ComponentProps } from 'lib/component-props';
-
-interface Fields {
-  Id: string;
-  DisplayName: string;
-  Title: TextField;
-  NavigationTitle: TextField;
-  Href: string;
-  Querystring: string;
-  Children: Array<Fields>;
-  Styles: string[];
-}
-
-interface NavigationListItemProps {
-  fields: Fields;
-  handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
-  relativeLevel: number;
-}
-
-interface NavigationProps extends ComponentProps {
-  fields: Fields;
-}
+import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';
 
 const getTextContent = (fields: Fields): JSX.Element | string => {
   if (fields.NavigationTitle) return <Text field={fields.NavigationTitle} />;
