@@ -40,8 +40,6 @@ import * as SubscriptionBanner from 'src/components/subscription-banner/Subscrip
 import * as subscriptionbannerprops from 'src/components/subscription-banner/subscription-banner.props';
 import * as subscriptionbannerdictionary from 'src/components/subscription-banner/subscription-banner.dictionary';
 import * as StructuredData from 'src/components/structured-data/StructuredData';
-import * as SiteMetadata from 'src/components/site-metadata/SiteMetadata';
-import * as sitemetadataprops from 'src/components/site-metadata/site-metadata.props';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
 import * as secondarynavigationprops from 'src/components/secondary-navigation/secondary-navigation.props';
 import * as RichTextBlock from 'src/components/rich-text-block/RichTextBlock';
@@ -49,6 +47,7 @@ import * as richtextblockprops from 'src/components/rich-text-block/rich-text-bl
 import * as PromoBlock from 'src/components/promo-block/PromoBlock';
 import * as promoblockprops from 'src/components/promo-block/promo-block.props';
 import * as PromoAnimatedImageRightdev from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
+import * as PromoAnimatedEmptyImageEditing from 'src/components/promo-animated/PromoAnimatedEmptyImageEditing';
 import * as PromoAnimatedDefaultdev from 'src/components/promo-animated/PromoAnimatedDefault.dev';
 import * as PromoAnimated from 'src/components/promo-animated/PromoAnimated';
 import * as promoanimatedutil from 'src/components/promo-animated/promo-animated.util';
@@ -171,8 +170,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubscriptionBanner', { ...SubscriptionBanner, componentType: 'client' }],
   ['subscription-banner', { ...subscriptionbannerprops, ...subscriptionbannerdictionary }],
   ['StructuredData', { ...StructuredData }],
-  ['SiteMetadata', { ...SiteMetadata }],
-  ['site-metadata', { ...sitemetadataprops }],
   ['SecondaryNavigation', { ...SecondaryNavigation, componentType: 'client' }],
   ['secondary-navigation', { ...secondarynavigationprops }],
   ['RichTextBlock', { ...RichTextBlock }],
@@ -180,6 +177,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['PromoBlock', { ...PromoBlock }],
   ['promo-block', { ...promoblockprops }],
   ['PromoAnimatedImageRight', { ...PromoAnimatedImageRightdev }],
+  ['PromoAnimatedEmptyImageEditing', { ...PromoAnimatedEmptyImageEditing }],
   ['PromoAnimatedDefault', { ...PromoAnimatedDefaultdev }],
   ['PromoAnimated', { ...PromoAnimated, componentType: 'client' }],
   ['promo-animated', { ...promoanimatedutil, ...promoanimatedprops }],
