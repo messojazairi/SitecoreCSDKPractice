@@ -7,7 +7,6 @@ import { routing } from 'src/i18n/routing';
 import scConfig from 'sitecore.config';
 import client from 'src/lib/sitecore-client';
 import Layout, { RouteFields } from 'src/Layout';
-import components from '.sitecore/component-map';
 import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
@@ -51,13 +50,6 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  // Fetch the component data from Sitecore (Likely will be deprecated)
-  const componentProps = await client.getComponentData(
-    page.layout,
-    {},
-    components,
-  );
-
   const routeFields = page.layout.sitecore.route?.fields as RouteFields;
   const pageTitle = routeFields?.Title?.value?.toString() || 'Page';
   const pageDescription = routeFields?.ogDescription?.value?.toString();
@@ -81,7 +73,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <NextIntlClientProvider>
-      <Providers page={page} componentProps={componentProps}>
+      <Providers page={page}>
         <StructuredData id="webpage-schema" data={webPageSchema} />
         <Layout page={page} />
       </Providers>
