@@ -1,11 +1,11 @@
-import { ComponentProps } from 'lib/component-props';
+import { CompatibleField, ComponentProps } from 'lib/component-props';
 import { LinkField, TextField } from '@sitecore-content-sdk/nextjs';
 
 export interface NavigationFields {
   Id: string;
   DisplayName: string;
-  Title: TextField;
-  NavigationTitle: TextField;
+  Title: CompatibleField<TextField>;
+  NavigationTitle: CompatibleField<TextField>;
   Href: string;
   Querystring: string;
   Children: Array<NavigationFields>;

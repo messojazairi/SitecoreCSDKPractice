@@ -1,6 +1,7 @@
 import React, { JSX } from 'react';
 import { LinkField, Text, TextField } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
+import { getDatasource, getFieldValue } from 'lib/component-props';
 import { TitleComponentContentProps, TitleProps } from './title.props';
 
 const ComponentContent = ({ id, styles = '', children }: TitleComponentContentProps): JSX.Element => (
@@ -13,8 +14,8 @@ const ComponentContent = ({ id, styles = '', children }: TitleComponentContentPr
 
 export const Default = ({ params, fields, page }: TitleProps): JSX.Element => {
   const { styles, RenderingIdentifier: id } = params;
-  const datasource = fields?.data?.datasource || fields?.data?.contextItem;
-  const datasourceField: TextField = datasource?.field?.jsonValue as TextField;
+  const datasource = getDatasource(fields);
+  const datasourceField = getFieldValue(datasource?.field) as TextField | undefined;
   const contextField: TextField = page?.layout?.sitecore?.route?.fields?.Title as TextField;
   const titleField: TextField = datasourceField || contextField;
 
@@ -23,7 +24,7 @@ export const Default = ({ params, fields, page }: TitleProps): JSX.Element => {
       href: datasource?.url?.path,
       title:
         (titleField?.value ? String(titleField.value) : undefined) ||
-        datasource?.field?.jsonValue?.value,
+        datasourceField?.value?.toString(),
     },
   };
 

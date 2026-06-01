@@ -1,5 +1,5 @@
 import { LinkField, TextField } from '@sitecore-content-sdk/nextjs';
-import { ComponentProps } from 'lib/component-props';
+import { CompatibleDatasource, CompatibleField, ComponentProps } from 'lib/component-props';
 import type React from 'react';
 
 export interface TitleItem {
@@ -7,20 +7,11 @@ export interface TitleItem {
     path: string;
     siteName: string;
   };
-  field: {
-    jsonValue: {
-      value: string;
-    };
-  };
+  field: CompatibleField<TextField>;
 }
 
 export interface TitleProps extends ComponentProps {
-  fields: {
-    data?: {
-      datasource?: TitleItem;
-      contextItem?: TitleItem;
-    };
-  };
+  fields: CompatibleDatasource<TitleItem>;
 }
 
 export interface TitleComponentContentProps {
