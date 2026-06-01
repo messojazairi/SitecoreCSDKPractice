@@ -3,16 +3,16 @@ import { notFound } from 'next/navigation';
 import { draftMode, headers as nextHeaders } from 'next/headers';
 import { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import sites from '.sitecore/sites.json';
-import { routing } from 'src/i18n/routing';
+import { routing } from '@/i18n/routing';
 import scConfig from 'sitecore.config';
-import client from 'src/lib/sitecore-client';
-import Layout, { RouteFields } from 'src/Layout';
-import Providers from 'src/Providers';
+import client from '@/lib/sitecore-client';
+import Layout, { RouteFields } from '@/Layout';
+import Providers from '@/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { StructuredData } from '@/components/structured-data/StructuredData';
 import { generateWebPageSchema } from '@/lib/structured-data/schema';
-import { getBaseUrl } from 'lib/utils';
+import { getBaseUrl } from '@/lib/utils';
 
 type PageProps = {
   params: Promise<{
