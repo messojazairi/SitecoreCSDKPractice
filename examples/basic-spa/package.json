@@ -26,7 +26,7 @@
       "serialize-javascript": "7.0.5",
       "flatted": "3.4.2",
       "express>path-to-regexp": "0.1.13",
-      "qs": "6.14.2",
+      "qs": "6.15.2",
       "vite": "7.3.2",
       "lodash": "4.18.1",
       "hono": "4.12.14",
