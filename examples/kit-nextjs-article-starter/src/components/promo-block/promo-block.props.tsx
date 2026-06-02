@@ -1,5 +1,5 @@
 import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps } from '@/lib/component-props';
 
 /**
  * Model used for Sitecore Component integration

@@ -4,8 +4,8 @@ import { GlobalFooterProps } from '@/components/global-footer/global-footer.prop
 import { Default as FooterCallout } from '@/components/footer-navigation-callout/FooterNavigationCallout.dev';
 import { Default as Logo } from '@/components/logo/Logo.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
-import { EditableImageButton } from 'components/button-component/ButtonComponent';
-import { cn } from 'lib/utils';
+import { EditableImageButton } from '@/components/button-component/ButtonComponent';
+import { cn } from '@/lib/utils';
 import componentMap from '.sitecore/component-map';
 
 export const Default: React.FC<GlobalFooterProps> = (props) => {
