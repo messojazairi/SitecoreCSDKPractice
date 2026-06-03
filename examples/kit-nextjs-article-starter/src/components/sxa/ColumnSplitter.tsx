@@ -1,5 +1,5 @@
 import React, { JSX } from 'react';
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps } from '@/lib/component-props';
 import componentMap from '.sitecore/component-map';
 import { AppPlaceholder } from '@sitecore-content-sdk/nextjs';
 

@@ -6,7 +6,7 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 import { NavigationMenuToggle } from './NavigationMenuToggle.client';
 import { NavigationList } from './NavigationList.client';
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps } from '@/lib/component-props';
 
 export interface Fields {
   Id: string;
