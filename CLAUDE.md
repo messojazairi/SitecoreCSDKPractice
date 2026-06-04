@@ -459,10 +459,14 @@ src/
 
 **File Organization:**
 - Component directories contain main file, variants, and props
-- Main component file should contain variants and props following the Locality of Behavior pattern
+- Main component file should contain variants and rendering logic; keep props/interfaces in sidecar files (`*.props.ts` / `*.props.tsx`)
 - Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes dificult for the componenent and seperation can not be avoided
 - Shared utilities in dedicated directories
 - Group UI components in `ui/` subdirectory
+- Exclude sidecar props files from component-map generation in each starter `sitecore.cli.config.ts` via `componentMap.exclude`:
+  - `src/components/**/*.props.ts`
+  - `src/components/**/*.props.tsx`
+- After adding or renaming sidecar props files, regenerate maps with `npm run sitecore-tools:generate-map` and verify `.sitecore/component-map.ts` has no props-sidecar registrations.
 
 ### Error Handling
 

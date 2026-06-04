@@ -175,10 +175,17 @@ components/
 ```
 
 **Key Principles:**
-- Main component file contains all variants and props
+- Main component file contains variants and rendering logic; define props interfaces in sidecar files like `component-name.props.ts` or `component-name.props.tsx`
 - Variants exported as named exports: `Default`, `ThreeUp`, `Slider`, etc.
 - Props interfaces extend `ComponentProps` from `@/lib/component-props`
 - Use `.dev.tsx` files only when separation is necessary for maintainability
+
+**Props Sidecar Rule (All Starters):**
+- Keep props/interfaces in sidecar files (`*.props.ts` / `*.props.tsx`) per component folder.
+- Exclude sidecar props files from Sitecore component generation in each starter `sitecore.cli.config.ts` using `componentMap.exclude` patterns:
+  - `src/components/**/*.props.ts`
+  - `src/components/**/*.props.tsx`
+- After adding or renaming props files, run `npm run sitecore-tools:generate-map` and verify sidecar files are not registered in `.sitecore/component-map.ts`.
 
 ### Sitecore Integration Patterns
 
