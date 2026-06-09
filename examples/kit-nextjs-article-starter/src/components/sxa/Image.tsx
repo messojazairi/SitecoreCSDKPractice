@@ -52,7 +52,7 @@ export const Default = (props: ImageProps): JSX.Element => {
   const classNameList = `component image ${sxaStyles}`.trimEnd();
 
   if (fields) {
-    const { Image } = props.fields;
+    const { Image } = fields;
 
     const modifyImageProps = {
       ...Image,

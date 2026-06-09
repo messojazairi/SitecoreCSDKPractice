@@ -53,8 +53,8 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
         orientation="vertical"
       >
         <NavigationMenu.List className="m-0 flex list-none flex-col gap-2 pl-0">
-          {parent.children?.results?.map((item, index) => {
-            const isParent = datasource.id == item.id;
+          {parent?.children?.results?.map((item, index) => {
+            const isParent = datasource?.id == item.id;
             const title =
               item.navigationTitle?.jsonValue.value ||
               item.title?.jsonValue.value ||
@@ -71,7 +71,7 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
                     {title}
                   </NextLink>
                 </Button>
-                {isParent && renderChildren(children.results)}
+                {isParent && renderChildren(children?.results ?? [])}
               </NavigationMenu.Item>
             );
           })}

@@ -305,7 +305,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
             >
               <ImageWrapper
                 image={imageRequired?.jsonValue}
-                alt={pageHeaderTitle?.jsonValue.value}
+                alt={pageHeaderTitle?.jsonValue?.value}
                 className="h-full w-full object-cover"
                 wrapperClass="h-full w-full"
                 priority

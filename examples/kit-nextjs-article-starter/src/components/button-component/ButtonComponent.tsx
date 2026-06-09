@@ -32,14 +32,14 @@ export type ButtonFields = {
 };
 
 export type ButtonRendering = { rendering: ComponentRendering };
-const linkIsValid = (link: LinkField) => {
+const linkIsValid = (link?: LinkField) => {
   return (
     !!link?.value?.text &&
     (!!link?.value?.href || !!link?.value?.url) &&
     link?.value?.href !== 'http://'
   );
 };
-const isValidEditableLink = (link: LinkField, icon?: ImageField) => {
+const isValidEditableLink = (link?: LinkField, icon?: ImageField) => {
   return (
     !!link?.value?.text ||
     (icon?.value?.src &&
@@ -92,9 +92,9 @@ const ButtonBase = (
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
-      {isPageEditing ? (
+      {isPageEditing && buttonLink ? (
         <Link field={buttonLink} editable={true} />
-      ) : (
+      ) : enhancedButtonLink ? (
         <Link field={enhancedButtonLink} editable={isPageEditing}>
           {iconPosition === IconPosition.LEADING && icon ? (
             <Icon
@@ -112,13 +112,13 @@ const ButtonBase = (
             />
           ) : null}
         </Link>
-      )}
+      ) : null}
     </Button>
   );
 };
 
 const EditableButton = (props: {
-  buttonLink: LinkField;
+  buttonLink?: LinkField;
   icon?: { value: EnumValues<typeof IconName> };
   iconClassName?: string;
   iconPosition?: EnumValues<typeof IconPosition>;
@@ -169,7 +169,7 @@ const EditableButton = (props: {
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
-      {isPageEditing ? (
+      {isPageEditing && buttonLink ? (
         <span className="flex">
           {iconPosition === IconPosition.LEADING ? (
             <Icon
@@ -187,7 +187,7 @@ const EditableButton = (props: {
             />
           ) : null}
         </span>
-      ) : (
+      ) : enhancedButtonLink ? (
         <Link
           className={className}
           field={enhancedButtonLink}
@@ -210,13 +210,13 @@ const EditableButton = (props: {
             />
           ) : null}
         </Link>
-      )}
+      ) : null}
     </Button>
   );
 };
 
 const EditableImageButton = (props: {
-  buttonLink: LinkField;
+  buttonLink?: LinkField;
   icon?: ImageField;
   iconClassName?: string;
   iconPosition?: EnumValues<typeof IconPosition>;
@@ -267,7 +267,7 @@ const EditableImageButton = (props: {
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
-      {isPageEditing ? (
+      {isPageEditing && buttonLink ? (
         <span className="flex">
           {iconPosition === IconPosition.LEADING ? (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
@@ -277,7 +277,7 @@ const EditableImageButton = (props: {
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
         </span>
-      ) : (
+      ) : enhancedButtonLink ? (
         <Link
           className={className}
           field={enhancedButtonLink}
@@ -292,7 +292,7 @@ const EditableImageButton = (props: {
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
         </Link>
-      )}
+      ) : null}
     </Button>
   );
 };
@@ -328,9 +328,9 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isPageEditing ? (
+        {isPageEditing && buttonLink ? (
           <Link field={buttonLink} editable={true} />
-        ) : (
+        ) : enhancedButtonLink ? (
           <Link editable={isPageEditing} field={enhancedButtonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
@@ -340,7 +340,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
           </Link>
-        )}
+        ) : null}
       </Button>
     );
   }

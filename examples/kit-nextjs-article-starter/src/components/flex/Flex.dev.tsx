@@ -344,13 +344,14 @@ export const XMFlex: React.FC<XMComponent> = ({
   page,
 }) => {
   const phKey = `flex-${params.DynamicPlaceholderId}`;
+  const safeFields = fields ?? {};
   return (
     <Flex
-      direction={getFieldValue(fields, 'direction')}
-      justify={getFieldValue(fields, 'justify')}
-      align={getFieldValue(fields, 'align')}
-      gap={getFieldValue(fields, 'gap')}
-      className={getFieldValue(fields, 'className')}
+      direction={getFieldValue(safeFields, 'direction')}
+      justify={getFieldValue(safeFields, 'justify')}
+      align={getFieldValue(safeFields, 'align')}
+      gap={getFieldValue(safeFields, 'gap')}
+      className={getFieldValue(safeFields, 'className')}
     >
       <AppPlaceholder
         name={phKey}
@@ -369,13 +370,14 @@ export const XMFlexItem: React.FC<XMComponent> = ({
   page,
 }) => {
   const phKey = `flex-item-${params.DynamicPlaceholderId}`;
+  const safeFields = fields ?? {};
   return (
     <FlexItem
-      grow={getFieldValue(fields, 'grow')}
-      shrink={getFieldValue(fields, 'shrink')}
-      basis={getFieldValue(fields, 'basis')}
-      alignSelf={getFieldValue(fields, 'alignSelf')}
-      className={getFieldValue(fields, 'className')}
+      grow={getFieldValue(safeFields, 'grow')}
+      shrink={getFieldValue(safeFields, 'shrink')}
+      basis={getFieldValue(safeFields, 'basis')}
+      alignSelf={getFieldValue(safeFields, 'alignSelf')}
+      className={getFieldValue(safeFields, 'className')}
     >
       <AppPlaceholder
         name={phKey}

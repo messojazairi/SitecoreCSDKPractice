@@ -44,7 +44,7 @@ export const Default = (props: PromoProps): JSX.Element => {
               </div>
             </div>
             <div className="field-promolink">
-              <ContentSdkLink field={props.fields.PromoLink} />
+              {props.fields.PromoLink && <ContentSdkLink field={props.fields.PromoLink} />}
             </div>
           </div>
         </div>

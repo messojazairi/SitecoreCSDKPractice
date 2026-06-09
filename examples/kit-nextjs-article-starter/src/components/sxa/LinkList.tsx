@@ -70,13 +70,14 @@ export const Default = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const childResults = datasource.children?.results ?? [];
+    const list = childResults
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => (
         <LinkListItem
           index={key}
           key={`${key}${element.field.link}`}
-          total={datasource.children.results.length}
+          total={childResults.length}
           field={element.field.link}
         />
       ));

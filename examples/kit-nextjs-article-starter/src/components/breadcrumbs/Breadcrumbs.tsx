@@ -61,7 +61,7 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
           position: index + 1,
         })),
         {
-          name: truncate(name),
+          name: truncate(name ?? ''),
           url: typeof window !== 'undefined' ? window.location.href : '',
           position: ancestors.length + 1,
         },
@@ -89,7 +89,7 @@ export const Default: React.FC<BreadcrumbsProps> = (props) => {
               );
             })}
             <BreadcrumbItem>
-              <BreadcrumbPage>{truncate(name)}</BreadcrumbPage>
+              <BreadcrumbPage>{truncate(name ?? '')}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

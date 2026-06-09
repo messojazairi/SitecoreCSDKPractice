@@ -66,7 +66,7 @@ export const Default: React.FC<TestimonialCarouselProps> = (props) => {
       setCanScrollNext(api.canScrollNext());
 
       // Announce slide change
-      setAnnouncement(`Slide ${newIndex + 1} of ${children?.results.length}`);
+      setAnnouncement(`Slide ${newIndex + 1} of ${children?.results?.length ?? 0}`);
     });
 
     // Add mousewheel event listener and keyboard event listener

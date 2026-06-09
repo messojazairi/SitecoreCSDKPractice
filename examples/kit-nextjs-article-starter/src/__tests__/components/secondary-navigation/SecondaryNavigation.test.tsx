@@ -342,11 +342,11 @@ describe('SecondaryNavigation Component', () => {
     });
 
     it('should handle missing datasource gracefully', () => {
-      // Component needs safe destructuring for datasource
-      // This test verifies the component can handle missing datasource
-      expect(() => {
-        render(<SecondaryNavigation {...propsWithoutDatasource} />);
-      }).toThrow();
+      render(<SecondaryNavigation {...propsWithoutDatasource} />);
+
+      const navRoots = screen.getAllByTestId('navigation-root');
+      expect(navRoots.length).toBeGreaterThan(0);
+      expect(screen.queryByRole('link')).not.toBeInTheDocument();
     });
   });
 

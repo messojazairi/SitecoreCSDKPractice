@@ -22,13 +22,13 @@ import { useMatchMedia } from '@/hooks/use-match-media';
  */
 export const Default: FC<FooterNavigationColumnProps> = (props) => {
   const { fields, page } = props;
-  const { items, header } = fields.data?.datasource ?? {};
   const isPageEditing = page.mode.isEditing;
 
   const accordionId = useId();
   const isMobile = useMatchMedia('(max-width: 767px)');
 
   if (fields) {
+    const { items, header } = fields.data?.datasource ?? {};
     return (
       <nav>
         {isMobile ? (
@@ -46,7 +46,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
                         asChild
                         className="h-auto text-pretty p-0 text-base font-normal text-white"
                       >
-                        <Link field={item.link?.jsonValue} />
+                        {item.link?.jsonValue && <Link field={item.link.jsonValue} />}
                       </Button>
                     </li>
                   ))}
@@ -68,7 +68,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
                   asChild
                   className="h-auto text-pretty p-0 text-base font-normal text-white"
                 >
-                  <Link field={item.link?.jsonValue} />
+                  {item.link?.jsonValue && <Link field={item.link.jsonValue} />}
                 </Button>
               </li>
             ))}

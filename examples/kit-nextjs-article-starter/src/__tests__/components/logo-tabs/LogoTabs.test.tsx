@@ -514,12 +514,12 @@ describe('LogoTabs Component', () => {
         fields: {
           data: {
             datasource: {
-              ...defaultProps.fields.data.datasource,
-              logos: {} as unknown as LogoTabsProps['fields']['data']['datasource']['logos'],
+              ...defaultProps.fields!.data!.datasource,
+              logos: {} as unknown as { results?: unknown[] },
             },
           },
         },
-      };
+      } as LogoTabsProps;
 
       render(<LogoTabs {...propsWithUndefinedLogos} />);
 

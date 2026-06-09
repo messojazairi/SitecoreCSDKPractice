@@ -81,7 +81,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                     <Fragment key={`desktop-nav-menu-list-item-${i}`}>
                       {pageEditing ? (
                         <Button variant="ghost" asChild className="font-body text-base font-medium">
-                          <SitecoreLink field={item.link?.jsonValue} />
+                          {item.link?.jsonValue && <SitecoreLink field={item.link.jsonValue} />}
                         </Button>
                       ) : (
                         item.link?.jsonValue?.value?.href && (
@@ -107,7 +107,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
           {pageEditing ? (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
               <Button variant="outline" asChild className="font-heading text-medium rounded-full">
-                <SitecoreLink field={headerContact?.jsonValue} />
+                {headerContact?.jsonValue && <SitecoreLink field={headerContact.jsonValue} />}
               </Button>
             </div>
           ) : (

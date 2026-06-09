@@ -300,27 +300,19 @@ describe('AlertBanner Component', () => {
   });
 
   describe('Edge cases and fallbacks', () => {
-    // NOTE: Component has a bug - it destructures fields before checking if fields exists
-    // This causes a runtime error. The check should happen before destructuring.
-    it('should throw error when fields is null due to component bug', () => {
-      // Component destructures before checking, causing error
-      // Using type assertion to test the component bug scenario
-      expect(() => {
-        render(<AlertBanner {...(propsWithoutFields as unknown as Parameters<typeof AlertBanner>[0])} />);
-      }).toThrow();
+    it('should show NoDataFallback when fields is null', () => {
+      render(<AlertBanner {...(propsWithoutFields as unknown as Parameters<typeof AlertBanner>[0])} />);
+      expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
     });
 
-    it('should throw error when fields is undefined due to component bug', () => {
+    it('should show NoDataFallback when fields is undefined', () => {
       const propsWithUndefinedFields = {
         ...defaultProps,
         fields: undefined as AlertBannerFieldsType | undefined,
       };
 
-      // Component destructures before checking, causing error
-      // Using type assertion to test the component bug scenario
-      expect(() => {
-        render(<AlertBanner {...(propsWithUndefinedFields as unknown as Parameters<typeof AlertBanner>[0])} />);
-      }).toThrow();
+      render(<AlertBanner {...(propsWithUndefinedFields as unknown as Parameters<typeof AlertBanner>[0])} />);
+      expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
     });
 
     it('should handle empty title value', () => {
