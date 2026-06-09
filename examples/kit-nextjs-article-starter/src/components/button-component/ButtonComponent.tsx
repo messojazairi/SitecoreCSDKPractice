@@ -16,9 +16,9 @@ import { getDescriptiveLinkText } from '@/utils/link-text';
  */
 
 export type ButtonFields = {
-  fields: {
-    buttonLink: LinkField;
-    icon?: { value: EnumValues<typeof IconName> };
+  fields?: {
+    buttonLink?: LinkField;
+    icon?: { value?: EnumValues<typeof IconName> };
     iconClassName?: string;
     isAriaHidden?: boolean;
   };

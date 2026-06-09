@@ -9,15 +9,15 @@ import {
 } from '@sitecore-content-sdk/nextjs';
 
 interface Fields {
-  PromoIcon: ImageField;
-  PromoText: Field<string>;
-  PromoLink: LinkField;
-  PromoText2: Field<string>;
+  PromoIcon?: ImageField;
+  PromoText?: Field<string>;
+  PromoLink?: LinkField;
+  PromoText2?: Field<string>;
 }
 
 type PromoProps = {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 const PromoDefaultComponent = (props: PromoProps): JSX.Element => (

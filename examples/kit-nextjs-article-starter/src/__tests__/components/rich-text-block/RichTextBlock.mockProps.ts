@@ -93,14 +93,13 @@ export const defaultProps: RichTextBlockProps = {
 };
 
 export const propsWithoutFields: RichTextBlockProps = {
-  fields: undefined as unknown as RichTextBlockProps['fields'],
   rendering: mockRendering,
   params: mockParams,
   page: mockPage,
 };
 
 export const propsWithNullFields: RichTextBlockProps = {
-  fields: null as unknown as RichTextBlockProps['fields'],
+  fields: undefined,
   rendering: mockRendering,
   params: mockParams,
   page: mockPage,

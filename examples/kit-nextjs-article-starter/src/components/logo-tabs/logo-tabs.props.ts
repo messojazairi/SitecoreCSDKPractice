@@ -9,20 +9,20 @@ interface LogoTabsParams {
 }
 
 export interface LogoTabContent {
-  heading: { jsonValue: Field<string> };
-  cta: { jsonValue: LinkField };
+  heading?: { jsonValue?: Field<string> };
+  cta?: { jsonValue?: LinkField };
 }
 
 export interface LogoTabsFields {
-  data: {
-    datasource: {
-      title: { jsonValue: Field<string> };
-      backgroundImage?: { jsonValue: ImageField };
+  data?: {
+    datasource?: {
+      title?: { jsonValue?: Field<string> };
+      backgroundImage?: { jsonValue?: ImageField };
       logos?: {
-        results: LogoItemProps[];
+        results?: LogoItemProps[];
       };
       logoTabContent?: {
-        results: LogoTabContent[];
+        results?: LogoTabContent[];
       };
     };
   };
@@ -30,13 +30,13 @@ export interface LogoTabsFields {
 
 export interface LogoTabsProps extends ComponentProps {
   params: LogoTabsParams;
-  fields: LogoTabsFields;
+  fields?: LogoTabsFields;
   isPageEditing?: boolean;
 }
 
 export type LogoItemProps = {
-  title: {
-    jsonValue: Field<string>;
+  title?: {
+    jsonValue?: Field<string>;
   };
-  logo: { jsonValue: ImageField };
+  logo?: { jsonValue?: ImageField };
 };

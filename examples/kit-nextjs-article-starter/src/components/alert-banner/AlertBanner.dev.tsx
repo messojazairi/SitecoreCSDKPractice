@@ -27,9 +27,9 @@ type AlertBannerData = {
 };
 
 type AlertBannerFields = {
-  fields: {
-    title: Field<string>; // Sitecore editable text field
-    description: Field<string>; // Sitecore editable text field
+  fields?: {
+    title?: Field<string>; // Sitecore editable text field
+    description?: Field<string>; // Sitecore editable text field
     image?: ImageField; // Sitecore editable image field
     link?: LinkField; // Sitecore editable link field
   };
@@ -37,7 +37,7 @@ type AlertBannerFields = {
 
 export const Default: React.FC<AlertBannerProps> = (props) => {
   const { fields } = props;
-  const { title, description, link } = fields;
+  const { title, description, link } = fields ?? {};
   const [isHidden, setIsHidden] = useState(false);
 
   if (fields) {

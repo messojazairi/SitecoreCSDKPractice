@@ -9,13 +9,13 @@ type ResultsFieldLink = {
 };
 
 interface Fields {
-  data: {
-    datasource: {
-      children: {
-        results: ResultsFieldLink[];
+  data?: {
+    datasource?: {
+      children?: {
+        results?: ResultsFieldLink[];
       };
-      field: {
-        title: TextField;
+      field?: {
+        title?: TextField;
       };
     };
   };
@@ -23,7 +23,7 @@ interface Fields {
 
 type LinkListProps = {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 type LinkListItemProps = {

@@ -17,31 +17,31 @@ interface PageHeaderLogos {
 
 export interface PageHeaderProps extends ComponentProps {
   params: PageHeaderParams;
-  fields: {
-    data: {
+  fields?: {
+    data?: {
       datasource?: {
-        imageRequired: {
-          jsonValue: ImageField;
+        imageRequired?: {
+          jsonValue?: ImageField;
         };
         videoOptional?: {
-          jsonValue: LinkField;
+          jsonValue?: LinkField;
         };
         logoText?: {
-          jsonValue: Field<string>;
+          jsonValue?: Field<string>;
         };
         children?: {
-          results: PageHeaderLogos[];
+          results?: PageHeaderLogos[];
         };
       };
-      externalFields: {
-        pageTitle: {
-          jsonValue: Field<string>;
+      externalFields?: {
+        pageTitle?: {
+          jsonValue?: Field<string>;
         };
-        pageHeaderTitle: {
-          jsonValue: Field<string>;
+        pageHeaderTitle?: {
+          jsonValue?: Field<string>;
         };
-        pageSubtitle: {
-          jsonValue: Field<string>;
+        pageSubtitle?: {
+          jsonValue?: Field<string>;
         };
       };
     };

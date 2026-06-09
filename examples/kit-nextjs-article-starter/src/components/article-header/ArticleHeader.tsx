@@ -56,18 +56,18 @@ interface ArticleHeaderFields {
 }
 
 interface ArticleHeaderExternalFields {
-  pageHeaderTitle: { jsonValue: Field<string> };
-  pageReadTime?: { jsonValue: Field<string> };
-  pageDisplayDate?: { jsonValue: Field<string> };
-  pageAuthor?: { jsonValue: AuthorReferenceField };
+  pageHeaderTitle?: { jsonValue?: Field<string> };
+  pageReadTime?: { jsonValue?: Field<string> };
+  pageDisplayDate?: { jsonValue?: Field<string> };
+  pageAuthor?: { jsonValue?: AuthorReferenceField };
 }
 
 interface ArticleHeaderProps extends ComponentProps {
   params: ArticleHeaderParams;
-  fields: {
-    data: {
-      datasource: ArticleHeaderFields;
-      externalFields: ArticleHeaderExternalFields;
+  fields?: {
+    data?: {
+      datasource?: ArticleHeaderFields;
+      externalFields?: ArticleHeaderExternalFields;
     };
   };
 }

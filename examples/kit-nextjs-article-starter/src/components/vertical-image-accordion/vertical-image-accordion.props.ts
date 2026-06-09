@@ -7,18 +7,18 @@ interface VerticalImageAccordionParams {
 }
 
 export interface AccordionItem {
-  title: { jsonValue: Field<string> };
-  description: { jsonValue: Field<string> };
-  image: { jsonValue: ImageField };
-  link?: { jsonValue: LinkField };
+  title?: { jsonValue?: Field<string> };
+  description?: { jsonValue?: Field<string> };
+  image?: { jsonValue?: ImageField };
+  link?: { jsonValue?: LinkField };
 }
 
 interface VerticalImageAccordionFields {
-  data: {
-    datasource: {
-      title?: { jsonValue: Field<string> };
+  data?: {
+    datasource?: {
+      title?: { jsonValue?: Field<string> };
       items?: {
-        results: AccordionItem[];
+        results?: AccordionItem[];
       };
     };
   };
@@ -26,6 +26,6 @@ interface VerticalImageAccordionFields {
 
 export interface VerticalImageAccordionProps extends ComponentProps {
   params: VerticalImageAccordionParams;
-  fields: VerticalImageAccordionFields;
+  fields?: VerticalImageAccordionFields;
   isPageEditing?: boolean;
 }

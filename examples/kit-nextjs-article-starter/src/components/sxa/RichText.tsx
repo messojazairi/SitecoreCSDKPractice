@@ -2,12 +2,12 @@ import React, { JSX } from 'react';
 import { Field, RichText as ContentSdkRichText } from '@sitecore-content-sdk/nextjs';
 
 interface Fields {
-  Text: Field<string>;
+  Text?: Field<string>;
 }
 
 export type RichTextProps = {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 export const Default = (props: RichTextProps): JSX.Element => {

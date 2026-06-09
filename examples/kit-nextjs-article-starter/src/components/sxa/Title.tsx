@@ -4,27 +4,27 @@ import { Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import React, { JSX } from 'react';
 
 interface Fields {
-  data: {
-    datasource: {
-      url: {
-        path: string;
-        siteName: string;
+  data?: {
+    datasource?: {
+      url?: {
+        path?: string;
+        siteName?: string;
       };
-      field: {
-        jsonValue: {
-          value: string;
+      field?: {
+        jsonValue?: {
+          value?: string;
           metadata?: { [key: string]: unknown };
         };
       };
     };
-    contextItem: {
-      url: {
-        path: string;
-        siteName: string;
+    contextItem?: {
+      url?: {
+        path?: string;
+        siteName?: string;
       };
-      field: {
-        jsonValue: {
-          value: string;
+      field?: {
+        jsonValue?: {
+          value?: string;
           metadata?: { [key: string]: unknown };
         };
       };
@@ -34,7 +34,7 @@ interface Fields {
 
 type TitleProps = {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 export const Default = (props: TitleProps): JSX.Element => {

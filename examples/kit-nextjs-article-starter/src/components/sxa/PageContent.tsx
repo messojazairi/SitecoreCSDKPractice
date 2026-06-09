@@ -6,12 +6,12 @@ import {
 import { ComponentProps } from '@/lib/component-props';
 
 interface Fields {
-  Content: RichTextField;
+  Content?: RichTextField;
 }
 
 type PageContentProps = ComponentProps & {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 export const Default = (props: PageContentProps): JSX.Element => {

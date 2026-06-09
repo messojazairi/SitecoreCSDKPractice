@@ -11,20 +11,19 @@ import {
 import React, { JSX } from 'react';
 
 interface Fields {
-  Image: ImageField & { metadata?: { [key: string]: unknown } };
-  ImageCaption: Field<string>;
-  TargetUrl: LinkField;
+  Image?: ImageField & { metadata?: { [key: string]: unknown } };
+  ImageCaption?: Field<string>;
+  TargetUrl?: LinkField;
 }
 
 type ImageProps = {
   params: { [key: string]: string };
-  fields: Fields;
+  fields?: Fields;
 };
 
 export const Banner = (props: ImageProps): JSX.Element => {
   const { page } = useSitecore();
-  const { Image } = props.fields;
-  const { TargetUrl } = props.fields;
+  const { Image, TargetUrl } = props.fields ?? {};
   const sxaStyles = props.params?.Styles ?? '';
   const classNameList = `component image ${sxaStyles}`.trimEnd();
 
@@ -32,7 +31,7 @@ export const Banner = (props: ImageProps): JSX.Element => {
     return (
       <div className={classNameList}>
         <div className="component-content">
-          {page.mode.isEditing || !props.fields.TargetUrl?.value?.href ? (
+          {page.mode.isEditing || !TargetUrl?.value?.href ? (
             <ContentSdkImage field={Image} />
           ) : (
             <ContentSdkLink field={TargetUrl}>

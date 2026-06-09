@@ -10,11 +10,11 @@ interface FooterNavigationCalloutFields {
 }
 
 interface FooterNavigationCalloutProps {
-  fields: FooterNavigationCalloutFields;
+  fields?: FooterNavigationCalloutFields;
 }
 
 export const Default: React.FC<FooterNavigationCalloutProps> = ({ fields }) => {
-  const { title, description, linkOptional } = fields;
+  const { title, description, linkOptional } = fields ?? {};
 
   return (
     <aside>

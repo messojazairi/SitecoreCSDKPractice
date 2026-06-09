@@ -7,8 +7,8 @@ import { ComponentProps } from '@/lib/component-props';
 export type ImageProps = ComponentProps & ImageFields;
 
 export type ImageFields = {
-  fields: {
-    image: ImageField; // Sitecore editable image field
+  fields?: {
+    image?: ImageField; // Sitecore editable image field
     caption?: Field<string>;
   };
 };

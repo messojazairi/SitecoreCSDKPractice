@@ -7,18 +7,18 @@ import { Field } from '@sitecore-content-sdk/nextjs';
 
 export type TestimonialCarouselItemProps = {
   testimonialAttribution?: {
-    jsonValue: Field<string>;
+    jsonValue?: Field<string>;
   };
-  testimonialQuote: {
-    jsonValue: Field<string>;
+  testimonialQuote?: {
+    jsonValue?: Field<string>;
   };
 };
 
 type TestimonialCarouselFields = {
-  fields: {
-    data: {
-      datasource: {
-        children: { results: TestimonialCarouselItemProps[] };
+  fields?: {
+    data?: {
+      datasource?: {
+        children?: { results?: TestimonialCarouselItemProps[] };
       };
     };
   };

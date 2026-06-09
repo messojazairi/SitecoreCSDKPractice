@@ -265,7 +265,7 @@ export interface FlexItemProps {
 export interface XMComponent extends ComponentProps {
   rendering: ComponentRendering & { params: ComponentParams };
   params: ComponentParams;
-  fields: ComponentFields;
+  fields?: ComponentFields;
 }
 
 const getVariantString = <T extends FlexVariantKey>(

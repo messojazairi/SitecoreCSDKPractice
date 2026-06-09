@@ -5,9 +5,9 @@ import { ComponentProps } from '@/lib/component-props';
 import { JSX } from 'react';
 
 type ContentBlockProps = ComponentProps & {
-  fields: {
-    heading: Field<string>;
-    content: Field<string>;
+  fields?: {
+    heading?: Field<string>;
+    content?: Field<string>;
   };
 };
 
@@ -18,9 +18,9 @@ type ContentBlockProps = ComponentProps & {
  */
 const ContentBlock = ({ fields }: ContentBlockProps): JSX.Element => (
   <div className="contentBlock">
-    <Text tag="h2" className="contentTitle" field={fields.heading} />
+    <Text tag="h2" className="contentTitle" field={fields?.heading} />
 
-    <RichText className="contentDescription" field={fields.content} />
+    <RichText className="contentDescription" field={fields?.content} />
   </div>
 );
 

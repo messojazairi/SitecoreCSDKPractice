@@ -9,20 +9,20 @@ import { GqlField } from '@/types/gql.props';
 export type GlobalHeaderProps = ComponentProps & PlaceholderProps & GlobalHeaderFields;
 
 export type GlobalHeaderFields = {
-  fields: {
-    data: {
-      item: {
-        logo: {
+  fields?: {
+    data?: {
+      item?: {
+        logo?: {
           jsonValue?: ImageField;
         };
-        children: {
+        children?: {
           results?: [
             {
-              link: GqlField<LinkField>;
+              link?: GqlField<LinkField>;
             },
           ];
         };
-        headerContact: GqlField<LinkField>;
+        headerContact?: GqlField<LinkField>;
       };
     };
   };

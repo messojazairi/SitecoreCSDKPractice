@@ -10,29 +10,29 @@ export type GlobalFooterProps = ComponentProps &
   };
 
 export type GlobalFooterFields = {
-  fields: {
-    data: {
-      datasource: {
-        footerLogo?: { jsonValue: ImageField };
-        footerPromoTitle?: { jsonValue: Field<string> };
-        footerPromoDescription?: { jsonValue: Field<string> };
-        footerPromoLink?: { jsonValue: LinkField };
-        footerSocialLinks?: { results: FooterSocialLink[] };
-        footerCopyright?: { jsonValue: Field<string> };
+  fields?: {
+    data?: {
+      datasource?: {
+        footerLogo?: { jsonValue?: ImageField };
+        footerPromoTitle?: { jsonValue?: Field<string> };
+        footerPromoDescription?: { jsonValue?: Field<string> };
+        footerPromoLink?: { jsonValue?: LinkField };
+        footerSocialLinks?: { results?: FooterSocialLink[] };
+        footerCopyright?: { jsonValue?: Field<string> };
       };
     };
   };
 };
 
 export type FooterNavigationColumnProps = ComponentProps & {
-  fields: {
-    data: {
-      datasource: {
-        header: {
-          jsonValue: Field<string>;
+  fields?: {
+    data?: {
+      datasource?: {
+        header?: {
+          jsonValue?: Field<string>;
         };
         items?: {
-          results: FooterNavigationLink[];
+          results?: FooterNavigationLink[];
         };
       };
     };
@@ -40,12 +40,12 @@ export type FooterNavigationColumnProps = ComponentProps & {
 };
 
 export type FooterSocialLink = {
-  link: { jsonValue: LinkField };
-  socialIcon: { jsonValue: ImageField };
+  link?: { jsonValue?: LinkField };
+  socialIcon?: { jsonValue?: ImageField };
 };
 
 export type FooterNavigationLink = {
-  link: {
-    jsonValue: LinkField;
+  link?: {
+    jsonValue?: LinkField;
   };
 };

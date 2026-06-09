@@ -17,13 +17,13 @@ export interface MultiPromoTabsFields {
 
 export interface MultiPromoTabsProps extends ComponentProps {
   params: MultiPromoTabsParams;
-  fields: {
-    data: {
-      datasource: {
-        title?: { jsonValue: Field<string> };
-        droplistLabel?: { jsonValue: Field<string> };
+  fields?: {
+    data?: {
+      datasource?: {
+        title?: { jsonValue?: Field<string> };
+        droplistLabel?: { jsonValue?: Field<string> };
         children?: {
-          results: MultiPromoTabsFields[];
+          results?: MultiPromoTabsFields[];
         };
       };
     };

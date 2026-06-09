@@ -35,12 +35,12 @@ interface ArticleListingFields {
   titleOptional?: Field<string>;
   descriptionOptional?: Field<string>;
   linkOptional?: LinkField;
-  featuredContent: ArticleItemReferenceField[];
+  featuredContent?: ArticleItemReferenceField[];
 }
 
 interface ArticleListingProps extends ComponentProps {
   params: ArticleListingParams;
-  fields: ArticleListingFields;
+  fields?: ArticleListingFields;
   isPageEditing?: boolean;
 }
 

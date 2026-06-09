@@ -20,11 +20,11 @@ import { generateBreadcrumbListSchema } from '@/lib/structured-data/schema';
 type BreadcrumbsProps = ComponentProps & BreadcrumbsData;
 
 type BreadcrumbsData = {
-  fields: {
-    data: {
-      datasource: {
-        ancestors: BreadcrumbsPage[];
-        name: string;
+  fields?: {
+    data?: {
+      datasource?: {
+        ancestors?: BreadcrumbsPage[];
+        name?: string;
       };
     };
   };

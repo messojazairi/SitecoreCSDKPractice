@@ -8,16 +8,16 @@ import { GqlFieldString } from '../../utils/graphQlClient';
 export type SecondaryNavigationProps = ComponentProps & SecondaryNavigationFields;
 
 export type SecondaryNavigationFields = {
-  fields: {
-    data: {
-      datasource: {
-        id: string;
-        children: {
-          results: SecondaryNavigationPage[];
+  fields?: {
+    data?: {
+      datasource?: {
+        id?: string;
+        children?: {
+          results?: SecondaryNavigationPage[];
         };
-        parent: {
+        parent?: {
           children?: {
-            results: SecondaryNavigationPage[];
+            results?: SecondaryNavigationPage[];
           };
         };
       };
