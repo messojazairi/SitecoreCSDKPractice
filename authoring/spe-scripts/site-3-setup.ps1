@@ -197,6 +197,27 @@ function Invoke-ModuleScriptBody {
             New-Item -Parent $dataFolder -Name "AI" -ItemType $addAiConfigBranchTemplate.ID | Out-Null
         }
 
+        Write-Verbose "Remove duplicate SXA Image rendering from Media Available Renderings"
+        $mediaAvailableRenderings = Get-Item -Path "$sitePath/Presentation/Available Renderings/Media" -ErrorAction SilentlyContinue
+        if ($mediaAvailableRenderings) {
+            $sxaImagePaths = @(
+                '/sitecore/layout/Renderings/Feature/JSS Experience Accelerator/Media/Image',
+                '/sitecore/layout/Renderings/Feature/Headless Experience Accelerator/Media/Image'
+            )
+            foreach ($sxaImagePath in $sxaImagePaths) {
+                $sxaImageRendering = Get-Item -Path $sxaImagePath -ErrorAction SilentlyContinue
+                if ($sxaImageRendering) {
+                    $currentRenderings = $mediaAvailableRenderings.Renderings
+                    if ($currentRenderings -match $sxaImageRendering.ID) {
+                        $mediaAvailableRenderings.Editing.BeginEdit()
+                        $mediaAvailableRenderings["Renderings"] = ($currentRenderings -replace "\{$($sxaImageRendering.ID)\}\s*", "").Trim()
+                        $mediaAvailableRenderings.Editing.EndEdit()
+                        Write-Verbose "Removed SXA Image rendering ($($sxaImageRendering.ID)) from Media Available Renderings"
+                    }
+                }
+            }
+        }
+
         Write-Verbose "Create dictionary items"
         $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
         $dictionaryBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/Site 3/Add Dictionary Items" -Language $Site.Language
