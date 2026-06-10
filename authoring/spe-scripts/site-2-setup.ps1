@@ -250,26 +250,6 @@ function Invoke-ModuleScriptBody {
         $titlePartialOverlayVariant = New-Item -Parent $promoVariant -Name "TitlePartialOverlay" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
         $titlePartialOverlayVariant.'__Display name' = "Title Partial Overlay"
 
-        Write-Verbose "Remove duplicate SXA Image rendering from Media Available Renderings"
-        $mediaAvailableRenderings = Get-Item -Path "$sitePath/Presentation/Available Renderings/Media" -ErrorAction SilentlyContinue
-        if ($mediaAvailableRenderings) {
-            $sxaImagePaths = @(
-                '/sitecore/layout/Renderings/Feature/JSS Experience Accelerator/Media/Image',
-                '/sitecore/layout/Renderings/Feature/Headless Experience Accelerator/Media/Image'
-            )
-            foreach ($sxaImagePath in $sxaImagePaths) {
-                $sxaImageRendering = Get-Item -Path $sxaImagePath -ErrorAction SilentlyContinue
-                if ($sxaImageRendering) {
-                    $currentRenderings = $mediaAvailableRenderings.Renderings
-                    if ($currentRenderings -match $sxaImageRendering.ID) {
-                        $mediaAvailableRenderings.Editing.BeginEdit()
-                        $mediaAvailableRenderings["Renderings"] = ($currentRenderings -replace "\{$($sxaImageRendering.ID)\}\s*", "").Trim()
-                        $mediaAvailableRenderings.Editing.EndEdit()
-                        Write-Verbose "Removed SXA Image rendering ($($sxaImageRendering.ID)) from Media Available Renderings"
-                    }
-                }
-            }
-        }
 
         Write-Verbose "Create AI config at $sitePath/Data/AI"
         $dataFolderPath = "$sitePath/Data"
