@@ -1,4 +1,4 @@
----
+﻿---
 ID: "ddca84c9-b397-46b2-b711-c3532370ddc7"
 Parent: "5518d63d-3684-452b-9b40-7ad2079d7133"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
@@ -68,7 +68,7 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ??? ?????
+    Value: プロモ フォルダー
   Versions:
   - Version: 1
     Fields:
@@ -97,7 +97,7 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ?????
+    Value: 促销文件夹
   Versions:
   - Version: 1
     Fields:

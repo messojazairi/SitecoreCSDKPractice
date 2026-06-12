@@ -1,4 +1,4 @@
----
+﻿---
 ID: "8b8335ff-7082-4d8f-a1a8-4cfe82472b39"
 Parent: "fad1c4f2-a75d-4519-8b4d-e1334332dfc5"
 Template: "ab86861a-6030-46c5-b394-e8f99e8b87db"
@@ -75,7 +75,7 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ???
+    Value: プロモ
   Versions:
   - Version: 1
     Fields:
@@ -104,7 +104,7 @@ Languages:
   Fields:
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ??
+    Value: 促销
   Versions:
   - Version: 1
     Fields:
