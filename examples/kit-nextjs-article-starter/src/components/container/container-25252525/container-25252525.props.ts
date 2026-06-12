@@ -1,6 +1,6 @@
 import type React from 'react';
 import type { JSX } from 'react';
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps } from '@/lib/component-props';
 
 export type Container25252525Props = ComponentProps & {
   col1?: JSX.Element;
