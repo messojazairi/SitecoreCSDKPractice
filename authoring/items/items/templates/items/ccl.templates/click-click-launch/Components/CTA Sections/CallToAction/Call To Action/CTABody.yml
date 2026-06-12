@@ -1,4 +1,4 @@
----
+﻿---
 ID: "db177faa-b2b1-4764-8c1b-25b24ec5ecfc"
 Parent: "52cbcc6c-c505-4f20-a391-9070376878f4"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
@@ -81,10 +81,10 @@ Languages:
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
     Hint: Title
-    Value: ???? 2
+    Value: テキスト 2
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ??? ????2
+    Value: プロモ テキスト2
   Versions:
   - Version: 1
     Fields:
@@ -113,10 +113,10 @@ Languages:
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
     Hint: Title
-    Value: ??2
+    Value: 文本2
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ????2
+    Value: 促销文字2
   Versions:
   - Version: 1
     Fields:

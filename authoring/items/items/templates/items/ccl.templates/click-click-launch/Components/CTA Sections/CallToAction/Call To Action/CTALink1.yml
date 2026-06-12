@@ -1,4 +1,4 @@
----
+﻿---
 ID: "9e923d5f-6f61-4e0c-8ff5-2bdab92c615f"
 Parent: "52cbcc6c-c505-4f20-a391-9070376878f4"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
@@ -77,10 +77,10 @@ Languages:
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
     Hint: Title
-    Value: ???
+    Value: リンク
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ??? ???
+    Value: プロモ リンク
   Versions:
   - Version: 1
     Fields:
@@ -109,10 +109,10 @@ Languages:
   Fields:
   - ID: "19a69332-a23e-4e70-8d16-b2640cb24cc8"
     Hint: Title
-    Value: ??
+    Value: 链接
   - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
     Hint: __Display name
-    Value: ????
+    Value: 促销链接
   Versions:
   - Version: 1
     Fields:
