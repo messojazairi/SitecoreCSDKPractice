@@ -29,7 +29,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, externalFields }
   const [forceCollapse] = useState(true);
   const copyNotificationRef = useRef<HTMLDivElement>(null);
 
-  // Generate JSON-LD structured data for article (must be at top level)
+  // Generate JSON-LD structured data for article (must be at top level) tezt
   const articleSchema = useMemo(() => {
     const headline = pageHeaderTitle?.value || '';
     const image = imageRequired?.value?.src || '';
