@@ -8,7 +8,6 @@ import * as zipcodemodaldev from 'src/components/zipcode-modal/zipcode-modal.dev
 import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
 import * as VideoModaldev from 'src/components/video/VideoModal.dev';
 import * as Video from 'src/components/video/Video';
-import * as videoprops from 'src/components/video/video-props';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
 import * as TopicListing from 'src/components/topic-listing/TopicListing';
 import * as TopicItemdev from 'src/components/topic-listing/TopicItem.dev';
@@ -61,7 +60,6 @@ import * as ProductListingSliderdev from 'src/components/product-listing/Product
 import * as ProductListingDefaultdev from 'src/components/product-listing/ProductListingDefault.dev';
 import * as ProductListingCarddev from 'src/components/product-listing/ProductListingCard.dev';
 import * as ProductListing from 'src/components/product-listing/ProductListing';
-import * as portaldev from 'src/components/portal/portal.dev';
 import * as PageHeaderFiftyFiftydev from 'src/components/page-header/PageHeaderFiftyFifty.dev';
 import * as PageHeaderDefaultdev from 'src/components/page-header/PageHeaderDefault.dev';
 import * as PageHeaderCentereddev from 'src/components/page-header/PageHeaderCentered.dev';
@@ -74,7 +72,6 @@ import * as MultiPromoItemdev from 'src/components/multi-promo/MultiPromoItem.de
 import * as MultiPromo from 'src/components/multi-promo/MultiPromo';
 import * as modetoggledev from 'src/components/mode-toggle/mode-toggle.dev';
 import * as MediaSectiondev from 'src/components/media-section/MediaSection.dev';
-import * as meteors from 'src/components/magicui/meteors';
 import * as LogoTabs from 'src/components/logo-tabs/LogoTabs';
 import * as LogoItem from 'src/components/logo-tabs/LogoItem';
 import * as Logodev from 'src/components/logo/Logo.dev';
@@ -144,7 +141,6 @@ import * as successcompactdev from 'src/components/forms/success/success-compact
 import * as SubmitInfoFormdev from 'src/components/forms/submitinfo/SubmitInfoForm.dev';
 import * as EmailSignupFormdev from 'src/components/forms/email/EmailSignupForm.dev';
 import * as FooterNavigationCalloutdev from 'src/components/footer-navigation-callout/FooterNavigationCallout.dev';
-import * as floatingdockdev from 'src/components/floating-dock/floating-dock.dev';
 import * as Flexdev from 'src/components/flex/Flex.dev';
 import * as CtaBanner from 'src/components/cta-banner/CtaBanner';
 import * as ContentSdkRichText from 'src/components/content-sdk-rich-text/ContentSdkRichText';
@@ -184,7 +180,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['VideoPlayer', { ...VideoPlayerdev }],
   ['VideoModal', { ...VideoModaldev }],
   ['Video', { ...Video, componentType: 'client' }],
-  ['video-props', { ...videoprops }],
   ['VerticalImageAccordion', { ...VerticalImageAccordion, componentType: 'client' }],
   ['TopicListing', { ...TopicListing }],
   ['TopicItem', { ...TopicItemdev }],
@@ -237,7 +232,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['ProductListingDefault', { ...ProductListingDefaultdev }],
   ['ProductListingCard', { ...ProductListingCarddev }],
   ['ProductListing', { ...ProductListing, componentType: 'client' }],
-  ['portal', { ...portaldev }],
   ['PageHeaderFiftyFifty', { ...PageHeaderFiftyFiftydev }],
   ['PageHeaderDefault', { ...PageHeaderDefaultdev }],
   ['PageHeaderCentered', { ...PageHeaderCentereddev }],
@@ -250,7 +244,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['MultiPromo', { ...MultiPromo, componentType: 'client' }],
   ['mode-toggle', { ...modetoggledev }],
   ['MediaSection', { ...MediaSectiondev }],
-  ['meteors', { ...meteors, componentType: 'client' }],
   ['LogoTabs', { ...LogoTabs, componentType: 'client' }],
   ['LogoItem', { ...LogoItem }],
   ['Logo', { ...Logodev }],
@@ -317,7 +310,6 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SubmitInfoForm', { ...SubmitInfoFormdev }],
   ['EmailSignupForm', { ...EmailSignupFormdev }],
   ['FooterNavigationCallout', { ...FooterNavigationCalloutdev }],
-  ['floating-dock', { ...floatingdockdev }],
   ['Flex', { ...Flexdev }],
   ['CtaBanner', { ...CtaBanner }],
   ['ContentSdkRichText', { ...ContentSdkRichText }],
