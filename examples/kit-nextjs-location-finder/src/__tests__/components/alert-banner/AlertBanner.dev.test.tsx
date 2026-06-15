@@ -68,9 +68,11 @@ const mockProps = {
     },
   },
   params: {},
+  externalFields: {
+    mock_external_data: { value: 'External Data' },
+  },
   rendering: { componentName: 'AlertBanner' },
   page: mockPageBase,
-  componentMap: new Map(),
 };
 
 describe('AlertBanner', () => {

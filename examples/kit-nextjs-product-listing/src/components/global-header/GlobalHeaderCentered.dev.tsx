@@ -18,10 +18,13 @@ import type { GlobalHeaderProps } from './global-header.props';
 import { Button } from '@/components/ui/button';
 import { useMatchMedia } from '@/hooks/use-match-media';
 import { AnimatedHoverNav } from '@/components/ui/animated-hover-nav';
+import { getFieldValue } from '@/lib/component-props';
 
 export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
   const { fields, isPageEditing } = props ?? {};
   const { logo, primaryNavigationLinks, headerContact } = fields?.data?.item ?? {};
+  const logoField = getFieldValue(logo as any);
+  const headerContactField = getFieldValue(headerContact as any);
   const [isOpen, setIsOpen] = useState(false);
   const [sheetAnimationComplete, setSheetAnimationComplete] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -80,24 +83,26 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                     {primaryNavigationLinks?.targetItems &&
                       primaryNavigationLinks.targetItems.length > 0 &&
                       primaryNavigationLinks?.targetItems.map((item, index) => (
-                        <NavigationMenuItem key={`${item.link?.jsonValue?.value?.text}-${index}`}>
+                        <NavigationMenuItem
+                          key={`${getFieldValue(item.link as any)?.value?.text}-${index}`}
+                        >
                           {isPageEditing ? (
                             <Button
                               variant="ghost"
                               asChild
                               className="font-body bg-transparent text-base font-medium hover:bg-transparent"
                             >
-                              <ContentSdkLink field={item.link?.jsonValue} />
+                              <ContentSdkLink field={getFieldValue(item.link as any)} />
                             </Button>
                           ) : (
-                            item.link?.jsonValue?.value?.href && (
+                            getFieldValue(item.link as any)?.value?.href && (
                               <Button
                                 variant="ghost"
                                 asChild
                                 className="font-body bg-transparent text-base font-medium hover:bg-transparent"
                               >
-                                <Link href={item.link.jsonValue.value.href}>
-                                  {item.link.jsonValue.value.text}
+                                <Link href={getFieldValue(item.link as any)!.value!.href!}>
+                                  {getFieldValue(item.link as any)!.value!.text}
                                 </Link>
                               </Button>
                             )
@@ -113,7 +118,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
             {!isPageEditing ? (
               <Link href="/" className="flex items-center justify-center" aria-label="Home">
                 <ImageWrapper
-                  image={logo?.jsonValue}
+                  image={logoField}
                   className="w-full object-contain"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   alt="Home"
@@ -121,7 +126,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
               </Link>
             ) : (
               <ImageWrapper
-                image={logo?.jsonValue}
+                image={logoField}
                 className="w-full object-contain"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 alt="Home"
@@ -129,17 +134,17 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
             )}
           </div>
           {/* Desktop CTA */}
-          {headerContact?.jsonValue?.value && (
+          {headerContactField?.value && (
             <div className="@lg:flex @lg:items-center @lg:justify-end z-10 hidden">
               {isPageEditing ? (
                 <Button asChild className="font-heading text-base font-medium">
-                  <ContentSdkLink field={headerContact.jsonValue} />
+                  <ContentSdkLink field={headerContactField} />
                 </Button>
               ) : (
-                headerContact.jsonValue.value.href && (
+                headerContactField.value?.href && (
                   <Button asChild className="font-heading text-base font-medium">
-                    <Link href={headerContact.jsonValue.value.href}>
-                      {headerContact.jsonValue.value.text}
+                    <Link href={headerContactField.value.href}>
+                      {headerContactField.value.text}
                     </Link>
                   </Button>
                 )
@@ -192,7 +197,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                           primaryNavigationLinks.targetItems.length > 0 &&
                           primaryNavigationLinks?.targetItems.map((item, index) => (
                             <motion.div
-                              key={`${item.link?.jsonValue?.value?.text}-mobile`}
+                              key={`${getFieldValue(item.link as any)?.value?.text}-mobile`}
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{
@@ -203,20 +208,20 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                             >
                               {isPageEditing ? (
                                 <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                                  <ContentSdkLink field={item.link?.jsonValue} />
+                                  <ContentSdkLink field={getFieldValue(item.link as any)} />
                                 </Button>
                               ) : (
-                                item.link?.jsonValue?.value?.href && (
+                                getFieldValue(item.link as any)?.value?.href && (
                                   <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                                    <Link href={item.link.jsonValue.value.href}>
-                                      {item.link.jsonValue.value.text}
+                                    <Link href={getFieldValue(item.link as any)!.value!.href!}>
+                                      {getFieldValue(item.link as any)!.value!.text}
                                     </Link>
                                   </Button>
                                 )
                               )}
                             </motion.div>
                           ))}
-                        {headerContact?.jsonValue?.value && (
+                        {headerContactField?.value && (
                           <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -230,13 +235,13 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                           >
                             {isPageEditing ? (
                               <Button asChild onClick={() => setIsOpen(false)}>
-                                <ContentSdkLink field={headerContact.jsonValue} />
+                                <ContentSdkLink field={headerContactField} />
                               </Button>
                             ) : (
-                              headerContact.jsonValue.value.href && (
+                              headerContactField.value?.href && (
                                 <Button asChild onClick={() => setIsOpen(false)}>
-                                  <Link href={headerContact.jsonValue.value.href}>
-                                    {headerContact.jsonValue.value.text}
+                                  <Link href={headerContactField.value.href}>
+                                    {headerContactField.value.text}
                                   </Link>
                                 </Button>
                               )
