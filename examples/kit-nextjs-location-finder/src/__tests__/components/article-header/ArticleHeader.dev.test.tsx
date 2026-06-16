@@ -1,4 +1,4 @@
-// src/_tests_/components/article-header/ArticleHeader.dev.test.tsx
+// src/__tests__/components/article-header/ArticleHeader.dev.test.tsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';

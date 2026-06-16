@@ -35,7 +35,7 @@ Before work is framed as a **pull request to the official upstream** repository,
 ## Technology Stack
 
 ### Core Technologies
-- **Next.js 14+** - React framework with App Router and Pages Router support
+- **Next.js 14+** - React framework with App Router (all starters except `basic-nextjs-pages-router`)
 - **TypeScript** - Strict type safety throughout all components
 - **Sitecore XM Cloud** - Headless content management and delivery
 - **Sitecore Content SDK** - Modern SDK for XM Cloud integration (`@sitecore-content-sdk/nextjs`)
