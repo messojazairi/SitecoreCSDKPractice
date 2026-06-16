@@ -17,11 +17,14 @@ import { Default as Logo } from '@/components/logo/Logo.dev';
 import { GlobalHeaderProps } from './global-header.props';
 import { Button } from '@/components/ui/button';
 import { Url } from 'next/dist/shared/lib/router/router';
+import { getFieldValue } from '@/lib/component-props';
 
 export const Default: React.FC<GlobalHeaderProps> = (props) => {
   const { fields, page } = props ?? {};
   const { logo, headerContact } = fields?.data?.item ?? {};
   const links = fields?.data?.item?.children?.results ?? [];
+  const logoField = getFieldValue(logo);
+  const headerContactField = getFieldValue(headerContact);
   const [isOpen, setIsOpen] = useState(false);
   const pageEditing = page.mode.isEditing;
 
@@ -59,14 +62,14 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
         <div className="@xl:px-8 mx-auto flex h-16 w-full max-w-screen-xl items-center px-4">
           <div className="mr-8">
             {pageEditing ? (
-              <Image field={logo?.jsonValue} className="h-10 w-auto" />
+              <Image field={logoField} className="h-10 w-auto" />
             ) : (
-              logo?.jsonValue?.value && (
+              logoField?.value && (
                 <Link
                   href="/"
                   className="flex w-[164px] items-stretch space-x-2 [&_.image-container]:w-full"
                 >
-                  <Logo logo={logo?.jsonValue} className="w-full" />
+                  <Logo logo={logoField} className="w-full" />
                 </Link>
               )
             )}
@@ -77,45 +80,57 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
               <NavigationMenuList>
                 {links &&
                   links.length > 0 &&
-                  links.map((item, i) => (
-                    <Fragment key={`desktop-nav-menu-list-item-${i}`}>
-                      {pageEditing ? (
-                        <Button variant="ghost" asChild className="font-body text-base font-medium">
-                          <SitecoreLink field={item.link?.jsonValue} />
-                        </Button>
-                      ) : (
-                        item.link?.jsonValue?.value?.href && (
-                          <NavigationMenuItem>
+                  links.map((item, i) => {
+                    const linkField = getFieldValue(item.link);
+
+                    return (
+                      <Fragment key={`desktop-nav-menu-list-item-${i}`}>
+                        {pageEditing ? (
+                          linkField ? (
                             <Button
                               variant="ghost"
                               asChild
                               className="font-body text-base font-medium"
                             >
-                              <Link href={item.link.jsonValue.value.href as string}>
-                                {item.link.jsonValue.value.text}
-                              </Link>
+                              <SitecoreLink field={linkField} />
                             </Button>
-                          </NavigationMenuItem>
-                        )
-                      )}
-                    </Fragment>
-                  ))}
+                          ) : null
+                        ) : (
+                          linkField?.value?.href && (
+                            <NavigationMenuItem>
+                              <Button
+                                variant="ghost"
+                                asChild
+                                className="font-body text-base font-medium"
+                              >
+                                <Link href={linkField.value.href as string}>
+                                  {linkField.value.text}
+                                </Link>
+                              </Button>
+                            </NavigationMenuItem>
+                          )
+                        )}
+                      </Fragment>
+                    );
+                  })}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
           {/* Desktop CTA */}
           {pageEditing ? (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-              <Button variant="outline" asChild className="font-heading text-medium rounded-full">
-                <SitecoreLink field={headerContact?.jsonValue} />
-              </Button>
+              {headerContactField ? (
+                <Button variant="outline" asChild className="font-heading text-medium rounded-full">
+                  <SitecoreLink field={headerContactField} />
+                </Button>
+              ) : null}
             </div>
           ) : (
-            headerContact?.jsonValue?.value?.href && (
+            headerContactField?.value?.href && (
               <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
                 <Button variant="outline" asChild className="font-heading text-medium rounded-full">
-                  <Link href={headerContact.jsonValue.value.href as Url}>
-                    {headerContact.jsonValue.value.text}
+                  <Link href={headerContactField.value.href as Url}>
+                    {headerContactField.value.text}
                   </Link>
                 </Button>
               </div>
@@ -134,30 +149,33 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                 <nav className="mt-[70px] flex flex-col space-y-4">
                   {links &&
                     links.length > 0 &&
-                    links.map(
-                      (item) =>
-                        item.link?.jsonValue?.value?.href && (
+                    links.map((item) => {
+                      const linkField = getFieldValue(item.link);
+
+                      return (
+                        linkField?.value?.href && (
                           <Button
-                            key={`${item.link.jsonValue.value.text}-mobile`}
+                            key={`${linkField.value.text}-mobile`}
                             variant="ghost"
                             asChild
                             onClick={() => setIsOpen(false)}
                           >
-                            <Link href={item.link.jsonValue.value.href as string}>
-                              {item.link.jsonValue.value.text}
+                            <Link href={linkField.value.href as string}>
+                              {linkField.value.text}
                             </Link>
                           </Button>
                         )
-                    )}
-                  {headerContact?.jsonValue?.value?.href && (
+                      );
+                    })}
+                  {headerContactField?.value?.href && (
                     <Button
                       variant="outline"
                       asChild
                       className="rounded-full"
                       onClick={() => setIsOpen(false)}
                     >
-                      <Link href={headerContact.jsonValue.value.href as Url}>
-                        {headerContact.jsonValue.value.text}
+                      <Link href={headerContactField.value.href as Url}>
+                        {headerContactField.value.text}
                       </Link>
                     </Button>
                   )}
