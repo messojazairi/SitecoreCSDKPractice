@@ -7,7 +7,7 @@ import { Form } from '@sitecore-content-sdk/nextjs';
 import * as VideoPlayerdev from 'src/components/video/VideoPlayer.dev';
 import * as VideoModaldev from 'src/components/video/VideoModal.dev';
 import * as Video from 'src/components/video/Video';
-import * as videoprops from 'src/components/video/video-props';
+import * as videoprops from '@/components/video/video.props';
 import * as VerticalImageAccordion from 'src/components/vertical-image-accordion/VerticalImageAccordion';
 import * as verticalimageaccordionprops from 'src/components/vertical-image-accordion/vertical-image-accordion.props';
 import * as TopicListing from 'src/components/topic-listing/TopicListing';
