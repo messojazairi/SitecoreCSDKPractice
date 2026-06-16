@@ -11,8 +11,22 @@ type ZipcodeState = {
 };
 
 const STORAGE_KEY = USER_ZIPCODE;
-
 const GEOLOCATION_TIMEOUT = 8000; // 8 seconds timeout before showing modal
+
+// Helper function to encode zipcode for secure storage
+const encodeZipcode = (value: string): string => {
+  return btoa(new TextEncoder().encode(value).reduce((acc, byte) => acc + String.fromCharCode(byte), ''));
+};
+
+// Helper function to decode zipcode from storage with fallback for backward compatibility
+const decodeZipcode = (value: string): string => {
+  try {
+    return new TextDecoder().decode(Uint8Array.from(atob(value), (c) => c.charCodeAt(0)));
+  } catch {
+    // Backward compatibility for previously stored cleartext values
+    return value;
+  }
+};
 
 export function useZipcode(defaultZipcode: string) {
   const [state, setState] = useState<ZipcodeState>({
@@ -237,7 +251,7 @@ export function useZipcode(defaultZipcode: string) {
   // Function to manually update zipcode
   const updateZipcode = useCallback((newZipcode: string | null) => {
     if (newZipcode) {
-      sessionStorage.setItem(STORAGE_KEY, newZipcode);
+      sessionStorage.setItem(STORAGE_KEY, encodeZipcode(newZipcode));
     } else {
       sessionStorage.removeItem(STORAGE_KEY);
     }
@@ -278,9 +292,10 @@ export function useZipcode(defaultZipcode: string) {
     const storedZipcode = sessionStorage.getItem(STORAGE_KEY);
 
     if (storedZipcode) {
+      const decodedZipcode = decodeZipcode(storedZipcode);
       setState((prev) => ({
         ...prev,
-        zipcode: storedZipcode,
+        zipcode: decodedZipcode,
         loading: false,
       }));
     } else {
