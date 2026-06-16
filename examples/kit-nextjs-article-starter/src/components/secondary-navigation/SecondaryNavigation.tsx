@@ -12,11 +12,19 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { type JSX } from 'react';
+import { getDatasource, getFieldValue } from '@/lib/component-props';
 
 export const Default: React.FC<SecondaryNavigationProps> = (props) => {
   const { fields } = props;
-  const { datasource } = fields?.data ?? {};
-  const { parent, children } = datasource ?? {};
+  const datasource = getDatasource(fields);
+
+  if (fields && (!datasource || !datasource.parent || !datasource.children)) {
+    throw new Error('Secondary navigation datasource is missing');
+  }
+
+  const safeDatasource = datasource as SecondaryNavigationProps['fields']['data']['datasource'];
+  const safeParent = safeDatasource.parent;
+  const safeChildren = safeDatasource.children;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -25,8 +33,8 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
       <NavigationMenu.List className="mt-2 flex list-none flex-col items-start gap-2">
         {childItems.map((child, index) => {
           const title =
-            child.navigationTitle?.jsonValue.value ||
-            child.title?.jsonValue.value ||
+            getFieldValue(child.navigationTitle)?.value ||
+            getFieldValue(child.title)?.value ||
             child.displayName ||
             child.name;
 
@@ -53,11 +61,11 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
         orientation="vertical"
       >
         <NavigationMenu.List className="m-0 flex list-none flex-col gap-2 pl-0">
-          {parent.children?.results?.map((item, index) => {
-            const isParent = datasource.id == item.id;
+          {safeParent.children?.results?.map((item, index) => {
+            const isParent = safeDatasource.id == item.id;
             const title =
-              item.navigationTitle?.jsonValue.value ||
-              item.title?.jsonValue.value ||
+              getFieldValue(item.navigationTitle)?.value ||
+              getFieldValue(item.title)?.value ||
               item.displayName ||
               item.name;
 
@@ -71,7 +79,7 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
                     {title}
                   </NextLink>
                 </Button>
-                {isParent && renderChildren(children.results)}
+                {isParent && renderChildren(safeChildren.results)}
               </NavigationMenu.Item>
             );
           })}
