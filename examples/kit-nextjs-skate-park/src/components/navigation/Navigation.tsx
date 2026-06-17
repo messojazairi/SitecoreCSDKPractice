@@ -2,32 +2,15 @@
 import React, { useState, JSX } from 'react';
 import { LinkField, Text, TextField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
-import { ComponentProps } from 'lib/component-props';
-
-interface Fields {
-  Id: string;
-  DisplayName: string;
-  Title: TextField;
-  NavigationTitle: TextField;
-  Href: string;
-  Querystring: string;
-  Children: Array<Fields>;
-  Styles: string[];
-}
-
-interface NavigationListItemProps {
-  fields: Fields;
-  handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
-  relativeLevel: number;
-}
-
-interface NavigationProps extends ComponentProps {
-  fields: Fields;
-}
+import { getFieldValue } from 'lib/component-props';
+import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';
 
 const getTextContent = (fields: Fields): JSX.Element | string => {
-  if (fields.NavigationTitle) return <Text field={fields.NavigationTitle} />;
-  if (fields.Title) return <Text field={fields.Title} />;
+  const navigationTitle = getFieldValue(fields.NavigationTitle);
+  const title = getFieldValue(fields.Title);
+
+  if (navigationTitle) return <Text field={navigationTitle} />;
+  if (title) return <Text field={title} />;
   return fields.DisplayName;
 };
 
@@ -35,8 +18,8 @@ const getLinkField = (fields: Fields): LinkField => ({
   value: {
     href: fields.Href,
     title:
-      fields.NavigationTitle?.value?.toString() ??
-      fields.Title?.value?.toString() ??
+      getFieldValue(fields.NavigationTitle)?.value?.toString() ??
+      getFieldValue(fields.Title)?.value?.toString() ??
       fields.DisplayName,
     querystring: fields.Querystring,
   },
