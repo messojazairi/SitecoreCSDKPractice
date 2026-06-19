@@ -7,7 +7,7 @@ import {
   Text,
 } from '@sitecore-content-sdk/nextjs';
 import React from 'react';
-import { ComponentProps } from 'lib/component-props';
+import { ComponentProps } from '@/lib/component-props';
 
 interface ImageFields {
   Image: ImageField;
