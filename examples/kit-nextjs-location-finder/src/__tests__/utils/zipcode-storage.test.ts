@@ -1,7 +1,7 @@
 import {
   clearZipcodeFromSession,
-  decryptZipcodeFromStorage,
-  encryptZipcodeForStorage,
+  decodeZipcodeFromStorage,
+  encodeZipcodeForStorage,
   readZipcodeFromSession,
   storeZipcodeInSession,
 } from '@/utils/zipcode-storage';
@@ -12,18 +12,18 @@ describe('zipcode-storage', () => {
     sessionStorage.clear();
   });
 
-  it('round-trips zipcodes through encrypted session storage', () => {
+  it('round-trips zipcodes through encoded session storage', () => {
     storeZipcodeInSession('90210');
 
     expect(sessionStorage.getItem(USER_ZIPCODE)).not.toBe('90210');
     expect(readZipcodeFromSession()).toBe('90210');
   });
 
-  it('encrypts and decrypts zipcodes', () => {
-    const encoded = encryptZipcodeForStorage('M5V 2T6');
+  it('encodes and decodes zipcodes', () => {
+    const encoded = encodeZipcodeForStorage('M5V 2T6');
 
     expect(encoded).not.toBe('M5V 2T6');
-    expect(decryptZipcodeFromStorage(encoded)).toBe('M5V 2T6');
+    expect(decodeZipcodeFromStorage(encoded)).toBe('M5V 2T6');
   });
 
   it('reads legacy cleartext values for backward compatibility', () => {

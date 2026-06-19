@@ -3,12 +3,12 @@ import { USER_ZIPCODE } from '@/lib/constants';
 const STORAGE_KEY = USER_ZIPCODE;
 
 /** Encodes a zipcode before persisting in browser storage. */
-export function encryptZipcodeForStorage(zipcode: string): string {
+export function encodeZipcodeForStorage(zipcode: string): string {
   return btoa(encodeURIComponent(zipcode));
 }
 
-/** Decodes a zipcode previously stored with {@link encryptZipcodeForStorage}. */
-export function decryptZipcodeFromStorage(encodedZipcode: string): string | null {
+/** Decodes a zipcode previously stored with {@link encodeZipcodeForStorage}. */
+export function decodeZipcodeFromStorage(encodedZipcode: string): string | null {
   try {
     return decodeURIComponent(atob(encodedZipcode));
   } catch {
@@ -17,11 +17,11 @@ export function decryptZipcodeFromStorage(encodedZipcode: string): string | null
 }
 
 function readStoredZipcodeValue(encodedOrLegacyValue: string): string {
-  return decryptZipcodeFromStorage(encodedOrLegacyValue) ?? encodedOrLegacyValue;
+  return decodeZipcodeFromStorage(encodedOrLegacyValue) ?? encodedOrLegacyValue;
 }
 
 export function storeZipcodeInSession(zipcode: string): void {
-  sessionStorage.setItem(STORAGE_KEY, encryptZipcodeForStorage(zipcode));
+  sessionStorage.setItem(STORAGE_KEY, encodeZipcodeForStorage(zipcode));
 }
 
 export function readZipcodeFromSession(): string | null {
