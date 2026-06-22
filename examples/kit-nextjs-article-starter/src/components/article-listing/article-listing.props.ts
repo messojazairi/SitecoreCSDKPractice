@@ -17,19 +17,19 @@ export interface ArticleItem {
 }
 
 export type ArticleItemReferenceField = ReferenceField & {
-  fields: ArticleItem;
+  fields?: ArticleItem;
 };
 
 export interface ArticleListingFields {
   titleOptional?: Field<string>;
   descriptionOptional?: Field<string>;
   linkOptional?: LinkField;
-  featuredContent: ArticleItemReferenceField[];
+  featuredContent?: ArticleItemReferenceField[];
 }
 
 export interface ArticleListingProps extends ComponentProps {
   params: ArticleListingParams;
-  fields: ArticleListingFields;
+  fields?: ArticleListingFields;
   isPageEditing?: boolean;
 }
 

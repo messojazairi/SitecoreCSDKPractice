@@ -12,13 +12,13 @@ export interface TitleDatasourceField {
 }
 
 export interface TitleFields {
-  data: {
-    datasource: TitleDatasourceField;
-    contextItem: TitleDatasourceField;
+  data?: {
+    datasource?: TitleDatasourceField;
+    contextItem?: TitleDatasourceField;
   };
 }
 
 export type TitleProps = {
   params: { [key: string]: string };
-  fields: TitleFields;
+  fields?: TitleFields;
 };

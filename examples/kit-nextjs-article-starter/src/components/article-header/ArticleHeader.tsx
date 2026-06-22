@@ -30,13 +30,11 @@ import { getDatasource, getFieldValue } from '@/lib/component-props';
 export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
   const datasource = getDatasource(fields);
   const { imageRequired, eyebrowOptional } = datasource ?? {};
-  const externalFields = fields?.data?.externalFields ?? {};
-  const {
-    pageHeaderTitle = null,
-    pageReadTime = null,
-    pageDisplayDate = null,
-    pageAuthor = null,
-  } = externalFields;
+  const externalFields = fields?.data?.externalFields;
+  const pageHeaderTitle = externalFields?.pageHeaderTitle ?? null;
+  const pageReadTime = externalFields?.pageReadTime ?? null;
+  const pageDisplayDate = externalFields?.pageDisplayDate ?? null;
+  const pageAuthor = externalFields?.pageAuthor ?? null;
   const imageField = getFieldValue(imageRequired);
   const eyebrowField = getFieldValue(eyebrowOptional);
   const pageHeaderTitleField = getFieldValue(pageHeaderTitle);

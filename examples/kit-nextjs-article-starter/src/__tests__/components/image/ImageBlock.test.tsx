@@ -230,7 +230,7 @@ describe('ImageBlock Component', () => {
         ...defaultProps,
         fields: {
           image: { value: undefined } as unknown as ImageField,
-          caption: defaultProps.fields.caption,
+          caption: defaultProps.fields?.caption,
         },
       };
 

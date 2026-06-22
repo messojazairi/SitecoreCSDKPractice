@@ -7,5 +7,5 @@ export interface FooterNavigationCalloutFields {
 }
 
 export interface FooterNavigationCalloutProps {
-  fields: FooterNavigationCalloutFields;
+  fields?: FooterNavigationCalloutFields;
 }
