@@ -11,7 +11,7 @@ export interface TitleItem {
 }
 
 export interface TitleProps extends ComponentProps {
-  fields: CompatibleDatasource<TitleItem>;
+  fields?: CompatibleDatasource<TitleItem>;
 }
 
 export interface TitleComponentContentProps {

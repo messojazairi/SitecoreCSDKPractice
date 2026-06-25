@@ -11,9 +11,9 @@ import { ContentBlockProps } from './content-block.props';
  */
 const ContentBlock = ({ fields }: ContentBlockProps): JSX.Element => (
   <section className="contentBlock">
-    <Text tag="h2" className="contentTitle" field={fields.heading} />
+    <Text tag="h2" className="contentTitle" field={fields?.heading} />
 
-    <RichText className="contentDescription" field={fields.content} />
+    <RichText className="contentDescription" field={fields?.content} />
   </section>
 );
 

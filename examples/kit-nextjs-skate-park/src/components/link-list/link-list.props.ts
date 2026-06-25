@@ -2,16 +2,16 @@ import { CompatibleDatasource, ComponentProps } from 'lib/component-props';
 import { LinkField, TextField } from '@sitecore-content-sdk/nextjs';
 
 export interface LinkListProps extends ComponentProps {
-  fields: CompatibleDatasource<{
-    children: {
-      results: Array<{
-        field: {
-          link: LinkField;
+  fields?: CompatibleDatasource<{
+    children?: {
+      results?: Array<{
+        field?: {
+          link?: LinkField;
         };
       }>;
     };
-    field: {
-      title: TextField;
+    field?: {
+      title?: TextField;
     };
   }>;
 }

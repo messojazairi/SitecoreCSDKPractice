@@ -36,10 +36,12 @@ export const Default = ({ params, fields }: LinkListProps) => {
     }
 
     const links = results
-      .filter((element) => element?.field?.link)
+      .filter((element): element is typeof element & { field: { link: LinkField } } =>
+        Boolean(element?.field?.link)
+      )
       .map((element, index) => (
         <LinkListItem
-          key={`${index}-${element.field?.link}`}
+          key={`${index}-${element.field.link.value?.href ?? index}`}
           index={index}
           total={results.length}
           field={element.field.link}
