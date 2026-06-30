@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import {
   SecondaryNavigationPage,
+  SecondaryNavigationFields,
   SecondaryNavigationProps,
 } from '@/components/secondary-navigation/secondary-navigation.props';
 import { Button } from '@/components/ui/button';
@@ -33,7 +34,9 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
     throw new Error('Secondary navigation datasource is missing');
   }
 
-  const safeDatasource = datasource as SecondaryNavigationProps['fields']['data']['datasource'];
+  const safeDatasource = datasource as NonNullable<
+    NonNullable<NonNullable<SecondaryNavigationFields['fields']>['data']>['datasource']
+  >;
   const safeParent = safeDatasource.parent;
   const safeChildren = safeDatasource.children;
 

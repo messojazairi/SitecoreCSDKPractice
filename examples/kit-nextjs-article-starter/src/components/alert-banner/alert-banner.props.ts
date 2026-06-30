@@ -16,9 +16,9 @@ export type AlertBannerData = {
 };
 
 export type AlertBannerFields = {
-  fields: {
-    title: Field<string>;
-    description: Field<string>;
+  fields?: {
+    title?: Field<string>;
+    description?: Field<string>;
     image?: ImageField;
     link?: LinkField;
   };

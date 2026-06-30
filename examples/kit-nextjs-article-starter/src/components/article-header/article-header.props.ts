@@ -21,10 +21,10 @@ export interface ArticleHeaderExternalFields {
 
 export interface ArticleHeaderProps extends ComponentProps {
   params: ArticleHeaderParams;
-  fields: {
-    data: {
-      datasource: ArticleHeaderFields;
-      externalFields: ArticleHeaderExternalFields;
+  fields?: {
+    data?: {
+      datasource?: ArticleHeaderFields;
+      externalFields?: ArticleHeaderExternalFields;
     };
   };
 }

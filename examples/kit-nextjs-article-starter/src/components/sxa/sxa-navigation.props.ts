@@ -14,7 +14,7 @@ export interface NavigationFields {
 
 export type NavigationProps = ComponentProps & {
   params?: { [key: string]: string };
-  fields: NavigationFields;
+  fields?: NavigationFields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
 };

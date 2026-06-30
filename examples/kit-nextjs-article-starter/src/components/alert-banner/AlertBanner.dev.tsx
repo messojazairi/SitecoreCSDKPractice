@@ -12,7 +12,7 @@ import { AlertBannerProps } from './alert-banner.props';
 
 export const Default: React.FC<AlertBannerProps> = (props) => {
   const { fields } = props;
-  const { title, description, link } = fields;
+  const { title, description, link } = fields || {};
   const [isHidden, setIsHidden] = useState(false);
 
   if (fields) {

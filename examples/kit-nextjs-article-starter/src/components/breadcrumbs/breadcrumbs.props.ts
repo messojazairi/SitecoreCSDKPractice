@@ -10,9 +10,9 @@ export type BreadcrumbsPage = {
 };
 
 export type BreadcrumbsData = {
-  fields: {
-    data: {
-      datasource: {
+  fields?: {
+    data?: {
+      datasource?: {
         ancestors: BreadcrumbsPage[];
         name: string;
       };
