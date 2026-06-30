@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Link as ContentSdkLink,
-  LinkField,
-} from '@sitecore-content-sdk/nextjs';
+import { LinkField } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 import type { JSX } from 'react';
 
 import type { NavigationFields } from './navigation.props';
@@ -53,14 +51,14 @@ export const NavigationList = ({
         className={`navigation-title ${children.length ? 'child' : ''}`}
         onClick={() => setActive(() => !active)}
       >
-        <ContentSdkLink
+        <CompatibleLink
           field={getLinkField({ fields })}
           editable={isEditing}
           onClick={handleClick}
           prefetch={false}
         >
           {getNavigationText({ fields })}
-        </ContentSdkLink>
+        </CompatibleLink>
       </div>
       {children.length > 0 ? <ul className="clearfix">{children}</ul> : null}
     </li>

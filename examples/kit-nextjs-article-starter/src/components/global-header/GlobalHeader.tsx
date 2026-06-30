@@ -3,9 +3,10 @@
 import { Fragment, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
-import { Link as SitecoreLink, Image } from '@sitecore-content-sdk/nextjs';
+import { Image } from '@sitecore-content-sdk/nextjs';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 
 import {
   NavigationMenu,
@@ -16,7 +17,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Default as Logo } from '@/components/logo/Logo.dev';
 import { GlobalHeaderProps } from './global-header.props';
 import { Button } from '@/components/ui/button';
-import { Url } from 'next/dist/shared/lib/router/router';
 import { getFieldValue } from '@/lib/component-props';
 
 export const Default: React.FC<GlobalHeaderProps> = (props) => {
@@ -85,30 +85,16 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
 
                     return (
                       <Fragment key={`desktop-nav-menu-list-item-${i}`}>
-                        {pageEditing ? (
-                          linkField ? (
+                        {linkField && (pageEditing || linkField.value?.href) && (
+                          <NavigationMenuItem>
                             <Button
                               variant="ghost"
                               asChild
                               className="font-body text-base font-medium"
                             >
-                              <SitecoreLink field={linkField} />
+                              <CompatibleLink field={linkField} editable={pageEditing} />
                             </Button>
-                          ) : null
-                        ) : (
-                          linkField?.value?.href && (
-                            <NavigationMenuItem>
-                              <Button
-                                variant="ghost"
-                                asChild
-                                className="font-body text-base font-medium"
-                              >
-                                <Link href={linkField.value.href as string}>
-                                  {linkField.value.text}
-                                </Link>
-                              </Button>
-                            </NavigationMenuItem>
-                          )
+                          </NavigationMenuItem>
                         )}
                       </Fragment>
                     );
@@ -117,24 +103,12 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
             </NavigationMenu>
           </div>
           {/* Desktop CTA */}
-          {pageEditing ? (
+          {headerContactField && (pageEditing || headerContactField.value?.href) && (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-              {headerContactField ? (
-                <Button variant="outline" asChild className="font-heading text-medium rounded-full">
-                  <SitecoreLink field={headerContactField} />
-                </Button>
-              ) : null}
+              <Button variant="outline" asChild className="font-heading text-medium rounded-full">
+                <CompatibleLink field={headerContactField} editable={pageEditing} />
+              </Button>
             </div>
-          ) : (
-            headerContactField?.value?.href && (
-              <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-                <Button variant="outline" asChild className="font-heading text-medium rounded-full">
-                  <Link href={headerContactField.value.href as Url}>
-                    {headerContactField.value.text}
-                  </Link>
-                </Button>
-              </div>
-            )
           )}
           {/* Mobile Navigation */}
           <div className="@lg:hidden flex flex-1 justify-end">
@@ -153,30 +127,26 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                       const linkField = getFieldValue(item.link);
 
                       return (
-                        linkField?.value?.href && (
+                        linkField && (pageEditing || linkField.value?.href) && (
                           <Button
                             key={`${linkField.value.text}-mobile`}
                             variant="ghost"
                             asChild
                             onClick={() => setIsOpen(false)}
                           >
-                            <Link href={linkField.value.href as string}>
-                              {linkField.value.text}
-                            </Link>
+                            <CompatibleLink field={linkField} editable={pageEditing} />
                           </Button>
                         )
                       );
                     })}
-                  {headerContactField?.value?.href && (
+                  {headerContactField && (pageEditing || headerContactField.value?.href) && (
                     <Button
                       variant="outline"
                       asChild
                       className="rounded-full"
                       onClick={() => setIsOpen(false)}
                     >
-                      <Link href={headerContactField.value.href as Url}>
-                        {headerContactField.value.text}
-                      </Link>
+                      <CompatibleLink field={headerContactField} editable={pageEditing} />
                     </Button>
                   )}
                 </nav>

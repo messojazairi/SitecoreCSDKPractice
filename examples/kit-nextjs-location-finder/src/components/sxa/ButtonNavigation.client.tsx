@@ -1,7 +1,7 @@
 'use client';
 
-import { useSitecore, Link as ContentSdkLink, LinkField } from '@sitecore-content-sdk/nextjs';
-import Link from 'next/link';
+import { useSitecore, LinkField } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 import { ArrowRight } from 'lucide-react';
 import type { JSX } from 'react';
 
@@ -14,8 +14,7 @@ type ButtonNavigationClientProps = {
 };
 
 /**
- * Client component for ButtonNavigation with editing mode detection.
- * Uses ContentSdkLink in editing mode and Next.js Link in production.
+ * Client component for ButtonNavigation with adapter-based link routing.
  */
 export const ButtonNavigationClient = ({
   list,
@@ -30,29 +29,13 @@ export const ButtonNavigationClient = ({
       {list.map((section) => {
         const linkField = getLinkField({ fields: section });
         const href = linkField?.value?.href;
-        return isPageEditing ? (
-          <ContentSdkLink
-            key={section.Id}
-            field={linkField}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-            prefetch={false}
-          >
-            <h4 className="text-xl font-semibold text-brand-sky mb-2">
-              {getNavigationText({ fields: section })}
-            </h4>
-            <p className="text-brand-black mb-4">
-              Explore {getNavigationText({ fields: section })} components
-            </p>
-            <div className="flex items-center text-brand-sky">
-              <span className="mr-2">View components</span>
-              <ArrowRight size={20} />
-            </div>
-          </ContentSdkLink>
-        ) : (
+
+        return (
           href && (
-            <Link
+            <CompatibleLink
               key={section.Id}
-              href={href}
+              field={linkField}
+              editable={isPageEditing}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
               prefetch={false}
             >
@@ -66,7 +49,7 @@ export const ButtonNavigationClient = ({
                 <span className="mr-2">View components</span>
                 <ArrowRight size={20} />
               </div>
-            </Link>
+            </CompatibleLink>
           )
         );
       })}
