@@ -1,9 +1,8 @@
-import { ImageField } from '@sitecore-content-sdk/nextjs';
+import { ImageField,Page } from '@sitecore-content-sdk/nextjs';
 import { getImageProps } from 'next/image';
-import { ImageProps } from './image.props';
 import { isBrowser } from '@/utils/browser';
 
-const getImageUrl = (imageField: ImageField, mode: ImageProps['page']['mode']) => {
+const getImageUrl = (imageField: ImageField, mode: Page['mode']) => {
   const src = imageField?.value?.src;
 
   if (!mode.isNormal && isBrowser && src?.startsWith('/')) {
@@ -13,7 +12,7 @@ const getImageUrl = (imageField: ImageField, mode: ImageProps['page']['mode']) =
   return src ? `${src.replace('http://cm/', '/')}` : '';
 };
 
-export const nextImageSrc = (img: ImageField, page: ImageProps['page']) =>
+export const nextImageSrc = (img: ImageField, page: Page) =>
   getImageProps({
     alt: (img.value as { alt: string }).alt,
     width: (img.value as { width: number }).width,
