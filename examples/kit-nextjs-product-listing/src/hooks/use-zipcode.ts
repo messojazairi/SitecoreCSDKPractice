@@ -1,11 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  clearZipcodeFromSession,
-  readZipcodeFromSession,
-  storeZipcodeInSession,
-} from '@/utils/zipcode-storage';
+import { USER_ZIPCODE } from '@/lib/constants';
+import { hasNavigator, hasSessionStorage, isBrowser } from '@/utils/browser';
 
 type ZipcodeState = {
   zipcode: string | null;
@@ -13,6 +10,8 @@ type ZipcodeState = {
   error: string | null;
   showModal: boolean;
 };
+
+const STORAGE_KEY = USER_ZIPCODE;
 
 const GEOLOCATION_TIMEOUT = 8000; // 8 seconds timeout before showing modal
 
@@ -47,6 +46,11 @@ export function useZipcode(defaultZipcode: string) {
     console.log('Fetching zipcode using geolocation...');
     setState((prev) => ({ ...prev, loading: true, error: null, showModal: false }));
 
+    if (!isBrowser) {
+      setState((prev) => ({ ...prev, loading: false }));
+      return;
+    }
+
     // Reset the geolocation completed flag
     geolocationCompletedRef.current = false;
 
@@ -59,7 +63,7 @@ export function useZipcode(defaultZipcode: string) {
     timeoutRef.current = setTimeout(showFallbackModal, GEOLOCATION_TIMEOUT);
 
     // Check if geolocation is supported by the browser
-    if (!navigator.geolocation) {
+    if (!hasNavigator() || !navigator.geolocation) {
       console.log('Geolocation not supported');
       clearTimeout(timeoutRef.current);
       geolocationCompletedRef.current = true;
@@ -84,7 +88,9 @@ export function useZipcode(defaultZipcode: string) {
 
         if (data.postal) {
           console.log('IP geolocation found zipcode:', data.postal);
-          storeZipcodeInSession(data.postal);
+          if (hasSessionStorage()) {
+            sessionStorage.setItem(STORAGE_KEY, data.postal);
+          }
 
           setState((prev) => ({
             ...prev,
@@ -142,8 +148,11 @@ export function useZipcode(defaultZipcode: string) {
           console.log('Extracted zipcode:', zipcode);
 
           if (zipcode) {
-            storeZipcodeInSession(zipcode);
-            console.log('Saved zipcode to sessionStorage');
+            // Save to sessionStorage
+            if (hasSessionStorage()) {
+              sessionStorage.setItem(STORAGE_KEY, zipcode);
+            }
+            console.log('Saved zipcode to sessionStorage:', zipcode);
 
             setState((prev) => {
               console.log('Updating state with zipcode:', zipcode);
@@ -237,10 +246,12 @@ export function useZipcode(defaultZipcode: string) {
 
   // Function to manually update zipcode
   const updateZipcode = useCallback((newZipcode: string | null) => {
-    if (newZipcode) {
-      storeZipcodeInSession(newZipcode);
-    } else {
-      clearZipcodeFromSession();
+    if (hasSessionStorage()) {
+      if (newZipcode) {
+        sessionStorage.setItem(STORAGE_KEY, newZipcode);
+      } else {
+        sessionStorage.removeItem(STORAGE_KEY);
+      }
     }
 
     setState((prev) => ({
@@ -269,14 +280,13 @@ export function useZipcode(defaultZipcode: string) {
   }, []);
 
   useEffect(() => {
-    // Check if we're in a browser environment
-    if (typeof window === 'undefined') {
+    if (!isBrowser) {
       setState((prev) => ({ ...prev, loading: false }));
       return;
     }
 
     // Try to get zipcode from sessionStorage first
-    const storedZipcode = readZipcodeFromSession();
+    const storedZipcode = hasSessionStorage() ? sessionStorage.getItem(STORAGE_KEY) : null;
 
     if (storedZipcode) {
       setState((prev) => ({

@@ -14,6 +14,7 @@ import { FloatingDock } from '@/components/floating-dock/floating-dock.dev';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import type { ArticleHeaderProps, PersonItem } from './article-header.props';
+import { hasDocument, hasNavigator, isBrowser } from '@/utils/browser';
 
 export const Default: React.FC<ArticleHeaderProps> = (props) => {
   const { fields, externalFields, page } = props;
@@ -29,6 +30,8 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
   const copyNotificationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isBrowser || !window.matchMedia) return;
+
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
 
@@ -38,6 +41,8 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
   }, []);
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     let animationFrameId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -71,8 +76,10 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
       : {};
 
     const handleShare = (platform: string) => {
+      if (!isBrowser) return;
+
       const url = encodeURIComponent(window.location.href);
-      const title = encodeURIComponent(document.title);
+      const title = encodeURIComponent(hasDocument ? document.title : '');
       let shareUrl = '';
 
       switch (platform) {
@@ -90,30 +97,32 @@ export const Default: React.FC<ArticleHeaderProps> = (props) => {
           window.location.href = shareUrl;
           return;
         case 'copy':
-          navigator.clipboard
-            .writeText(window.location.href)
-            .then(() => {
-              // Show toast notification
-              toast({
-                title: 'Link copied!',
-                description: 'The link has been copied to your clipboard.',
-                duration: 3000, // Explicitly set duration
-              });
+          if (hasNavigator() && navigator.clipboard) {
+            navigator.clipboard
+              .writeText(window.location.href)
+              .then(() => {
+                // Show toast notification
+                toast({
+                  title: 'Link copied!',
+                  description: 'The link has been copied to your clipboard.',
+                  duration: 3000, // Explicitly set duration
+                });
 
-              setCopySuccess(true);
+                setCopySuccess(true);
 
-              if (copyNotificationRef.current) {
-                copyNotificationRef.current.textContent = 'Link copied to clipboard';
-              }
-            })
-            .catch((err) => {
-              console.error('Failed to copy: ', err);
-              toast({
-                title: 'Copy failed',
-                description: 'Could not copy the link to clipboard.',
-                variant: 'destructive',
+                if (copyNotificationRef.current) {
+                  copyNotificationRef.current.textContent = 'Link copied to clipboard';
+                }
+              })
+              .catch((err) => {
+                console.error('Failed to copy: ', err);
+                toast({
+                  title: 'Copy failed',
+                  description: 'Could not copy the link to clipboard.',
+                  variant: 'destructive',
+                });
               });
-            });
+          }
           return;
       }
 
