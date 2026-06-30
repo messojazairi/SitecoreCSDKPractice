@@ -85,7 +85,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
 
                     return (
                       <Fragment key={`desktop-nav-menu-list-item-${i}`}>
-                        {linkField?.value?.href && (
+                        {linkField && (pageEditing || linkField.value?.href) && (
                           <NavigationMenuItem>
                             <Button
                               variant="ghost"
@@ -103,7 +103,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
             </NavigationMenu>
           </div>
           {/* Desktop CTA */}
-          {headerContactField?.value?.href && (
+          {headerContactField && (pageEditing || headerContactField.value?.href) && (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
               <Button variant="outline" asChild className="font-heading text-medium rounded-full">
                 <CompatibleLink field={headerContactField} editable={pageEditing} />
@@ -127,7 +127,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                       const linkField = getFieldValue(item.link);
 
                       return (
-                        linkField?.value?.href && (
+                        linkField && (pageEditing || linkField.value?.href) && (
                           <Button
                             key={`${linkField.value.text}-mobile`}
                             variant="ghost"
@@ -139,7 +139,7 @@ export const Default: React.FC<GlobalHeaderProps> = (props) => {
                         )
                       );
                     })}
-                  {headerContactField?.value?.href && (
+                  {headerContactField && (pageEditing || headerContactField.value?.href) && (
                     <Button
                       variant="outline"
                       asChild

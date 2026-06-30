@@ -86,7 +86,8 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                         <NavigationMenuItem
                           key={`${getFieldValue(item.link as any)?.value?.text}-${index}`}
                         >
-                          {getFieldValue(item.link as any)?.value?.href && (
+                          {getFieldValue(item.link as any) &&
+                            (isPageEditing || getFieldValue(item.link as any)?.value?.href) && (
                             <Button
                               variant="ghost"
                               asChild
@@ -98,7 +99,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                                 prefetch={false}
                               />
                             </Button>
-                          )}
+                            )}
                         </NavigationMenuItem>
                       ))}
                   </NavigationMenuList>

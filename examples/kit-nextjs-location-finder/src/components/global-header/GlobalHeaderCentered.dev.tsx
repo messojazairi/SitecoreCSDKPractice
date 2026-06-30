@@ -84,7 +84,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
                         <NavigationMenuItem
                           key={`${item.link?.jsonValue?.value?.text}-${index}`}
                         >
-                          {item.link?.jsonValue?.value?.href && (
+                          {item.link?.jsonValue && (isPageEditing || item.link.jsonValue?.value?.href) && (
                             <Button
                               variant="ghost"
                               asChild
