@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { type JSX } from 'react';
-import NextLink from 'next/link';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
 import {
@@ -9,6 +8,7 @@ import {
   ComponentRendering,
   Page,
 } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { IconPosition } from '@/enumerations/IconPosition.enum';
@@ -40,10 +40,10 @@ const ButtonBase = (props: ButtonBaseProps): JSX.Element | null => {
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
-        <Link field={buttonLink} editable={true} />
+        <CompatibleLink field={buttonLink} editable={true} />
       ) : (
         buttonLink?.value?.href && (
-          <NextLink href={buttonLink.value.href} prefetch={false}>
+          <CompatibleLink field={buttonLink} editable={false} prefetch={false}>
             {iconPosition === IconPosition.LEADING && icon ? (
               <Icon
                 iconName={iconName ? iconName : IconName.ARROW_LEFT}
@@ -59,7 +59,7 @@ const ButtonBase = (props: ButtonBaseProps): JSX.Element | null => {
                 isAriaHidden={ariaHidden}
               />
             ) : null}
-          </NextLink>
+          </CompatibleLink>
         )
       )}
     </Button>
@@ -121,8 +121,9 @@ const EditableButton = (props: {
         </span>
       ) : (
         buttonLink?.value?.href && (
-          <NextLink
-            href={buttonLink.value.href}
+          <CompatibleLink
+            field={buttonLink}
+            editable={isPageEditing}
             className={className}
             aria-label={asIconLink ? buttonLink?.value?.text : undefined}
             prefetch={false}
@@ -144,7 +145,7 @@ const EditableButton = (props: {
                 page={page}
               />
             ) : null}
-          </NextLink>
+          </CompatibleLink>
         )
       )}
     </Button>
@@ -187,7 +188,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
                 isAriaHidden={ariaHidden}
               />
             )}
-            <Link field={buttonLink} editable={true} />
+            <CompatibleLink field={buttonLink} editable={true} />
             {iconPosition !== IconPosition.LEADING && buttonIcon && (
               <Icon
                 iconName={buttonIcon}
@@ -198,7 +199,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
           </span>
         ) : (
           buttonLink?.value?.href && (
-            <NextLink href={buttonLink.value.href} prefetch={false}>
+            <CompatibleLink field={buttonLink} editable={false} prefetch={false}>
               {iconPosition === IconPosition.LEADING && buttonIcon && (
                 <Icon
                   iconName={buttonIcon}
@@ -214,7 +215,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
                   isAriaHidden={ariaHidden}
                 />
               )}
-            </NextLink>
+            </CompatibleLink>
           )
         )}
       </Button>

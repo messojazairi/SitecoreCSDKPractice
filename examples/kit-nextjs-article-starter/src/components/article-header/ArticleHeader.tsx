@@ -25,6 +25,7 @@ import {
   generatePersonSchema,
 } from '@/lib/structured-data/schema';
 import { getDatasource, getFieldValue } from '@/lib/component-props';
+import { hasDocument, hasNavigator, isBrowser } from '@/utils/browser';
 
 
 export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
@@ -57,6 +58,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
   };
 
   useEffect(() => {
+    if (!isBrowser || !window.matchMedia) return;
+
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
 
@@ -66,6 +69,8 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
   }, []);
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     let animationFrameId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -99,8 +104,10 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
       : {};
 
     const handleShare = (platform: string) => {
+      if (!isBrowser) return;
+
       const url = encodeURIComponent(window.location.href);
-      const title = encodeURIComponent(document.title);
+      const title = encodeURIComponent(hasDocument ? document.title : '');
       let shareUrl = '';
 
       switch (platform) {
@@ -118,30 +125,32 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
           window.location.href = shareUrl;
           return;
         case 'copy':
-          navigator.clipboard
-            .writeText(window.location.href)
-            .then(() => {
-              // Show toast notification
-              toast({
-                title: 'Link copied!',
-                description: 'The link has been copied to your clipboard.',
-                duration: 3000, // Explicitly set duration
-              });
+          if (hasNavigator() && navigator.clipboard) {
+            navigator.clipboard
+              .writeText(window.location.href)
+              .then(() => {
+                // Show toast notification
+                toast({
+                  title: 'Link copied!',
+                  description: 'The link has been copied to your clipboard.',
+                  duration: 3000, // Explicitly set duration
+                });
 
-              setCopySuccess(true);
+                setCopySuccess(true);
 
-              if (copyNotificationRef.current) {
-                copyNotificationRef.current.textContent = 'Link copied to clipboard';
-              }
-            })
-            .catch((err) => {
-              console.error('Failed to copy: ', err);
-              toast({
-                title: 'Copy failed',
-                description: 'Could not copy the link to clipboard.',
-                variant: 'destructive',
+                if (copyNotificationRef.current) {
+                  copyNotificationRef.current.textContent = 'Link copied to clipboard';
+                }
+              })
+              .catch((err) => {
+                console.error('Failed to copy: ', err);
+                toast({
+                  title: 'Copy failed',
+                  description: 'Could not copy the link to clipboard.',
+                  variant: 'destructive',
+                });
               });
-            });
+          }
           return;
       }
 
@@ -219,7 +228,7 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                 }`.trim(),
               }
             : undefined,
-          url: typeof window !== 'undefined' ? window.location.href : undefined,
+          url: isBrowser ? window.location.href : undefined,
         })
       : null;
 
@@ -282,7 +291,9 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                   variant="link"
                   onClick={(e) => {
                     e.preventDefault();
-                    window.history.back();
+                    if (isBrowser) {
+                      window.history.back();
+                    }
                   }}
                 >
                   <Icon iconName="arrow-left" className="ml-2" />

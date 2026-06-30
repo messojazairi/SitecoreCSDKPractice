@@ -7,13 +7,24 @@ import {
   SecondaryNavigationProps,
 } from '@/components/secondary-navigation/secondary-navigation.props';
 import { Button } from '@/components/ui/button';
-import NextLink from 'next/link';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { type JSX } from 'react';
 import { getDatasource, getFieldValue } from '@/lib/component-props';
+import type { LinkField, LinkFieldValue } from '@sitecore-content-sdk/nextjs';
+
+const toLinkField = (url: LinkFieldValue | undefined, text: string): LinkField => ({
+  value: {
+    href: url?.href ?? '',
+    text,
+    target: url?.target,
+    querystring: url?.querystring,
+    anchor: url?.anchor,
+  },
+});
 
 export const Default: React.FC<SecondaryNavigationProps> = (props) => {
   const { fields } = props;
@@ -44,9 +55,11 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
           return (
             <NavigationMenu.Item key={index}>
               <Button asChild variant="link" className="font-bold">
-                <NextLink href={child.url?.href || ''} className=" p-2">
-                  {title}
-                </NextLink>
+                <CompatibleLink
+                  field={toLinkField(child.url, title)}
+                  editable={false}
+                  className=" p-2"
+                />
               </Button>
             </NavigationMenu.Item>
           );
@@ -75,12 +88,11 @@ export const Default: React.FC<SecondaryNavigationProps> = (props) => {
             return (
               <NavigationMenu.Item key={index}>
                 <Button asChild variant="link" className="justify-start">
-                  <NextLink
-                    href={item.url?.href || ''}
+                  <CompatibleLink
+                    field={toLinkField(item.url, title)}
+                    editable={false}
                     className="hover:bg-accent-6 box-border inline-block w-full  p-2 px-4 font-bold"
-                  >
-                    {title}
-                  </NextLink>
+                  />
                 </Button>
                 {isParent && renderChildren(safeChildren.results)}
               </NavigationMenu.Item>
