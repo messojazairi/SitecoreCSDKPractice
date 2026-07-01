@@ -1,9 +1,8 @@
-import { ImageField, Page } from '@sitecore-content-sdk/nextjs';
+import { ImageField,Page } from '@sitecore-content-sdk/nextjs';
 import { getImageProps } from 'next/image';
 import { isBrowser } from '@/utils/browser';
 
-const getImageUrl = (imageField: ImageField, page: Page) => {
-  const { mode } = page;
+const getImageUrl = (imageField: ImageField, mode: Page['mode']) => {
   const src = imageField?.value?.src;
 
   if (!mode.isNormal && isBrowser && src?.startsWith('/')) {
