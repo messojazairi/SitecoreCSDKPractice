@@ -17,5 +17,5 @@ export const nextImageSrc = (img: ImageField, page: Page) =>
     alt: (img.value as { alt: string }).alt,
     width: (img.value as { width: number }).width,
     height: (img.value as { height: number }).height,
-    src: getImageUrl(img, page.mode),
+    src: getImageUrl(img, page),
   })?.props?.src;
