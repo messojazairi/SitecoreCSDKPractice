@@ -1,0 +1,23 @@
+﻿---
+ID: "a308988e-9704-4483-b9cb-9c521f5009e5"
+Parent: "812cd1f5-cf95-4843-b137-83c31339cf16"
+Template: "5009075d-5dc4-4852-b9e0-af5c7e2c919e"
+Path: "/sitecore/content/sai-local-setup/kit-nextjs-skate-park/Home/Locations/Data/Text 1"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260702T082912Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "8cbae21d-67bf-4ebd-b6df-2be443977573"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260702T082912Z

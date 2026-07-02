@@ -1,0 +1,32 @@
+﻿---
+ID: "a9f2e48f-b48d-47ec-b9cb-85b88b46925a"
+Parent: "812cd1f5-cf95-4843-b137-83c31339cf16"
+Template: "67b68437-58fa-4cee-af3c-d4fce60f2ea0"
+Path: "/sitecore/content/sai-local-setup/kit-nextjs-skate-park/Home/Locations/Data/Location Title"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "001dd393-96c5-490b-924a-b0f25cd9efd8"
+      Hint: __Lock
+      Value: <r />
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260702T083205Z
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "23112307-c9bf-40f6-840c-7661e4ba5ae4"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "bbaf5bf9-581a-4b82-a24d-b7dbc80cca48"
+      Hint: Title
+      Value: Skate Park Locations
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260702T083254Z
+    - ID: "ed78aade-491f-4275-8cae-8037e626888d"
+      Hint: Text
+      Value: <p>Here are the list of park locations</p>

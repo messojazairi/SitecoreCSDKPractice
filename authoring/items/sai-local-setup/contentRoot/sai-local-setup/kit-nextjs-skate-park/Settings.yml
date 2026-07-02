@@ -40,7 +40,7 @@ SharedFields:
   Value: "{3BCAB9EF-1E4F-4C23-B452-783BB82AA686}"
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 2000
+  Value: 600
 - ID: "c8d002f9-9518-4c5e-9baa-6617e13f0797"
   Hint: LayoutPath
   Value: "{96E5F4BA-A2CF-4A4C-A4E7-64DA88226362}"
@@ -49,7 +49,7 @@ SharedFields:
   Value: "{AF584191-45C9-4201-8740-5409F4CF8BDD}|{A3AD8F43-34E8-4654-97AB-406DD9A344F6}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "36aeed06-d5db-458c-ba0c-d482ff137af3"
+  Value: "d245ad7b-8257-4e2a-9658-767077cddf0f"
 - ID: "e8881464-38af-4655-be4a-ee10586578a2"
   Hint: Templates
   Value: "{48AF7825-DEFD-4522-89EE-2738AA0D76C9}"
@@ -77,11 +77,11 @@ Languages:
         sitecore\prem_kumar1@epam.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "561cb3ab-d9d9-449b-a9ff-f392b8a32077"
+      Value: "bea7e1d7-497d-4fee-81a0-b7564894fabf"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\prem_kumar1@epam.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20260627T162334Z
+      Value: 20260702T061454Z

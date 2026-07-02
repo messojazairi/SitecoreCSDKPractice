@@ -10,10 +10,10 @@ SharedFields:
   Value: Office/32x32/book2.png
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 1500
+  Value: 400
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "db16db5e-ce6a-4c9c-860f-0d9c27f67263"
+  Value: "c937d7d5-dccc-4b83-a85d-1c73ef9bae51"
 - ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
   Hint: __Originator
   Value: "{95DA6E6D-AA58-4322-A36E-E5C63FCF1AD1}"
@@ -35,11 +35,11 @@ Languages:
         sitecore\prem_kumar1@epam.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "ee95d519-9ed7-4a53-bd4a-e058278c719c"
+      Value: "176b9f81-5588-48bd-8d9c-25ceeaa431f5"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\prem_kumar1@epam.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20260627T162330Z
+      Value: 20260702T061453Z

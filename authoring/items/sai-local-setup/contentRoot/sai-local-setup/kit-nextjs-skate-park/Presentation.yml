@@ -7,10 +7,10 @@ BranchID: "45cf9f42-b3ac-4412-aab9-f8441c7e448e"
 SharedFields:
 - ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
   Hint: __Sortorder
-  Value: 1600
+  Value: 500
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "161e927a-1aec-4074-a998-ebaf1201f931"
+  Value: "d7445500-5e23-4750-9533-ab4df165fe54"
 - ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
   Hint: __Originator
   Value: "{1DB2D249-8FDB-4D9F-A357-841D6A51ABFA}"
@@ -32,11 +32,11 @@ Languages:
         sitecore\prem_kumar1@epam.com
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "4f49e632-66cc-4959-b2de-da43c5d8a2dc"
+      Value: "9a07e5a3-e0fb-4113-805d-60ece8290137"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
         sitecore\prem_kumar1@epam.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20260627T162331Z
+      Value: 20260702T061453Z
