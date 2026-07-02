@@ -1,0 +1,65 @@
+﻿---
+ID: "55a02ff0-b02d-44e6-9127-e7aabed33abc"
+Parent: "d359d8ba-46c4-43c2-8a56-3000302c6520"
+Template: "962b53c4-f93b-4df9-9821-415c867b8903"
+Path: "/sitecore/media library/Project/sai-local-setup/kit-nextjs-skate-park/Sitemaps/kit-nextjs-skate-park/sitemap"
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: People/32x32/cube_molecule.png
+- ID: "40e50ed9-ba07-4702-992e-a912738d32dc"
+  Hint: Blob
+  BlobID: "59751245-a7f0-45aa-a3a6-c4b9c5afae65"
+  Value: PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8dXJsc2V0IHhtbG5zOnhodG1sPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIiB4bWxucz0iaHR0cDovL3d3dy5zaXRlbWFwcy5vcmcvc2NoZW1hcy9zaXRlbWFwLzAuOSI+DQogIDx1cmw+DQogICAgPGxvYz5odHRwczovL3htYy1lcGFtMTJiMjgteG1jbGVhcm5pbmc2Mzg3LXNhaWV4cGVyaW1lNjc1NC5zaXRlY29yZWNsb3VkLmlvLzwvbG9jPg0KICAgIDxsYXN0bW9kPjIwMjYtMDYtMjc8L2xhc3Rtb2Q+DQogICAgPGNoYW5nZWZyZXE+ZGFpbHk8L2NoYW5nZWZyZXE+DQogICAgPHByaW9yaXR5PjAuNTwvcHJpb3JpdHk+DQogIDwvdXJsPg0KICA8dXJsPg0KICAgIDxsb2M+aHR0cHM6Ly94bWMtZXBhbTEyYjI4LXhtY2xlYXJuaW5nNjM4Ny1zYWlleHBlcmltZTY3NTQuc2l0ZWNvcmVjbG91ZC5pby9BYm91dDwvbG9jPg0KICAgIDxsYXN0bW9kPjIwMjYtMDYtMjc8L2xhc3Rtb2Q+DQogICAgPGNoYW5nZWZyZXE+ZGFpbHk8L2NoYW5nZWZyZXE+DQogICAgPHByaW9yaXR5PjAuNTwvcHJpb3JpdHk+DQogIDwvdXJsPg0KPC91cmxzZXQ+
+- ID: "6954b7c7-2487-423f-8600-436cb3b6dc0e"
+  Hint: Size
+  Value: 591
+- ID: "6f47a0a5-9c94-4b48-abeb-42d38def6054"
+  Hint: Mime Type
+  Value: text/xml
+- ID: "9c6106ea-7a5a-48e2-8cad-f0f693b1e2d4"
+  Hint: __Read Only
+  Value: 1
+- ID: "c06867fe-9a43-4c7d-b739-48780492d06f"
+  Hint: Extension
+  Value: xml
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "58ca32f3-86f7-4540-8b75-168efbf9084b"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260627T164102Z
+    - ID: "2fafe7cb-2691-4800-8848-255efa1d31aa"
+      Hint: Keywords
+      Value: |
+        sd:{003C5630-DFCA-4FEC-A09F-EC94E8223B48}
+        site:{421A32DC-6958-47C1-8441-E4B816D2B654}
+    - ID: "3f4b20e9-36e6-4d45-a423-c86567373f82"
+      Hint: Title
+      Value: sitemap
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "2ce5eff7-d3d2-486a-b891-7302d3e63a71"
+    - ID: "ba8341a1-ff30-47b8-ae6a-f4947e4113f0"
+      Hint: Description
+      Value: Sitecore Experience Accelelator sitemap file
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260627T164103Z

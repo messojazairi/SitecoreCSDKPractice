@@ -1,0 +1,31 @@
+﻿---
+ID: "fe1845ca-1ca7-4375-9aaa-00e947b791cb"
+Parent: "cbc7bb6d-324e-4f35-92e3-f320572b3257"
+Template: "f1828a2c-7e5d-4bbd-98ca-320474871548"
+Path: "/sitecore/media library/Project/sai-local-setup/kit-nextjs-skate-park/System/3/0/1/6/thumbnail_301681C5EC8F407B9C97DF8E4A93ABE8"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260627T162431Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\ThumbnailsGenerator
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\ThumbnailsGenerator
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "9fccde1e-9f70-495e-a1ca-aa43f67a715f"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\ThumbnailsGenerator
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260627T162431Z

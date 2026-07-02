@@ -1,0 +1,18 @@
+﻿---
+ID: "d8bcecc0-26fd-41b0-b7a0-949c5de7f197"
+Parent: "4dcf1506-9b47-4b3e-afc3-854a3a4b011b"
+Template: "0a7aa373-5ed1-4e9b-9678-22d3c5faf6df"
+Path: "/sitecore/content/sai-local-setup/kit-nextjs-skate-park/Presentation/Partial Designs/Footer/Data/Contact info"
+BranchID: "8204a950-cbaa-4d06-878b-11ced5ddc1ad"
+SharedFields:
+- ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
+  Hint: __Originator
+  Value: "{24280E66-0C0C-42B5-9B03-B8D789E81922}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: "20260627T162414:639181742548677401Z"

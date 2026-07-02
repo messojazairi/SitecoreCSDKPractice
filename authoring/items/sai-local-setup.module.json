@@ -1,0 +1,29 @@
+{
+    "$schema": "../../.sitecore/schemas/ModuleFile.schema.json",
+    "namespace": "sai-local-setup",
+    "items": {
+        "path": "sai-local-setup",
+        "includes": [
+            {
+                "name": "layout",
+                "path": "/sitecore/layout/Placeholder Settings/Project/sai-local-setup",
+                "allowedPushOperations": "CreateUpdateAndDelete"
+            },
+            {
+                "name": "templates",
+                "path": "/sitecore/templates/Project/sai-local-setup",
+                "allowedPushOperations": "CreateUpdateAndDelete"
+            },
+            {
+                "name": "contentRoot",
+                "path": "/sitecore/content/sai-local-setup",
+                "allowedPushOperations": "CreateUpdateAndDelete"
+            },
+            {
+                "name": "media",
+                "path": "/sitecore/media library/Project/sai-local-setup",
+                "allowedPushOperations": "CreateUpdateAndDelete"
+            }
+        ]
+    }
+}

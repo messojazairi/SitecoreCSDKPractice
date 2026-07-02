@@ -1,0 +1,77 @@
+﻿---
+ID: "0a545157-14d3-4bc4-82f3-f5c98442bd66"
+Parent: "0de95ae4-41ab-4d01-9eb0-67441b7c2450"
+Template: "2c9346a3-15af-4602-97f9-03fe6d04e0f6"
+Path: "/sitecore/content/sai-local-setup"
+BranchID: "2d3805b9-3089-44f3-b952-d45c44add7f8"
+SharedFields:
+- ID: "102b58da-2a86-4953-b3cd-c9f91256b657"
+  Hint: PlaceholderSettingsFolder
+  Value: "{60461762-FAD0-4D5B-877F-17F559F24FD2}"
+- ID: "1230d2cb-4948-4d43-8a3b-b39978f6f1b3"
+  Hint: Modules
+  Value: |
+    {7BAAA4FC-3051-442D-9BD2-AD720B655E0B}
+    {1B0A98C0-1801-44A0-85F2-845694FEAFF3}
+    {02CD7086-1F87-41EC-B40F-B92C1226895B}
+    {7B81B847-1891-43B2-BC13-5047A62EC32A}
+    {7574F439-0B48-48BE-BA6B-94B1A3CE01A3}
+    {D912C30C-7A98-4A8D-A094-611D9AF9605D}
+    {0DC2E395-4A95-4773-88CA-75B22A130849}
+    {6DE1F4E9-815D-491D-923D-D5038100DBEE}
+    {4346A98A-D6E9-491E-A0ED-CD12F524CF4E}
+    {4CBC64BF-8116-48A1-ABAC-DB19103897A6}
+    {D315A501-6503-4545-A5D8-B9FECBA1097D}
+- ID: "800dc4ed-0846-45ba-b112-19902af240f6"
+  Hint: SharedMediaLibrary
+  Value: "{B02C3557-7B9E-4003-94B3-6AF2A2A3B0E3}"
+- ID: "853b245f-53e4-4ebe-bab5-299f9de314b6"
+  Hint: RenderingsFolder
+  Value: "{14B9405F-2C36-4696-9C5C-833BBF5635D9}"
+- ID: "85a7501a-86d9-4243-9075-0b727c3a6db4"
+  Hint: Name
+  Value: "SAi-Learning"
+- ID: "9c596379-f8d4-45d1-a064-cdf1ede2e7c7"
+  Hint: Templates
+  Value: "{48AF7825-DEFD-4522-89EE-2738AA0D76C9}"
+- ID: "b6953f8b-56d3-4c90-a6db-885786711e4a"
+  Hint: SettingsFolder
+  Value: "{B16C5F18-BD62-4C57-9E32-F02FF7B26ABA}"
+- ID: "c5dbb136-3299-4835-a8ce-bca8b49ba3fa"
+  Hint: BranchesFolder
+  Value: "{A0EFAEE7-18CB-4FDE-BC9D-AF0B5FC265A4}"
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "652fe50d-717b-4493-b51f-a13b8cad9f2c"
+- ID: "e90a4413-c111-4951-9b6a-00c4ce7fb289"
+  Hint: MediaLibrary
+  Value: "{24A2C9F4-BC29-4546-971E-1706095C097B}"
+- ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
+  Hint: __Originator
+  Value: "{8453C078-6D17-4817-9230-91654AFE69C6}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20260627T162211Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "fe915ddc-72f5-413e-8ba7-9e00156797ac"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\prem_kumar1@epam.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20260627T162829Z
