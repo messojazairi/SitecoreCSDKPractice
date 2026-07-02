@@ -2,7 +2,7 @@
 ID: "d4a48cb4-1f43-433b-8a45-b781349746db"
 Parent: "ce59aecb-d7ca-4e4c-ac2c-0beba0de35af"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: "/sitecore/templates/Project/click-click-launch/Components/Media/Image/Image/caption"
+Path: "/sitecore/templates/Project/click-click-launch/Components/Media/Image/Image/ImageCaption"
 SharedFields:
 - ID: "24cb32f0-e364-4f37-b400-0f2899097b5b"
   Hint: Enable Shared Language Fallback

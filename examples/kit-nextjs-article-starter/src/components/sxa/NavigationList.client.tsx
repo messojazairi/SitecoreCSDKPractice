@@ -19,6 +19,10 @@ export const NavigationList = ({
   getLinkField,
   getNavigationText,
 }: NavigationListProps) => {
+  if (!fields) {
+    return null;
+  }
+
   const [active, setActive] = useState(false);
   const classNameList = `${fields.Styles.concat('rel-level' + relativeLevel).join(' ')}`;
 

@@ -5,7 +5,7 @@ import { ButtonBase as Button } from '@/components/button-component/ButtonCompon
 import { FooterNavigationCalloutProps } from './footer-navigation-callout.props';
 
 export const Default: React.FC<FooterNavigationCalloutProps> = ({ fields }) => {
-  const { title, description, linkOptional } = fields;
+  const { title, description, linkOptional } = fields || {};
 
   return (
     <aside>

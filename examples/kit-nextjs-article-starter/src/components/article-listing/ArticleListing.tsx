@@ -31,14 +31,14 @@ export const Default: React.FC<ArticleListingProps> = ({
 
     return featuredContent.map((article) => ({
       link: article.url || '',
-      image: article.fields.pageThumbnail?.value?.src || '',
-      title: article.fields.pageTitle?.value || '',
-      summary: article.fields.pageSummary?.value || '',
-      author: `${article.fields.taxAuthor?.fields?.personFirstName?.value || ''} ${
-        article.fields.taxAuthor?.fields?.personLastName?.value || ''
+      image: article.fields?.pageThumbnail?.value?.src || '',
+      title: article.fields?.pageTitle?.value || '',
+      summary: article.fields?.pageSummary?.value || '',
+      author: `${article.fields?.taxAuthor?.fields?.personFirstName?.value || ''} ${
+        article.fields?.taxAuthor?.fields?.personLastName?.value || ''
       }`.trim(),
-      authorImage: article.fields.taxAuthor?.fields?.personProfileImage?.value?.src || '',
-      readTime: article.fields.pageReadTime?.value || '',
+      authorImage: article.fields?.taxAuthor?.fields?.personProfileImage?.value?.src || '',
+      readTime: article.fields?.pageReadTime?.value || '',
     }));
   }, [featuredContent]);
 
