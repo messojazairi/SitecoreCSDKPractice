@@ -13,10 +13,10 @@ type TitleAndTextProps = {
 
 export const Default = (props: TitleAndTextProps): React.ReactElement => {
   const containerStyles = props.params && props.params.styles ? props.params.styles : '';
-  const styles = \`${props.params.GridParameters} ${containerStyles}\`.trimEnd();
+  const styles = `${props.params.GridParameters} ${containerStyles}`.trimEnd();
 
   return (
-    <div className={\`container-default component ${styles}\`}>
+    <div className={`container-default component ${styles}`}>
       <div data-class-change className={containerStyles}>
         This container must be refreshed without reloading the page.
       </div>
