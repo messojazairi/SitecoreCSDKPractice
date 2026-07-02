@@ -2,7 +2,7 @@
 ID: "db177faa-b2b1-4764-8c1b-25b24ec5ecfc"
 Parent: "52cbcc6c-c505-4f20-a391-9070376878f4"
 Template: "455a3e98-a627-4b40-8035-e683a0331ac7"
-Path: "/sitecore/templates/Project/click-click-launch/Components/CTA Sectoins/CallToAction/Call To Action/CTABody"
+Path: "/sitecore/templates/Project/click-click-launch/Components/CTA Sections/CallToAction/Call To Action/CTABody"
 SharedFields:
 - ID: "1eb8ae32-e190-44a6-968d-ed904c794ebf"
   Hint: Source
