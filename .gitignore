@@ -49,3 +49,4 @@ packages/
 
 # VS Code settings
 .vscode/
+local-containers/.env

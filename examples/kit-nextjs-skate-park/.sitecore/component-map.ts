@@ -4,6 +4,7 @@ import { BYOCServerWrapper, NextjsContentSdkComponent, FEaaSServerWrapper } from
 import { Form } from '@sitecore-content-sdk/nextjs';
 
 // end of built-in components
+import * as TitleAndText from 'src/components/title-and-text/TitleAndText';
 import * as Title from 'src/components/title/Title';
 import * as StructuredData from 'src/components/structured-data/StructuredData';
 import * as RowSplitter from 'src/components/row-splitter/RowSplitter';
@@ -22,6 +23,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['BYOCWrapper', BYOCServerWrapper],
   ['FEaaSWrapper', FEaaSServerWrapper],
   ['Form', { ...Form, componentType: 'client' }],
+  ['TitleAndText', { ...TitleAndText }],
   ['Title', { ...Title }],
   ['StructuredData', { ...StructuredData }],
   ['RowSplitter', { ...RowSplitter }],
