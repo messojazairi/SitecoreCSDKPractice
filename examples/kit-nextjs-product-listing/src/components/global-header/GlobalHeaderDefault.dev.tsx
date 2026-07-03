@@ -4,7 +4,7 @@ import type React from 'react';
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Link as ContentSdkLink } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from '@/components/content-sdk/CompatibleLink';
 import { Menu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -108,27 +108,20 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                         <NavigationMenuItem
                           key={`${getFieldValue(item.link as any)?.value?.text}-${index}`}
                         >
-                          {isPageEditing ? (
+                          {getFieldValue(item.link as any) &&
+                            (isPageEditing || getFieldValue(item.link as any)?.value?.href) && (
                             <Button
                               variant="ghost"
                               asChild
                               className="font-body bg-transparent text-base font-medium hover:bg-transparent"
                             >
-                              <ContentSdkLink field={getFieldValue(item.link as any)} />
+                              <CompatibleLink
+                                field={getFieldValue(item.link as any)}
+                                editable={isPageEditing}
+                                prefetch={false}
+                              />
                             </Button>
-                          ) : (
-                            getFieldValue(item.link as any)?.value?.href && (
-                              <Button
-                                variant="ghost"
-                                asChild
-                                className="font-body bg-transparent text-base font-medium hover:bg-transparent"
-                              >
-                                <Link href={getFieldValue(item.link as any)!.value!.href!}>
-                                  {getFieldValue(item.link as any)!.value!.text}
-                                </Link>
-                              </Button>
-                            )
-                          )}
+                            )}
                         </NavigationMenuItem>
                       ))}
                   </NavigationMenuList>
@@ -139,19 +132,13 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
           {/* Desktop CTA */}
           {headerContactField?.value && (
             <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
-              {isPageEditing ? (
-                <Button asChild className="font-heading text-base font-medium">
-                  <ContentSdkLink field={headerContactField} />
-                </Button>
-              ) : (
-                headerContactField.value?.href && (
-                  <Button asChild className="font-heading text-base font-medium">
-                    <Link href={headerContactField.value.href}>
-                      {headerContactField.value.text}
-                    </Link>
-                  </Button>
-                )
-              )}
+              <Button asChild className="font-heading text-base font-medium">
+                <CompatibleLink
+                  field={headerContactField}
+                  editable={isPageEditing}
+                  prefetch={false}
+                />
+              </Button>
             </div>
           )}
           {/* Mobile Navigation */}
@@ -211,19 +198,13 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                               }}
                               className="flex justify-center"
                             >
-                              {isPageEditing ? (
-                                <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                                  <ContentSdkLink field={getFieldValue(item.link as any)} />
-                                </Button>
-                              ) : (
-                                getFieldValue(item.link as any)?.value?.href && (
-                                  <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                                    <Link href={getFieldValue(item.link as any)!.value!.href!}>
-                                      {getFieldValue(item.link as any)!.value!.text}
-                                    </Link>
-                                  </Button>
-                                )
-                              )}
+                              <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
+                                <CompatibleLink
+                                  field={getFieldValue(item.link as any)}
+                                  editable={isPageEditing}
+                                  prefetch={false}
+                                />
+                              </Button>
                             </motion.div>
                           ))}
                         {headerContactField?.value && (
@@ -238,19 +219,13 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
                             }}
                             className="flex justify-center"
                           >
-                            {isPageEditing ? (
-                              <Button asChild onClick={() => setIsOpen(false)}>
-                                <ContentSdkLink field={headerContactField} />
-                              </Button>
-                            ) : (
-                              headerContactField.value?.href && (
-                                <Button asChild onClick={() => setIsOpen(false)}>
-                                  <Link href={headerContactField.value.href}>
-                                    {headerContactField.value.text}
-                                  </Link>
-                                </Button>
-                              )
-                            )}
+                            <Button asChild onClick={() => setIsOpen(false)}>
+                              <CompatibleLink
+                                field={headerContactField}
+                                editable={isPageEditing}
+                                prefetch={false}
+                              />
+                            </Button>
                           </motion.div>
                         )}
                       </motion.nav>

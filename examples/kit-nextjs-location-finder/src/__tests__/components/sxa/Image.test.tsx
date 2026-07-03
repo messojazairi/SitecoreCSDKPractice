@@ -2,19 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Default as Image, Banner } from '@/components/sxa/Image';
-import { baseSitecoreProps } from '@/__tests__/test-utils/component-props';
+import { Page, ComponentRendering, NextjsContentSdkComponent } from '@sitecore-content-sdk/nextjs';
 
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: jest.fn(() => ({
-    page: {
-      mode: {
-        isEditing: false,
-        isPreview: false,
-        isNormal: true,
-      },
-    },
-  })),
   NextImage: jest.fn(({ field }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img data-testid="sxa-image" src={field?.value?.src} alt={field?.value?.alt} />
@@ -24,14 +15,33 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
       {children}
     </a>
   )),
-  Text: jest.fn(({ field, className }) => (
-    <span className={className} data-testid="image-caption">
-      {field?.value}
-    </span>
-  )),
+  Text: jest.fn(({ field, tag: Tag = 'span' }) =>
+    field?.value ? <Tag data-testid="image-caption">{field.value}</Tag> : null
+  ),
 }));
 
 describe('SXA Image', () => {
+  const mockPage = {
+    mode: {
+      isEditing: false,
+      isPreview: false,
+      isNormal: true,
+      name: 'normal' as const,
+      designLibrary: { isVariantGeneration: false },
+      isDesignLibrary: false,
+    },
+    layout: { sitecore: { context: {}, route: null } },
+    locale: 'en',
+  } as Page;
+
+  const mockPageEditing = {
+    ...mockPage,
+    mode: { ...mockPage.mode, isEditing: true, isNormal: false, name: 'edit' as const },
+  } as Page;
+
+  const mockRendering = {} as ComponentRendering;
+  const mockComponentMap = new Map<string, NextjsContentSdkComponent>();
+
   const mockFields = {
     Image: {
       value: {
@@ -49,12 +59,14 @@ describe('SXA Image', () => {
     },
   };
 
-  it('renders image with caption and link', () => {
+  it('renders Default with image, caption and link when not editing', () => {
     render(
       <Image
-        {...baseSitecoreProps}
+        rendering={mockRendering}
+        componentMap={mockComponentMap}
         params={{ styles: '', RenderingIdentifier: 'img-1' }}
         fields={mockFields}
+        page={mockPage}
       />
     );
 
@@ -71,7 +83,7 @@ describe('SXA Image', () => {
     );
   });
 
-  it('renders image without link when not provided', () => {
+  it('renders Default without link when not provided', () => {
     const fieldsWithoutLink = {
       ...mockFields,
       TargetUrl: { value: { href: '' } },
@@ -79,9 +91,11 @@ describe('SXA Image', () => {
 
     render(
       <Image
-        {...baseSitecoreProps}
+        rendering={mockRendering}
+        componentMap={mockComponentMap}
         params={{ styles: '', RenderingIdentifier: 'img-2' }}
         fields={fieldsWithoutLink}
+        page={mockPage}
       />
     );
 
@@ -89,17 +103,49 @@ describe('SXA Image', () => {
     expect(screen.queryByTestId('image-link')).not.toBeInTheDocument();
   });
 
-  it('renders Banner variant with background image', () => {
-    const { container } = render(
-      <Banner
-        {...baseSitecoreProps}
-        params={{ styles: 'hero-section', RenderingIdentifier: 'banner-1' }}
+  it('renders Default without link when in editing mode', () => {
+    render(
+      <Image
+        rendering={mockRendering}
+        componentMap={mockComponentMap}
+        params={{ styles: '', RenderingIdentifier: 'img-3' }}
         fields={mockFields}
+        page={mockPageEditing}
       />
     );
 
-    const bannerDiv = container.querySelector('.hero-banner');
-    expect(bannerDiv).toBeInTheDocument();
-    expect(bannerDiv).toHaveClass('hero-section');
+    expect(screen.getByTestId('sxa-image')).toBeInTheDocument();
+    expect(screen.queryByTestId('image-link')).not.toBeInTheDocument();
+  });
+
+  it('renders Banner variant in figure.hero-banner and always shows image', () => {
+    const { container } = render(
+      <Banner
+        rendering={mockRendering}
+        componentMap={mockComponentMap}
+        params={{ styles: 'hero-section', RenderingIdentifier: 'banner-1' }}
+        fields={mockFields}
+        page={mockPage}
+      />
+    );
+
+    const bannerFigure = container.querySelector('figure.hero-banner');
+    expect(bannerFigure).toBeInTheDocument();
+    expect(bannerFigure).toHaveClass('hero-section');
+    expect(screen.getByTestId('sxa-image')).toBeInTheDocument();
+  });
+
+  it('renders Banner image in editing mode too', () => {
+    render(
+      <Banner
+        rendering={mockRendering}
+        componentMap={mockComponentMap}
+        params={{ styles: '', RenderingIdentifier: 'banner-2' }}
+        fields={mockFields}
+        page={mockPageEditing}
+      />
+    );
+
+    expect(screen.getByTestId('sxa-image')).toBeInTheDocument();
   });
 });

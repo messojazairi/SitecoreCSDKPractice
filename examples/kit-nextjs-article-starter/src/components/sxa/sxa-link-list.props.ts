@@ -7,8 +7,8 @@ export type ResultsFieldLink = {
 };
 
 export interface LinkListFields {
-  data: {
-    datasource: {
+  data?: {
+    datasource?: {
       children: {
         results: ResultsFieldLink[];
       };
@@ -21,7 +21,7 @@ export interface LinkListFields {
 
 export type LinkListProps = {
   params: { [key: string]: string };
-  fields: LinkListFields;
+  fields?: LinkListFields;
 };
 
 export type LinkListItemProps = {
