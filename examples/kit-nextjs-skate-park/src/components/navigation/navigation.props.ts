@@ -13,13 +13,13 @@ export interface NavigationFields {
 }
 
 export interface NavigationListItemProps {
-  fields: NavigationFields;
+  fields?: NavigationFields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
 }
 
 export interface NavigationProps extends ComponentProps {
-  fields: NavigationFields;
+  fields?: NavigationFields;
 }
 
 export type NavigationLinkField = LinkField;

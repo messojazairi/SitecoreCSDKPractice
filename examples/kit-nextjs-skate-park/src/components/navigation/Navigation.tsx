@@ -5,7 +5,11 @@ import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import { getFieldValue } from 'lib/component-props';
 import { NavigationFields as Fields, NavigationListItemProps, NavigationProps } from './navigation.props';
 
-const getTextContent = (fields: Fields): JSX.Element | string => {
+const getTextContent = (fields?: Fields): JSX.Element | string => {
+  if (!fields) {
+    return '';
+  }
+
   const navigationTitle = getFieldValue(fields.NavigationTitle);
   const title = getFieldValue(fields.Title);
 
@@ -14,14 +18,14 @@ const getTextContent = (fields: Fields): JSX.Element | string => {
   return fields.DisplayName;
 };
 
-const getLinkField = (fields: Fields): LinkField => ({
+const getLinkField = (fields?: Fields): LinkField => ({
   value: {
-    href: fields.Href,
+    href: fields?.Href ?? '',
     title:
-      getFieldValue(fields.NavigationTitle)?.value?.toString() ??
-      getFieldValue(fields.Title)?.value?.toString() ??
-      fields.DisplayName,
-    querystring: fields.Querystring,
+      getFieldValue(fields?.NavigationTitle)?.value?.toString() ??
+      getFieldValue(fields?.Title)?.value?.toString() ??
+      fields?.DisplayName,
+    querystring: fields?.Querystring ?? '',
   },
 });
 
@@ -30,6 +34,10 @@ const NavigationListItem: React.FC<NavigationListItemProps> = ({
   handleClick,
   relativeLevel,
 }) => {
+  if (!fields) {
+    return null;
+  }
+
   const [isActive, setIsActive] = useState(false);
   const { page } = useSitecore();
 
@@ -69,7 +77,7 @@ export const Default = ({ params, fields }: NavigationProps) => {
   const { page } = useSitecore();
   const { styles, RenderingIdentifier: id } = params;
 
-  if (!Object.values(fields).length) {
+  if (!fields || !Object.values(fields).length) {
     return (
       <div className={`component navigation ${styles}`} id={id}>
         <div className="component-content">[Navigation]</div>

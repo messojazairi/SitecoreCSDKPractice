@@ -21,7 +21,7 @@ const ImageDefault: React.FC<ImageProps> = ({ params }) => (
 
 export const Banner: React.FC<ImageProps> = ({ params, fields }) => {
   const { styles, RenderingIdentifier: id } = params;
-  const baseImageField = getFieldValue(fields.Image);
+  const baseImageField = getFieldValue(fields?.Image);
   const imageField = baseImageField && {
     ...baseImageField,
     value: {
