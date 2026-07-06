@@ -8,12 +8,12 @@ import type { JSX } from 'react';
 import type { NavigationFields } from './navigation.props';
 
 type NavigationListProps = {
-  fields: NavigationFields;
+  fields?: NavigationFields;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
   isEditing: boolean;
-  getLinkField: (props: { fields: NavigationFields }) => LinkField;
-  getNavigationText: (props: { fields: NavigationFields }) => JSX.Element | string;
+  getLinkField: (props: { fields?: NavigationFields }) => LinkField;
+  getNavigationText: (props: { fields?: NavigationFields }) => JSX.Element | string;
 };
 
 /**
@@ -27,6 +27,10 @@ export const NavigationList = ({
   getLinkField,
   getNavigationText,
 }: NavigationListProps) => {
+  if (!fields) {
+    return null;
+  }
+
   const [active, setActive] = useState(false);
   const classNameList = `${fields.Styles.concat('rel-level' + relativeLevel).join(' ')}`;
 

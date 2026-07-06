@@ -1,26 +1,26 @@
 import type { OptionalComponentProps } from '@/lib/component-props';
 
 export type TitleFields = {
-  data: {
-    datasource: {
-      url: {
+  data?: {
+    datasource?: {
+      url?: {
         path: string;
         siteName: string;
       };
-      field: {
-        jsonValue: {
+      field?: {
+        jsonValue?: {
           value: string;
           metadata?: { [key: string]: unknown };
         };
       };
     };
-    contextItem: {
-      url: {
+    contextItem?: {
+      url?: {
         path: string;
         siteName: string;
       };
-      field: {
-        jsonValue: {
+      field?: {
+        jsonValue?: {
           value: string;
           metadata?: { [key: string]: unknown };
         };
@@ -30,7 +30,7 @@ export type TitleFields = {
 };
 
 export type TitleProps = OptionalComponentProps & {
-  fields: TitleFields;
+  fields?: TitleFields;
 };
 
 export type TitleComponentContentProps = {

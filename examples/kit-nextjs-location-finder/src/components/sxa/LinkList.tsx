@@ -37,13 +37,14 @@ export const Default = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: LinkListResultFieldLink) => element?.field?.link)
       .map((element: LinkListResultFieldLink, key: number) => (
         <LinkListItem
           index={key}
           key={`${key}${element.field.link}`}
-          total={datasource.children.results.length}
+          total={results.length}
           field={element.field.link}
         />
       ));
@@ -115,7 +116,8 @@ export const AnchorNav = (props: LinkListProps): JSX.Element => {
   }, []);
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: LinkListResultFieldLink) => element?.field?.link)
       .map((element: LinkListResultFieldLink, key: number) => {
         const link = element.field.link;

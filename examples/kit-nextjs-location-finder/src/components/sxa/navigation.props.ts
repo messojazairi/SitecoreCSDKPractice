@@ -13,7 +13,7 @@ export type NavigationFields = {
 };
 
 export type NavigationProps = OptionalComponentProps & {
-  fields: Record<string, NavigationFields>;
+  fields?: Record<string, NavigationFields>;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
   isEditing?: boolean;

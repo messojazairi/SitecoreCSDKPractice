@@ -10,7 +10,7 @@ export const Default = ({ params, fields }: RichTextProps): JSX.Element => {
       <div className="component-content">
         {fields ? (
           <section>
-            <ContentSdkRichText field={fields.Text} />
+            <ContentSdkRichText field={fields?.Text} />
           </section>
         ) : (
           <span className="is-empty-hint">Rich text</span>

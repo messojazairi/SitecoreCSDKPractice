@@ -63,7 +63,7 @@ export const Default = (props: PromoProps): JSX.Element => {
             className="font-bold py-1 px-3 mx-6 mb-4 mt-auto relative b-0"
             asChild
           >
-            <ContentSdkLink field={props.fields.PromoLink} />
+            {props.fields.PromoLink ? <ContentSdkLink field={props.fields.PromoLink} /> : null}
           </Button>
         </aside>
       </div>
@@ -112,7 +112,7 @@ export const CenteredCard = (props: PromoProps): JSX.Element => {
             className="font-bold text-xl text-center w-full py-1 px-3 ml-4 mb-4 relative b-0"
             asChild
           >
-            <ContentSdkLink field={props.fields.PromoLink} />
+            {props.fields.PromoLink ? <ContentSdkLink field={props.fields.PromoLink} /> : null}
           </Button>
         </aside>
       </div>
