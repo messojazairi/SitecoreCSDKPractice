@@ -49,13 +49,14 @@ export const Default = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => (
         <LinkListItem
           index={key}
           key={`${key}${element.field.link}`}
-          total={datasource.children.results.length}
+          total={results.length}
           field={element.field.link}
           isPageEditing={isPageEditing}
         />
@@ -128,7 +129,8 @@ export const AnchorNav = (props: LinkListProps): JSX.Element => {
   }, []);
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => {
         const link = element.field.link;
@@ -186,7 +188,8 @@ export const FooterLinks = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => {
         const link = element.field.link;
@@ -251,7 +254,8 @@ export const HeaderPrimaryLinks = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => {
         const link = element.field.link;
@@ -296,7 +300,8 @@ export const HeaderSecondaryLinks = (props: LinkListProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
 
   if (datasource) {
-    const list = datasource.children.results
+    const results = datasource.children?.results ?? [];
+    const list = results
       .filter((element: ResultsFieldLink) => element?.field?.link)
       .map((element: ResultsFieldLink, key: number) => {
         const link = element.field.link;

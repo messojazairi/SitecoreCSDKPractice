@@ -7,13 +7,13 @@ export type ResultsFieldLink = {
 };
 
 export interface LinkListFields {
-  data: {
-    datasource: {
-      children: {
-        results: ResultsFieldLink[];
+  data?: {
+    datasource?: {
+      children?: {
+        results?: ResultsFieldLink[];
       };
-      field: {
-        title: TextField;
+      field?: {
+        title?: TextField;
       };
     };
   };
@@ -21,7 +21,7 @@ export interface LinkListFields {
 
 export type LinkListProps = {
   params: { [key: string]: string };
-  fields: LinkListFields;
+  fields?: LinkListFields;
 };
 
 export type LinkListItemProps = {

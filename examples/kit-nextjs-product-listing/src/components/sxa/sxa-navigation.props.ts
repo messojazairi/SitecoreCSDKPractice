@@ -14,14 +14,14 @@ export interface NavigationFields {
 
 export type NavigationProps = {
   params?: { [key: string]: string };
-  fields: NavigationFields;
+  fields?: Record<string, NavigationFields>;
   handleClick: (event?: React.MouseEvent<HTMLElement>) => void;
   relativeLevel: number;
   isEditing?: boolean;
 };
 
 export type NavigationFieldProps = {
-  fields: NavigationFields;
+  fields?: NavigationFields;
 };
 
 export type GetLinkField = (props: NavigationFieldProps) => LinkField;
