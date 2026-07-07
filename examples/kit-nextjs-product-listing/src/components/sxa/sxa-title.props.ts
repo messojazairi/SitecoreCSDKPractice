@@ -2,26 +2,26 @@ import type { ComponentProps } from '@/lib/component-props';
 import type { JSX } from 'react';
 
 export interface TitleFields {
-  data: {
-    datasource: {
-      url: {
+  data?: {
+    datasource?: {
+      url?: {
         path: string;
         siteName: string;
       };
-      field: {
-        jsonValue: {
+      field?: {
+        jsonValue?: {
           value: string;
           metadata?: { [key: string]: unknown };
         };
       };
     };
-    contextItem: {
-      url: {
+    contextItem?: {
+      url?: {
         path: string;
         siteName: string;
       };
-      field: {
-        jsonValue: {
+      field?: {
+        jsonValue?: {
           value: string;
           metadata?: { [key: string]: unknown };
         };
@@ -32,7 +32,7 @@ export interface TitleFields {
 
 export type TitleProps = ComponentProps & {
   params: { [key: string]: string };
-  fields: TitleFields;
+  fields?: TitleFields;
 };
 
 export type ComponentContentProps = {

@@ -1,23 +1,10 @@
 import {
-  Field,
-  ImageField,
   NextImage as ContentSdkImage,
   Link as ContentSdkLink,
-  LinkField,
   Text,
 } from '@sitecore-content-sdk/nextjs';
-import { ComponentProps } from '@/lib/component-props';
 import React from 'react';
-
-interface ImageFields {
-  Image: ImageField;
-  ImageCaption: Field<string>;
-  TargetUrl: LinkField;
-}
-
-interface ImageProps extends ComponentProps {
-  fields: ImageFields;
-}
+import type { ImageProps } from './sxa-image.props';
 
 const ImageWrapper: React.FC<{
   className: string;
@@ -92,7 +79,7 @@ export const Default: React.FC<ImageProps> = (props) => {
       className={`component image ${styles ?? ''}`}
       id={typeof id === 'string' ? id : undefined}
     >
-      {shouldWrapWithLink ? (
+      {shouldWrapWithLink && fields.TargetUrl ? (
         <ContentSdkLink field={fields.TargetUrl}>
           <Image />
         </ContentSdkLink>

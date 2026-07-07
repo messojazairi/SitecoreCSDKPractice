@@ -3,14 +3,14 @@ import type { ComponentProps } from '@/lib/component-props';
 import type { JSX } from 'react';
 
 export interface PageContentFields {
-  Title: TextField;
-  Content: RichTextField;
-  MainLink: LinkField;
+  Title?: TextField;
+  Content?: RichTextField;
+  MainLink?: LinkField;
 }
 
 export type PageContentProps = ComponentProps & {
   params: { [key: string]: string };
-  fields: PageContentFields;
+  fields?: PageContentFields;
 };
 
 export type ComponentContentProps = {
