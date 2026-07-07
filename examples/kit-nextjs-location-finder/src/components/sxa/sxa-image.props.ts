@@ -8,6 +8,6 @@ export type SxaImageFields = {
 };
 
 export type SxaImageProps = OptionalComponentProps & {
-  fields: SxaImageFields;
+  fields?: SxaImageFields;
 };
 

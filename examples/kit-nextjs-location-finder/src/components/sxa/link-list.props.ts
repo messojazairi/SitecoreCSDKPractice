@@ -8,20 +8,20 @@ export type LinkListResultFieldLink = {
 };
 
 export type LinkListFields = {
-  data: {
-    datasource: {
-      children: {
-        results: LinkListResultFieldLink[];
+  data?: {
+    datasource?: {
+      children?: {
+        results?: LinkListResultFieldLink[];
       };
-      field: {
-        title: TextField;
+      field?: {
+        title?: TextField;
       };
     };
   };
 };
 
 export type LinkListProps = OptionalComponentProps & {
-  fields: LinkListFields;
+  fields?: LinkListFields;
 };
 
 export type LinkListItemProps = {
